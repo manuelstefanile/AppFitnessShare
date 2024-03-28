@@ -2,6 +2,7 @@ package com.example.appfitness;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +16,7 @@ import java.util.Calendar;
 
 public class NotificheDialog {
 
-    public static void NotificaPeso(LayoutInflater inflater, Peso pesoEsitente) throws Eccezioni{
-        System.out.println(pesoEsitente+"****** pesoesistene");
+    public static void NotificaPeso(LayoutInflater inflater, SharedPreferences sh) throws Eccezioni{
 
         Calendar dataSalvare=Calendar.getInstance();
 
@@ -39,14 +39,15 @@ public class NotificheDialog {
         CalendarView calendario=dialogView.findViewById((int)R.id.calendarioPeso);
         EditText kiliEdit= dialogView.findViewById(R.id.pesoAttual);
 
+        //prendo l oggetto
+        Peso pesoStorage= Peso.fromJson(sh.getString("pesoPassato",null));
+
         //se il peso esiste ed è gia stato inserito allora mostralo
-        if(pesoEsitente!=null){
-            calendario.setDate(pesoEsitente.getCalendario().getTimeInMillis());
-            kiliEdit.setText(String.valueOf(pesoEsitente.getPesoKg()));
-        }else {
-            pesoEsitente=new Peso();
+        if(pesoStorage.getPesoKg()!=0&&pesoStorage.getCalendario()!=null){
+            calendario.setDate(pesoStorage.getCalendario().getTimeInMillis());
+            kiliEdit.setText(String.valueOf(pesoStorage.getPesoKg()));
         }
-        PesoWrapper pesoWrapper = new PesoWrapper(pesoEsitente);
+
 
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -98,8 +99,11 @@ public class NotificheDialog {
                 if(pesoInserito!=0){
                     Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
                 }
-                pesoWrapper.getPeso().setPesoKg(pesoInserito);
-                pesoWrapper.getPeso().setCalendario(dataSalvare);
+                pesoStorage.setPesoKg(pesoInserito);
+                pesoStorage.setCalendario(dataSalvare);
+                SharedPreferences.Editor edi=sh.edit();
+                edi.putString("pesoPassato",pesoStorage.toJson());
+                edi.apply();
                 // Se desideri applicare i cambiamenti all'oggetto originale:
                 //alertDialog.dismiss(); // Chiudi il dialog
             }
