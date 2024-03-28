@@ -12,7 +12,7 @@ public class Eccezioni extends Exception{
     public Eccezioni(tipiEccezioni tipoEccezione, View v) {
         switch (tipoEccezione){
             case FORMATO_NON_VALIDO:
-                Toast.makeText(v.getContext(), "Formato non valido", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Formato don't valido", Toast.LENGTH_SHORT).show();
                 break;
             case DATA_NON_VALIDA:
                 Toast.makeText(v.getContext(), "Inserisci una data valida", Toast.LENGTH_SHORT).show();
