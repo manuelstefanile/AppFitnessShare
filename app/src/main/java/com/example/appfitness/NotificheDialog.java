@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import java.lang.reflect.Field;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class NotificheDialog {
 
@@ -41,7 +43,6 @@ public class NotificheDialog {
 
         //prendo l oggetto
         Peso pesoStorage= Peso.fromJson(sh.getString("pesoPassato",null));
-
         //se il peso esiste ed è gia stato inserito allora mostralo
         if(pesoStorage.getPesoKg()!=0&&pesoStorage.getCalendario()!=null){
             calendario.setDate(pesoStorage.getCalendario().getTimeInMillis());
@@ -104,14 +105,13 @@ public class NotificheDialog {
                 SharedPreferences.Editor edi=sh.edit();
                 edi.putString("pesoPassato",pesoStorage.toJson());
                 edi.apply();
-                // Se desideri applicare i cambiamenti all'oggetto originale:
+
                 //alertDialog.dismiss(); // Chiudi il dialog
             }
         });
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("sono in on ok");
                 alertDialog.dismiss(); // Chiudi il dialog
 
             }
@@ -121,8 +121,7 @@ public class NotificheDialog {
 
 
     }
-    public static Misure NotificaMisure(LayoutInflater inflater) throws Eccezioni{
-        Misure[] misuraSalvare = new Misure[1];
+    public static void NotificaMisure(LayoutInflater inflater,SharedPreferences sh) throws Eccezioni{
 
         View dialogView = inflater.inflate(R.layout.misure_dettaglio, null);
         Button salvaButton=dialogView.findViewById((int)R.id.SalvaMisure);
@@ -138,53 +137,84 @@ public class NotificheDialog {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
+
+        EditText braccioDx=dialogView.findViewById(R.id.braccioDX);
+        EditText braccioSx=dialogView.findViewById(R.id.braccioSX);
+        EditText gambaDx=dialogView.findViewById(R.id.gambaDX);
+        EditText gambaSx=dialogView.findViewById(R.id.gambaSX);
+        EditText petto=dialogView.findViewById(R.id.petto);
+        EditText spalle=dialogView.findViewById(R.id.spalle);
+        EditText addome=dialogView.findViewById(R.id.addome);
+        HashMap<String,EditText> mappa=new HashMap<>();
+        mappa.put("braccioDx",braccioDx);
+        mappa.put("braccioSx",braccioSx);
+        mappa.put("gambaDx",gambaDx);
+        mappa.put("gambaSx",gambaSx);
+        mappa.put("petto",petto);
+        mappa.put("spalle",spalle);
+        mappa.put("addome",addome);
+
+        Misure misureStorage= Misure.fromJson(sh.getString("misurePassate",null));
+        //scorro tutte le proprietà del istanza
+        //prendo le proprietà
+        Field[] campi = misureStorage.getClass().getDeclaredFields();
+        for (Field campo : campi) {
+            campo.setAccessible(true); // Per accedere a campi privati
+            try {
+                //prendo il valore del campo
+                Object valoreCampo = campo.get(misureStorage);
+                //se il campo è float e il valore è !=0 allora c è qualcosa
+                if (campo.getType()==float.class&& (float)valoreCampo != 0) {
+                    //prendo l'edit text da aggiornare e setto il testo
+                    mappa.get(campo.getName()).setText(String.valueOf(valoreCampo));
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
         salvaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText braccioDx=dialogView.findViewById(R.id.braccioDX);
-                EditText braccioSx=dialogView.findViewById(R.id.braccioSX);
-                EditText gambaDx=dialogView.findViewById(R.id.gambaDX);
-                EditText gambaSx=dialogView.findViewById(R.id.gambaSX);
-                EditText petto=dialogView.findViewById(R.id.petto);
-                EditText spalle=dialogView.findViewById(R.id.spalle);
-                EditText addome=dialogView.findViewById(R.id.addome);
-                Misure misure=new Misure();
                 try{
-                    System.out.println("**" + braccioDx.getText().toString());
+
                     float valoreBracicoDx=braccioDx.getText().toString().trim().length()!=0?Float.parseFloat(braccioDx.getText().toString()):0;
-                    misure.setBraccioDx(valoreBracicoDx);
-                    braccioDx.setText(String.valueOf(misure.getBraccioDx()));
+                    misureStorage.setBraccioDx(valoreBracicoDx);
+                    braccioDx.setText(String.valueOf(misureStorage.getBraccioDx()));
 
                     float valoreBracicoSx=braccioSx.getText().toString().trim().length()!=0?Float.parseFloat(braccioSx.getText().toString()):0;
-                    misure.setBraccioSx(valoreBracicoSx);
-                    braccioSx.setText(String.valueOf(misure.getBraccioSx()));
+                    misureStorage.setBraccioSx(valoreBracicoSx);
+                    braccioSx.setText(String.valueOf(misureStorage.getBraccioSx()));
 
                     float valoreGambaDx=gambaDx.getText().toString().trim().length()!=0?Float.parseFloat(gambaDx.getText().toString()):0;
-                    misure.setGambaDx(valoreGambaDx);
-                    gambaDx.setText(String.valueOf(misure.getGambaDx()));
+                    misureStorage.setGambaDx(valoreGambaDx);
+                    gambaDx.setText(String.valueOf(misureStorage.getGambaDx()));
 
                     float valoreGambaSx=gambaSx.getText().toString().trim().length()!=0?Float.parseFloat(gambaSx.getText().toString()):0;
-                    misure.setGambaSx(valoreGambaSx);
-                    gambaSx.setText(String.valueOf(misure.getGambaSx()));
+                    misureStorage.setGambaSx(valoreGambaSx);
+                    gambaSx.setText(String.valueOf(misureStorage.getGambaSx()));
 
                     float valorePetto=petto.getText().toString().trim().length()!=0?Float.parseFloat(petto.getText().toString()):0;
-                    misure.setPetto(valorePetto);
-                    petto.setText(String.valueOf(misure.getPetto()));
+                    misureStorage.setPetto(valorePetto);
+                    petto.setText(String.valueOf(misureStorage.getPetto()));
 
                     float valoreSpalle=spalle.getText().toString().trim().length()!=0?Float.parseFloat(spalle.getText().toString()):0;
-                    misure.setSpalle(valoreSpalle);
-                    spalle.setText(String.valueOf(misure.getSpalle()));
+                    misureStorage.setSpalle(valoreSpalle);
+                    spalle.setText(String.valueOf(misureStorage.getSpalle()));
 
                     float valoreAddome=addome.getText().toString().trim().length()!=0?Float.parseFloat(addome.getText().toString()):0;
-                    misure.setAddome(valoreAddome);
-                    addome.setText(String.valueOf(misure.getAddome()));
+                    misureStorage.setAddome(valoreAddome);
+                    addome.setText(String.valueOf(misureStorage.getAddome()));
 
 
                 }catch (Exception e){
                     e.printStackTrace();
                 }
                 Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
-                misuraSalvare[0] =misure;
+
+                SharedPreferences.Editor edi=sh.edit();
+                edi.putString("misurePassate",misureStorage.toJson());
+                edi.apply();
             }
         });
         okButton.setOnClickListener(new View.OnClickListener() {
@@ -194,24 +224,9 @@ public class NotificheDialog {
             }
         });
 
-        return misuraSalvare[0];
+
 
     }
 
-    public static class PesoWrapper {
-        private Peso peso;
-
-        public PesoWrapper(Peso peso) {
-            this.peso = peso;
-        }
-
-        public Peso getPeso() {
-            return peso;
-        }
-
-        public void setPeso(Peso peso) {
-            this.peso = peso;
-        }
-    }
 }
 

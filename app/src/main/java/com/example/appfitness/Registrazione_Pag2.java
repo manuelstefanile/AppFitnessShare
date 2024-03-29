@@ -18,9 +18,12 @@ public class Registrazione_Pag2 extends Activity {
 
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
         pesoSalvato=new Peso();
+        misureSalvato=new Misure();
 
         editor.putString("pesoPassato", pesoSalvato.toJson());
+        editor.putString("misurePassate", misureSalvato.toJson());
 
         editor.apply();
 
@@ -34,7 +37,7 @@ public class Registrazione_Pag2 extends Activity {
                 NotificheDialog.NotificaPeso(getLayoutInflater(),sharedPreferences);
                 break;
             case "misure":
-                NotificheDialog.NotificaMisure(getLayoutInflater());
+                NotificheDialog.NotificaMisure(getLayoutInflater(),sharedPreferences);
                 break;
             case "kcal":
                 break;

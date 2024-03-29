@@ -1,5 +1,7 @@
 package com.example.appfitness;
 
+import com.google.gson.Gson;
+
 public class Misure {
     private float braccioDx;
     private float braccioSx;
@@ -77,5 +79,15 @@ public class Misure {
 
     public void setAddome(float addome) {
         this.addome = addome;
+    }
+
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    public static Misure fromJson(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, Misure.class);
     }
 }
