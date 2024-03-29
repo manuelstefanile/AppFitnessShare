@@ -1,4 +1,4 @@
-package com.example.appfitness;
+package com.example.appfitness.Eccezioni;
 
 import android.view.View;
 import android.widget.Toast;

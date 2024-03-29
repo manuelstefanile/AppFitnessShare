@@ -1,4 +1,4 @@
-package com.example.appfitness;
+package com.example.appfitness.Bean;
 
 import com.google.gson.Gson;
 

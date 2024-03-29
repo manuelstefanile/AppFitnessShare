@@ -6,10 +6,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.appfitness.Bean.Kcal;
+import com.example.appfitness.Bean.Misure;
+import com.example.appfitness.Bean.Peso;
+import com.example.appfitness.Eccezioni.Eccezioni;
+
 public class Registrazione_Pag2 extends Activity {
 
     Peso pesoSalvato;
     Misure misureSalvato;
+    Kcal chiloK;
     SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +27,11 @@ public class Registrazione_Pag2 extends Activity {
 
         pesoSalvato=new Peso();
         misureSalvato=new Misure();
+        chiloK=new Kcal();
 
         editor.putString("pesoPassato", pesoSalvato.toJson());
         editor.putString("misurePassate", misureSalvato.toJson());
+        editor.putString("kcalPassate", chiloK.toJson());
 
         editor.apply();
 
@@ -40,6 +48,7 @@ public class Registrazione_Pag2 extends Activity {
                 NotificheDialog.NotificaMisure(getLayoutInflater(),sharedPreferences);
                 break;
             case "kcal":
+                NotificheDialog.NotificaKcal(getLayoutInflater(),sharedPreferences);
                 break;
             case "note":
                 break;

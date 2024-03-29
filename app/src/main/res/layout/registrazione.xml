@@ -213,6 +213,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Inserisci"
+                android:tag="kcal"
+                android:onClick="FunzioniInserisciRegistrazioni"
                 >
             </Button>
         </LinearLayout>

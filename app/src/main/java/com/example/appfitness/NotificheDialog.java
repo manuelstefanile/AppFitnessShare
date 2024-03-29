@@ -1,16 +1,21 @@
 package com.example.appfitness;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+
+import com.example.appfitness.Bean.Kcal;
+import com.example.appfitness.Bean.Misure;
+import com.example.appfitness.Bean.Peso;
+import com.example.appfitness.Eccezioni.Eccezioni;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
@@ -18,9 +23,7 @@ import java.util.HashMap;
 
 public class NotificheDialog {
 
-    public static void NotificaPeso(LayoutInflater inflater, SharedPreferences sh) throws Eccezioni{
-
-        Calendar dataSalvare=Calendar.getInstance();
+    public static void NotificaPeso(LayoutInflater inflater, SharedPreferences sh) throws Eccezioni {
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.peso_dettaglio, null);
@@ -43,39 +46,16 @@ public class NotificheDialog {
 
         //prendo l oggetto
         Peso pesoStorage= Peso.fromJson(sh.getString("pesoPassato",null));
+
+        if(pesoStorage.getCalendario()==null)pesoStorage.setCalendario(Calendar.getInstance());
         //se il peso esiste ed è gia stato inserito allora mostralo
         if(pesoStorage.getPesoKg()!=0&&pesoStorage.getCalendario()!=null){
             calendario.setDate(pesoStorage.getCalendario().getTimeInMillis());
             kiliEdit.setText(String.valueOf(pesoStorage.getPesoKg()));
         }
 
-
-        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int anno, int mese, int giorno) {
-                Calendar calendarioAtutale= Calendar.getInstance();
-                System.out.println("dat "+ giorno + " m " + mese +"anno "+ anno);
-                try{
-                    if(anno>calendarioAtutale.get(Calendar.YEAR)){
-                        calendario.setDate(calendarioAtutale.getTimeInMillis());
-                        throw new Eccezioni(Eccezioni.tipiEccezioni.DATA_NON_VALIDA,dialogView);
-                    }
-                    else if(mese>calendarioAtutale.get(Calendar.MONTH)){
-                        calendario.setDate(calendarioAtutale.getTimeInMillis());
-                        throw new Eccezioni(Eccezioni.tipiEccezioni.DATA_NON_VALIDA,dialogView);
-                    }
-                    else if(giorno>calendarioAtutale.get(Calendar.DAY_OF_MONTH)){
-                        calendario.setDate(calendarioAtutale.getTimeInMillis());
-                        throw new Eccezioni(Eccezioni.tipiEccezioni.DATA_NON_VALIDA,dialogView);
-                    }else{
-                        dataSalvare.set(anno,mese,giorno);
-                    }
-                }catch (Eccezioni e){
-
-                }
-
-            }
-        });
+        Calendar dataSalvare=pesoStorage.getCalendario();
+        ImpostaCalendario(calendario,dialogView,dataSalvare);
 
 
         salvaButton.setOnClickListener(new View.OnClickListener() {
@@ -225,6 +205,175 @@ public class NotificheDialog {
         });
 
 
+
+    }
+    public static void NotificaKcal(LayoutInflater inflater,SharedPreferences sh) throws Eccezioni{
+
+        // Creazione del layout della tua View
+        View dialogView = inflater.inflate(R.layout.kcal_dettaglio, null);
+
+
+        // Creazione dell'AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
+        builder.setView(dialogView);
+
+
+        builder.setPositiveButton(null,null);
+        builder.setNegativeButton(null,null);
+        // Mostra l'AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        //prendo l oggetto
+        Kcal kcalStorage= Kcal.fromJson(sh.getString("kcalPassate",null));
+        if(kcalStorage.getData()==null)kcalStorage.setData(Calendar.getInstance());
+
+        //prendo gli edit
+        EditText kcalAttuali=dialogView.findViewById((int)R.id.kcalAttual);
+        RadioButton radioMassa=dialogView.findViewById((int)R.id.radioMassa);
+        RadioButton radioNormo=dialogView.findViewById((int)R.id.radioNormo);
+        RadioButton radioDeficit=dialogView.findViewById((int)R.id.radioDeficit);
+        RadioButton radioRicomposizione=dialogView.findViewById((int)R.id.radioRicomposizione);
+        EditText carbo=dialogView.findViewById((int)R.id.carbo);
+        EditText proteine=dialogView.findViewById((int)R.id.proteine);
+        EditText grassi=dialogView.findViewById((int)R.id.grassi);
+        EditText sale=dialogView.findViewById((int)R.id.sale);
+        EditText acqua=dialogView.findViewById((int)R.id.acqua);
+        EditText noteDettaglio=dialogView.findViewById((int)R.id.noteDettaglio);
+        CalendarView calendario=dialogView.findViewById((int)R.id.calendarioKcal);
+        Button salvaButton=dialogView.findViewById((int)R.id.SalvaKcal);
+        Button okButton=dialogView.findViewById((int)R.id.OkKcal);
+
+        HashMap<String,View> mappa=new HashMap<>();
+
+        mappa.put("kcal",kcalAttuali);
+        //mappa.put("fase",);
+        mappa.put("MASSA",radioMassa);
+        mappa.put("NORMO",radioNormo);
+        mappa.put("DEFINIZIONE",radioDeficit);
+        mappa.put("RICOMPOSIZIONE",radioRicomposizione);
+
+        mappa.put("carbo",carbo);
+        mappa.put("proteine",proteine);
+        mappa.put("grassi",grassi);
+        mappa.put("sale",sale);
+        mappa.put("acqua",acqua);
+        mappa.put("note",noteDettaglio);
+        mappa.put("data",calendario);
+
+        Field[] campi = kcalStorage.getClass().getDeclaredFields();
+        for (Field campo : campi) {
+            campo.setAccessible(true); // Per accedere a campi privati
+            try {
+                //prendo il valore del campo
+                Object valoreCampo = campo.get(kcalStorage);
+                System.out.println(campo.getName());
+                System.out.println(valoreCampo);
+
+                //se il campo è float allora carbo,proteine,grassi,sale,acqua
+                if (campo.getType()==float.class&& (float)valoreCampo != 0) {
+                    //prendo l'edit text da aggiornare e setto il testo
+                    ((EditText) mappa.get(campo.getName())).setText(valoreCampo.toString());
+
+                    //aggiorna i radio button chekkati
+                }else if(campo.getType()== Kcal.Fase.class&&valoreCampo!=null){
+                    ((RadioButton)mappa.get(valoreCampo.toString())).setChecked(true);
+                }
+
+                else if(campo.getType()==int.class){
+                    ((EditText)mappa.get(campo.getName())).setText(valoreCampo.toString());
+                }
+
+                else if(campo.getType()==String.class&&valoreCampo!=null){
+                    ((EditText)mappa.get(campo.getName())).setText(valoreCampo.toString());
+                }
+
+                else if(campo.getType()==Calendar.class&&valoreCampo!=null){
+                    ((CalendarView)mappa.get(campo.getName())).setDate(((Calendar)valoreCampo).getTimeInMillis());
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+
+
+
+        Calendar dataSalvare=kcalStorage.getData();
+        ImpostaCalendario(calendario,dialogView,dataSalvare);
+
+
+
+        salvaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                kcalStorage.setKcal(Integer.parseInt(kcalAttuali.getText().toString().trim().length()!=0?kcalAttuali.getText().toString():"0"));
+                if(radioMassa.isChecked()){
+                    kcalStorage.setFase(Kcal.Fase.MASSA);
+                }else if(radioNormo.isChecked()){
+                    kcalStorage.setFase(Kcal.Fase.NORMO);
+                }else if(radioDeficit.isChecked()){
+                    kcalStorage.setFase(Kcal.Fase.DEFINIZIONE);
+                }else{
+                    kcalStorage.setFase(Kcal.Fase.RICOMPOSIZIONE);
+                }
+                kcalStorage.setCarbo(Float.parseFloat(carbo.getText().toString().trim().length()!=0?carbo.getText().toString():"0"));
+                kcalStorage.setProteine(Float.parseFloat(proteine.getText().toString().trim().length()!=0?proteine.getText().toString():"0"));
+                kcalStorage.setSale(Float.parseFloat(sale.getText().toString().trim().length()!=0?sale.getText().toString():"0"));
+                kcalStorage.setGrassi(Float.parseFloat(grassi.getText().toString().trim().length()!=0?grassi.getText().toString():"0"));
+                kcalStorage.setAcqua(Float.parseFloat(acqua.getText().toString().trim().length()!=0?acqua.getText().toString():"0"));
+                kcalStorage.setNote(noteDettaglio.getText().toString());
+                kcalStorage.setData(dataSalvare);
+
+                SharedPreferences.Editor edi=sh.edit();
+                edi.putString("kcalPassate",kcalStorage.toJson());
+                edi.apply();
+
+                Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
+            }
+        });
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss(); // Chiudi il dialog
+            }
+        });
+
+
+    }
+
+    private static void ImpostaCalendario(CalendarView calendario, View dialogView, Calendar dataSalvare){
+        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int anno, int mese, int giorno) {
+                Calendar calendarioAtutale= Calendar.getInstance();
+                System.out.println("dat "+ giorno + " m " + mese +"anno "+ anno);
+                try{
+                    if(anno>calendarioAtutale.get(Calendar.YEAR)){
+                        calendario.setDate(calendarioAtutale.getTimeInMillis());
+                        dataSalvare.setTimeInMillis(calendarioAtutale.getTimeInMillis());
+                        throw new Eccezioni(Eccezioni.tipiEccezioni.DATA_NON_VALIDA,dialogView);
+                    }
+                    else if(mese>calendarioAtutale.get(Calendar.MONTH)){
+                        calendario.setDate(calendarioAtutale.getTimeInMillis());
+                        dataSalvare.setTimeInMillis(calendarioAtutale.getTimeInMillis());
+                        throw new Eccezioni(Eccezioni.tipiEccezioni.DATA_NON_VALIDA,dialogView);
+                    }
+                    else if(giorno>calendarioAtutale.get(Calendar.DAY_OF_MONTH)){
+                        calendario.setDate(calendarioAtutale.getTimeInMillis());
+                        dataSalvare.setTimeInMillis(calendarioAtutale.getTimeInMillis());
+                        throw new Eccezioni(Eccezioni.tipiEccezioni.DATA_NON_VALIDA,dialogView);
+                    }else{
+                        dataSalvare.set(anno,mese,giorno);
+                    }
+                }catch (Eccezioni e){
+
+                }
+
+            }
+        });
 
     }
 
