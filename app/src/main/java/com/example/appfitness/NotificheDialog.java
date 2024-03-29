@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import com.example.appfitness.Bean.Kcal;
 import com.example.appfitness.Bean.Misure;
+import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Peso;
 import com.example.appfitness.Eccezioni.Eccezioni;
 
@@ -343,6 +344,78 @@ public class NotificheDialog {
 
 
     }
+
+    public static void NotificaNote(LayoutInflater inflater,SharedPreferences sh) throws Eccezioni {
+
+        // Creazione del layout della tua View
+        View dialogView = inflater.inflate(R.layout.note_dettaglio, null);
+        Button salvaButton = dialogView.findViewById((int) R.id.SalvaNote);
+        Button okButton = dialogView.findViewById((int) R.id.OkNote);
+
+        // Creazione dell'AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
+        builder.setView(dialogView);
+
+        builder.setPositiveButton(null, null);
+        builder.setNegativeButton(null, null);
+        // Mostra l'AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        //prendo l oggetto
+        Note noteStorage = Note.fromJson(sh.getString("notePassate", null));
+        //prendo gli edit
+
+        EditText noteDettaglio = dialogView.findViewById((int) R.id.noteDettaglio);
+
+
+        HashMap<String, View> mappa = new HashMap<>();
+
+
+        mappa.put("note", noteDettaglio);
+        Field[] campi = noteStorage.getClass().getDeclaredFields();
+        for (Field campo : campi) {
+            campo.setAccessible(true); // Per accedere a campi privati
+            try {
+                //prendo il valore del campo
+                Object valoreCampo = campo.get(noteStorage);
+                System.out.println(campo.getName());
+                System.out.println(valoreCampo);
+                if (campo.getType() == int.class) {
+                    ((EditText) mappa.get(campo.getName())).setText(valoreCampo.toString());
+                } else if (campo.getType() == String.class && valoreCampo != null) {
+                    ((EditText) mappa.get(campo.getName())).setText(valoreCampo.toString());
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+
+            salvaButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    noteStorage.setNote(noteDettaglio.getText().toString());
+
+
+                    SharedPreferences.Editor edi = sh.edit();
+                    edi.putString("notePassate", noteStorage.toJson());
+                    edi.apply();
+
+                    Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
+                }
+            });
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss(); // Chiudi il dialog
+                }
+            });
+
+
+        }
+    }
+
 
     private static void ImpostaCalendario(CalendarView calendario, View dialogView, Calendar dataSalvare){
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
