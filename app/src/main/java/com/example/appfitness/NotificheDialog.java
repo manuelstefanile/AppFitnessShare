@@ -367,30 +367,9 @@ public class NotificheDialog {
         //prendo gli edit
 
         EditText noteDettaglio = dialogView.findViewById((int) R.id.noteDettaglio);
-
-
-        HashMap<String, View> mappa = new HashMap<>();
-
-
-        mappa.put("note", noteDettaglio);
-        Field[] campi = noteStorage.getClass().getDeclaredFields();
-        for (Field campo : campi) {
-            campo.setAccessible(true); // Per accedere a campi privati
-            try {
-                //prendo il valore del campo
-                Object valoreCampo = campo.get(noteStorage);
-                System.out.println(campo.getName());
-                System.out.println(valoreCampo);
-                if (campo.getType() == int.class) {
-                    ((EditText) mappa.get(campo.getName())).setText(valoreCampo.toString());
-                } else if (campo.getType() == String.class && valoreCampo != null) {
-                    ((EditText) mappa.get(campo.getName())).setText(valoreCampo.toString());
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-
-
+        if(noteStorage.getNote()!=null){
+            noteDettaglio.setText(noteStorage.getNote());
+        }
             salvaButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -411,9 +390,6 @@ public class NotificheDialog {
                     alertDialog.dismiss(); // Chiudi il dialog
                 }
             });
-
-
-        }
     }
 
 
@@ -449,6 +425,7 @@ public class NotificheDialog {
         });
 
     }
+
 
 }
 
