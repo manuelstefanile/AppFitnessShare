@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 public class Peso {
     private float pesoKg;
-    private Calendar calendario;
+    private Calendar calendario=Calendar.getInstance();
 
     public Peso(float pesoKg, Calendar calendario) {
         this.pesoKg = pesoKg;
@@ -41,5 +41,13 @@ public class Peso {
     public static Peso fromJson(String json) {
         Gson gson = new Gson();
         return gson.fromJson(json, Peso.class);
+    }
+
+    @Override
+    public String toString() {
+        return "Peso{" +
+                "pesoKg=" + pesoKg +
+                ", calendario=" + calendario +
+                '}';
     }
 }

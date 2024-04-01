@@ -90,4 +90,17 @@ public class Misure {
         Gson gson = new Gson();
         return gson.fromJson(json, Misure.class);
     }
+
+    @Override
+    public String toString() {
+        return "Misure{" +
+                "braccioDx=" + braccioDx +
+                ", braccioSx=" + braccioSx +
+                ", gambaDx=" + gambaDx +
+                ", gambaSx=" + gambaSx +
+                ", petto=" + petto +
+                ", spalle=" + spalle +
+                ", addome=" + addome +
+                '}';
+    }
 }

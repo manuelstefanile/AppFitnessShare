@@ -26,6 +26,7 @@
                 android:value="" />
         </activity>
         <activity android:name=".Registrazione_Pag2"></activity>
+        <activity android:name=".Pagina3.PaginaScheda_Pag3"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Nome giorno:"
+            android:gravity="center"
+            ></TextView>
+
+        <EditText
+            android:id="@+id/nomeGiorno"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+
+            >
+        </EditText>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/CreaEsercizio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aggiungi esercizio"
+        android:layout_gravity="center"
+        android:onClick="AggiungiGiorno"
+        >
+    </Button>
+    <ListView
+        android:id="@+id/listaEserciziView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+        <Button
+            android:id="@+id/salvaGiorno"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Salva"
+            android:layout_marginRight="10dp"
+            >
+
+        </Button>
+        <Button
+            android:id="@+id/backGiorno"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="---"
+
+            >
+        </Button>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -104,4 +104,19 @@ public class Utente {
         kcal=null;
         note=null;
     }
+
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", nomeUtente='" + nomeUtente + '\'' +
+                ", eta=" + eta +
+                ", altezza=" + altezza +
+                ", peso=" + peso +
+                ", misure=" + misure +
+                ", kcal=" + kcal +
+                ", note=" + note +
+                '}';
+    }
 }

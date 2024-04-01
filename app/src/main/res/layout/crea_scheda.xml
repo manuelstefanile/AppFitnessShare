@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:text="Nome scheda:"
+            android:gravity="center"
+            ></TextView>
+
+        <EditText
+            android:id="@+id/nomeScheda"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+
+            >
+        </EditText>
+        <ImageButton
+            android:id="@+id/aggiungiImmagineScheda"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="50dp"
+            android:text="cm"
+            ></ImageButton>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/CreaGiorno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aggiungi giorno"
+        android:layout_gravity="center"
+        android:onClick="AggiungiGiorno"
+        >
+    </Button>
+    <ListView
+        android:id="@+id/listaGiorniView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+        <Button
+            android:id="@+id/salvaScheda"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Salva"
+            android:layout_marginRight="10dp"
+            >
+
+        </Button>
+        <Button
+            android:id="@+id/backScheda"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="---"
+
+            >
+        </Button>
+    </LinearLayout>
+
+
+</LinearLayout>

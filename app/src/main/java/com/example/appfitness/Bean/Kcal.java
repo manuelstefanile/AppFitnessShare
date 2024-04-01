@@ -116,4 +116,19 @@ public class Kcal {
         Gson gson = new Gson();
         return gson.fromJson(json, Kcal.class);
     }
+
+    @Override
+    public String toString() {
+        return "Kcal{" +
+                "kcal=" + kcal +
+                ", fase=" + fase +
+                ", carbo=" + carbo +
+                ", proteine=" + proteine +
+                ", grassi=" + grassi +
+                ", sale=" + sale +
+                ", acqua=" + acqua +
+                ", note='" + note + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }
