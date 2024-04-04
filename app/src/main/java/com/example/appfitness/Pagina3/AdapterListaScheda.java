@@ -24,12 +24,12 @@ import java.util.List;
 public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapter<T> {
 
     private LayoutInflater inflater;
-    private SharedPreferences shp;
+    private List<T> itemList; // Riferimento alla lista
 
-    public AdapterListaScheda(@NonNull Context context, int risorsaId, List<T> c, SharedPreferences sh) {
+    public AdapterListaScheda(@NonNull Context context, int risorsaId, List<T> c) {
         super(context,risorsaId,c);
         inflater=LayoutInflater.from(context);
-        shp=sh;
+        itemList=c;
     }
 
     @Override
@@ -51,12 +51,6 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             bottone.setTag(position);
             bottoneElimina.setTag(position);
 
-            bottone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    PopupSchede.CreaScheda(inflater,shp,false);
-                }
-            });
 
         }else if(getItem(position).getClass()== Giorno.class){
             if (v == null) {
@@ -73,6 +67,15 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             bottone.setTag(position);
             bottoneElimina.setTag(position);
 
+            bottone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupGiorno.ApriGiornoSelezionato(c,inflater);
+                }
+            });
+
+
+
         } else if(getItem(position).getClass()== Esercizio.class){
         if (v == null) {
             v = inflater.inflate(R.layout.item_esercizi, null);
@@ -87,9 +90,19 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
 
         bottone.setTag(position);
         bottoneElimina.setTag(position);
+            bottone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupEsercizio.ApriEsercizioSelezionato(c,inflater);
+                }
+            });
 
-    }
+
+        }
 
         return v;
+    }
+    public List<T> getItemList() {
+        return itemList;
     }
 }

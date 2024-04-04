@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Scheda extends ListeClasseMarker {
@@ -20,6 +21,14 @@ public class Scheda extends ListeClasseMarker {
     public Scheda(String nomeScheda, Drawable img) {
         this.nomeScheda = nomeScheda;
         this.imgBytes = drawableToByteArray(img);
+    }
+    public Scheda(String nomeScheda, byte[] img) {
+        this.nomeScheda = nomeScheda;
+        this.imgBytes = img;
+    }
+
+    public Scheda() {
+
     }
 
     public String getNomeScheda() {
@@ -76,5 +85,14 @@ public class Scheda extends ListeClasseMarker {
     public static Scheda fromJson(String json) {
         Gson gson = new Gson();
         return gson.fromJson(json, Scheda.class);
+    }
+
+    @Override
+    public String toString() {
+        return "\nScheda{" +
+                "nomeScheda='" + nomeScheda + '\'' +
+                ", imgBytes=" + Arrays.toString(imgBytes) +
+                ", listaGiorni=" + listaGiorni +
+                '}';
     }
 }

@@ -68,6 +68,15 @@ public class Registrazione_Pag2 extends Activity {
     }
     @SuppressLint("Range")
     public void SalvaAll(View v){
+
+        //elimina il salvataggio precendente se presente.
+        SQLiteDatabase dbWritable = db.getWritableDatabase();
+        dbWritable.delete(SchemaDB.PesoDB.TABLE_NAME, null, null);
+        dbWritable.delete(SchemaDB.KcalDB.TABLE_NAME, null, null);
+        dbWritable.delete(SchemaDB.MisureDB.TABLE_NAME, null, null);
+        dbWritable.delete(SchemaDB.UtenteDB.TABLE_NAME, null, null);
+
+
         //controlli e prendo i valori associati all edittext
         String nome=nomeR.getText().toString();
         String cognome=cognomeR.getText().toString();
@@ -82,14 +91,6 @@ public class Registrazione_Pag2 extends Activity {
         chiloK = Kcal.fromJson(sharedPreferences.getString("kcalPassate", null));
 
         utente=new Utente(nome,cognome,nomeUtente,eta,altezza,pesoSalvato,misureSalvato,chiloK,noteSalvate);
-
-        System.out.println("**** peso"+pesoSalvato);
-        System.out.println("**** not"+noteSalvate);
-        System.out.println("**** misu"+misureSalvato);
-        System.out.println("**** kil"+chiloK);
-        System.out.println("**** ute"+utente);
-
-        SQLiteDatabase dbWritable = db.getWritableDatabase();
 
         ContentValues valuesPeso = new ContentValues();
         valuesPeso.put(SchemaDB.PesoDB.COLUMN_pesoKg, pesoSalvato.getPesoKg());
@@ -159,6 +160,7 @@ public class Registrazione_Pag2 extends Activity {
             } while (cursor.moveToNext());
         }
         */
+        dbWritable.close();
 
     }
     public void RipristinaDati(View v){
@@ -181,6 +183,14 @@ public class Registrazione_Pag2 extends Activity {
         editor.putString("kcalPassate", chiloK.toJson());
         editor.putString("notePassate", noteSalvate.toJson());
         editor.apply();
+
+        SQLiteDatabase dbWritable = db.getWritableDatabase();
+        dbWritable.delete(SchemaDB.PesoDB.TABLE_NAME, null, null);
+        dbWritable.delete(SchemaDB.KcalDB.TABLE_NAME, null, null);
+        dbWritable.delete(SchemaDB.MisureDB.TABLE_NAME, null, null);
+        dbWritable.delete(SchemaDB.UtenteDB.TABLE_NAME, null, null);
+
+        dbWritable.close();
 
         Toast.makeText(getApplicationContext(), "Ripristinato con successo", Toast.LENGTH_SHORT).show();
 
@@ -208,6 +218,7 @@ public class Registrazione_Pag2 extends Activity {
 
     }
     public void PassaPagina3(View v){
+        db.close();
         Intent i =new Intent();
         i.setClass(getApplicationContext(), PaginaScheda_Pag3.class);
         startActivity(i);

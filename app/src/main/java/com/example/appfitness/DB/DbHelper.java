@@ -1,6 +1,7 @@
 package com.example.appfitness.DB;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -75,27 +76,28 @@ public class DbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + SchemaDB.SchedaDB.TABLE_NAME + " ("
                     + SchemaDB.SchedaDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + SchemaDB.SchedaDB.COLUMN_nomeScheda + " TEXT NOT NULL, "
-                    + SchemaDB.SchedaDB.COLUMN_immagineScheda + " BLOB, "
-                    + SchemaDB.SchedaDB.COLUMN_IDListaGiorni + " INTEGER "
+                    + SchemaDB.SchedaDB.COLUMN_immagineScheda + " BLOB "
                     + ");";
 
     final private static String CREATE_LISTAGIORNI =
             "CREATE TABLE " + SchemaDB.ListaGiorniDB.TABLE_NAME + " ("
                     + SchemaDB.ListaGiorniDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + SchemaDB.ListaGiorniDB.COLUM_SCHEDARIFERIMENTO + " TEXT , "
                     + SchemaDB.ListaGiorniDB.COLUMN_IDGiorno + " INTEGER "
                     + ");";
 
     final private static String CREATE_GIORNO =
             "CREATE TABLE " + SchemaDB.GiornoDB.TABLE_NAME + " ("
                     + SchemaDB.GiornoDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + SchemaDB.GiornoDB.COLUMN_nomeGiorno + " TEXT NOT NULL, "
-                    + SchemaDB.GiornoDB.COLUMN_IDListaEsercizi + " INTEGER "
+                    + SchemaDB.GiornoDB.COLUMN_nomeGiorno + " TEXT NOT NULL"
                     + ");";
+
 
     final private static String CREATE_LISTAESERCIZI =
             "CREATE TABLE " + SchemaDB.ListaEserciziDB.TABLE_NAME + " ("
                     + SchemaDB.ListaEserciziDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi + " INTEGER "
+                    +SchemaDB.ListaEserciziDB.IDGiorno + " TEXT ,"
+                    + SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi + " TEXT "
                     + ");";
 
     final private static Integer VERSION = 1;
@@ -130,9 +132,41 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //Questo metodo serve per cancellare il database
     //Non viene usato in questo esempio
-    void deleteDatabase() {
 
-        context.deleteDatabase(SchemaDB.UtenteDB.TABLE_NAME);
 
+    public void deleteDatabase() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.UtenteDB.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.PesoDB.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.KcalDB.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.MisureDB.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.SchedaDB.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.ListaGiorniDB.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.GiornoDB.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.ListaEserciziDB.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.EsercizioDB.TABLE_NAME);
+
+        System.out.println("bo");
+        onCreate(db); // Ricrea le tabelle vuote
     }
+
+    public Cursor getAllData(String tableName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + tableName, null);
+
+        // Ottieni il nome delle colonne
+        String[] columnNames = cursor.getColumnNames();
+
+        // Stampa il nome della tabella
+        System.out.println("Table: " + tableName);
+
+        // Stampa i nomi delle colonne
+        for (String columnName : columnNames) {
+            System.out.print(columnName + " | ");
+        }
+        System.out.println(); // Nuova linea
+
+        return cursor;
+    }
+
 }

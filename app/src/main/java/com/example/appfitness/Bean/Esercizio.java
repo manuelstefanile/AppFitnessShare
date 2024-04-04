@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
 
 public class Esercizio extends ListeClasseMarker {
     private String nomeEsercizio,tecnica_intensita,esecuzione;
@@ -24,6 +25,10 @@ public class Esercizio extends ListeClasseMarker {
         this.numeroSerie = numeroSerie;
         this.numeroRipetizioni = numeroRipetizioni;
         this.timer = timer;
+    }
+
+    public Esercizio() {
+
     }
 
     public String getNomeEsercizio() {
@@ -64,12 +69,17 @@ public class Esercizio extends ListeClasseMarker {
     }
     private byte[] drawableToByteArray(Drawable drawable) {
         if (drawable == null) return null;
+        try{
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            return stream.toByteArray();
+        }catch (Exception e){
+            return null;
+        }
 
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        return stream.toByteArray();
+
     }
 
     private Drawable byteArrayToDrawable(byte[] byteArray) {
@@ -120,5 +130,18 @@ public class Esercizio extends ListeClasseMarker {
     public static Esercizio fromJson(String json) {
         Gson gson = new Gson();
         return gson.fromJson(json, Esercizio.class);
+    }
+
+    @Override
+    public String toString() {
+        return "\nEsercizio{" +
+                "nomeEsercizio='" + nomeEsercizio + '\'' +
+                ", tecnica_intensita='" + tecnica_intensita + '\'' +
+                ", esecuzione='" + esecuzione + '\'' +
+                ", immagineMacchinario=" + Arrays.toString(immagineMacchinario) +
+                ", numeroSerie=" + numeroSerie +
+                ", numeroRipetizioni=" + numeroRipetizioni +
+                ", timer=" + timer +
+                '}';
     }
 }

@@ -13,6 +13,10 @@ public class Giorno extends ListeClasseMarker {
         this.listaEsercizi = listaEsercizi;
     }
 
+    public Giorno() {
+
+    }
+
     public String getNomeGiorno() {
         return nomeGiorno;
     }
@@ -37,5 +41,13 @@ public class Giorno extends ListeClasseMarker {
     public static Giorno fromJson(String json) {
         Gson gson = new Gson();
         return gson.fromJson(json, Giorno.class);
+    }
+
+    @Override
+    public String toString() {
+        return "\nGiorno{" +
+                "nomeGiorno='" + nomeGiorno + '\'' +
+                ", listaEsercizi=" + listaEsercizi +
+                '}';
     }
 }

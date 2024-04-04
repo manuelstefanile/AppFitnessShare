@@ -60,21 +60,22 @@ public static abstract class UtenteDB implements BaseColumns {
         public static final String TABLE_NAME = "Scheda";
         public static final String COLUMN_nomeScheda = "nomeScheda";
         public static final String COLUMN_immagineScheda = "imagineScheda";
-        public static final String COLUMN_IDListaGiorni = "IDListaGiorni";
     }
     public static abstract class ListaGiorniDB implements BaseColumns {
         public static final String TABLE_NAME = "ListaGiorni";
+        public static final String COLUM_SCHEDARIFERIMENTO = "SchedaRiferimento";
         public static final String COLUMN_IDGiorno = "IDGiorno";
     }
 
     public static abstract class GiornoDB implements BaseColumns {
         public static final String TABLE_NAME = "Giorno";
         public static final String COLUMN_nomeGiorno = "nomeGiorno";
-        public static final String COLUMN_IDListaEsercizi = "IDListaEsercizi";
+
 
     }
     public static abstract class ListaEserciziDB implements BaseColumns {
         public static final String TABLE_NAME = "ListaEsercizi";
+        public static final String IDGiorno = "GiornoRiferimento";
         public static final String COLUMN_IDEsercizi = "IDEsercizi";
     }
     public static abstract class EsercizioDB implements BaseColumns {

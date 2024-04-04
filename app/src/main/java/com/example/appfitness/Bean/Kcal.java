@@ -6,10 +6,10 @@ import java.util.Calendar;
 
 public class Kcal {
     private int kcal;
-    private Fase fase;
+    private Fase fase=Fase.NORMO;
     private float carbo,proteine,grassi,sale,acqua;
     private String note;
-    private Calendar data;
+    private Calendar data=Calendar.getInstance();
 
     public Kcal() {
 

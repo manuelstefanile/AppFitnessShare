@@ -57,21 +57,11 @@
         android:padding="10dp"
         >
         <Button
-            android:id="@+id/salvaScheda"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Salva"
-            android:layout_marginRight="10dp"
-            >
-
-        </Button>
-        <Button
             android:id="@+id/backScheda"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="---"
+            android:text="Back"
 
             >
         </Button>
