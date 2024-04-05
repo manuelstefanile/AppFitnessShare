@@ -19,7 +19,9 @@ import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.Scheda;
 import com.example.appfitness.DB.DbHelper;
+import com.example.appfitness.DB.EsercizioDAO;
 import com.example.appfitness.DB.GiornoDAO;
+import com.example.appfitness.DB.ListaEserciziDAO;
 import com.example.appfitness.DB.ListaGiorniDAO;
 import com.example.appfitness.DB.SchedaDAO;
 import com.example.appfitness.DB.SchemaDB;
@@ -32,14 +34,7 @@ import kotlin.Suppress;
 
 public class PaginaScheda_Pag3 extends Activity {
     ListView lista;
-
-
-    static AdapterListaScheda adapterSchede;
     PopupSchede popS=new PopupSchede(this);
-    SchedaDAO schedadao;
-    public static ListaGiorniDAO listaGiornidao;
-
-    public static DbHelper db;
 
     @Override
     @SuppressLint({"Range", "WrongThread"})
@@ -47,26 +42,23 @@ public class PaginaScheda_Pag3 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schede_pag3);
 
-        PopupGiorno.giornoDao=new GiornoDAO(getApplicationContext());
-        listaGiornidao= new ListaGiorniDAO(getApplicationContext());
-        schedadao=new SchedaDAO(getApplicationContext());
-        db=new DbHelper(getApplicationContext());
+        Global.listaGiornidao= new ListaGiorniDAO(getApplicationContext());
+        Global.schedadao=new SchedaDAO(getApplicationContext());
+        Global.db=new DbHelper(getApplicationContext());
+        Global.adapterSchede = new AdapterListaScheda(this, R.layout.item_scheda, new ArrayList<Scheda>());
+        Global.giornoDao=new GiornoDAO(getApplicationContext());
+        Global.esercizioDao=new EsercizioDAO(getApplicationContext());
+        Global.ledao=new ListaEserciziDAO(getApplicationContext());
+
         //db.deleteDatabase();
 
         lista = (ListView)findViewById(R.id.listaSchedeView);
-        adapterSchede = new AdapterListaScheda(this, R.layout.item_scheda, new ArrayList<Scheda>());
-        lista.setAdapter(adapterSchede);
-
-
-
-        /********************************************
-
-        ******************************************/
+        lista.setAdapter(Global.adapterSchede);
 
         //chiama daoScheda
-        ArrayList<Scheda> arrSchede= schedadao.getAllSchede();
+        ArrayList<Scheda> arrSchede= Global.schedadao.getAllSchede();
         for(Scheda schedaTemp:arrSchede){
-            adapterSchede.add(schedaTemp);
+            Global.adapterSchede.add(schedaTemp);
         }
 
         StampaTutto();
@@ -88,20 +80,20 @@ public class PaginaScheda_Pag3 extends Activity {
         //printMisureData(db);
 
         // Stampare tutte le Schede
-        printSchedaData(db);
+        printSchedaData(Global.db);
 
         // Stampare tutte le Liste Giorni
-        printListaGiorniData(db);
+        printListaGiorniData(Global.db);
 
         // Stampare tutti i Giorni
 
-        printGiornoData(db);
+        printGiornoData(Global.db);
 
         // Stampare tutte le Liste Esercizi
-        printListaEserciziData(db);
+        printListaEserciziData(Global.db);
 
         // Stampare tutti gli Esercizi
-        printEsercizioData(db);
+        printEsercizioData(Global.db);
         System.out.println("*********************************************************");
 
     }
@@ -189,14 +181,14 @@ public class PaginaScheda_Pag3 extends Activity {
 
     public void OnSchedaClick(View v){
         int position = Integer.parseInt(v.getTag().toString());
-        Scheda c = (Scheda) adapterSchede.getItem(position);
+        Scheda c = (Scheda) Global.adapterSchede.getItem(position);
         System.out.println(c);
         //apriSchedaSelezionata
         popS.ApriSchedaSelezionata(c,getLayoutInflater());
     }
     public void CreaScheda(View v){
 
-        popS.CreaScheda(getLayoutInflater(),adapterSchede);
+        popS.CreaScheda(getLayoutInflater());
     }
 
     @Override
@@ -204,4 +196,6 @@ public class PaginaScheda_Pag3 extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         PopupSchede.onActivityResult(requestCode, resultCode, data);
     }
+
+
 }

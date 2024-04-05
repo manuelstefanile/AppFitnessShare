@@ -91,6 +91,23 @@ public class EsercizioDAO {
         return result;
     }
 
+    public void DeleteEsercizioById(int id){
+        SQLiteDatabase dbWrite = db.getWritableDatabase();
+        dbWrite.delete(SchemaDB.EsercizioDB.TABLE_NAME,
+                SchemaDB.EsercizioDB._ID + " = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
+
+    }
+    public void DeleteEsercizioByName(String id){
+        SQLiteDatabase dbWrite = db.getWritableDatabase();
+        dbWrite.delete(SchemaDB.EsercizioDB.TABLE_NAME,
+                SchemaDB.EsercizioDB.COLUMN_nomeEsercizio + " = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
+
+    }
+
 
 
 }

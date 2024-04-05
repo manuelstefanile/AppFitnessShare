@@ -2,12 +2,15 @@ package com.example.appfitness.Pagina3;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
@@ -22,13 +25,11 @@ import java.util.ArrayList;
 
 public class PopupGiorno {
 
-    static AdapterListaScheda adapterEsercizi;
-    public static ArrayList<Long> idGiorniSalvati= new ArrayList<>();
-    public static GiornoDAO giornoDao;
-    private static EsercizioDAO esercizioDao;
-    static ListaEserciziDAO ledao;
 
-    public static void CreaGiorno(LayoutInflater inflater, Scheda schedaRiferimento, AdapterListaScheda<Giorno> adapGiorni){
+    public static ArrayList<Long> idGiorniSalvati= new ArrayList<>();
+
+    public static void CreaGiorno(LayoutInflater inflater, Scheda schedaRiferimento)
+    {
 
 
         // Creazione del layout della tua View
@@ -40,7 +41,6 @@ public class PopupGiorno {
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
         builder.setView(dialogView);
 
-
         builder.setPositiveButton(null,null);
         builder.setNegativeButton(null,null);
         // Mostra l'AlertDialog
@@ -49,7 +49,6 @@ public class PopupGiorno {
 
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
         Button creaEsercizio=dialogView.findViewById((int)R.id.CreaEsercizio);
-
         Button back=dialogView.findViewById((int)R.id.backGiorno);
 
         Giorno giornoNuovo=new Giorno();
@@ -58,24 +57,33 @@ public class PopupGiorno {
 
 
         ListView listaEserciziView = (ListView)dialogView.findViewById(R.id.listaEserciziView);
-        adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi, new ArrayList<Esercizio>());
-        listaEserciziView.setAdapter(adapterEsercizi);
+        Global.adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi, new ArrayList<Esercizio>());
+        listaEserciziView.setAdapter(Global.adapterEsercizi);
 
 
+        final View backgroundView = alertDialog.getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
+        backgroundView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
+                back.callOnClick();
+                return true; // Indica che l'evento è stato consumato
+            }
+        });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                giornoNuovo.setNomeGiorno(nomeGiorno.getText().toString());
-                adapGiorni.add(giornoNuovo);
-
-                long idGiorno=giornoDao.InsertGiorno(giornoNuovo);
-                idGiorniSalvati.add(idGiorno);
-                PaginaScheda_Pag3.StampaTutto();
-                PopupEsercizio.idEserciziSalvati=new ArrayList<>();
-                alertDialog.dismiss();
+                if(nomeGiorno.getText().toString().trim().length()==0){
+                    Toast.makeText(dialogView.getContext(), "Inserisci un nome", Toast.LENGTH_LONG).show();
+                }else {
+                    giornoNuovo.setNomeGiorno(nomeGiorno.getText().toString());
+                    Global.adapterGiorni.add(giornoNuovo);
+                    long idGiorno = Global.giornoDao.InsertGiorno(giornoNuovo);
+                    idGiorniSalvati.add(idGiorno);
+                    PopupEsercizio.idEserciziSalvati = new ArrayList<>();
+                    alertDialog.dismiss();
+                }
             }
         });
 
@@ -84,7 +92,7 @@ public class PopupGiorno {
             @Override
             public void onClick(View view) {
 
-                PopupEsercizio.CreaEsercizio(inflater,giornoNuovo,adapterEsercizi);
+                PopupEsercizio.CreaEsercizio(inflater,giornoNuovo);
             }
         });
 
@@ -111,19 +119,20 @@ public class PopupGiorno {
         alertDialog.show();
 
         ListView listaEserciziiView = (ListView)dialogView.findViewById(R.id.listaEserciziView);
-        adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi, new ArrayList<Esercizio>());
-        listaEserciziiView.setAdapter(adapterEsercizi);
+        Global.adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi, new ArrayList<Esercizio>());
+        listaEserciziiView.setAdapter(Global.adapterEsercizi);
 
-        ledao= new ListaEserciziDAO(PopupSchede.act.getApplicationContext());
-        esercizioDao=new EsercizioDAO(PopupSchede.act.getApplicationContext());
+        Global.ledao= new ListaEserciziDAO(PopupSchede.act.getApplicationContext());
+        Global.esercizioDao=new EsercizioDAO(PopupSchede.act.getApplicationContext());
         //mi serve l id nel db del giorno associato alla scheda
-        Integer idGiorno=giornoDao.getGiornoIDByNameAndScheda(giorno.getNomeGiorno(),PopupSchede.schedaNuova.getNomeScheda());
-        ArrayList<Integer> listaDiID =ledao.getListaEserciziPerGiorno(idGiorno);
+        Integer idGiorno=Global.giornoDao.getGiornoIDByNameAndScheda(giorno.getNomeGiorno(),Global.schedaNuova.getNomeScheda());
+        ArrayList<Integer> listaDiID =Global.ledao.getListaEserciziPerGiorno(idGiorno);
+
 
 
         //per ogni id, ricercami l'elemento giorno e aggiungilo alla lista di giorni visibile
         for(Integer id:listaDiID){
-            adapterEsercizi.add(esercizioDao.getEsercizioById(id));
+            Global.adapterEsercizi.add(Global.esercizioDao.getEsercizioById(id));
             //adapterGiorni.notify();
         }
 
@@ -136,7 +145,7 @@ public class PopupGiorno {
         creaEsercizio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupEsercizio.CreaEsercizio(inflater,giorno,adapterEsercizi);
+                PopupEsercizio.CreaEsercizio(inflater,giorno);
             }
         });
 
@@ -145,7 +154,7 @@ public class PopupGiorno {
             public void onClick(View view) {
                 //se la lista degli esercizzi è maggiore di 1 allora va inserito nel db e aggiornato
                 if(giorno.getListaEsercizi().size()>0){
-                    giornoDao.AggiornaGiorno(giorno.getNomeGiorno(),PopupSchede.schedaNuova.getNomeScheda());
+                    Global.giornoDao.AggiornaGiorno(giorno.getNomeGiorno(),Global.schedaNuova.getNomeScheda());
                 }
 
                 alertDialog.dismiss();
@@ -155,4 +164,5 @@ public class PopupGiorno {
 
 
     }
+
 }

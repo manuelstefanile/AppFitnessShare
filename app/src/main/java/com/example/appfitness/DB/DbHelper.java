@@ -76,7 +76,7 @@ public class DbHelper extends SQLiteOpenHelper {
     final private static String CREATE_SCHEDA =
             "CREATE TABLE " + SchemaDB.SchedaDB.TABLE_NAME + " ("
                     + SchemaDB.SchedaDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + SchemaDB.SchedaDB.COLUMN_nomeScheda + " TEXT NOT NULL, "
+                    + SchemaDB.SchedaDB.COLUMN_nomeScheda + " TEXT NOT NULL UNIQUE, "
                     + SchemaDB.SchedaDB.COLUMN_immagineScheda + " BLOB "
                     + ");";
 
@@ -84,7 +84,8 @@ public class DbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + SchemaDB.ListaGiorniDB.TABLE_NAME + " ("
                     + SchemaDB.ListaGiorniDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + SchemaDB.ListaGiorniDB.COLUM_SCHEDARIFERIMENTO + " TEXT , "
-                    + SchemaDB.ListaGiorniDB.COLUMN_IDGiorno + " INTEGER "
+                    + SchemaDB.ListaGiorniDB.COLUMN_IDGiorno + " INTEGER REFERENCES "
+                    + SchemaDB.GiornoDB.TABLE_NAME + "(" + SchemaDB.GiornoDB._ID + ") ON DELETE CASCADE"
                     + ");";
 
     final private static String CREATE_GIORNO =
@@ -97,7 +98,8 @@ public class DbHelper extends SQLiteOpenHelper {
     final private static String CREATE_LISTAESERCIZI =
             "CREATE TABLE " + SchemaDB.ListaEserciziDB.TABLE_NAME + " ("
                     + SchemaDB.ListaEserciziDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    +SchemaDB.ListaEserciziDB.IDGiorno + " INTEGER ,"
+                    + SchemaDB.ListaEserciziDB.IDGiorno + " INTEGER REFERENCES "
+                    + SchemaDB.GiornoDB.TABLE_NAME + "(" + SchemaDB.GiornoDB._ID + ") ON DELETE CASCADE, "
                     + SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi + " TEXT "
                     + ");";
 

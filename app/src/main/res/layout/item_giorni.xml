@@ -14,14 +14,6 @@
         android:layout_marginRight="10dp"
         >
     </Button>
-    <Button
-        android:id="@+id/eliminaGiorni"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="X"
-        android:layout_weight="0.4"
-        >
 
-    </Button>
 
 </LinearLayout>

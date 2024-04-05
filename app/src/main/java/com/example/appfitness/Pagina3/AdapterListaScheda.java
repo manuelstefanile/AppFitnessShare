@@ -10,17 +10,25 @@ import android.widget.ImageButton;
 
 import android.content.Context;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.ListeClasseMarker;
 import com.example.appfitness.Bean.Scheda;
+import com.example.appfitness.DB.EsercizioDAO;
+import com.example.appfitness.DB.GiornoDAO;
+import com.example.appfitness.DB.ListaGiorniDAO;
+import com.example.appfitness.DB.SchedaDAO;
 import com.example.appfitness.Eccezioni.Eccezioni;
 import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapter<T> {
@@ -32,42 +40,74 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
         super(context,risorsaId,c);
         inflater=LayoutInflater.from(context);
         itemList=c;
+
     }
+    @Override
+    public int getCount() {
+        return itemList.size();
+    }
+
 
     @Override
     public View getView(int position, View v, ViewGroup parent) {
-        if(getItem(position).getClass()==Scheda.class){
-            if (v == null) {
+
+        String nomeIdParent = getContext().getResources().getResourceEntryName(parent.getId());
+
+        switch (nomeIdParent) {
+            case "listaSchedeView":
+                if (v == null) {
+                    v = inflater.inflate(R.layout.item_scheda, null);
+
+
+                }
+                break;
+            case "listaGiorniView":
+                if (v == null) {
+                    v = inflater.inflate(R.layout.item_giorni, null);
+
+
+                }
+                break;
+            case "listaEserciziView":
+                if (v == null) {
+                    v = inflater.inflate(R.layout.item_esercizi, null);
+
+                }
+                break;
+
+        }
+
+        T item=getItem(position);
+        if(item==null)return v;
+        if(item.getClass()==Scheda.class){
+            if(v==null)
                 v = inflater.inflate(R.layout.item_scheda, null);
-                //v = inflater.inflate(resource, null);
-            }
+            //v = inflater.inflate(resource, null);
             Scheda c = (Scheda) getItem(position);
             ImageView im= v.findViewById(R.id.immagineScheda);
             Button bottone=v.findViewById(R.id.visualizzaScheda);
-            Button bottoneElimina= v.findViewById(R.id.eliminaScheda);
+
 
             im.setImageDrawable(c.getImg());
             bottone.setText(c.getNomeScheda());
 
             im.setTag(position);
             bottone.setTag(position);
-            bottoneElimina.setTag(position);
 
-
-        }else if(getItem(position).getClass()== Giorno.class){
-            if (v == null) {
+        }else if(item.getClass()== Giorno.class){
+            if(v==null)
                 v = inflater.inflate(R.layout.item_giorni, null);
-                //v = inflater.inflate(resource, null);
-            }
+            //v = inflater.inflate(resource, null);
+
             Giorno c = (Giorno) getItem(position);
 
             Button bottone=v.findViewById(R.id.visualizzaGiorni);
-            Button bottoneElimina= v.findViewById(R.id.eliminaGiorni);
+
 
             bottone.setText(c.getNomeGiorno());
 
             bottone.setTag(position);
-            bottoneElimina.setTag(position);
+
 
             bottone.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,21 +118,19 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
 
 
 
-        } else if(getItem(position).getClass()== Esercizio.class){
-        if (v == null) {
-            v = inflater.inflate(R.layout.item_esercizi, null);
-            //v = inflater.inflate(resource, null);
-        }
-        Esercizio c = (Esercizio) getItem(position);
-
-        Button bottone=v.findViewById(R.id.visualizzaEsercizi);
-        Button bottoneElimina= v.findViewById(R.id.eliminaEsercizi);
+        } else if(item.getClass()== Esercizio.class){
+            if(v==null)
+                v = inflater.inflate(R.layout.item_esercizi, null);
 
 
-        bottone.setText(c.getNomeEsercizio());
-        bottone.setTag(position);
-        bottoneElimina.setTag(position);
-        bottone.setOnClickListener(new View.OnClickListener() {
+            Esercizio c = (Esercizio) getItem(position);
+
+            Button bottone=v.findViewById(R.id.visualizzaEsercizi);
+
+            bottone.setText(c.getNomeEsercizio());
+            bottone.setTag(position);
+
+            bottone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     PopupEsercizio.ApriEsercizioSelezionato(c,inflater);
@@ -101,10 +139,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
 
         }
 
-
         return v;
     }
-    public List<T> getItemList() {
-        return itemList;
-    }
+
 }

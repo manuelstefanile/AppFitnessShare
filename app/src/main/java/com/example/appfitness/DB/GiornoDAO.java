@@ -170,5 +170,22 @@ public class GiornoDAO {
         dbWritable.close();
 
     }
+    public void DeleteGiornoById(int id){
+        SQLiteDatabase dbWrite = db.getWritableDatabase();
+        dbWrite.delete(SchemaDB.GiornoDB.TABLE_NAME,
+                SchemaDB.GiornoDB._ID + " = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
+
+        //elimina gli esercizi associati ai giorni
+        //prendo lista giorni-esercizi
+        ListaEserciziDAO leseDAO=new ListaEserciziDAO(ct);
+        EsercizioDAO exDao=new EsercizioDAO(ct);
+        ArrayList<Integer> idEsercizi=leseDAO.getListaEserciziPerGiorno(id);
+        for(int idEx:idEsercizi){
+            exDao.DeleteEsercizioById(idEx);
+        }
+
+    }
 
 }

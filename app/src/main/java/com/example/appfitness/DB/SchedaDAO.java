@@ -85,8 +85,22 @@ public class SchedaDAO {
             dbWritable.insert(SchemaDB.ListaGiorniDB.TABLE_NAME,null,valuesListaGiorni);
         }
 
+    }
+    public void DeleteScheda(String nome){
+        SQLiteDatabase dbWrite = db.getWritableDatabase();
+        dbWrite.delete(SchemaDB.SchedaDB.TABLE_NAME,
+                SchemaDB.SchedaDB.COLUMN_nomeScheda + " = ?",
+                new String[]{nome});
+        db.close();
 
-
+        //elimina i giorni associati alla scheda
+        ListaGiorniDAO ldao=new ListaGiorniDAO(ct);
+        GiornoDAO gdao=new GiornoDAO(ct);
+        ArrayList<Integer> idGiorni=ldao.getListaGiorniPerScheda(nome);
+        for(Integer idD:idGiorni){
+            //elimina giorno
+            gdao.DeleteGiornoById(idD);
+        }
     }
 
 }

@@ -43,12 +43,10 @@ public class PopupEsercizio {
 
     public static ImageButton immagineEsercizio;
 
-    public static EsercizioDAO esercizioDAO;
 
 
 
-    public static void CreaEsercizio(LayoutInflater inflater,
-                                     Giorno giornoNuovo, AdapterListaScheda adEsercizi){
+    public static void CreaEsercizio(LayoutInflater inflater, Giorno giornoNuovo){
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_esercizio, null);
@@ -108,7 +106,8 @@ public class PopupEsercizio {
                 SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
 
-                Esercizio esercizio=new Esercizio(nomeEsercizio.getText().toString(),intensitaEsercizio.getText().toString(),
+                Esercizio esercizio=new Esercizio(nomeEsercizio.getText().toString().trim().length()>0?nomeEsercizio.getText().toString().trim():"",
+                        intensitaEsercizio.getText().toString(),
                         esecuzioneEsercizio.getText().toString(),immagineEsercizio.getDrawable(),
                         Integer.parseInt(numeroSerieEsercizio.getText().toString().trim().length()!=0?numeroSerieEsercizio.getText().toString():"0"),
                         Integer.parseInt(numeroRipetEsercizio.getText().toString().trim().length()!=0?numeroRipetEsercizio.getText().toString():"0"),
@@ -139,15 +138,19 @@ public class PopupEsercizio {
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_note,note.getNote());
 
 
-
+                System.out.println("***_"+ esercizio.getNomeEsercizio());
                     long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
                 if(EsercizioId==-1){
                     Toast.makeText(dialogView.getContext(), "Nome già presente", Toast.LENGTH_LONG).show();
 
-                }else{
+                }else if(esercizio.getNomeEsercizio()==""){
+                    Toast.makeText(dialogView.getContext(), "Inserisci almeno il nome", Toast.LENGTH_LONG).show();
+                }
+                else{
                     idEserciziSalvati.add(EsercizioId);
                     giornoNuovo.getListaEsercizi().add(esercizio);
-                    adEsercizi.add(esercizio);
+                    Global.adapterEsercizi.add(esercizio);
+                    Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -170,9 +173,8 @@ public class PopupEsercizio {
     }
 
     public static void ApriEsercizioSelezionato(Esercizio esercizio,LayoutInflater inflater){
-        esercizioDAO=new EsercizioDAO(PopupSchede.act);
         System.out.println("_____-OLD EX " + esercizio);
-        Esercizio esercizioNew=esercizioDAO.getEsercizioByNome(esercizio.getNomeEsercizio());
+        Esercizio esercizioNew=Global.esercizioDao.getEsercizioByNome(esercizio.getNomeEsercizio());
         System.out.println("_____-NEW EX " + esercizio);
 
         // Creazione del layout della tua View

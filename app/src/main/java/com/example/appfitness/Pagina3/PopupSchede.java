@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,9 +18,7 @@ import android.widget.Toast;
 
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.Scheda;
-import com.example.appfitness.DB.GiornoDAO;
 import com.example.appfitness.DB.ListaGiorniDAO;
-import com.example.appfitness.DB.SchedaDAO;
 import com.example.appfitness.R;
 
 import java.io.IOException;
@@ -29,24 +28,14 @@ public class PopupSchede {
     private static final int PICK_IMAGE_REQUEST = 1;
     public static Activity act; // Aggiunto
     private static ImageButton imgScheda;
-    static SchedaDAO sDao;
-    static ListaGiorniDAO listaGiorniDao;
-    static GiornoDAO giornoDao;
-
-
-    AdapterListaScheda adapterGiorni;
-    public static Scheda schedaNuova;
-
-
-
 
     public PopupSchede(Activity activity) { // Costruttore aggiunto
         this.act = activity;
     }
 
-    public  void CreaScheda(LayoutInflater inflater, AdapterListaScheda adapterSchede){
+    public  void CreaScheda(LayoutInflater inflater){
 
-        sDao=new SchedaDAO(act);
+
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_scheda, null);
         Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
@@ -63,13 +52,13 @@ public class PopupSchede {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        schedaNuova=new Scheda();
-        schedaNuova.setListaGiorni(new ArrayList<>());
+        Global.schedaNuova=new Scheda();
+        Global.schedaNuova.setListaGiorni(new ArrayList<>());
 
 
         ListView listaGiorniView = (ListView)dialogView.findViewById(R.id.listaGiorniView);
-        adapterGiorni = new AdapterListaScheda(dialogView.getContext(), R.layout.item_giorni, new ArrayList<Giorno>());
-        listaGiorniView.setAdapter(adapterGiorni);
+        Global.adapterGiorni = new AdapterListaScheda(dialogView.getContext(), R.layout.item_giorni, new ArrayList<Giorno>());
+        listaGiorniView.setAdapter(Global.adapterGiorni);
 
 
         EditText nomeScheda= dialogView.findViewById((int)R.id.nomeScheda);
@@ -90,29 +79,42 @@ public class PopupSchede {
             @Override
             public void onClick(View view) {
 
-                PopupGiorno.CreaGiorno(inflater,schedaNuova,adapterGiorni);
+                PopupGiorno.CreaGiorno(inflater,Global.schedaNuova);
             }
         });
 
+        final View backgroundView = alertDialog.getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
+        backgroundView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                back.callOnClick();
+                return true; // Indica che l'evento è stato consumato
+            }
+        });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                schedaNuova.setNomeScheda(nomeScheda.getText().toString());
-                schedaNuova.setImg(imgScheda.getDrawable());
-                adapterSchede.add(schedaNuova);
-                System.out.println("SchedaNuova= " +schedaNuova);
-                sDao.InsertScheda(schedaNuova);
-                PaginaScheda_Pag3.StampaTutto();
-                alertDialog.dismiss();
-                ResettaVariabili();
+                if(nomeScheda.getText().toString().trim().length()==0){
+                    Toast.makeText(dialogView.getContext(), "Inserisci un nome", Toast.LENGTH_SHORT).show();
+                }else {
+                    Global.schedaNuova.setNomeScheda(nomeScheda.getText().toString());
+                    Global.schedaNuova.setImg(imgScheda.getDrawable());
+                    Global.adapterSchede.add(Global.schedaNuova);
+                    System.out.println("SchedaNuova= " + Global.schedaNuova);
+                    Global.schedadao.InsertScheda(Global.schedaNuova);
+                    PaginaScheda_Pag3.StampaTutto();
+                    alertDialog.dismiss();
+                    ResettaVariabili();
+                }
             }
         });
     }
 
     public void ApriSchedaSelezionata(Scheda sched,LayoutInflater inflater){
         //per rendere accessibile la scheda ai giorni con oclick dell adapter
-        schedaNuova=sched;
+        Global.schedaNuova=sched;
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_scheda, null);
@@ -131,16 +133,16 @@ public class PopupSchede {
         alertDialog.show();
 
         ListView listaGiorniView = (ListView)dialogView.findViewById(R.id.listaGiorniView);
-        adapterGiorni = new AdapterListaScheda(dialogView.getContext(), R.layout.item_giorni, new ArrayList<Giorno>());
-        listaGiorniView.setAdapter(adapterGiorni);
+        Global.adapterGiorni = new AdapterListaScheda(dialogView.getContext(), R.layout.item_giorni, new ArrayList<Giorno>());
+        listaGiorniView.setAdapter(Global.adapterGiorni);
 
-        listaGiorniDao=new ListaGiorniDAO(act.getApplicationContext());
-        giornoDao=new GiornoDAO(act.getApplicationContext());
-        ArrayList<Integer> listaDiID =listaGiorniDao.getListaGiorniPerScheda(sched.getNomeScheda());
+        Global.listaGiornidao=new ListaGiorniDAO(act.getApplicationContext());
+
+        ArrayList<Integer> listaDiID =Global.listaGiornidao.getListaGiorniPerScheda(sched.getNomeScheda());
 
         //per ogni id, ricercami l'elemento giorno e aggiungilo alla lista di giorni visibile
         for(Integer id:listaDiID){
-            adapterGiorni.add(giornoDao.getGiornoById(id));
+            Global.adapterGiorni.add(Global.giornoDao.getGiornoById(id));
             //adapterGiorni.notify();
         }
 
@@ -154,14 +156,14 @@ public class PopupSchede {
             @Override
             public void onClick(View view) {
 
-                PopupGiorno.CreaGiorno(inflater,sched,adapterGiorni);
+                PopupGiorno.CreaGiorno(inflater,sched);
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(sched.getListaGiorni().size()>0)
-                    PaginaScheda_Pag3.listaGiornidao.InserisciListaGiorni(sched);
+                    Global.listaGiornidao.InserisciListaGiorni(sched);
                 alertDialog.dismiss();
                 ResettaVariabili();
             }
@@ -173,7 +175,7 @@ public class PopupSchede {
     }
 
     private void ResettaVariabili(){
-        schedaNuova=null;
+        Global.schedaNuova=null;
         PopupGiorno.idGiorniSalvati= new ArrayList<>();
         PopupEsercizio.idEserciziSalvati= new ArrayList<>();
         PopupEsercizio.immagineEsercizio=null;
