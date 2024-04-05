@@ -3,12 +3,16 @@ package com.example.appfitness.Pagina3;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.provider.MediaStore;
+
+import android.database.SQLException;
+
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +23,19 @@ import android.widget.Toast;
 
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
+import com.example.appfitness.Bean.Note;
 import com.example.appfitness.DB.DbHelper;
 import com.example.appfitness.DB.EsercizioDAO;
 import com.example.appfitness.DB.SchemaDB;
+import com.example.appfitness.Eccezioni.Eccezioni;
+import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.net.ssl.ExtendedSSLSession;
 
 public class PopupEsercizio {
 
@@ -68,6 +77,21 @@ public class PopupEsercizio {
         Button salva=dialogView.findViewById((int)R.id.salvaEsercizio);
         Button ripristina=dialogView.findViewById((int)R.id.ripristinaEsercizio);
         Button back=dialogView.findViewById((int)R.id.backEsercizio);
+        Button bottoneNote = dialogView.findViewById(R.id.bottoneNote);
+
+        bottoneNote.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                System.out.println("noteClick");
+                try {
+                    NotificheDialog.NotificaNote(inflater, inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE),true);
+                } catch (Eccezioni e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
         immagineEsercizio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,11 +104,17 @@ public class PopupEsercizio {
         salva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //prendo le note
+                SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
+
                 Esercizio esercizio=new Esercizio(nomeEsercizio.getText().toString(),intensitaEsercizio.getText().toString(),
                         esecuzioneEsercizio.getText().toString(),immagineEsercizio.getDrawable(),
                         Integer.parseInt(numeroSerieEsercizio.getText().toString().trim().length()!=0?numeroSerieEsercizio.getText().toString():"0"),
                         Integer.parseInt(numeroRipetEsercizio.getText().toString().trim().length()!=0?numeroRipetEsercizio.getText().toString():"0"),
-                        Float.parseFloat(numeroTimetEsercizio.getText().toString().trim().length()!=0?numeroTimetEsercizio.getText().toString():"0")
+                        Float.parseFloat(numeroTimetEsercizio.getText().toString().trim().length()!=0?numeroTimetEsercizio.getText().toString():"0"),
+                        note.getNote()
+
                 );
                 //inserisco il giorno nel db
                 DbHelper db = new DbHelper(PopupSchede.act.getApplicationContext());
@@ -106,16 +136,22 @@ public class PopupEsercizio {
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroSerie, esercizio.getNumeroSerie());
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni, esercizio.getNumeroRipetizioni());
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_timer, esercizio.getTimer());
+                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_note,note.getNote());
 
 
-                long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
-                idEserciziSalvati.add(EsercizioId);
-                //devo aggiornare la lista dei giorni per quella lista
 
-                giornoNuovo.getListaEsercizi().add(esercizio);
-                adEsercizi.add(esercizio);
+                    long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
+                if(EsercizioId==-1){
+                    Toast.makeText(dialogView.getContext(), "Nome già presente", Toast.LENGTH_LONG).show();
 
-                PaginaScheda_Pag3.StampaTutto();
+                }else{
+                    idEserciziSalvati.add(EsercizioId);
+                    giornoNuovo.getListaEsercizi().add(esercizio);
+                    adEsercizi.add(esercizio);
+
+                }
+
+
 
 
             }
@@ -136,7 +172,7 @@ public class PopupEsercizio {
     public static void ApriEsercizioSelezionato(Esercizio esercizio,LayoutInflater inflater){
         esercizioDAO=new EsercizioDAO(PopupSchede.act);
         System.out.println("_____-OLD EX " + esercizio);
-        esercizio=esercizioDAO.getEsercizioByNome(esercizio.getNomeEsercizio());
+        Esercizio esercizioNew=esercizioDAO.getEsercizioByNome(esercizio.getNomeEsercizio());
         System.out.println("_____-NEW EX " + esercizio);
 
         // Creazione del layout della tua View
@@ -165,14 +201,16 @@ public class PopupEsercizio {
         Button salva=dialogView.findViewById((int)R.id.salvaEsercizio);
         Button ripristina=dialogView.findViewById((int)R.id.ripristinaEsercizio);
         Button back=dialogView.findViewById((int)R.id.backEsercizio);
+        Button bottoneNote = dialogView.findViewById(R.id.bottoneNote);
+        bottoneNote.setText("Mostra");
 
-        nomeEsercizio.setText(esercizio.getNomeEsercizio());
-        immagineEsercizio.setImageDrawable(esercizio.getImmagineMacchinario());
-        numeroSerieEsercizio.setText(String.valueOf(esercizio.getNumeroSerie()));
-        numeroRipetEsercizio.setText(String.valueOf(esercizio.getNumeroRipetizioni()));
-        numeroTimetEsercizio.setText(String.valueOf(esercizio.getTimer()));
-        intensitaEsercizio.setText(esercizio.getTecnica_intensita());
-        esecuzioneEsercizio.setText(esercizio.getEsecuzione());
+        nomeEsercizio.setText(esercizioNew.getNomeEsercizio());
+        immagineEsercizio.setImageDrawable(esercizioNew.getImmagineMacchinario());
+        numeroSerieEsercizio.setText(String.valueOf(esercizioNew.getNumeroSerie()));
+        numeroRipetEsercizio.setText(String.valueOf(esercizioNew.getNumeroRipetizioni()));
+        numeroTimetEsercizio.setText(String.valueOf(esercizioNew.getTimer()));
+        intensitaEsercizio.setText(esercizioNew.getTecnica_intensita());
+        esecuzioneEsercizio.setText(esercizioNew.getEsecuzione());
 
         nomeEsercizio.setInputType(InputType.TYPE_NULL);
         numeroSerieEsercizio.setInputType(InputType.TYPE_NULL);
@@ -188,6 +226,24 @@ public class PopupEsercizio {
             public void onClick(View view) {
 
                 alertDialog.dismiss();
+            }
+        });
+
+        bottoneNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit= sh.edit();
+                PaginaScheda_Pag3.StampaTutto();
+                Note notaDaMostrare= new Note(esercizioNew.getNote());
+                edit.putString("notePassate", notaDaMostrare.toJson());
+                edit.apply();
+                System.out.println("*****" + esercizioNew.getNote());
+                try {
+                    NotificheDialog.NotificaNote(inflater,sh,false);
+                } catch (Eccezioni e) {
+                    e.printStackTrace();
+                }
             }
         });
 

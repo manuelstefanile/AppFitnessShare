@@ -3,10 +3,14 @@ package com.example.appfitness;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.appfitness.DB.DbHelper;
+import com.example.appfitness.DB.SchemaDB;
+import com.example.appfitness.Pagina3.PaginaScheda_Pag3;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,9 +21,38 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void Inizia(View bottone){
+
+        //se l utente è gia registrato, vai a pagina 3
+        DbHelper db=new DbHelper(getApplicationContext());
+        //db.deleteDatabase();
+        SQLiteDatabase dbRead=db.getReadableDatabase();
+        int count=0;
+
+        // Query per ottenere tutti gli utenti
+        Cursor cursor = dbRead.query(
+                SchemaDB.UtenteDB.TABLE_NAME,   // Nome della tabella
+                null,       // Tutte le colonne (null = tutte le colonne)
+                null,       // Colonne per la clausola WHERE (null = tutte le righe)
+                null,       // Valori per la clausola WHERE (null = tutte le righe)
+                null,       // GroupBy
+                null,       // Having
+                null        // OrderBy
+        );
+
+        // Ora puoi iterare attraverso il cursore per ottenere i risultati
+        while (cursor.moveToNext()) {
+            count++;
+        }
+        // Chiudi il cursore quando hai finito di utilizzarlo
+        cursor.close();
+
         //porta in una nuova activity
         Intent i =new Intent();
-        i.setClass(getApplicationContext(),Registrazione_Pag2.class);
+        if(count==0){
+            i.setClass(getApplicationContext(),Registrazione_Pag2.class);
+        }else
+            i.setClass(getApplicationContext(), PaginaScheda_Pag3.class);
+
         startActivity(i);
     }
 

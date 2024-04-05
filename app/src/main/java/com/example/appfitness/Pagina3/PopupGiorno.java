@@ -116,8 +116,10 @@ public class PopupGiorno {
 
         ledao= new ListaEserciziDAO(PopupSchede.act.getApplicationContext());
         esercizioDao=new EsercizioDAO(PopupSchede.act.getApplicationContext());
-        ArrayList<Integer> listaDiID =ledao.getListaEserciziPerGiorno(giorno.getNomeGiorno());
-        System.out.println("*****" + listaDiID.size());
+        //mi serve l id nel db del giorno associato alla scheda
+        Integer idGiorno=giornoDao.getGiornoIDByNameAndScheda(giorno.getNomeGiorno(),PopupSchede.schedaNuova.getNomeScheda());
+        ArrayList<Integer> listaDiID =ledao.getListaEserciziPerGiorno(idGiorno);
+
 
         //per ogni id, ricercami l'elemento giorno e aggiungilo alla lista di giorni visibile
         for(Integer id:listaDiID){
@@ -143,7 +145,7 @@ public class PopupGiorno {
             public void onClick(View view) {
                 //se la lista degli esercizzi è maggiore di 1 allora va inserito nel db e aggiornato
                 if(giorno.getListaEsercizi().size()>0){
-                    giornoDao.AggiornaGiorno(giorno);
+                    giornoDao.AggiornaGiorno(giorno.getNomeGiorno(),PopupSchede.schedaNuova.getNomeScheda());
                 }
 
                 alertDialog.dismiss();

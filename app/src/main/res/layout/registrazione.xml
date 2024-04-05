@@ -266,6 +266,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Salva"
+                    android:background="@color/azzurrino"
                     android:layout_marginRight="10dp"
                     android:onClick="SalvaAll"
                     >
@@ -276,14 +277,18 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Ripristina"
+                    android:background="@color/azzurrino"
                     android:onClick="RipristinaDati"
                     >
                 </Button>
             </LinearLayout>
             <Button
+                android:id="@+id/bottoneNextRegistrazione"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="--->"
+                android:text="Next"
+                android:background="@color/grigio"
+                android:textColor="@color/black"
                 android:onClick="PassaPagina3"
                 android:layout_gravity="center"
                 >

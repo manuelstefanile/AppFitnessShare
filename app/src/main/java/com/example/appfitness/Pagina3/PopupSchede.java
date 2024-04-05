@@ -35,7 +35,7 @@ public class PopupSchede {
 
 
     AdapterListaScheda adapterGiorni;
-    Scheda schedaNuova;
+    public static Scheda schedaNuova;
 
 
 
@@ -111,6 +111,8 @@ public class PopupSchede {
     }
 
     public void ApriSchedaSelezionata(Scheda sched,LayoutInflater inflater){
+        //per rendere accessibile la scheda ai giorni con oclick dell adapter
+        schedaNuova=sched;
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_scheda, null);

@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -35,10 +36,13 @@ public class Registrazione_Pag2 extends Activity {
     Utente utente;
     SharedPreferences sharedPreferences;
     DbHelper db;
+    Button bottoneNext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrazione);
+        bottoneNext=findViewById((int)R.id.bottoneNextRegistrazione);
+        bottoneNext.setEnabled(false);
 
         //apreo il db
         db=new DbHelper(getApplicationContext());
@@ -133,33 +137,8 @@ public class Registrazione_Pag2 extends Activity {
         long IdUtente = dbWritable.insert(SchemaDB.UtenteDB.TABLE_NAME, null, valuesUtente);
 
         Toast.makeText(getApplicationContext(), "Salvato", Toast.LENGTH_SHORT).show();
-
-        //test del salvataggio
-        /*
-        Cursor cursor = null;
-        SQLiteDatabase dbRead = db.getReadableDatabase();
-        cursor = dbRead.query(
-                SchemaDB.UtenteDB.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-
-                 long idCC=cursor.getLong(cursor.getColumnIndex(SchemaDB.UtenteDB._ID));
-                String nomeCC=cursor.getString(cursor.getColumnIndex(SchemaDB.UtenteDB.COLUMN_nome));
-
-                // Continua per gli altri campi
-                System.out.println("______ID "+idCC );
-                System.out.println("______nomeCC "+nomeCC );
-                // Aggiungi l'utente alla lista
-            } while (cursor.moveToNext());
-        }
-        */
+        bottoneNext.setEnabled(true);
+        bottoneNext.setBackgroundColor((int)R.color.azzurrino);
         dbWritable.close();
 
     }
@@ -191,6 +170,8 @@ public class Registrazione_Pag2 extends Activity {
         dbWritable.delete(SchemaDB.UtenteDB.TABLE_NAME, null, null);
 
         dbWritable.close();
+        bottoneNext.setEnabled(false);
+        bottoneNext.setBackgroundColor((int)R.color.grigio);
 
         Toast.makeText(getApplicationContext(), "Ripristinato con successo", Toast.LENGTH_SHORT).show();
 
@@ -210,7 +191,7 @@ public class Registrazione_Pag2 extends Activity {
                 NotificheDialog.NotificaKcal(getLayoutInflater(),sharedPreferences);
                 break;
             case "note":
-                NotificheDialog.NotificaNote(getLayoutInflater(),sharedPreferences);
+                NotificheDialog.NotificaNote(getLayoutInflater(),sharedPreferences,true);
                 break;
             default:
                 break;
@@ -220,7 +201,9 @@ public class Registrazione_Pag2 extends Activity {
     public void PassaPagina3(View v){
         db.close();
         Intent i =new Intent();
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         i.setClass(getApplicationContext(), PaginaScheda_Pag3.class);
         startActivity(i);
+        finish();
     }
 }

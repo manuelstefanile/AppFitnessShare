@@ -1,7 +1,9 @@
 package com.example.appfitness;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -297,11 +299,6 @@ public class NotificheDialog {
             }
         }
 
-
-
-
-
-
         Calendar dataSalvare=kcalStorage.getData();
         ImpostaCalendario(calendario,dialogView,dataSalvare);
 
@@ -345,12 +342,19 @@ public class NotificheDialog {
 
     }
 
-    public static void NotificaNote(LayoutInflater inflater,SharedPreferences sh) throws Eccezioni {
+    public static void NotificaNote(LayoutInflater inflater,SharedPreferences sh,boolean modifica) throws Eccezioni {
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.note_dettaglio, null);
         Button salvaButton = dialogView.findViewById((int) R.id.SalvaNote);
         Button okButton = dialogView.findViewById((int) R.id.OkNote);
+        EditText noteDettaglio = dialogView.findViewById((int) R.id.noteDettaglio);
+        if(!modifica){
+            //non far scrivere
+            noteDettaglio.setInputType(InputType.TYPE_NULL);
+            //rimuovi il tasto salva
+            salvaButton.setVisibility(View.GONE);
+        }
 
         // Creazione dell'AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
@@ -362,21 +366,20 @@ public class NotificheDialog {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
+
         //prendo l oggetto
         Note noteStorage = Note.fromJson(sh.getString("notePassate", null));
         //prendo gli edit
+        System.out.println("****NOte" + noteStorage.getNote());
 
-        EditText noteDettaglio = dialogView.findViewById((int) R.id.noteDettaglio);
         if(noteStorage.getNote()!=null){
             noteDettaglio.setText(noteStorage.getNote());
         }
+        if(modifica){
             salvaButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     noteStorage.setNote(noteDettaglio.getText().toString());
-
-
                     SharedPreferences.Editor edi = sh.edit();
                     edi.putString("notePassate", noteStorage.toJson());
                     edi.apply();
@@ -384,6 +387,8 @@ public class NotificheDialog {
                     Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

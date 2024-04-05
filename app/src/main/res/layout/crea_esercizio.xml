@@ -73,6 +73,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
 
             >
         </EditText>
@@ -97,6 +98,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
 
             >
         </EditText>
@@ -122,6 +124,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
 
             >
         </EditText>
@@ -226,7 +229,7 @@
         android:id="@+id/backEsercizio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="---"
+        android:text="Back"
         android:onClick="back"
         android:layout_gravity="center"
         >

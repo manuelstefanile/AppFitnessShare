@@ -63,12 +63,13 @@ public class DbHelper extends SQLiteOpenHelper {
     final private static String CREATE_ESERCIZIO =
             "CREATE TABLE " + SchemaDB.EsercizioDB.TABLE_NAME + " ("
                     + SchemaDB.EsercizioDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + SchemaDB.EsercizioDB.COLUMN_nomeEsercizio + " TEXT NOT NULL, "
+                    + SchemaDB.EsercizioDB.COLUMN_nomeEsercizio + " TEXT NOT NULL UNIQUE, "
                     + SchemaDB.EsercizioDB.COLUMN_tecnica_intensita + " TEXT, "
                     + SchemaDB.EsercizioDB.COLUMN_esecuzione + " TEXT, "
                     + SchemaDB.EsercizioDB.COLUMN_immagineMacchinario + " BLOB, "
                     + SchemaDB.EsercizioDB.COLUMN_numeroSerie + " INTEGER, "
                     + SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni + " INTEGER, "
+                    + SchemaDB.EsercizioDB.COLUMN_note + " TEXT, "
                     + SchemaDB.EsercizioDB.COLUMN_timer + " FLOAT"
                     + ");";
 
@@ -96,7 +97,7 @@ public class DbHelper extends SQLiteOpenHelper {
     final private static String CREATE_LISTAESERCIZI =
             "CREATE TABLE " + SchemaDB.ListaEserciziDB.TABLE_NAME + " ("
                     + SchemaDB.ListaEserciziDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    +SchemaDB.ListaEserciziDB.IDGiorno + " TEXT ,"
+                    +SchemaDB.ListaEserciziDB.IDGiorno + " INTEGER ,"
                     + SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi + " TEXT "
                     + ");";
 

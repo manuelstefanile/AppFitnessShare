@@ -51,7 +51,7 @@ public class PaginaScheda_Pag3 extends Activity {
         listaGiornidao= new ListaGiorniDAO(getApplicationContext());
         schedadao=new SchedaDAO(getApplicationContext());
         db=new DbHelper(getApplicationContext());
-        db.deleteDatabase();
+        //db.deleteDatabase();
 
         lista = (ListView)findViewById(R.id.listaSchedeView);
         adapterSchede = new AdapterListaScheda(this, R.layout.item_scheda, new ArrayList<Scheda>());
@@ -88,7 +88,7 @@ public class PaginaScheda_Pag3 extends Activity {
         //printMisureData(db);
 
         // Stampare tutte le Schede
-        //printSchedaData(db);
+        printSchedaData(db);
 
         // Stampare tutte le Liste Giorni
         printListaGiorniData(db);
@@ -98,10 +98,10 @@ public class PaginaScheda_Pag3 extends Activity {
         printGiornoData(db);
 
         // Stampare tutte le Liste Esercizi
-        //printListaEserciziData(db);
+        printListaEserciziData(db);
 
         // Stampare tutti gli Esercizi
-        //printEsercizioData(db);
+        printEsercizioData(db);
         System.out.println("*********************************************************");
 
     }
@@ -179,9 +179,10 @@ public class PaginaScheda_Pag3 extends Activity {
 
                 }
                 System.out.println(); // Nuova linea per ogni record
-                System.out.println(); // Nuova linea per ogni record
+
             } while (cursor.moveToNext());
         }
+        System.out.println(); // Nuova linea per ogni record
         cursor.close();
     }
 

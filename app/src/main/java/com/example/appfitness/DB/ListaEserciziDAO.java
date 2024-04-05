@@ -18,15 +18,16 @@ public class ListaEserciziDAO {
 
     //ritorna un arrayList di id di Giorni per quella scheda
     @SuppressLint("Range")
-    public ArrayList<Integer> getListaEserciziPerGiorno(String giornoDiRiferimento) {
+    public ArrayList<Integer> getListaEserciziPerGiorno(Integer idGiorno) {
         SQLiteDatabase dbRead = db.getReadableDatabase();
         ArrayList<Integer> result = new ArrayList<>();
 
+        String[] selectionArgs = {String.valueOf(idGiorno)};
         Cursor cursor = dbRead.query(
                 SchemaDB.ListaEserciziDB.TABLE_NAME, // Nome della tua tabella
                 null, // Array di colonne; null seleziona tutte le colonne
                 SchemaDB.ListaEserciziDB.IDGiorno +" = ?", // Clausola WHERE
-                new String[]{giornoDiRiferimento}, // Valori per la clausola WHERE
+                selectionArgs, // Valori per la clausola WHERE
                 null, // GROUP BY
                 null, // HAVING
                 null // ORDER BY

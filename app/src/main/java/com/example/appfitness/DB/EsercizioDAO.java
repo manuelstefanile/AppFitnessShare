@@ -80,6 +80,7 @@ public class EsercizioDAO {
             Bitmap bitmap = BitmapFactory.decodeByteArray(immagine, 0, immagine.length);
             Drawable immDraw= new BitmapDrawable(Resources.getSystem(), bitmap);
             result.setImmagineMacchinario(immDraw);
+            result.setNote(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_note)));
 
             // Chiudi il cursore
             cursor.close();

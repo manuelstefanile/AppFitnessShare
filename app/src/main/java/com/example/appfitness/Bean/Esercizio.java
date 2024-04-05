@@ -12,12 +12,13 @@ import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
 public class Esercizio extends ListeClasseMarker {
-    private String nomeEsercizio,tecnica_intensita,esecuzione;
+    private String nomeEsercizio,tecnica_intensita,esecuzione,note;
     private byte[] immagineMacchinario;
     private int numeroSerie,numeroRipetizioni;
     private float timer;
 
-    public Esercizio(String nomeEsercizio, String tecnica_intensita, String esecuzione, Drawable immagineMacchinario, int numeroSerie, int numeroRipetizioni, float timer) {
+    public Esercizio(String nomeEsercizio, String tecnica_intensita, String esecuzione, Drawable immagineMacchinario,
+                     int numeroSerie, int numeroRipetizioni, float timer,String note) {
         this.nomeEsercizio = nomeEsercizio;
         this.tecnica_intensita = tecnica_intensita;
         this.esecuzione = esecuzione;
@@ -25,6 +26,7 @@ public class Esercizio extends ListeClasseMarker {
         this.numeroSerie = numeroSerie;
         this.numeroRipetizioni = numeroRipetizioni;
         this.timer = timer;
+        this.note=note;
     }
 
     public Esercizio() {
@@ -132,6 +134,14 @@ public class Esercizio extends ListeClasseMarker {
         return gson.fromJson(json, Esercizio.class);
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     @Override
     public String toString() {
         return "\nEsercizio{" +
@@ -142,6 +152,7 @@ public class Esercizio extends ListeClasseMarker {
                 ", numeroSerie=" + numeroSerie +
                 ", numeroRipetizioni=" + numeroRipetizioni +
                 ", timer=" + timer +
+                ", note=" + note +
                 '}';
     }
 }

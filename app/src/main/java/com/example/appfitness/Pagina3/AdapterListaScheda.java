@@ -17,6 +17,8 @@ import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.ListeClasseMarker;
 import com.example.appfitness.Bean.Scheda;
+import com.example.appfitness.Eccezioni.Eccezioni;
+import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
 
 import java.util.List;
@@ -86,19 +88,19 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
         Button bottone=v.findViewById(R.id.visualizzaEsercizi);
         Button bottoneElimina= v.findViewById(R.id.eliminaEsercizi);
 
-        bottone.setText(c.getNomeEsercizio());
 
+        bottone.setText(c.getNomeEsercizio());
         bottone.setTag(position);
         bottoneElimina.setTag(position);
-            bottone.setOnClickListener(new View.OnClickListener() {
+        bottone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     PopupEsercizio.ApriEsercizioSelezionato(c,inflater);
                 }
             });
 
-
         }
+
 
         return v;
     }
