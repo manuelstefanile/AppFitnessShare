@@ -48,6 +48,13 @@ public class PopupEsercizio {
 
     public static void CreaEsercizio(LayoutInflater inflater, Giorno giornoNuovo){
 
+
+        SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        //note all inizio della creazione dell ex è vuoto
+        SharedPreferences.Editor edit=shp.edit();
+        edit.putString("notePassate",new Note().toJson());
+        edit.commit();
+
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_esercizio, null);
         Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
@@ -77,13 +84,14 @@ public class PopupEsercizio {
         Button back=dialogView.findViewById((int)R.id.backEsercizio);
         Button bottoneNote = dialogView.findViewById(R.id.bottoneNote);
 
+
         bottoneNote.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 System.out.println("noteClick");
                 try {
-                    NotificheDialog.NotificaNote(inflater, inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE),true);
+                    NotificheDialog.NotificaNote(inflater, shp,true);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }
@@ -164,6 +172,9 @@ public class PopupEsercizio {
             @Override
             public void onClick(View view) {
 
+                SharedPreferences.Editor edit=shp.edit();
+                edit.putString("notePassate",new Note().toJson());
+                edit.commit();
                 alertDialog.dismiss();
             }
         });

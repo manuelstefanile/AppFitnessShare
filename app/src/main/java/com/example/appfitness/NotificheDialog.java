@@ -370,11 +370,11 @@ public class NotificheDialog {
         //prendo l oggetto
         Note noteStorage = Note.fromJson(sh.getString("notePassate", null));
         //prendo gli edit
-        System.out.println("****NOte" + noteStorage.getNote());
+
 
         if(noteStorage.getNote()!=null){
             noteDettaglio.setText(noteStorage.getNote());
-        }
+        }else noteDettaglio.setText("");
         if(modifica){
             salvaButton.setOnClickListener(new View.OnClickListener() {
                 @Override
