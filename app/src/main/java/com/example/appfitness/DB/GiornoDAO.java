@@ -186,6 +186,12 @@ public class GiornoDAO {
             exDao.DeleteEsercizioById(idEx);
         }
 
+        //elimino anche la lista di giorni e lista esercizi
+        ListaGiorniDAO listaGiorniDAO=new ListaGiorniDAO(ct);
+        listaGiorniDAO.DeleteListaPerIdGiorno(id);
+
+        leseDAO.DeleteListaPerIdGiorno(id);
+
     }
 
 }

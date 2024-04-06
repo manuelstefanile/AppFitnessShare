@@ -63,4 +63,19 @@ public class ListaGiorniDAO {
         }
     }
 
+    public void DeleteListaPerIdGiorno(Integer idGiorno) {
+        SQLiteDatabase dbWrite = db.getWritableDatabase();
+        dbWrite.delete(SchemaDB.ListaGiorniDB.TABLE_NAME,
+                SchemaDB.ListaGiorniDB.COLUMN_IDGiorno + " = ?",
+                new String[]{String.valueOf(idGiorno)});
+        db.close();
+    }
+    public void DeleteListaPerScheda(String schedaName) {
+        SQLiteDatabase dbWrite = db.getWritableDatabase();
+        dbWrite.delete(SchemaDB.ListaGiorniDB.TABLE_NAME,
+                SchemaDB.ListaGiorniDB.COLUM_SCHEDARIFERIMENTO + " = ?",
+                new String[]{String.valueOf(schedaName)});
+        db.close();
+    }
+
 }

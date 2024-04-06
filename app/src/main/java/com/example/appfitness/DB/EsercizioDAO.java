@@ -52,6 +52,32 @@ public class EsercizioDAO {
 
         return result;
     }
+    public Integer getIDEsercizioByName(String nomeEx) {
+        SQLiteDatabase dbRead = db.getReadableDatabase();
+        Integer id = null;
+
+        Cursor cursor = dbRead.query(
+                SchemaDB.EsercizioDB.TABLE_NAME, // Nome della tua tabella Giorno
+                null, // Array di colonne; null seleziona tutte le colonne
+                SchemaDB.EsercizioDB.COLUMN_nomeEsercizio + " = ?", // Clausola WHERE per l'ID
+                new String[]{nomeEx}, // Valore per la clausola WHERE
+                null, // GROUP BY
+                null, // HAVING
+                null // ORDER BY
+        );
+
+        if (cursor.moveToFirst()) {
+            // Se la riga è stata trovata, puoi creare il tuo oggetto Giorno
+
+            id=(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB._ID)));
+            // Chiudi il cursore
+            cursor.close();
+        }
+        // Chiudi il database
+        dbRead.close();
+
+        return id;
+    }
 
     public Esercizio getEsercizioByNome(String nome) {
         SQLiteDatabase dbRead = db.getReadableDatabase();
@@ -105,6 +131,13 @@ public class EsercizioDAO {
                 SchemaDB.EsercizioDB.COLUMN_nomeEsercizio + " = ?",
                 new String[]{String.valueOf(id)});
         db.close();
+
+        //prendo l id dell ex
+
+        ListaEserciziDAO listaEserciziDAO=new ListaEserciziDAO(ct);
+        listaEserciziDAO.DeleteListaPerNomeEsercizi(id);
+
+
 
     }
 

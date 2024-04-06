@@ -43,4 +43,20 @@ public class ListaEserciziDAO {
         return result;
     }
 
+
+    public void DeleteListaPerIdGiorno(Integer idGiorno) {
+        SQLiteDatabase dbWrite = db.getWritableDatabase();
+        dbWrite.delete(SchemaDB.ListaEserciziDB.TABLE_NAME,
+                SchemaDB.ListaEserciziDB.IDGiorno + " = ?",
+                new String[]{String.valueOf(idGiorno)});
+        db.close();
+    }
+    public void DeleteListaPerNomeEsercizi(String idEx) {
+        SQLiteDatabase dbWrite = db.getWritableDatabase();
+        dbWrite.delete(SchemaDB.ListaEserciziDB.TABLE_NAME,
+                SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi + " = ?",
+                new String[]{String.valueOf(idEx)});
+        db.close();
+    }
+
 }

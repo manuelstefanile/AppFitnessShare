@@ -101,6 +101,7 @@ public class SchedaDAO {
             //elimina giorno
             gdao.DeleteGiornoById(idD);
         }
+        ldao.DeleteListaPerScheda(nome);
     }
 
 }
