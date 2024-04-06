@@ -9,11 +9,12 @@
 
     <ImageView
         android:id="@+id/immagineScheda"
-        android:layout_width="0dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_weight="0.4"
-        android:background="@drawable/drawable_immagine_scheda"
         android:layout_marginRight="10dp"
+        android:src="@drawable/noimg"
         >
 
     </ImageView>

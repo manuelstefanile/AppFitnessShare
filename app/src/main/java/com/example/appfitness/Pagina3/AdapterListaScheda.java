@@ -1,6 +1,8 @@
 package com.example.appfitness.Pagina3;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import com.example.appfitness.Eccezioni.Eccezioni;
 import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,8 +90,12 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             ImageView im= v.findViewById(R.id.immagineScheda);
             Button bottone=v.findViewById(R.id.visualizzaScheda);
 
+            Bitmap bitmap = ((BitmapDrawable) c.getImg()).getBitmap();
 
-            im.setImageDrawable(c.getImg());
+            if (bitmap==null){
+                im.setImageResource(R.drawable.noimg);
+            }else
+                im.setImageDrawable(c.getImg());
             bottone.setText(c.getNomeScheda());
 
             im.setTag(position);

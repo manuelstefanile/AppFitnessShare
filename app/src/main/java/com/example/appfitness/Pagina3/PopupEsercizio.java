@@ -163,6 +163,7 @@ public class PopupEsercizio {
                     Global.adapterEsercizi.add(esercizio);
                     Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
 
+
                 }
 
 

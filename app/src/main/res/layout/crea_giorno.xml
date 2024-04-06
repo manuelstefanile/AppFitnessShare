@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/drawable_creascheda"
+    android:background="@drawable/drawable_creasgiorno"
     android:padding="20dp">
     <LinearLayout
         android:layout_width="match_parent"
