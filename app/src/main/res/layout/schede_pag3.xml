@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Crea Scheda"
         android:onClick="CreaScheda"
+        android:background="@drawable/drawable_botton_grey"
         >
     </Button>
 

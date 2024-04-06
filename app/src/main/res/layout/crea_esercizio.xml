@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/drawable_creaesercizio"
+    android:padding="10dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -212,6 +214,7 @@
             android:layout_height="wrap_content"
             android:text="Salva"
             android:layout_marginRight="10dp"
+            android:background="@drawable/drawable_botton_green"
             >
 
         </Button>
@@ -221,7 +224,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Ripristina"
-
+            android:background="@drawable/drawable_botton_grey"
             >
         </Button>
     </LinearLayout>
@@ -232,6 +235,8 @@
         android:text="Back"
         android:onClick="back"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/drawable_botton_grey"
         >
     </Button>
 

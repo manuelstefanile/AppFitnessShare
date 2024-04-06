@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/drawable_creascheda"
+    android:padding="20dp"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,6 +18,7 @@
             android:layout_weight="0.4"
             android:layout_height="wrap_content"
             android:text="Nome scheda:"
+            android:textColor="@color/white"
             android:gravity="center"
             ></TextView>
 
@@ -22,6 +26,7 @@
             android:id="@+id/nomeScheda"
             android:layout_width="0dp"
             android:layout_weight="0.4"
+            android:layout_marginRight="20dp"
             android:layout_height="wrap_content"
 
             >
@@ -32,6 +37,7 @@
             android:layout_weight="0.2"
             android:layout_height="50dp"
             android:text="cm"
+
             ></ImageButton>
 
     </LinearLayout>
@@ -42,6 +48,9 @@
         android:text="Aggiungi giorno"
         android:layout_gravity="center"
         android:onClick="AggiungiGiorno"
+        android:padding="10dp"
+
+        android:background="@drawable/drawable_item_giorno"
         >
     </Button>
     <ListView
@@ -51,17 +60,20 @@
     </ListView>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal"
+        android:layout_marginTop="10dp"
         android:padding="10dp"
         >
         <Button
             android:id="@+id/backScheda"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Back"
+            android:background="@drawable/drawable_botton_grey"
 
             >
         </Button>

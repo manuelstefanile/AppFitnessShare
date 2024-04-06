@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.InputType;
@@ -50,6 +52,7 @@ public class PopupSchede {
         builder.setNegativeButton(null,null);
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
         Global.schedaNuova=new Scheda();
@@ -130,6 +133,8 @@ public class PopupSchede {
         builder.setNegativeButton(null,null);
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
+        // Impostazione del background trasparente
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
         ListView listaGiorniView = (ListView)dialogView.findViewById(R.id.listaGiorniView);

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="20dp">
+    android:padding="20dp"
+   >
 
     <Button
         android:id="@+id/visualizzaEsercizi"
@@ -13,6 +14,7 @@
         android:onClick="OnSchedaClick"
         android:layout_weight="1"
         android:layout_marginRight="10dp"
+        android:background="@drawable/drawable_item_esercizio"
         >
     </Button>
 

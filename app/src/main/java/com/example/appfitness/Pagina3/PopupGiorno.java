@@ -3,6 +3,8 @@ package com.example.appfitness.Pagina3;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -45,6 +47,7 @@ public class PopupGiorno {
         builder.setNegativeButton(null,null);
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
@@ -116,6 +119,7 @@ public class PopupGiorno {
         builder.setNegativeButton(null,null);
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
         ListView listaEserciziiView = (ListView)dialogView.findViewById(R.id.listaEserciziView);

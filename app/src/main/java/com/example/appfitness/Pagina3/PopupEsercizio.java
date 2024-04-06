@@ -9,10 +9,12 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 
 import android.database.SQLException;
 
+import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,6 +71,7 @@ public class PopupEsercizio {
         builder.setNegativeButton(null,null);
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
 
@@ -202,6 +205,7 @@ public class PopupEsercizio {
         builder.setNegativeButton(null,null);
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
         EditText nomeEsercizio = dialogView.findViewById((int) R.id.nomeEsercizio);
