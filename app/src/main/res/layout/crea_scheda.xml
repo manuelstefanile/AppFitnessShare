@@ -6,6 +6,17 @@
     android:background="@drawable/drawable_creascheda"
     android:padding="20dp"
     >
+
+        <Button
+            android:id="@+id/xChiudiScheda"
+            android:onClick="ChiudTuttoNonSalva"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_baseline_close_24"
+            android:contentDescription="Cancella Tutto"
+            >
+        </Button>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

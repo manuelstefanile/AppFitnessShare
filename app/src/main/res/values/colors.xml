@@ -12,4 +12,6 @@
     <color name="arancione">#FFA500</color>
     <color name="grigio">#D9DDDC</color>
     <color name="lightGreen">#90ee90</color>
+    <color name="red">#ff0000</color>
+
 </resources>

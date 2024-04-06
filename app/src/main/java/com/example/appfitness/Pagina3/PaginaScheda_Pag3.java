@@ -197,5 +197,11 @@ public class PaginaScheda_Pag3 extends Activity {
         PopupSchede.onActivityResult(requestCode, resultCode, data);
     }
 
+    public void ChiudTuttoNonSalva(View v){
+        finish();
+        Intent intent = new Intent(this, PaginaScheda_Pag3.class);
+        startActivity(intent);
+    }
+
 
 }
