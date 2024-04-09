@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
+import com.example.appfitness.Pagina3.Global;
 import com.example.appfitness.Pagina3.PopupEsercizio;
 
 import java.util.ArrayList;
@@ -93,12 +94,15 @@ public class EsercizioDAO {
         return result;
     }
 
-    public void DeleteEsercizioById(int id){
+    public void DeleteEsercizioById(long id){
         SQLiteDatabase dbWrite = db.getWritableDatabase();
         dbWrite.delete(SchemaDB.EsercizioDB.TABLE_NAME,
                 SchemaDB.EsercizioDB._ID + " = ?",
                 new String[]{String.valueOf(id)});
         db.close();
+
+        //elimino dalla lista di ex quelli associati all esercizio
+        Global.ledao.DeleteListaPerNomeEsercizi(id);
 
     }
     public void DeleteEsercizioByName(String id){

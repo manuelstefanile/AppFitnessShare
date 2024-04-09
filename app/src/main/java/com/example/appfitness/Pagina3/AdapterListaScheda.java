@@ -137,9 +137,11 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             Esercizio c = (Esercizio) getItem(position);
 
             Button bottone=v.findViewById(R.id.visualizzaEsercizi);
+            Button bottoneDelete=v.findViewById(R.id.deleteEsercizi);
 
             bottone.setText(c.getNomeEsercizio());
             bottone.setTag(position);
+            bottoneDelete.setTag(position);
 
             bottone.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -196,6 +196,15 @@ public class PaginaScheda_Pag3 extends Activity {
         Global.adapterSchede.remove(c);
         StampaTutto();
     }
+
+    public void OnDeleteExPerGiornoClick(View v){
+
+        int position = Integer.parseInt(v.getTag().toString());
+        Esercizio c = (Esercizio) Global.adapterEsercizi.getItem(position);
+        Global.esercizioDao.DeleteEsercizioById(c.getId());
+        Global.adapterEsercizi.remove(c);
+
+    }
     public void CreaScheda(View v){
 
         popS.CreaScheda(getLayoutInflater());

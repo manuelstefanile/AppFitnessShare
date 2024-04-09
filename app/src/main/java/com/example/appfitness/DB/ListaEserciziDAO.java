@@ -77,7 +77,7 @@ public class ListaEserciziDAO {
                 new String[]{String.valueOf(idGiorno)});
         db.close();
     }
-    public void DeleteListaPerNomeEsercizi(Integer idEx) {
+    public void DeleteListaPerNomeEsercizi(Long idEx) {
         SQLiteDatabase dbWrite = db.getWritableDatabase();
         dbWrite.delete(SchemaDB.ListaEserciziDB.TABLE_NAME,
                 SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi + " = ?",
