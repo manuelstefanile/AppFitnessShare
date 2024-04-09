@@ -50,6 +50,33 @@ public class ListaGiorniDAO {
         return result;
     }
 
+    //ritorna un array di idListaGiorni pe quella scheda
+    @SuppressLint("Range")
+    public ArrayList<Integer> getIDListaGiorniPerScheda(Long idschedaDiRiferimento) {
+        SQLiteDatabase dbRead = db.getReadableDatabase();
+        ArrayList<Integer> result = new ArrayList<>();
+
+        Cursor cursor = dbRead.query(
+                "ListaGiorni", // Nome della tua tabella
+                null, // Array di colonne; null seleziona tutte le colonne
+                SchemaDB.ListaGiorniDB.COLUM_SCHEDARIFERIMENTO +" = ?", // Clausola WHERE
+                new String[]{String.valueOf(idschedaDiRiferimento)}, // Valori per la clausola WHERE
+                null, // GROUP BY
+                null, // HAVING
+                null // ORDER BY
+        );
+
+        while (cursor.moveToNext()){
+            result.add(cursor.getInt(cursor.getColumnIndex(SchemaDB.ListaGiorniDB._ID)));
+        }
+
+        // Chiudi il database
+        db.close();
+
+        return result;
+    }
+
+
     public void InserisciListaGiorni(Scheda schedaRiferimento){
         //scheda e id giorno int
         SQLiteDatabase dbWritable = db.getWritableDatabase();

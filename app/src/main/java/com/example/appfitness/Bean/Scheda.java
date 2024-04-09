@@ -17,7 +17,7 @@ public class Scheda extends ListeClasseMarker {
     private long id;
     private String nomeScheda;
     private byte[] imgBytes;
-    private ArrayList<Long> listaIdGiorni=new ArrayList<>() ;
+    private ArrayList<? extends Number> listaIdGiorni=new ArrayList<>() ;
 
     public Scheda(String nomeScheda, Drawable img) {
         this.nomeScheda = nomeScheda;
@@ -82,11 +82,11 @@ public class Scheda extends ListeClasseMarker {
 
 
 
-    public ArrayList<Long> getListaGiorni() {
-        return listaIdGiorni;
+    public<T extends Number> ArrayList<T> getListaGiorni() {
+        return (ArrayList<T>) listaIdGiorni;
     }
 
-    public void setListaGiorni(ArrayList<Long> listaGiorni) {
+    public <T extends Number> void setListaGiorni(ArrayList<T> listaGiorni) {
         this.listaIdGiorni = listaGiorni;
     }
 

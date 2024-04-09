@@ -17,7 +17,7 @@ public class ListaEserciziDAO {
         db=new DbHelper(ct);
     }
 
-    //ritorna un arrayList di id di Giorni per quella scheda
+    //ritorna un arrayList di id di esercizi per quella scheda
     @SuppressLint("Range")
     public ArrayList<Integer> getListaEserciziPerGiorno(Long idGiorno) {
         SQLiteDatabase dbRead = db.getReadableDatabase();
@@ -36,6 +36,31 @@ public class ListaEserciziDAO {
 
         while (cursor.moveToNext()){
             result.add(cursor.getInt(cursor.getColumnIndex("IDEsercizi")));
+        }
+
+        // Chiudi il database
+        db.close();
+
+        return result;
+    }
+    @SuppressLint("Range")
+    public ArrayList<Integer> getIDListaEserciziPerGiorno(Long idGiorno) {
+        SQLiteDatabase dbRead = db.getReadableDatabase();
+        ArrayList<Integer> result = new ArrayList<>();
+
+        String[] selectionArgs = {String.valueOf(idGiorno)};
+        Cursor cursor = dbRead.query(
+                SchemaDB.ListaEserciziDB.TABLE_NAME, // Nome della tua tabella
+                null, // Array di colonne; null seleziona tutte le colonne
+                SchemaDB.ListaEserciziDB.IDGiorno +" = ?", // Clausola WHERE
+                selectionArgs, // Valori per la clausola WHERE
+                null, // GROUP BY
+                null, // HAVING
+                null // ORDER BY
+        );
+
+        while (cursor.moveToNext()){
+            result.add(cursor.getInt(cursor.getColumnIndex(SchemaDB.ListaEserciziDB._ID)));
         }
 
         // Chiudi il database

@@ -30,6 +30,17 @@
         android:layout_marginRight="10dp"
         >
     </Button>
+    <Button
+        android:id="@+id/eliminaScheda"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:textColor="@color/white"
+        android:background="@drawable/ic_baseline_close_24"
+        android:onClick="OnDeleteSchedaClick"
+        android:layout_weight="0.2"
+        android:layout_marginRight="10dp"
+        >
+    </Button>
 
 
 </LinearLayout>

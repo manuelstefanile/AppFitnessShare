@@ -92,6 +92,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             Scheda c = (Scheda) getItem(position);
             ImageView im= v.findViewById(R.id.immagineScheda);
             Button bottone=v.findViewById(R.id.visualizzaScheda);
+            Button bottoneElimina=v.findViewById(R.id.eliminaScheda);
             Bitmap bitmap =null;
             if(c.getImg()!=null)
                  bitmap=((BitmapDrawable) c.getImg()).getBitmap();
@@ -104,6 +105,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
 
             im.setTag(position);
             bottone.setTag(position);
+            bottoneElimina.setTag(position);
 
         }else if(item.getClass()== Giorno.class){
             if(v==null)

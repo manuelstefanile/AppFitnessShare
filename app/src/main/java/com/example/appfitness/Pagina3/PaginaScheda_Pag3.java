@@ -186,6 +186,16 @@ public class PaginaScheda_Pag3 extends Activity {
         //apriSchedaSelezionata
         popS.ApriSchedaSelezionata(c,getLayoutInflater());
     }
+    public void OnDeleteSchedaClick(View v){
+        int position = Integer.parseInt(v.getTag().toString());
+        Scheda c = (Scheda) Global.adapterSchede.getItem(position);
+        //metto l id della listagiorni
+        ArrayList<Integer> listaGiorniId=Global.listaGiornidao.getIDListaGiorniPerScheda(c.getId());
+        c.setListaGiorni(listaGiorniId);
+        Global.schedadao.DeleteScheda(c);
+        Global.adapterSchede.remove(c);
+        StampaTutto();
+    }
     public void CreaScheda(View v){
 
         popS.CreaScheda(getLayoutInflater());

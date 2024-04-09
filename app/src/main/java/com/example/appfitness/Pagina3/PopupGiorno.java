@@ -156,9 +156,11 @@ public class PopupGiorno {
 
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
         Button creaEsercizio=dialogView.findViewById((int)R.id.CreaEsercizio);
+        Button salvaGiorno=dialogView.findViewById((int)R.id.salvaGiorno);
         Button back=dialogView.findViewById((int)R.id.backGiorno);
         nomeGiorno.setText(giorno.getNomeGiorno());
         nomeGiorno.setInputType(InputType.TYPE_NULL);
+        salvaGiorno.setVisibility(View.GONE);
 
         creaEsercizio.setOnClickListener(new View.OnClickListener() {
             @Override

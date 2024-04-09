@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.Scheda;
+import com.example.appfitness.Pagina3.Global;
 import com.example.appfitness.Pagina3.PopupEsercizio;
 import com.example.appfitness.Pagina3.PopupGiorno;
 import com.example.appfitness.Pagina3.PopupSchede;
@@ -122,8 +123,57 @@ public class SchedaDAO {
         }
 
     }
-    /*public void DeleteScheda(String nome){
+
+    public void DeleteScheda(Scheda scheda){
         SQLiteDatabase dbWrite = db.getWritableDatabase();
+
+        ArrayList<Integer> idGiorni=Global.listaGiornidao.getListaGiorniPerScheda(scheda.getId());
+        //elimina lista giorni dove c è la scheda id di riferimento
+        //qui ho l id ListaGiorni
+        for(Number idLG:scheda.getListaGiorni()){
+            dbWrite.delete(SchemaDB.ListaGiorniDB.TABLE_NAME,
+                    SchemaDB.ListaGiorniDB._ID + " = ?",
+                    new String[]{String.valueOf(idLG)});
+
+        }
+
+        //prendo i giorni id da lista giorni ed elmino anche i giorni
+        for (Integer idG: idGiorni){
+            dbWrite.delete(SchemaDB.GiornoDB.TABLE_NAME,
+                    SchemaDB.GiornoDB._ID + " = ?",
+                    new String[]{String.valueOf(idG)});
+
+            dbWrite.delete(SchemaDB.GiornoDB.TABLE_NAME,
+                    SchemaDB.GiornoDB._ID + " = ?",
+                    new String[]{String.valueOf(idG)});
+
+        }
+
+
+
+        for(Integer i: idGiorni) {
+
+            //elimino gli id esercizi
+            ArrayList<Integer> arr = Global.ledao.getListaEserciziPerGiorno(Long.valueOf(i));
+            for(Integer idex:arr){
+                dbWrite.delete(SchemaDB.EsercizioDB.TABLE_NAME,
+                        SchemaDB.EsercizioDB._ID + " = ?",
+                        new String[]{String.valueOf(idex)});
+            }
+
+            //prendo gli id esercizi in listaEsercizi associati ai giorni ed elimino
+            dbWrite.delete(SchemaDB.ListaEserciziDB.TABLE_NAME,
+                    SchemaDB.ListaEserciziDB.IDGiorno + " = ?",
+                    new String[]{String.valueOf(i)});
+        }
+
+        dbWrite.delete(SchemaDB.SchedaDB.TABLE_NAME,
+                SchemaDB.SchedaDB._ID + " = ?",
+                new String[]{String.valueOf(scheda.getId())});
+
+        db.close();
+        /*
+
         dbWrite.delete(SchemaDB.SchedaDB.TABLE_NAME,
                 SchemaDB.SchedaDB.COLUMN_nomeScheda + " = ?",
                 new String[]{nome});
@@ -138,8 +188,8 @@ public class SchedaDAO {
             gdao.DeleteGiornoById(idD);
         }
         ldao.DeleteListaPerScheda(nome);
-    }
 
-     */
+         */
+    }
 
 }

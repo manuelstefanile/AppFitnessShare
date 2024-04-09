@@ -53,32 +53,6 @@ public class EsercizioDAO {
 
         return result;
     }
-    public Integer getIDEsercizioByName(String nomeEx) {
-        SQLiteDatabase dbRead = db.getReadableDatabase();
-        Integer id = null;
-
-        Cursor cursor = dbRead.query(
-                SchemaDB.EsercizioDB.TABLE_NAME, // Nome della tua tabella Giorno
-                null, // Array di colonne; null seleziona tutte le colonne
-                SchemaDB.EsercizioDB.COLUMN_nomeEsercizio + " = ?", // Clausola WHERE per l'ID
-                new String[]{nomeEx}, // Valore per la clausola WHERE
-                null, // GROUP BY
-                null, // HAVING
-                null // ORDER BY
-        );
-
-        if (cursor.moveToFirst()) {
-            // Se la riga è stata trovata, puoi creare il tuo oggetto Giorno
-
-            id=(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB._ID)));
-            // Chiudi il cursore
-            cursor.close();
-        }
-        // Chiudi il database
-        dbRead.close();
-
-        return id;
-    }
 
     public Esercizio getEsercizioByNome(String nome) {
         SQLiteDatabase dbRead = db.getReadableDatabase();
@@ -97,6 +71,7 @@ public class EsercizioDAO {
         if (cursor.moveToFirst()) {
             // Se la riga è stata trovata, puoi creare il tuo oggetto Giorno
             result = new Esercizio();
+            result.setId(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB._ID)));
             result.setNomeEsercizio(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_nomeEsercizio)));
             result.setEsecuzione(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_esecuzione)));
             result.setNumeroRipetizioni(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni)));
