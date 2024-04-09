@@ -50,6 +50,9 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
         return itemList.size();
     }
 
+    public List<T> getLista(){
+            return itemList;
+    }
 
     @Override
     public View getView(int position, View v, ViewGroup parent) {
@@ -89,8 +92,9 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             Scheda c = (Scheda) getItem(position);
             ImageView im= v.findViewById(R.id.immagineScheda);
             Button bottone=v.findViewById(R.id.visualizzaScheda);
-
-            Bitmap bitmap = ((BitmapDrawable) c.getImg()).getBitmap();
+            Bitmap bitmap =null;
+            if(c.getImg()!=null)
+                 bitmap=((BitmapDrawable) c.getImg()).getBitmap();
 
             if (bitmap==null){
                 im.setImageResource(R.drawable.noimg);
@@ -114,8 +118,6 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             bottone.setText(c.getNomeGiorno());
 
             bottone.setTag(position);
-
-
             bottone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

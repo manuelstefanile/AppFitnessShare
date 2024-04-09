@@ -37,6 +37,14 @@
 
             >
         </EditText>
+        <Button
+            android:id="@+id/salvaGiorno"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:text="save"
+            android:layout_height="wrap_content"
+            >
+        </Button>
 
     </LinearLayout>
     <Button

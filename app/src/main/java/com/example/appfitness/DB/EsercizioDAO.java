@@ -43,6 +43,7 @@ public class EsercizioDAO {
         if (cursor.moveToFirst()) {
             // Se la riga è stata trovata, puoi creare il tuo oggetto Giorno
             result = new Esercizio();
+            result.setId(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB._ID)));
             result.setNomeEsercizio(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_nomeEsercizio)));
             // Chiudi il cursore
             cursor.close();
@@ -135,7 +136,7 @@ public class EsercizioDAO {
         //prendo l id dell ex
 
         ListaEserciziDAO listaEserciziDAO=new ListaEserciziDAO(ct);
-        listaEserciziDAO.DeleteListaPerNomeEsercizi(id);
+        //listaEserciziDAO.DeleteListaPerNomeEsercizi(id);
 
 
 

@@ -25,19 +25,22 @@ public class GiornoDAO {
     }
 
 
-    public long InsertGiorno(Giorno giorno){
+    public Giorno InsertGiorno(Giorno giorno){
         SQLiteDatabase dbWritable = db.getWritableDatabase();
-
-
+        /*
         //prendo gli id delle schede appena salvate
         ArrayList<Long> idSalvatiEx= PopupEsercizio.idEserciziSalvati;
         ArrayList<Long> idSalvatiListaEx= new ArrayList<>();
         //inserisco il giorno nel db
+
+         */
         ContentValues valuesGiorno = new ContentValues();
         valuesGiorno.put(SchemaDB.GiornoDB.COLUMN_nomeGiorno, giorno.getNomeGiorno());
         long idDBGiorno=dbWritable.insert(SchemaDB.GiornoDB.TABLE_NAME,null,valuesGiorno);
-        idSalvatiListaEx.add(idDBGiorno);
+        giorno.setId(idDBGiorno);
+        //idSalvatiListaEx.add(idDBGiorno);
 
+        /*
         //inserisco le liste associate
         for (Long id:idSalvatiEx) {
             System.out.println("_____ "+id);
@@ -49,9 +52,10 @@ public class GiornoDAO {
             long idW=dbWritable.insert(SchemaDB.ListaEserciziDB.TABLE_NAME,null,valuesListaEx);
             idSalvatiListaEx.add(idW);
         }
+         */
 
         dbWritable.close();
-        return idDBGiorno;
+        return giorno;
 
     }
 
@@ -72,8 +76,8 @@ public class GiornoDAO {
         if (cursor.moveToFirst()) {
             // Se la riga è stata trovata, puoi creare il tuo oggetto Giorno
             result = new Giorno();
+            result.setId(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.GiornoDB._ID)));
             result.setNomeGiorno(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.GiornoDB.COLUMN_nomeGiorno)));
-
 
             // Chiudi il cursore
             cursor.close();
@@ -112,6 +116,7 @@ public class GiornoDAO {
 
         return idTrovati;
     }
+    /*
     public Integer getGiornoIDByNameAndScheda(String nomeGiorno, String nomeScheda) {
         System.out.println("*** "+ nomeGiorno +"  " + nomeScheda);
         SQLiteDatabase dbRead = db.getReadableDatabase();
@@ -141,6 +146,9 @@ public class GiornoDAO {
         return idRisultanti;
     }
 
+     */
+
+    /*
     public void AggiornaGiorno(String giornoName, String schedaName){
 
         Integer idGiorno=getGiornoIDByNameAndScheda(giornoName,schedaName);
@@ -170,7 +178,11 @@ public class GiornoDAO {
         dbWritable.close();
 
     }
-    public void DeleteGiornoById(int id){
+    /
+     */
+
+    /*
+    public void DeleteGiornoById(Long id){
         SQLiteDatabase dbWrite = db.getWritableDatabase();
         dbWrite.delete(SchemaDB.GiornoDB.TABLE_NAME,
                 SchemaDB.GiornoDB._ID + " = ?",
@@ -193,5 +205,7 @@ public class GiornoDAO {
         leseDAO.DeleteListaPerIdGiorno(id);
 
     }
+
+     */
 
 }

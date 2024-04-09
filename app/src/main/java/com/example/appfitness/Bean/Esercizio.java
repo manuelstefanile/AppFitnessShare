@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
 public class Esercizio extends ListeClasseMarker {
+    private long id;
     private String nomeEsercizio,tecnica_intensita,esecuzione,note;
     private byte[] immagineMacchinario;
     private int numeroSerie,numeroRipetizioni;
@@ -31,6 +32,14 @@ public class Esercizio extends ListeClasseMarker {
 
     public Esercizio() {
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNomeEsercizio() {

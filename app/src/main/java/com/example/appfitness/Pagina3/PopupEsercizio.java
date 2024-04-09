@@ -89,7 +89,6 @@ public class PopupEsercizio {
 
 
         bottoneNote.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 System.out.println("noteClick");
@@ -105,7 +104,7 @@ public class PopupEsercizio {
         immagineEsercizio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("PREMON ");
+
                 PopupEsercizio.selectImageFromGallery();
             }
         });
@@ -126,7 +125,7 @@ public class PopupEsercizio {
                         note.getNote()
 
                 );
-                //inserisco il giorno nel db
+                //inserisco l ex nel db
                 DbHelper db = new DbHelper(PopupSchede.act.getApplicationContext());
                 SQLiteDatabase dbWritable = db.getWritableDatabase();
 
@@ -148,9 +147,8 @@ public class PopupEsercizio {
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_timer, esercizio.getTimer());
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_note,note.getNote());
 
-
-                System.out.println("***_"+ esercizio.getNomeEsercizio());
-                    long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
+                long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
+                esercizio.setId(EsercizioId);
                 if(EsercizioId==-1){
                     Toast.makeText(dialogView.getContext(), "Nome già presente", Toast.LENGTH_LONG).show();
 
@@ -158,11 +156,10 @@ public class PopupEsercizio {
                     Toast.makeText(dialogView.getContext(), "Inserisci almeno il nome", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    idEserciziSalvati.add(EsercizioId);
-                    giornoNuovo.getListaEsercizi().add(esercizio);
+                    giornoNuovo.getListaEsercizi().add(EsercizioId);
                     Global.adapterEsercizi.add(esercizio);
+                    Global.ledao.Insert(giornoNuovo.getId(),esercizio.getId());
                     Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
-
 
                 }
 
@@ -175,7 +172,6 @@ public class PopupEsercizio {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 SharedPreferences.Editor edit=shp.edit();
                 edit.putString("notePassate",new Note().toJson());
                 edit.commit();

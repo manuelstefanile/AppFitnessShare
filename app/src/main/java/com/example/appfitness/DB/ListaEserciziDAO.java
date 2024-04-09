@@ -1,6 +1,7 @@
 package com.example.appfitness.DB;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,7 +19,7 @@ public class ListaEserciziDAO {
 
     //ritorna un arrayList di id di Giorni per quella scheda
     @SuppressLint("Range")
-    public ArrayList<Integer> getListaEserciziPerGiorno(Integer idGiorno) {
+    public ArrayList<Integer> getListaEserciziPerGiorno(Long idGiorno) {
         SQLiteDatabase dbRead = db.getReadableDatabase();
         ArrayList<Integer> result = new ArrayList<>();
 
@@ -51,7 +52,7 @@ public class ListaEserciziDAO {
                 new String[]{String.valueOf(idGiorno)});
         db.close();
     }
-    public void DeleteListaPerNomeEsercizi(String idEx) {
+    public void DeleteListaPerNomeEsercizi(Integer idEx) {
         SQLiteDatabase dbWrite = db.getWritableDatabase();
         dbWrite.delete(SchemaDB.ListaEserciziDB.TABLE_NAME,
                 SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi + " = ?",
@@ -59,4 +60,11 @@ public class ListaEserciziDAO {
         db.close();
     }
 
+    public void Insert(Long idGiorno, Long idEx){
+        SQLiteDatabase dbWritable = db.getWritableDatabase();
+        ContentValues valuesListaEx = new ContentValues();
+        valuesListaEx.put(SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi, idEx);
+        valuesListaEx.put(SchemaDB.ListaEserciziDB.IDGiorno, idGiorno);
+        long idDBListaEx=dbWritable.insert(SchemaDB.ListaEserciziDB.TABLE_NAME,null,valuesListaEx);
+    }
 }

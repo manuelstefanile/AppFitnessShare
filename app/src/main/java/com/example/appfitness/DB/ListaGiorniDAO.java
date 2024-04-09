@@ -26,7 +26,7 @@ public class ListaGiorniDAO {
 
     //ritorna un arrayList di id di Giorni per quella scheda
     @SuppressLint("Range")
-    public ArrayList<Integer> getListaGiorniPerScheda(String schedaDiRiferimento) {
+    public ArrayList<Integer> getListaGiorniPerScheda(Long idschedaDiRiferimento) {
         SQLiteDatabase dbRead = db.getReadableDatabase();
         ArrayList<Integer> result = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class ListaGiorniDAO {
                 "ListaGiorni", // Nome della tua tabella
                 null, // Array di colonne; null seleziona tutte le colonne
                 SchemaDB.ListaGiorniDB.COLUM_SCHEDARIFERIMENTO +" = ?", // Clausola WHERE
-                new String[]{schedaDiRiferimento}, // Valori per la clausola WHERE
+                new String[]{String.valueOf(idschedaDiRiferimento)}, // Valori per la clausola WHERE
                 null, // GROUP BY
                 null, // HAVING
                 null // ORDER BY
@@ -57,7 +57,7 @@ public class ListaGiorniDAO {
         for (Long id:idSalvatiGiorni) {
             //crea la query id/idSalvatiEsercizi
             ContentValues valuesListaGiorni = new ContentValues();
-            valuesListaGiorni.put(SchemaDB.ListaGiorniDB.COLUM_SCHEDARIFERIMENTO,schedaRiferimento.getNomeScheda());
+            valuesListaGiorni.put(SchemaDB.ListaGiorniDB.COLUM_SCHEDARIFERIMENTO,schedaRiferimento.getId());
             valuesListaGiorni.put(SchemaDB.ListaGiorniDB.COLUMN_IDGiorno,id);
             dbWritable.insert(SchemaDB.ListaGiorniDB.TABLE_NAME,null,valuesListaGiorni);
         }
@@ -76,6 +76,21 @@ public class ListaGiorniDAO {
                 SchemaDB.ListaGiorniDB.COLUM_SCHEDARIFERIMENTO + " = ?",
                 new String[]{String.valueOf(schedaName)});
         db.close();
+    }
+    public void Insert(Long idScheda, ArrayList<Long> idGiorni){
+        SQLiteDatabase dbWritable = db.getWritableDatabase();
+        ContentValues valuesListaGiorni = new ContentValues();
+
+        System.out.println("+++"+idGiorni);
+
+        for(Long idG:idGiorni){
+            valuesListaGiorni.put(SchemaDB.ListaGiorniDB.COLUM_SCHEDARIFERIMENTO, idScheda);
+            valuesListaGiorni.put(SchemaDB.ListaGiorniDB.COLUMN_IDGiorno, idG);
+            dbWritable.insert(SchemaDB.ListaGiorniDB.TABLE_NAME,null,valuesListaGiorni);
+        }
+
+
+
     }
 
 }

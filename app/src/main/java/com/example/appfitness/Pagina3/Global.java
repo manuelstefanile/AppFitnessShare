@@ -24,4 +24,6 @@ public class Global {
     public static AdapterListaScheda adapterEsercizi;
 
     public static DbHelper db;
+
+    public static boolean aperturaSchedaVisualizzazione=false;
 }

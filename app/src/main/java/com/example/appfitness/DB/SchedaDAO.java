@@ -43,11 +43,12 @@ public class SchedaDAO {
         );
         if (cursor != null && cursor.moveToFirst()) {
             do {
+                int id=cursor.getInt(cursor.getColumnIndex(SchemaDB.SchedaDB._ID));
                 String nomeScheda=cursor.getString(cursor.getColumnIndex(SchemaDB.SchedaDB.COLUMN_nomeScheda));
                 byte[] immagine=cursor.getBlob(cursor.getColumnIndex(SchemaDB.SchedaDB.COLUMN_immagineScheda));
                 Scheda sch=new Scheda(nomeScheda,immagine);
+                sch.setId(id);
                 sch.setListaGiorni(new ArrayList<>());
-
                 result.add(sch);
 
             } while (cursor.moveToNext());
@@ -56,6 +57,41 @@ public class SchedaDAO {
         dbRead.close();
 
         return result;
+    }
+
+    public Scheda CreaSchedaTemp(){
+        SQLiteDatabase dbWritable = db.getWritableDatabase();
+        ContentValues valuesScheda = new ContentValues();
+        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_nomeScheda, "temp");
+        long id=dbWritable.insert(SchemaDB.SchedaDB.TABLE_NAME,null,valuesScheda);
+        Scheda schedaTemp=new Scheda("temp");
+        schedaTemp.setListaGiorni(new ArrayList<>());
+        schedaTemp.setId(id);
+        return schedaTemp;
+    }
+
+    public void ModificaSchedaTemp(Scheda scheda){
+
+        SQLiteDatabase dbWritable = db.getWritableDatabase();
+        //prendo gli id delle schede appena salvate
+
+
+        ContentValues valuesScheda = new ContentValues();
+        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_nomeScheda, scheda.getNomeScheda());
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        if(scheda.getImg()!=null) {
+            Bitmap bitmap = ((BitmapDrawable) scheda.getImg()).getBitmap();
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+            scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        }
+        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_immagineScheda, stream.toByteArray());
+
+        long idDBScheda=dbWritable.update(SchemaDB.SchedaDB.TABLE_NAME,valuesScheda,
+                SchemaDB.SchedaDB._ID+" = ?",
+                new String[]{String.valueOf(scheda.getId())});
+
+        dbWritable.close();
+
     }
 
 
@@ -86,7 +122,7 @@ public class SchedaDAO {
         }
 
     }
-    public void DeleteScheda(String nome){
+    /*public void DeleteScheda(String nome){
         SQLiteDatabase dbWrite = db.getWritableDatabase();
         dbWrite.delete(SchemaDB.SchedaDB.TABLE_NAME,
                 SchemaDB.SchedaDB.COLUMN_nomeScheda + " = ?",
@@ -103,5 +139,7 @@ public class SchedaDAO {
         }
         ldao.DeleteListaPerScheda(nome);
     }
+
+     */
 
 }

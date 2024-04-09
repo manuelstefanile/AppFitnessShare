@@ -37,7 +37,6 @@ public class PopupSchede {
 
     public  void CreaScheda(LayoutInflater inflater){
 
-
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_scheda, null);
         Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
@@ -55,10 +54,10 @@ public class PopupSchede {
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
-        Global.schedaNuova=new Scheda();
-        Global.schedaNuova.setListaGiorni(new ArrayList<>());
+        //creo la scheda temp e l aggiungo al db
+        Scheda schedaTemp=Global.schedadao.CreaSchedaTemp();
 
-
+        //setto l adapter dei giorni a vuoto
         ListView listaGiorniView = (ListView)dialogView.findViewById(R.id.listaGiorniView);
         Global.adapterGiorni = new AdapterListaScheda(dialogView.getContext(), R.layout.item_giorni, new ArrayList<Giorno>());
         listaGiorniView.setAdapter(Global.adapterGiorni);
@@ -82,7 +81,7 @@ public class PopupSchede {
             @Override
             public void onClick(View view) {
 
-                PopupGiorno.CreaGiorno(inflater,Global.schedaNuova);
+                PopupGiorno.CreaGiorno(inflater,schedaTemp);
             }
         });
 
@@ -102,11 +101,11 @@ public class PopupSchede {
                 if(nomeScheda.getText().toString().trim().length()==0){
                     Toast.makeText(dialogView.getContext(), "Inserisci un nome", Toast.LENGTH_SHORT).show();
                 }else {
-                    Global.schedaNuova.setNomeScheda(nomeScheda.getText().toString());
-                    Global.schedaNuova.setImg(imgScheda.getDrawable());
-                    Global.adapterSchede.add(Global.schedaNuova);
-                    System.out.println("SchedaNuova= " + Global.schedaNuova);
-                    Global.schedadao.InsertScheda(Global.schedaNuova);
+                    schedaTemp.setNomeScheda(nomeScheda.getText().toString());
+                    schedaTemp.setImg(imgScheda.getDrawable());
+                    Global.adapterSchede.add(schedaTemp);
+                    Global.schedadao.ModificaSchedaTemp(schedaTemp);
+                    Global.schedadao.ModificaSchedaTemp(schedaTemp);
                     PaginaScheda_Pag3.StampaTutto();
                     alertDialog.dismiss();
                     ResettaVariabili();
@@ -117,7 +116,6 @@ public class PopupSchede {
 
     public void ApriSchedaSelezionata(Scheda sched,LayoutInflater inflater){
         //per rendere accessibile la scheda ai giorni con oclick dell adapter
-        Global.schedaNuova=sched;
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_scheda, null);
@@ -143,7 +141,7 @@ public class PopupSchede {
 
         Global.listaGiornidao=new ListaGiorniDAO(act.getApplicationContext());
 
-        ArrayList<Integer> listaDiID =Global.listaGiornidao.getListaGiorniPerScheda(sched.getNomeScheda());
+        ArrayList<Integer> listaDiID =Global.listaGiornidao.getListaGiorniPerScheda(sched.getId());
 
         //per ogni id, ricercami l'elemento giorno e aggiungilo alla lista di giorni visibile
         for(Integer id:listaDiID){
@@ -160,7 +158,6 @@ public class PopupSchede {
         creaGiorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 PopupGiorno.CreaGiorno(inflater,sched);
             }
         });

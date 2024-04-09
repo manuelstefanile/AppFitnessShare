@@ -14,9 +14,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Scheda extends ListeClasseMarker {
+    private long id;
     private String nomeScheda;
     private byte[] imgBytes;
-    private ArrayList<Giorno> listaGiorni=new ArrayList<>() ;
+    private ArrayList<Long> listaIdGiorni=new ArrayList<>() ;
 
     public Scheda(String nomeScheda, Drawable img) {
         this.nomeScheda = nomeScheda;
@@ -27,8 +28,20 @@ public class Scheda extends ListeClasseMarker {
         this.imgBytes = img;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Scheda() {
 
+    }
+
+    public Scheda(String temp) {
+        this.nomeScheda=temp;
     }
 
     public String getNomeScheda() {
@@ -69,12 +82,12 @@ public class Scheda extends ListeClasseMarker {
 
 
 
-    public ArrayList<Giorno> getListaGiorni() {
-        return listaGiorni;
+    public ArrayList<Long> getListaGiorni() {
+        return listaIdGiorni;
     }
 
-    public void setListaGiorni(ArrayList<Giorno> listaGiorni) {
-        this.listaGiorni = listaGiorni;
+    public void setListaGiorni(ArrayList<Long> listaGiorni) {
+        this.listaIdGiorni = listaGiorni;
     }
 
     public String toJson() {
@@ -92,7 +105,7 @@ public class Scheda extends ListeClasseMarker {
         return "\nScheda{" +
                 "nomeScheda='" + nomeScheda + '\'' +
                 ", imgBytes=" + Arrays.toString(imgBytes) +
-                ", listaGiorni=" + listaGiorni +
+                ", listaGiorni=" + listaIdGiorni +
                 '}';
     }
 }

@@ -5,12 +5,21 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class Giorno extends ListeClasseMarker {
+    private long id;
     private String nomeGiorno;
-    private ArrayList<Esercizio> listaEsercizi=new ArrayList<>();
+    private ArrayList<Long> listaIdEsercizi=new ArrayList<>();
 
-    public Giorno(String nomeGiorno, ArrayList<Esercizio> listaEsercizi) {
+    public Giorno(String nomeGiorno, ArrayList<Long> listaEsercizi) {
         this.nomeGiorno = nomeGiorno;
-        this.listaEsercizi = listaEsercizi;
+        this.listaIdEsercizi = listaEsercizi;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Giorno() {
@@ -25,12 +34,12 @@ public class Giorno extends ListeClasseMarker {
         this.nomeGiorno = nomeGiorno;
     }
 
-    public ArrayList<Esercizio> getListaEsercizi() {
-        return listaEsercizi;
+    public ArrayList<Long> getListaEsercizi() {
+        return listaIdEsercizi;
     }
 
-    public void setListaEsercizi(ArrayList<Esercizio> listaEsercizi) {
-        this.listaEsercizi = listaEsercizi;
+    public void setListaEsercizi(ArrayList<Long> listaEsercizi) {
+        this.listaIdEsercizi = listaEsercizi;
     }
 
     public String toJson() {
@@ -47,7 +56,7 @@ public class Giorno extends ListeClasseMarker {
     public String toString() {
         return "\nGiorno{" +
                 "nomeGiorno='" + nomeGiorno + '\'' +
-                ", listaEsercizi=" + listaEsercizi +
+                ", listaEsercizi=" + listaIdEsercizi +
                 '}';
     }
 }
