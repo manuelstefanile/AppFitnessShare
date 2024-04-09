@@ -90,7 +90,7 @@ public class ListaGiorniDAO {
         }
     }
 
-    public void DeleteListaPerIdGiorno(Integer idGiorno) {
+    public void DeleteListaPerIdGiorno(long idGiorno) {
         SQLiteDatabase dbWrite = db.getWritableDatabase();
         dbWrite.delete(SchemaDB.ListaGiorniDB.TABLE_NAME,
                 SchemaDB.ListaGiorniDB.COLUMN_IDGiorno + " = ?",

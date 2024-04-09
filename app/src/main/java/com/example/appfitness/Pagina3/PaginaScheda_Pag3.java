@@ -201,9 +201,18 @@ public class PaginaScheda_Pag3 extends Activity {
 
         int position = Integer.parseInt(v.getTag().toString());
         Esercizio c = (Esercizio) Global.adapterEsercizi.getItem(position);
-        Global.esercizioDao.DeleteEsercizioById(c.getId());
+
+        //elimino la lista esercizi , non l esercizio in se. Perchè potrebbe servire
+        Global.ledao.DeleteListaPerNomeEsercizi(c.getId());
         Global.adapterEsercizi.remove(c);
 
+    }
+
+    public void OnDeleteGiornoClick(View v){
+        int position = Integer.parseInt(v.getTag().toString());
+        Giorno c = (Giorno) Global.adapterGiorni.getItem(position);
+        Global.giornoDao.DeleteGiornoByGiorno(c);
+        Global.adapterGiorni.remove(c);
     }
     public void CreaScheda(View v){
 

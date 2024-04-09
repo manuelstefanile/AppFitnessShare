@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.Scheda;
+import com.example.appfitness.Pagina3.Global;
 import com.example.appfitness.Pagina3.PopupEsercizio;
 
 import java.io.ByteArrayOutputStream;
@@ -68,12 +69,19 @@ public class GiornoDAO {
     }
 
 
-    public void DeleteGiornoById(Long id){
+    public void DeleteGiornoByGiorno(Giorno g){
         SQLiteDatabase dbWrite = db.getWritableDatabase();
         dbWrite.delete(SchemaDB.GiornoDB.TABLE_NAME,
                 SchemaDB.GiornoDB._ID + " = ?",
-                new String[]{String.valueOf(id)});
+                new String[]{String.valueOf(g.getId())});
         db.close();
+
+        //elimino la lista di giorni
+        Global.listaGiornidao.DeleteListaPerIdGiorno(g.getId());
+        //devo eliminare la lista di ex associata ai giorni
+        Global.ledao.DeleteListaPerIdGiorno((int) g.getId());
+
+
 
         /*
         //elimina gli esercizi associati ai giorni

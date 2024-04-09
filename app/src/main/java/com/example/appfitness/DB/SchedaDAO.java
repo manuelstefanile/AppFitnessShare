@@ -153,13 +153,16 @@ public class SchedaDAO {
 
         for(Integer i: idGiorni) {
 
-            //elimino gli id esercizi
+            //elimino gli id esercizi..... da vedere
+            /*
             ArrayList<Integer> arr = Global.ledao.getListaEserciziPerGiorno(Long.valueOf(i));
             for(Integer idex:arr){
                 dbWrite.delete(SchemaDB.EsercizioDB.TABLE_NAME,
                         SchemaDB.EsercizioDB._ID + " = ?",
                         new String[]{String.valueOf(idex)});
             }
+
+             */
 
             //prendo gli id esercizi in listaEsercizi associati ai giorni ed elimino
             dbWrite.delete(SchemaDB.ListaEserciziDB.TABLE_NAME,

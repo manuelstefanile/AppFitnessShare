@@ -166,6 +166,7 @@ public class PopupSchede {
             public void onClick(View view) {
                 if(sched.getListaGiorni().size()>0)
                     Global.listaGiornidao.InserisciListaGiorni(sched);
+                PaginaScheda_Pag3.StampaTutto();
                 alertDialog.dismiss();
                 ResettaVariabili();
             }

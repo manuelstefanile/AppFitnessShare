@@ -115,11 +115,15 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             Giorno c = (Giorno) getItem(position);
 
             Button bottone=v.findViewById(R.id.visualizzaGiorni);
+            Button bottoneElimina=v.findViewById(R.id.eliminaGiorno);
+
+
 
 
             bottone.setText(c.getNomeGiorno());
 
             bottone.setTag(position);
+            bottoneElimina.setTag(position);
             bottone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
