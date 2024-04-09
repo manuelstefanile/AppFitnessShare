@@ -20,7 +20,11 @@ import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Peso;
 import com.example.appfitness.Bean.Utente;
 import com.example.appfitness.DB.DbHelper;
+import com.example.appfitness.DB.MisureDAO;
+import com.example.appfitness.DB.PesoDAO;
 import com.example.appfitness.DB.SchemaDB;
+import com.example.appfitness.DB.UtenteDAO;
+import com.example.appfitness.DB.kcalDAO;
 import com.example.appfitness.Eccezioni.Eccezioni;
 import com.example.appfitness.Pagina3.PaginaScheda_Pag3;
 
@@ -37,13 +41,23 @@ public class Registrazione_Pag2 extends Activity {
     SharedPreferences sharedPreferences;
     DbHelper db;
     Button bottoneNext;
+
+    public static PesoDAO pesodao;
+    public static MisureDAO misuradao;
+    public static UtenteDAO utentedao;
+    public static com.example.appfitness.DB.kcalDAO kcalDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrazione);
+
+        pesodao=new PesoDAO(getApplicationContext());
+        misuradao=new MisureDAO(getApplicationContext());
+        kcalDAO=new kcalDAO(getApplicationContext());
+        utentedao=new UtenteDAO(getApplicationContext());
+
         bottoneNext=findViewById((int)R.id.bottoneNextRegistrazione);
         bottoneNext.setEnabled(false);
-
         //apreo il db
         db=new DbHelper(getApplicationContext());
 
@@ -52,10 +66,8 @@ public class Registrazione_Pag2 extends Activity {
         nomeUtenteR=findViewById((int)R.id.nomeUtenteRegistrazione);
         etaR=findViewById((int)R.id.etaRegistrazione);
         altezzaR=findViewById((int)R.id.altezzaRegistrazione);
-
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
         pesoSalvato=new Peso();
         misureSalvato=new Misure();
         chiloK=new Kcal();
@@ -65,8 +77,17 @@ public class Registrazione_Pag2 extends Activity {
         editor.putString("misurePassate", misureSalvato.toJson());
         editor.putString("kcalPassate", chiloK.toJson());
         editor.putString("notePassate", noteSalvate.toJson());
-
         editor.apply();
+
+        String modalita=getIntent().getStringExtra("mode");
+        if (modalita!=null)
+        {
+            switch (modalita) {
+                case "edit":
+                    ModalitaEdit();
+                    break;
+            }
+        }
 
 
     }
@@ -205,5 +226,28 @@ public class Registrazione_Pag2 extends Activity {
         i.setClass(getApplicationContext(), PaginaScheda_Pag3.class);
         startActivity(i);
         finish();
+    }
+    private void ModalitaEdit(){
+        Utente u=utentedao.getUtenteInfo();
+        System.out.println("*** "+u);
+        nomeR.setText(u.getNome());
+        cognomeR.setText(u.getCognome());
+        nomeUtenteR.setText(u.getNomeUtente());
+        etaR.setText(String.valueOf(u.getEta()));
+        altezzaR.setText(String.valueOf(u.getAltezza()));
+
+        pesoSalvato=u.getPeso();
+        misureSalvato=u.getMisure();
+        chiloK=u.getKcal();
+        noteSalvate=u.getNote();
+
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("pesoPassato", pesoSalvato.toJson());
+        editor.putString("misurePassate", misureSalvato.toJson());
+        editor.putString("kcalPassate", chiloK.toJson());
+        editor.putString("notePassate", noteSalvate.toJson());
+        editor.apply();
+
     }
 }

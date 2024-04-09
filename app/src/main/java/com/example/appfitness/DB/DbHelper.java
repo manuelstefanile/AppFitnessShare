@@ -18,7 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     + SchemaDB.UtenteDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + SchemaDB.UtenteDB.COLUMN_nome + " TEXT NOT NULL, "
                     + SchemaDB.UtenteDB.COLUMN_cognome + " TEXT NOT NULL, "
-                    + SchemaDB.UtenteDB.COLUMN_nomeUtente + " INTEGER, "
+                    + SchemaDB.UtenteDB.COLUMN_nomeUtente + " TEXT, "
                     + SchemaDB.UtenteDB.COLUMN_eta + " INTEGER, "
                     + SchemaDB.UtenteDB.COLUMN_altezza + " FLOAT, "
                     + SchemaDB.UtenteDB.COLUMN_IdPeso + " INTEGER, "
@@ -31,21 +31,21 @@ public class DbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + SchemaDB.PesoDB.TABLE_NAME + " ("
                     + SchemaDB.PesoDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + SchemaDB.PesoDB.COLUMN_pesoKg + " FLOAT, "
-                    + SchemaDB.PesoDB.COLUMN_calendario + " INTEGER NOT NULL"
+                    + SchemaDB.PesoDB.COLUMN_calendario + " LONG NOT NULL"
                     + "); ";
 
     final private static String CREATE_KCAL =
             "CREATE TABLE " + SchemaDB.KcalDB.TABLE_NAME + " ("
                     + SchemaDB.KcalDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + SchemaDB.KcalDB.COLUMN_kcal + " INTEGER, "
-                    + SchemaDB.KcalDB.COLUMN_fase + " INTEGER, "
-                    + SchemaDB.KcalDB.COLUMN_carboidrati + " INTEGER, "
-                    + SchemaDB.KcalDB.COLUMN_proteine + " INTEGER, "
-                    + SchemaDB.KcalDB.COLUMN_grassi + " INTEGER, "
-                    + SchemaDB.KcalDB.COLUMN_sale + " INTEGER, "
-                    + SchemaDB.KcalDB.COLUMN_acqua + " INTEGER, "
+                    + SchemaDB.KcalDB.COLUMN_fase + " TEXT, "
+                    + SchemaDB.KcalDB.COLUMN_carboidrati + " FLOAT, "
+                    + SchemaDB.KcalDB.COLUMN_proteine + " FLOAT, "
+                    + SchemaDB.KcalDB.COLUMN_grassi + " FLOAT, "
+                    + SchemaDB.KcalDB.COLUMN_sale + " FLOAT, "
+                    + SchemaDB.KcalDB.COLUMN_acqua + " FLOAT, "
                     + SchemaDB.KcalDB.COLUMN_note + " TEXT, "
-                    + SchemaDB.KcalDB.COLUMN_calendario + " INTEGER NOT NULL"
+                    + SchemaDB.KcalDB.COLUMN_calendario + " LONG NOT NULL"
                     + "); ";
 
     final private static String CREATE_MISURE =

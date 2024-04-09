@@ -26,6 +26,7 @@ import com.example.appfitness.DB.ListaGiorniDAO;
 import com.example.appfitness.DB.SchedaDAO;
 import com.example.appfitness.DB.SchemaDB;
 import com.example.appfitness.R;
+import com.example.appfitness.Registrazione_Pag2;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -229,6 +230,14 @@ public class PaginaScheda_Pag3 extends Activity {
         finish();
         Intent intent = new Intent(this, PaginaScheda_Pag3.class);
         startActivity(intent);
+    }
+
+    public void EditUtente(View v){
+        Intent i =new Intent();
+        i.setClass(getApplicationContext(), Registrazione_Pag2.class);
+        i.putExtra("mode","edit");
+        startActivity(i);
+
     }
 
 

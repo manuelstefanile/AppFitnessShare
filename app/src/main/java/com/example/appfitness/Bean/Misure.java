@@ -3,6 +3,7 @@ package com.example.appfitness.Bean;
 import com.google.gson.Gson;
 
 public class Misure {
+    private long id;
     private float braccioDx;
     private float braccioSx;
     private float gambaDx;
@@ -23,6 +24,14 @@ public class Misure {
 
     public Misure() {
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public float getBraccioDx() {

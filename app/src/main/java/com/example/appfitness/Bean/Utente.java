@@ -1,6 +1,7 @@
 package com.example.appfitness.Bean;
 
 public class Utente {
+    private long id;
     private String nome,cognome,nomeUtente;
     private int eta;
     private float altezza;
@@ -19,6 +20,18 @@ public class Utente {
         this.misure = misure;
         this.kcal = kcal;
         this.note = note;
+    }
+
+    public Utente() {
+
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -108,7 +121,8 @@ public class Utente {
     @Override
     public String toString() {
         return "Utente{" +
-                "nome='" + nome + '\'' +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", nomeUtente='" + nomeUtente + '\'' +
                 ", eta=" + eta +

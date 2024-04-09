@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.util.Calendar;
 
 public class Peso {
+    private long id;
     private float pesoKg;
     private Calendar calendario=Calendar.getInstance();
 
@@ -15,6 +16,14 @@ public class Peso {
 
     public Peso() {
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public float getPesoKg() {

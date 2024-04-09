@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.util.Calendar;
 
 public class Kcal {
+    private long id;
     private int kcal;
     private Fase fase=Fase.NORMO;
     private float carbo,proteine,grassi,sale,acqua;
@@ -15,12 +16,29 @@ public class Kcal {
 
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public enum Fase{
         MASSA,
         NORMO,
         DEFINIZIONE,
-        RICOMPOSIZIONE
+        RICOMPOSIZIONE;
+
+        // Metodo statico per convertire una stringa in enum
+        public static Fase fromString(String text) {
+            for (Fase fase : Fase.values()) {
+                if (fase.name().equalsIgnoreCase(text)) {
+                    return fase;
+                }
+            }
+            return null;
+        }
     }
 
     public Kcal(int kcal, Fase fase, float carbo, float proteine, float grassi, float sale, float acqua, String note, Calendar data) {
