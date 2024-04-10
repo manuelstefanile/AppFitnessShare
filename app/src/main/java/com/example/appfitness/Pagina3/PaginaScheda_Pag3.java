@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appfitness.Bean.Esercizio;
@@ -55,6 +56,11 @@ public class PaginaScheda_Pag3 extends Activity {
 
         lista = (ListView)findViewById(R.id.listaSchedeView);
         lista.setAdapter(Global.adapterSchede);
+        TextView nomeutenteR=findViewById((int)R.id.nomeUtente);
+        String nomeUtente=getIntent().getStringExtra("nomeUtente");
+        if(nomeUtente!=null){
+            nomeutenteR.setText(nomeUtente);
+        }
 
         //chiama daoScheda
         ArrayList<Scheda> arrSchede= Global.schedadao.getAllSchede();

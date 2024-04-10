@@ -1,6 +1,7 @@
 package com.example.appfitness.DB;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -84,6 +85,26 @@ public class MisureDAO {
 
         db.close();
         return misure;
+    }
+
+    public long insertMisure(Misure misure) {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SchemaDB.MisureDB.COLUMN_braccioDX, misure.getBraccioDx());
+        values.put(SchemaDB.MisureDB.COLUMN_braccioSX, misure.getBraccioSx());
+        values.put(SchemaDB.MisureDB.COLUMN_gambaDX, misure.getGambaDx());
+        values.put(SchemaDB.MisureDB.COLUMN_gambaSX, misure.getGambaSx());
+        values.put(SchemaDB.MisureDB.COLUMN_petto, misure.getPetto());
+        values.put(SchemaDB.MisureDB.COLUMN_spalle, misure.getSpalle());
+        values.put(SchemaDB.MisureDB.COLUMN_addome, misure.getAddome());
+
+        // Esegui l'operazione di inserimento
+        long newRowId = dbW.insert(SchemaDB.MisureDB.TABLE_NAME, null, values);
+
+        db.close();
+
+        return newRowId; // Ritorna l'ID del nuovo record inserito
     }
 
 }

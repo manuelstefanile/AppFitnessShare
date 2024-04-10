@@ -1,6 +1,7 @@
 package com.example.appfitness.DB;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -84,5 +85,40 @@ public class PesoDAO {
 
         db.close();
         return peso;
+    }
+
+    public void updatePeso(Peso peso) {
+        SQLiteDatabase dbW= db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SchemaDB.PesoDB.COLUMN_pesoKg, peso.getPesoKg());
+        values.put(SchemaDB.PesoDB.COLUMN_calendario, peso.getCalendario().getTimeInMillis());
+
+        // Esempio di clausola WHERE se vuoi aggiornare basandoti sull'ID
+        String selection = SchemaDB.PesoDB._ID + "=?";
+        String[] selectionArgs = { String.valueOf(peso.getId()) };
+
+        // Esegui l'aggiornamento
+        int rowsUpdated = dbW.update(
+                SchemaDB.PesoDB.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs
+        );
+
+        db.close();
+    }
+    public Peso insertPeso(Peso peso) {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SchemaDB.PesoDB.COLUMN_pesoKg, peso.getPesoKg());
+        values.put(SchemaDB.PesoDB.COLUMN_calendario, peso.getCalendario().getTimeInMillis());
+
+        // Esegui l'operazione di inserimento
+        long newRowId = dbW.insert(SchemaDB.PesoDB.TABLE_NAME, null, values);
+        peso.setId(newRowId);
+        db.close();
+        return peso; // Ritorna l'ID del nuovo record inserito
     }
 }

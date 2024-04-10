@@ -1,6 +1,7 @@
 package com.example.appfitness.DB;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -108,6 +109,28 @@ public class kcalDAO {
 
         db.close();
         return kcal;
+    }
+
+    public long insertKcal(Kcal kcal) {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SchemaDB.KcalDB.COLUMN_kcal, kcal.getKcal());
+        values.put(SchemaDB.KcalDB.COLUMN_fase, kcal.getFase().toString());
+        values.put(SchemaDB.KcalDB.COLUMN_carboidrati, kcal.getCarbo());
+        values.put(SchemaDB.KcalDB.COLUMN_proteine, kcal.getProteine());
+        values.put(SchemaDB.KcalDB.COLUMN_grassi, kcal.getGrassi());
+        values.put(SchemaDB.KcalDB.COLUMN_sale, kcal.getSale());
+        values.put(SchemaDB.KcalDB.COLUMN_acqua, kcal.getAcqua());
+        values.put(SchemaDB.KcalDB.COLUMN_note, kcal.getNote());
+        values.put(SchemaDB.KcalDB.COLUMN_calendario, kcal.getData().getTimeInMillis());
+
+        // Esegui l'operazione di inserimento
+        long newRowId = dbW.insert(SchemaDB.KcalDB.TABLE_NAME, null, values);
+
+        db.close();
+
+        return newRowId; // Ritorna l'ID del nuovo record inserito
     }
 
 

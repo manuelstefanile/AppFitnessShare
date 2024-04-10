@@ -26,6 +26,7 @@ import com.example.appfitness.DB.SchemaDB;
 import com.example.appfitness.DB.UtenteDAO;
 import com.example.appfitness.DB.kcalDAO;
 import com.example.appfitness.Eccezioni.Eccezioni;
+import com.example.appfitness.Pagina3.Global;
 import com.example.appfitness.Pagina3.PaginaScheda_Pag3;
 
 import java.sql.Date;
@@ -40,7 +41,7 @@ public class Registrazione_Pag2 extends Activity {
     Utente utente;
     SharedPreferences sharedPreferences;
     DbHelper db;
-    Button bottoneNext;
+    Button bottoneNext,bottoneSalva,bottoneripristinaDati;
 
     public static PesoDAO pesodao;
     public static MisureDAO misuradao;
@@ -56,10 +57,13 @@ public class Registrazione_Pag2 extends Activity {
         kcalDAO=new kcalDAO(getApplicationContext());
         utentedao=new UtenteDAO(getApplicationContext());
 
+        bottoneripristinaDati=findViewById((int)R.id.ripristinaDatiButton);
+        bottoneSalva=findViewById((int)R.id.salvaButtonReg);
         bottoneNext=findViewById((int)R.id.bottoneNextRegistrazione);
         bottoneNext.setEnabled(false);
         //apreo il db
         db=new DbHelper(getApplicationContext());
+        Global.db=db;
 
         nomeR=findViewById((int)R.id.nomeRegistrazione);
         cognomeR=findViewById((int)R.id.cognomeRegistrazione);
@@ -79,17 +83,111 @@ public class Registrazione_Pag2 extends Activity {
         editor.putString("notePassate", noteSalvate.toJson());
         editor.apply();
 
+        bottoneNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PassaPagina3(view);
+            }
+        });
+        bottoneripristinaDati.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RipristinaDati(view);
+            }
+        });
+        bottoneSalva.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SalvaAll(view);
+            }
+        });
+
         String modalita=getIntent().getStringExtra("mode");
         if (modalita!=null)
         {
             switch (modalita) {
                 case "edit":
+                    bottoneNext.setEnabled(true);
+                    bottoneNext.setVisibility(View.GONE);
+                    bottoneripristinaDati.setText("Back");
+                    bottoneripristinaDati.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            onBackPressed();
+                        }
+                    });
+                    bottoneSalva.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //aggiorna
+                            AggiornaDati();
+                        }
+                    });
+
                     ModalitaEdit();
                     break;
             }
         }
 
 
+    }
+    public void AggiornaDati(){
+
+        //controlli e prendo i valori associati all edittext
+        String nome=nomeR.getText().toString();
+        System.out.println("nome **" + nome);
+        String cognome=cognomeR.getText().toString();
+        String nomeUtente=nomeUtenteR.getText().toString();
+        int eta= Integer.parseInt(etaR.getText().toString().trim().length()!=0?etaR.getText().toString():"0");
+        float altezza=Float.parseFloat(altezzaR.getText().toString().trim().length()!=0?altezzaR.getText().toString():"0");
+
+
+        pesoSalvato=Peso.fromJson(sharedPreferences.getString("pesoPassato",null));
+        noteSalvate = Note.fromJson(sharedPreferences.getString("notePassate", null));
+        misureSalvato = Misure.fromJson(sharedPreferences.getString("misurePassate", null));
+        chiloK = Kcal.fromJson(sharedPreferences.getString("kcalPassate", null));
+
+        long idUtente=utente.getId();
+
+        //se ci sono differenze, allora salva nel db, altrimenti non salvare niente
+        Peso pOld=utente.getPeso();
+        if(pOld.getCalendario().getTimeInMillis()!=pesoSalvato.getCalendario().getTimeInMillis()||
+            pOld.getPesoKg()!=pesoSalvato.getPesoKg())
+            pesodao.insertPeso(pesoSalvato);
+
+        Misure mOld=utente.getMisure();
+        if(mOld.getBraccioDx()!=misureSalvato.getBraccioDx()||
+            mOld.getBraccioSx()!=misureSalvato.getBraccioSx()||
+            mOld.getGambaDx()!=misureSalvato.getGambaDx()||mOld.getGambaSx()!=misureSalvato.getGambaSx()||
+            mOld.getAddome()!=misureSalvato.getAddome()||mOld.getPetto()!=misureSalvato.getPetto()||
+            mOld.getSpalle()!=misureSalvato.getSpalle())
+            misuradao.insertMisure(misureSalvato);
+
+        Kcal kOld=utente.getKcal();
+        System.out.println("KKvecchi "+kOld.getData().getTimeInMillis());
+        System.out.println("KKnuovo "+chiloK.getData().getTimeInMillis());
+
+        if(kOld.getData().getTimeInMillis()!=chiloK.getData().getTimeInMillis()||
+            kOld.getAcqua()!=chiloK.getAcqua()||
+                kOld.getKcal()!=chiloK.getKcal()||
+                kOld.getNote()!=chiloK.getNote()||
+                kOld.getSale()!=chiloK.getSale()||
+                kOld.getGrassi()!=chiloK.getGrassi() ||
+                kOld.getProteine()!=chiloK.getProteine()||
+                kOld.getCarbo()!=chiloK.getCarbo()||
+                kOld.getFase().toString()!=chiloK.getFase().toString())
+            kcalDAO.insertKcal(chiloK);
+
+
+
+
+        utente=new Utente(nome,cognome,nomeUtente,eta,altezza,pesoSalvato,misureSalvato,chiloK,noteSalvate);
+        utente.setId(idUtente);
+
+        utentedao.updateUtente(utente);
+
+        Toast.makeText(getApplicationContext(), "Aggiornato", Toast.LENGTH_SHORT).show();
+        StampaTutto();
     }
     @SuppressLint("Range")
     public void SalvaAll(View v){
@@ -161,6 +259,7 @@ public class Registrazione_Pag2 extends Activity {
         bottoneNext.setEnabled(true);
         bottoneNext.setBackgroundColor((int)R.color.azzurrino);
         dbWritable.close();
+        StampaTutto();
 
     }
     public void RipristinaDati(View v){
@@ -223,23 +322,23 @@ public class Registrazione_Pag2 extends Activity {
         db.close();
         Intent i =new Intent();
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("nomeUtente",nomeUtenteR.getText().toString());
         i.setClass(getApplicationContext(), PaginaScheda_Pag3.class);
         startActivity(i);
-        finish();
+
     }
     private void ModalitaEdit(){
-        Utente u=utentedao.getUtenteInfo();
-        System.out.println("*** "+u);
-        nomeR.setText(u.getNome());
-        cognomeR.setText(u.getCognome());
-        nomeUtenteR.setText(u.getNomeUtente());
-        etaR.setText(String.valueOf(u.getEta()));
-        altezzaR.setText(String.valueOf(u.getAltezza()));
+        utente=utentedao.getUtenteInfo();
+        nomeR.setText(utente.getNome());
+        cognomeR.setText(utente.getCognome());
+        nomeUtenteR.setText(utente.getNomeUtente());
+        etaR.setText(String.valueOf(utente.getEta()));
+        altezzaR.setText(String.valueOf(utente.getAltezza()));
 
-        pesoSalvato=u.getPeso();
-        misureSalvato=u.getMisure();
-        chiloK=u.getKcal();
-        noteSalvate=u.getNote();
+        pesoSalvato=utente.getPeso();
+        misureSalvato=utente.getMisure();
+        chiloK=utente.getKcal();
+        noteSalvate=utente.getNote();
 
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -249,5 +348,44 @@ public class Registrazione_Pag2 extends Activity {
         editor.putString("notePassate", noteSalvate.toJson());
         editor.apply();
 
+        StampaTutto();
+
+    }
+    public static void StampaTutto()
+    {
+        System.out.println("*********************************************************");
+
+        printUtente(Global.db);
+
+        printKcal(Global.db);
+
+        printMisure(Global.db);
+
+        printPeso(Global.db);
+
+        System.out.println("*********************************************************");
+
+    }
+
+    // Metodo per stampare tutte le Liste Esercizi
+    public static void printUtente(DbHelper dbHelper) {
+        Cursor cursor = dbHelper.getAllData(SchemaDB.UtenteDB.TABLE_NAME);
+        System.out.println("----UTENTI----");
+        PaginaScheda_Pag3.printCursor(cursor);
+    }
+    public static void printKcal(DbHelper dbHelper) {
+        Cursor cursor = dbHelper.getAllData(SchemaDB.KcalDB.TABLE_NAME);
+        System.out.println("----KCAL----");
+        PaginaScheda_Pag3.printCursor(cursor);
+    }
+    public static void printMisure(DbHelper dbHelper) {
+        Cursor cursor = dbHelper.getAllData(SchemaDB.MisureDB.TABLE_NAME);
+        System.out.println("----MISURE----");
+        PaginaScheda_Pag3.printCursor(cursor);
+    }
+    public static void printPeso(DbHelper dbHelper) {
+        Cursor cursor = dbHelper.getAllData(SchemaDB.PesoDB.TABLE_NAME);
+        System.out.println("----PESO----");
+        PaginaScheda_Pag3.printCursor(cursor);
     }
 }

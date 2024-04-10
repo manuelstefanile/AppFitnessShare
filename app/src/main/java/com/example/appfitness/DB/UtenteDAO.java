@@ -52,11 +52,11 @@ public class UtenteDAO {
 
             //ricerca misura
             int idMisura=cursor.getInt(cursor.getColumnIndex(SchemaDB.UtenteDB.COLUMN_IdMisure));
-            Misure m= Registrazione_Pag2.misuradao.getMisureById(idPeso);
+            Misure m= Registrazione_Pag2.misuradao.getMisureById(idMisura);
 
             //ricerca kcal
             int idkcal=cursor.getInt(cursor.getColumnIndex(SchemaDB.UtenteDB.COLUMN_IdKcal));
-            Kcal k= Registrazione_Pag2.kcalDAO.getKcalById(idPeso);
+            Kcal k= Registrazione_Pag2.kcalDAO.getKcalById(idkcal);
 
             utente.setPeso(p);
             utente.setMisure(m);
@@ -67,8 +67,40 @@ public class UtenteDAO {
         }
 
         cursor.close();
-        db.close();
+        dbW.close();
+
 
         return utente;
+    }
+
+    public void updateUtente(Utente utente) {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SchemaDB.UtenteDB.COLUMN_nome, utente.getNome());
+        values.put(SchemaDB.UtenteDB.COLUMN_cognome, utente.getCognome());
+        values.put(SchemaDB.UtenteDB.COLUMN_nomeUtente, utente.getNomeUtente());
+        values.put(SchemaDB.UtenteDB.COLUMN_eta, utente.getEta());
+        values.put(SchemaDB.UtenteDB.COLUMN_altezza, utente.getAltezza());
+        values.put(SchemaDB.UtenteDB.COLUMN_IdPeso, utente.getPeso().getId());
+        values.put(SchemaDB.UtenteDB.COLUMN_IdKcal, utente.getKcal().getId());
+        values.put(SchemaDB.UtenteDB.COLUMN_IdMisure, utente.getMisure().getId());
+        values.put(SchemaDB.UtenteDB.COLUMN_note, utente.getNote().getNote());
+
+        // Esempio di clausola WHERE se vuoi aggiornare basandoti sull'ID
+        String selection = SchemaDB.UtenteDB._ID + "=?";
+        String[] selectionArgs = { String.valueOf(utente.getId()) };
+
+        // Esegui l'aggiornamento
+        int rowsUpdated = dbW.update(
+                SchemaDB.UtenteDB.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs
+        );
+
+
+
+        dbW.close();
     }
 }
