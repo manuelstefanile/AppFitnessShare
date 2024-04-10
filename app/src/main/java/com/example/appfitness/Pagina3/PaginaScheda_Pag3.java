@@ -2,6 +2,7 @@ package com.example.appfitness.Pagina3;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -31,12 +32,15 @@ import com.example.appfitness.Registrazione_Pag2;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import kotlin.Suppress;
 
 public class PaginaScheda_Pag3 extends Activity {
     ListView lista;
     PopupSchede popS=new PopupSchede(this);
+    TextView nomeutenteR;
+    private Scheda schedaTemp;
 
     @Override
     @SuppressLint({"Range", "WrongThread"})
@@ -44,6 +48,10 @@ public class PaginaScheda_Pag3 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schede_pag3);
 
+
+        /*************************************************/
+        VisualizzaActivity();
+        /*************************************************/
         Global.listaGiornidao= new ListaGiorniDAO(getApplicationContext());
         Global.schedadao=new SchedaDAO(getApplicationContext());
         Global.db=new DbHelper(getApplicationContext());
@@ -56,7 +64,7 @@ public class PaginaScheda_Pag3 extends Activity {
 
         lista = (ListView)findViewById(R.id.listaSchedeView);
         lista.setAdapter(Global.adapterSchede);
-        TextView nomeutenteR=findViewById((int)R.id.nomeUtente);
+        nomeutenteR=findViewById((int)R.id.nomeUtente);
         String nomeUtente=getIntent().getStringExtra("nomeUtente");
         if(nomeUtente!=null){
             nomeutenteR.setText(nomeUtente);
@@ -65,7 +73,13 @@ public class PaginaScheda_Pag3 extends Activity {
         //chiama daoScheda
         ArrayList<Scheda> arrSchede= Global.schedadao.getAllSchede();
         for(Scheda schedaTemp:arrSchede){
-            Global.adapterSchede.add(schedaTemp);
+            //se ho la scheda temp, allora eliminala
+            System.out.println("_______"+schedaTemp.getNomeScheda());
+            if(schedaTemp.getNomeScheda().equals("temp")){
+                System.out.println("_____");
+                Global.schedadao.DeleteScheda(schedaTemp);
+            }else
+                Global.adapterSchede.add(schedaTemp);
         }
 
         StampaTutto();
@@ -233,8 +247,10 @@ public class PaginaScheda_Pag3 extends Activity {
     }
 
     public void ChiudTuttoNonSalva(View v){
+
         finish();
         Intent intent = new Intent(this, PaginaScheda_Pag3.class);
+        intent.putExtra("nomeUtente",nomeutenteR.getText().toString());
         startActivity(intent);
     }
 
@@ -243,8 +259,34 @@ public class PaginaScheda_Pag3 extends Activity {
         i.setClass(getApplicationContext(), Registrazione_Pag2.class);
         i.putExtra("mode","edit");
         startActivity(i);
-
+    }
+    public void SeeUtente(View v){
+        Intent i =new Intent();
+        i.setClass(getApplicationContext(), Registrazione_Pag2.class);
+        i.putExtra("mode","see");
+        startActivity(i);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String nomeUtente=getIntent().getStringExtra("nomeUtente");
 
+        if(nomeUtente!=null){
+
+            nomeutenteR.setText(nomeUtente);
+        }
+    }
+
+    public void VisualizzaActivity(){
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        if (activityManager != null) {
+            List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(10); // Numero massimo di attività da visualizzare
+            for (ActivityManager.RunningTaskInfo task : tasks) {
+                System.out.println("ActivityStack" + task.baseActivity.getClassName());
+
+            }
+        }
+
+    }
 }

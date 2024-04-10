@@ -87,7 +87,7 @@ public class MisureDAO {
         return misure;
     }
 
-    public long insertMisure(Misure misure) {
+    public Misure insertMisure(Misure misure) {
         SQLiteDatabase dbW = db.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -101,10 +101,10 @@ public class MisureDAO {
 
         // Esegui l'operazione di inserimento
         long newRowId = dbW.insert(SchemaDB.MisureDB.TABLE_NAME, null, values);
-
+        misure.setId(newRowId);
         db.close();
 
-        return newRowId; // Ritorna l'ID del nuovo record inserito
+        return misure; // Ritorna l'ID del nuovo record inserito
     }
 
 }

@@ -40,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
         );
 
         // Ora puoi iterare attraverso il cursore per ottenere i risultati
+        String nomeUtente=null;
         while (cursor.moveToNext()) {
             count++;
+            nomeUtente=cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.UtenteDB.COLUMN_nomeUtente));
         }
         // Chiudi il cursore quando hai finito di utilizzarlo
         cursor.close();
@@ -50,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
         Intent i =new Intent();
         if(count==0){
             i.setClass(getApplicationContext(),Registrazione_Pag2.class);
-        }else
+        }else {
             i.setClass(getApplicationContext(), PaginaScheda_Pag3.class);
+            i.putExtra("nomeUtente",nomeUtente);
+        }
 
         startActivity(i);
     }

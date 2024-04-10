@@ -42,6 +42,7 @@ public class Registrazione_Pag2 extends Activity {
     SharedPreferences sharedPreferences;
     DbHelper db;
     Button bottoneNext,bottoneSalva,bottoneripristinaDati;
+    public static boolean editGlobal=true;
 
     public static PesoDAO pesodao;
     public static MisureDAO misuradao;
@@ -57,6 +58,10 @@ public class Registrazione_Pag2 extends Activity {
         kcalDAO=new kcalDAO(getApplicationContext());
         utentedao=new UtenteDAO(getApplicationContext());
 
+        Button bottonePeso=findViewById((int)R.id.buttonPeso);
+        Button bottoneKcal=findViewById((int)R.id.buttonKcal);
+        Button bottoneMisure=findViewById((int)R.id.buttonMisure);
+        Button bottoneNote=findViewById((int)R.id.buttonNote);
         bottoneripristinaDati=findViewById((int)R.id.ripristinaDatiButton);
         bottoneSalva=findViewById((int)R.id.salvaButtonReg);
         bottoneNext=findViewById((int)R.id.bottoneNextRegistrazione);
@@ -107,13 +112,14 @@ public class Registrazione_Pag2 extends Activity {
         {
             switch (modalita) {
                 case "edit":
+                    editGlobal=true;
                     bottoneNext.setEnabled(true);
                     bottoneNext.setVisibility(View.GONE);
                     bottoneripristinaDati.setText("Back");
                     bottoneripristinaDati.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            onBackPressed();
+                            PassaPagina3(view);
                         }
                     });
                     bottoneSalva.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +130,26 @@ public class Registrazione_Pag2 extends Activity {
                         }
                     });
 
-                    ModalitaEdit();
+                    ModalitaEdit(true);
+                    break;
+                case "see":
+                    bottonePeso.setText("Mostra");
+                    bottoneNote.setText("Mostra");
+                    bottoneKcal.setText("Mostra");
+                    bottoneMisure.setText("Mostra");
+                    bottoneNext.setEnabled(true);
+                    bottoneNext.setVisibility(View.GONE);
+                    bottoneSalva.setVisibility(View.GONE);
+                    bottoneripristinaDati.setText("Back");
+                    bottoneripristinaDati.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            PassaPagina3(view);
+                        }
+                    });
+
+                    editGlobal=false;
+                    ModalitaEdit(false);
                     break;
             }
         }
@@ -153,7 +178,7 @@ public class Registrazione_Pag2 extends Activity {
         Peso pOld=utente.getPeso();
         if(pOld.getCalendario().getTimeInMillis()!=pesoSalvato.getCalendario().getTimeInMillis()||
             pOld.getPesoKg()!=pesoSalvato.getPesoKg())
-            pesodao.insertPeso(pesoSalvato);
+            pOld=pesodao.insertPeso(pesoSalvato);
 
         Misure mOld=utente.getMisure();
         if(mOld.getBraccioDx()!=misureSalvato.getBraccioDx()||
@@ -161,11 +186,9 @@ public class Registrazione_Pag2 extends Activity {
             mOld.getGambaDx()!=misureSalvato.getGambaDx()||mOld.getGambaSx()!=misureSalvato.getGambaSx()||
             mOld.getAddome()!=misureSalvato.getAddome()||mOld.getPetto()!=misureSalvato.getPetto()||
             mOld.getSpalle()!=misureSalvato.getSpalle())
-            misuradao.insertMisure(misureSalvato);
+            mOld=misuradao.insertMisure(misureSalvato);
 
         Kcal kOld=utente.getKcal();
-        System.out.println("KKvecchi "+kOld.getData().getTimeInMillis());
-        System.out.println("KKnuovo "+chiloK.getData().getTimeInMillis());
 
         if(kOld.getData().getTimeInMillis()!=chiloK.getData().getTimeInMillis()||
             kOld.getAcqua()!=chiloK.getAcqua()||
@@ -176,7 +199,7 @@ public class Registrazione_Pag2 extends Activity {
                 kOld.getProteine()!=chiloK.getProteine()||
                 kOld.getCarbo()!=chiloK.getCarbo()||
                 kOld.getFase().toString()!=chiloK.getFase().toString())
-            kcalDAO.insertKcal(chiloK);
+            kOld=kcalDAO.insertKcal(chiloK);
 
 
 
@@ -327,7 +350,7 @@ public class Registrazione_Pag2 extends Activity {
         startActivity(i);
 
     }
-    private void ModalitaEdit(){
+    private void ModalitaEdit(boolean edit){
         utente=utentedao.getUtenteInfo();
         nomeR.setText(utente.getNome());
         cognomeR.setText(utente.getCognome());
@@ -347,12 +370,25 @@ public class Registrazione_Pag2 extends Activity {
         editor.putString("kcalPassate", chiloK.toJson());
         editor.putString("notePassate", noteSalvate.toJson());
         editor.apply();
-
         StampaTutto();
 
+        //modalita see
+        if(!edit){
+            nomeR.setFocusable(false);
+            nomeR.setClickable(false);
+            cognomeR.setFocusable(false);
+            cognomeR.setClickable(false);
+            nomeUtenteR.setFocusable(false);
+            nomeUtenteR.setClickable(false);
+            etaR.setFocusable(false);
+            etaR.setClickable(false);
+            altezzaR.setFocusable(false);
+            altezzaR.setClickable(false);
+
+        }
+
     }
-    public static void StampaTutto()
-    {
+    public static void StampaTutto() {
         System.out.println("*********************************************************");
 
         printUtente(Global.db);
@@ -366,7 +402,6 @@ public class Registrazione_Pag2 extends Activity {
         System.out.println("*********************************************************");
 
     }
-
     // Metodo per stampare tutte le Liste Esercizi
     public static void printUtente(DbHelper dbHelper) {
         Cursor cursor = dbHelper.getAllData(SchemaDB.UtenteDB.TABLE_NAME);

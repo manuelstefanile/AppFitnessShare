@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,7 +47,14 @@ public class NotificheDialog {
 
         CalendarView calendario=dialogView.findViewById((int)R.id.calendarioPeso);
         EditText kiliEdit= dialogView.findViewById(R.id.pesoAttual);
-
+        if(!Registrazione_Pag2.editGlobal){
+            calendario.setFocusable(false);
+            calendario.setClickable(false);
+            kiliEdit.setFocusable(false);
+            kiliEdit.setClickable(false);
+            salvaButton.setVisibility(View.GONE);
+            okButton.setText("Back");
+        }
         //prendo l oggetto
         Peso pesoStorage= Peso.fromJson(sh.getString("pesoPassato",null));
 
@@ -136,6 +144,24 @@ public class NotificheDialog {
         mappa.put("petto",petto);
         mappa.put("spalle",spalle);
         mappa.put("addome",addome);
+        if(!Registrazione_Pag2.editGlobal){
+            braccioDx.setFocusable(false);
+            braccioDx.setClickable(false);
+            braccioSx.setFocusable(false);
+            braccioSx.setClickable(false);
+            gambaDx.setFocusable(false);
+            gambaDx.setClickable(false);
+            gambaSx.setFocusable(false);
+            gambaSx.setClickable(false);
+            petto.setFocusable(false);
+            petto.setClickable(false);
+            addome.setFocusable(false);
+            addome.setClickable(false);
+            spalle.setFocusable(false);
+            spalle.setClickable(false);
+            salvaButton.setVisibility(View.GONE);
+            okButton.setText("Back");
+        }
 
         Misure misureStorage= Misure.fromJson(sh.getString("misurePassate",null));
         //scorro tutte le proprietà del istanza
@@ -233,6 +259,7 @@ public class NotificheDialog {
 
         //prendo gli edit
         EditText kcalAttuali=dialogView.findViewById((int)R.id.kcalAttual);
+        RadioGroup radiogroup=dialogView.findViewById((int)R.id.radioGroup);
         RadioButton radioMassa=dialogView.findViewById((int)R.id.radioMassa);
         RadioButton radioNormo=dialogView.findViewById((int)R.id.radioNormo);
         RadioButton radioDeficit=dialogView.findViewById((int)R.id.radioDeficit);
@@ -246,6 +273,31 @@ public class NotificheDialog {
         CalendarView calendario=dialogView.findViewById((int)R.id.calendarioKcal);
         Button salvaButton=dialogView.findViewById((int)R.id.SalvaKcal);
         Button okButton=dialogView.findViewById((int)R.id.OkKcal);
+        if(!Registrazione_Pag2.editGlobal){
+            kcalAttuali.setFocusable(false);
+            kcalAttuali.setClickable(false);
+
+            radiogroup.setFocusable(false);
+            radiogroup.setClickable(false);
+
+            carbo.setClickable(false);
+            carbo.setFocusable(false);
+            proteine.setClickable(false);
+            proteine.setFocusable(false);
+            grassi.setClickable(false);
+            grassi.setFocusable(false);
+            sale.setClickable(false);
+            sale.setFocusable(false);
+            acqua.setFocusable(false);
+            acqua.setClickable(false);
+
+            calendario.setFocusable(false);
+            calendario.setClickable(false);
+            noteDettaglio.setFocusable(false);
+            noteDettaglio.setClickable(false);
+            salvaButton.setVisibility(View.GONE);
+            okButton.setText("Back");
+        }
 
         HashMap<String,View> mappa=new HashMap<>();
 
@@ -349,7 +401,7 @@ public class NotificheDialog {
         Button salvaButton = dialogView.findViewById((int) R.id.SalvaNote);
         Button okButton = dialogView.findViewById((int) R.id.OkNote);
         EditText noteDettaglio = dialogView.findViewById((int) R.id.noteDettaglio);
-        if(!modifica){
+        if(!modifica||!Registrazione_Pag2.editGlobal){
             //non far scrivere
             noteDettaglio.setInputType(InputType.TYPE_NULL);
             //rimuovi il tasto salva

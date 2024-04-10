@@ -163,6 +163,7 @@
                 >
             </TextView>
             <Button
+                android:id="@+id/buttonPeso"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -190,6 +191,7 @@
                 >
             </TextView>
             <Button
+                android:id="@+id/buttonMisure"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -216,6 +218,7 @@
                 >
             </TextView>
             <Button
+                android:id="@+id/buttonKcal"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -241,6 +244,7 @@
                 >
             </TextView>
             <Button
+                android:id="@+id/buttonNote"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"

@@ -149,8 +149,6 @@ public class SchedaDAO {
 
         }
 
-
-
         for(Integer i: idGiorni) {
 
             //elimino gli id esercizi..... da vedere
@@ -194,5 +192,6 @@ public class SchedaDAO {
 
          */
     }
+
 
 }

@@ -111,7 +111,7 @@ public class kcalDAO {
         return kcal;
     }
 
-    public long insertKcal(Kcal kcal) {
+    public Kcal insertKcal(Kcal kcal) {
         SQLiteDatabase dbW = db.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -127,10 +127,11 @@ public class kcalDAO {
 
         // Esegui l'operazione di inserimento
         long newRowId = dbW.insert(SchemaDB.KcalDB.TABLE_NAME, null, values);
+        kcal.setId(newRowId);
 
         db.close();
 
-        return newRowId; // Ritorna l'ID del nuovo record inserito
+        return kcal; // Ritorna l'ID del nuovo record inserito
     }
 
 
