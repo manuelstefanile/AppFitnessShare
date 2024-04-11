@@ -11,10 +11,19 @@
         android:orientation="horizontal"
         >
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Benvenuto, "
+            android:gravity="left"
+
+            ></TextView>
+        <TextView
             android:id="@+id/nomeUtente"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="left"
             android:text=""
 
             ></TextView>
@@ -36,6 +45,13 @@
         </Button>
 
     </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/listaSchedeView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
     <Button
         android:layout_gravity="center"
         android:id="@+id/creaScheda"
@@ -47,12 +63,6 @@
         android:layout_marginBottom="10dp"
         >
     </Button>
-
-    <ListView
-        android:id="@+id/listaSchedeView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
 
 
 </LinearLayout>

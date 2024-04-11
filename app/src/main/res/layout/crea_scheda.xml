@@ -52,6 +52,12 @@
             ></ImageButton>
 
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/listaGiorniView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
     <Button
         android:id="@+id/CreaGiorno"
         android:layout_width="wrap_content"
@@ -64,12 +70,6 @@
         android:background="@drawable/drawable_item_giorno"
         >
     </Button>
-    <ListView
-        android:id="@+id/listaGiorniView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,6 +89,7 @@
             >
         </Button>
     </LinearLayout>
+
 
 
 </LinearLayout>

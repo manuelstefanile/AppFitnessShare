@@ -47,6 +47,12 @@
         </Button>
 
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/listaEserciziView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
     <Button
         android:id="@+id/CreaEsercizio"
         android:layout_width="wrap_content"
@@ -58,12 +64,6 @@
         android:padding="10dp"
         >
     </Button>
-    <ListView
-        android:id="@+id/listaEserciziView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,6 +83,7 @@
             >
         </Button>
     </LinearLayout>
+
 
 
 </LinearLayout>

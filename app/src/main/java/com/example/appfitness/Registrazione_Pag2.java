@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appfitness.Bean.Kcal;
@@ -372,6 +373,7 @@ public class Registrazione_Pag2 extends Activity {
         editor.apply();
         StampaTutto();
 
+        TextView titolo=findViewById(R.id.titoloPaginaReg);
         //modalita see
         if(!edit){
             nomeR.setFocusable(false);
@@ -385,7 +387,11 @@ public class Registrazione_Pag2 extends Activity {
             altezzaR.setFocusable(false);
             altezzaR.setClickable(false);
 
-        }
+            //titolo= MODIFICA
+
+            titolo.setText("INFO UTENTE");
+        }else
+            titolo.setText("MODIFICA");
 
     }
     public static void StampaTutto() {

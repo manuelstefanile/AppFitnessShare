@@ -8,168 +8,164 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
-        >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:layout_marginBottom="20dp"
         >
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Braccia:"
-            android:gravity="center"
-            ></TextView>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="0.2"
-            android:layout_height="wrap_content"
-            android:text="DX"
-            >
 
-        </TextView>
-        <EditText
-            android:id="@+id/braccioDX"
-            android:layout_width="0dp"
-            android:layout_weight="0.6"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            >
-        </EditText>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="0.2"
-            android:layout_height="wrap_content"
-            android:text="cm"
-            ></TextView>
-
-    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                >
-            </TextView>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.2"
-                android:layout_height="wrap_content"
-                android:text="SX"
-                >
-
-            </TextView>
-            <EditText
-                android:id="@+id/braccioSX"
-                android:layout_width="0dp"
-                android:layout_weight="0.6"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                >
-            </EditText>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.2"
-                android:layout_height="wrap_content"
-                android:text="cm"
+                android:text="Braccia:"
+                android:gravity="center"
                 ></TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:text="DX"
+                    >
+                </TextView>
+                <EditText
+                    android:id="@+id/braccioDX"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    >
+                </EditText>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:text="cm"
+                    android:layout_marginRight="20dp"
+                    ></TextView>
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:text="SX"
+                    >
+
+                </TextView>
+                <EditText
+                    android:id="@+id/braccioSX"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    >
+                </EditText>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:text="cm"
+                    ></TextView>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
+            android:orientation="vertical"
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Gambe:"
                 android:gravity="center"
                 ></TextView>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.2"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="DX"
+                android:orientation="horizontal"
                 >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:text="DX"
+                    >
+                </TextView>
+                <EditText
+                    android:id="@+id/gambaDX"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    >
+                </EditText>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:text="cm"
+                    android:layout_marginRight="20dp"
+                    ></TextView>
 
-            </TextView>
-            <EditText
-                android:id="@+id/gambaDX"
-                android:layout_width="0dp"
-                android:layout_weight="0.6"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                >
-            </EditText>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.2"
-                android:layout_height="wrap_content"
-                android:text="cm"
-                ></TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:text="SX"
+                    >
 
+                </TextView>
+                <EditText
+                    android:id="@+id/gambaSX"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    >
+                </EditText>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:text="cm"
+                    ></TextView>
+            </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-            </TextView>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.2"
-                android:layout_height="wrap_content"
-                android:text="SX"
-                >
-
-            </TextView>
-            <EditText
-                android:id="@+id/gambaSX"
-                android:layout_width="0dp"
-                android:layout_weight="0.6"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                >
-            </EditText>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.2"
-                android:layout_height="wrap_content"
-                android:text="cm"
+                android:text="Petto:"
+                android:gravity="center"
                 ></TextView>
-
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="20dp"
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Petto:"
-                android:gravity="center"
-                ></TextView>
-
+                android:layout_weight="1"
+                >
+            </TextView>
             <EditText
                 android:id="@+id/petto"
                 android:layout_width="0dp"
@@ -184,23 +180,38 @@
                 android:layout_height="wrap_content"
                 android:text="cm"
                 ></TextView>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
 
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Spalle:"
+                android:gravity="center"
+                ></TextView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="20dp"
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Spalle:"
-                android:gravity="center"
-                ></TextView>
-
+                android:layout_weight="1"
+                >
+            </TextView>
             <EditText
                 android:id="@+id/spalle"
                 android:layout_width="0dp"
@@ -215,23 +226,37 @@
                 android:layout_height="wrap_content"
                 android:text="cm"
                 ></TextView>
-
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Addome:"
+                android:gravity="center"
+                ></TextView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="20dp"
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Addome:"
-                android:gravity="center"
-                ></TextView>
-
+                android:layout_weight="1"
+                >
+            </TextView>
             <EditText
                 android:id="@+id/addome"
                 android:layout_width="0dp"
@@ -246,8 +271,14 @@
                 android:layout_height="wrap_content"
                 android:text="cm"
                 ></TextView>
-
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+            </TextView>
         </LinearLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

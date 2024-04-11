@@ -67,6 +67,7 @@ public class PaginaScheda_Pag3 extends Activity {
         nomeutenteR=findViewById((int)R.id.nomeUtente);
         String nomeUtente=getIntent().getStringExtra("nomeUtente");
         if(nomeUtente!=null){
+            nomeutenteR.setText("");
             nomeutenteR.setText(nomeUtente);
         }
 
@@ -274,6 +275,7 @@ public class PaginaScheda_Pag3 extends Activity {
 
         if(nomeUtente!=null){
 
+            nomeutenteR.setText("");
             nomeutenteR.setText(nomeUtente);
         }
     }
