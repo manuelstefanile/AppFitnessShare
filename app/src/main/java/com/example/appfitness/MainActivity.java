@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.appfitness.DB.DbHelper;
 import com.example.appfitness.DB.SchemaDB;
@@ -18,6 +19,44 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //se l utente è gia registrato, vai a pagina 3
+        DbHelper db=new DbHelper(getApplicationContext());
+        //db.deleteDatabase();
+        SQLiteDatabase dbRead=db.getReadableDatabase();
+        int count=0;
+
+        TextView te=findViewById((int)R.id.testoUtenteInizia);
+        // Query per ottenere tutti gli utenti
+        Cursor cursor = dbRead.query(
+                SchemaDB.UtenteDB.TABLE_NAME,   // Nome della tabella
+                null,       // Tutte le colonne (null = tutte le colonne)
+                null,       // Colonne per la clausola WHERE (null = tutte le righe)
+                null,       // Valori per la clausola WHERE (null = tutte le righe)
+                null,       // GroupBy
+                null,       // Having
+                null        // OrderBy
+        );
+
+        // Ora puoi iterare attraverso il cursore per ottenere i risultati
+        String nomeUtente=null;
+        while (cursor.moveToNext()) {
+            count++;
+            nomeUtente=cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.UtenteDB.COLUMN_nomeUtente));
+        }
+        // Chiudi il cursore quando hai finito di utilizzarlo
+        cursor.close();
+
+        //porta in una nuova activity
+
+        if(count==0){
+
+        }else {
+            te.setText("Benvenuto, "+nomeUtente);
+
+        }
+
+
 
     }
     public void Inizia(View bottone){

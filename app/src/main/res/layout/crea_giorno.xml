@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/origineGiorno"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/drawable_creasgiorno"
@@ -10,7 +11,7 @@
         android:onClick="ChiudTuttoNonSalva"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@drawable/ic_baseline_close_24"
+        android:background="@drawable/ic_baseline_home_24"
         android:contentDescription="Cancella Tutto"
         >
     </Button>

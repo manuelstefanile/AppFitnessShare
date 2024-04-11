@@ -10,17 +10,22 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 
 import android.database.SQLException;
 
 import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.appfitness.Bean.Esercizio;
@@ -73,6 +78,18 @@ public class PopupEsercizio {
         AlertDialog alertDialog = builder.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+
+        WindowManager wm = (WindowManager) dialogView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        LinearLayout ll = dialogView.findViewById((int)R.id.origineEsercizio);
+        ViewGroup.LayoutParams llParams = ll.getLayoutParams();
+        llParams.height = size.y; // Altezza dello schermo
+        ll.setLayoutParams(llParams);
+
+        alertDialog.getWindow().setLayout(size.x, size.y);
 
 
         EditText nomeEsercizio = dialogView.findViewById((int) R.id.nomeEsercizio);
@@ -204,6 +221,18 @@ public class PopupEsercizio {
         AlertDialog alertDialog = builder.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+
+        WindowManager wm = (WindowManager) dialogView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        LinearLayout ll = dialogView.findViewById((int)R.id.origineEsercizio);
+        ViewGroup.LayoutParams llParams = ll.getLayoutParams();
+        llParams.height = size.y; // Altezza dello schermo
+        ll.setLayoutParams(llParams);
+
+        alertDialog.getWindow().setLayout(size.x, size.y);
 
         EditText nomeEsercizio = dialogView.findViewById((int) R.id.nomeEsercizio);
         immagineEsercizio = dialogView.findViewById((int) R.id.immagineEsercizio);

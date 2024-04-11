@@ -1,32 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp">
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="Benvenuto, "
-            android:gravity="left"
-
-            ></TextView>
-        <TextView
-            android:id="@+id/nomeUtente"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:text=""
-
-            ></TextView>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -35,6 +24,16 @@
             android:onClick="EditUtente"
             >
         </Button>
+        <TextView
+            android:id="@+id/nomeUtente"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=""
+
+            ></TextView>
+
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -50,10 +49,12 @@
     <ListView
         android:id="@+id/listaSchedeView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp">
     </ListView>
+
+    </LinearLayout>
     <Button
-        android:layout_gravity="center"
         android:id="@+id/creaScheda"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -61,8 +62,8 @@
         android:onClick="CreaScheda"
         android:background="@drawable/drawable_botton_grey"
         android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         >
     </Button>
-
-
-</LinearLayout>
+</RelativeLayout>

@@ -4,13 +4,18 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -48,6 +53,18 @@ public class PopupGiorno {
         AlertDialog alertDialog = builder.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+
+        WindowManager wm = (WindowManager) dialogView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        LinearLayout ll = dialogView.findViewById((int)R.id.origineGiorno);
+        ViewGroup.LayoutParams llParams = ll.getLayoutParams();
+        llParams.height = size.y; // Altezza dello schermo
+        ll.setLayoutParams(llParams);
+
+        alertDialog.getWindow().setLayout(size.x, size.y);
 
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
         Button creaEsercizio=dialogView.findViewById((int)R.id.CreaEsercizio);
@@ -139,6 +156,18 @@ public class PopupGiorno {
         AlertDialog alertDialog = builder.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+
+        WindowManager wm = (WindowManager) dialogView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        LinearLayout ll = dialogView.findViewById((int)R.id.origineGiorno);
+        ViewGroup.LayoutParams llParams = ll.getLayoutParams();
+        llParams.height = size.y; // Altezza dello schermo
+        ll.setLayoutParams(llParams);
+
+        alertDialog.getWindow().setLayout(size.x, size.y);
 
         ListView listaEserciziiView = (ListView)dialogView.findViewById(R.id.listaEserciziView);
         Global.adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi, new ArrayList<Esercizio>());

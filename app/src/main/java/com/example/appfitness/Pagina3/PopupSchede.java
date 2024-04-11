@@ -2,19 +2,25 @@ package com.example.appfitness.Pagina3;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,22 +43,33 @@ public class PopupSchede {
 
     public  void CreaScheda(LayoutInflater inflater){
 
+
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_scheda, null);
-        Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
-        Button okButton=dialogView.findViewById((int)R.id.okButton);
-
+        Button salvaButton = dialogView.findViewById((int)R.id.salvaButton);
+        Button okButton = dialogView.findViewById((int)R.id.okButton);
         // Creazione dell'AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
         builder.setView(dialogView);
-
-
-        builder.setPositiveButton(null,null);
-        builder.setNegativeButton(null,null);
+        builder.setPositiveButton(null, null);
+        builder.setNegativeButton(null, null);
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
+        // Imposta lo sfondo trasparente
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+
+        WindowManager wm = (WindowManager) dialogView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        LinearLayout ll = dialogView.findViewById(R.id.origineScheda);
+        ViewGroup.LayoutParams llParams = ll.getLayoutParams();
+        llParams.height = size.y; // Altezza dello schermo
+        ll.setLayoutParams(llParams);
+
+        alertDialog.getWindow().setLayout(size.x, size.y);
 
         //creo la scheda temp e l aggiungo al db
         Scheda schedaTemp=Global.schedadao.CreaSchedaTemp();
@@ -134,6 +151,18 @@ public class PopupSchede {
         // Impostazione del background trasparente
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+
+        WindowManager wm = (WindowManager) dialogView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        LinearLayout ll = dialogView.findViewById(R.id.origineScheda);
+        ViewGroup.LayoutParams llParams = ll.getLayoutParams();
+        llParams.height = size.y; // Altezza dello schermo
+        ll.setLayoutParams(llParams);
+
+        alertDialog.getWindow().setLayout(size.x, size.y);
 
         ListView listaGiorniView = (ListView)dialogView.findViewById(R.id.listaGiorniView);
         Global.adapterGiorni = new AdapterListaScheda(dialogView.getContext(), R.layout.item_giorni, new ArrayList<Giorno>());
