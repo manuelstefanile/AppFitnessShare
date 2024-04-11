@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:id="@+id/origineScheda"
     android:layout_height="match_parent"
-    android:background="@drawable/drawable_creascheda"
+    android:background="@color/white"
     android:padding="20dp"
     >
 
@@ -16,15 +16,7 @@
         >
 
 
-        <Button
-            android:id="@+id/xChiudiScheda"
-            android:onClick="ChiudTuttoNonSalva"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_baseline_home_24"
-            android:contentDescription="Cancella Tutto"
-            >
-        </Button>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,19 +25,30 @@
             android:gravity="center"
             android:layout_marginBottom="20dp"
             >
+            <Button
+                android:id="@+id/xChiudiScheda"
+                android:onClick="ChiudTuttoNonSalva"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_baseline_home_24"
+                android:contentDescription="Cancella Tutto"
+                >
+            </Button>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.4"
+                android:layout_weight="0.2"
                 android:layout_height="wrap_content"
-                android:text="Nome scheda:"
-                android:textColor="@color/white"
-                android:gravity="center"
+                android:text="Nome:"
+                android:textColor="@color/black"
+                android:textSize="24dp"
+                android:gravity="right"
                 ></TextView>
 
             <EditText
                 android:id="@+id/nomeScheda"
                 android:layout_width="0dp"
                 android:layout_weight="0.4"
+                android:textSize="24dp"
                 android:layout_marginRight="20dp"
                 android:layout_height="wrap_content"
 
@@ -82,12 +85,14 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Aggiungi giorno"
+            android:text="Nuovo giorno"
             android:onClick="AggiungiGiorno"
+            android:textSize="18dp"
+            android:textColor="@color/black"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/drawable_item_giorno"
+            android:background="@drawable/drawable_scheda"
             >
         </Button>
         <Button
@@ -98,7 +103,9 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Back"
-            android:background="@drawable/drawable_botton_grey"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:background="@drawable/drawable_scheda"
 
             >
         </Button>

@@ -14,10 +14,12 @@
         >
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.3"
             android:layout_height="wrap_content"
             android:text="Note:"
-            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:gravity="left"
             ></TextView>
         <EditText
             android:id="@+id/noteDettaglio"
@@ -40,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salva"
+            android:background="@drawable/drawable_scheda"
             android:layout_marginRight="20dp"
             >
         </Button>
@@ -47,7 +50,8 @@
             android:id="@+id/OkNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ok"
+            android:background="@drawable/drawable_scheda"
+            android:text="Back"
             >
         </Button>
     </LinearLayout>

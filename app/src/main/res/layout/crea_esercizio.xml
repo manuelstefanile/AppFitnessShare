@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:id="@+id/origineEsercizio"
     android:layout_height="match_parent"
-    android:background="@drawable/drawable_creaesercizio"
+    android:background="@color/white"
     android:paddingTop="20dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
@@ -16,14 +16,7 @@
         android:layout_marginBottom="80dp"
         >
 
-        <Button
-            android:onClick="ChiudTuttoNonSalva"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_baseline_home_24"
-            android:contentDescription="Cancella Tutto"
-            >
-        </Button>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,17 +24,28 @@
             android:gravity="center"
             android:layout_marginBottom="20dp"
             >
+            <Button
+                android:onClick="ChiudTuttoNonSalva"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_baseline_home_24"
+                android:contentDescription="Cancella Tutto"
+                >
+            </Button>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 android:layout_height="wrap_content"
-                android:text="Nome esercizio:"
-                android:gravity="center"
+                android:text="Nome:"
+                android:textSize="24dp"
+                android:textColor="@color/black"
+                android:gravity="right"
                 ></TextView>
 
             <EditText
                 android:id="@+id/nomeEsercizio"
-                android:layout_width="0dp"
+                android:layout_width="0.5dp"
+                android:textSize="24dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
 
@@ -58,11 +62,13 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:text="Immagine macchinario:"
-                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:gravity="left"
                 ></TextView>
 
             <ImageButton
@@ -84,17 +90,20 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:text="Numero Serie:"
-                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:gravity="left"
                 ></TextView>
 
             <EditText
                 android:id="@+id/numeroSerie"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:textSize="18dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
 
@@ -109,17 +118,20 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:text="Numero ripetizioni:"
-                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:gravity="left"
                 ></TextView>
 
             <EditText
                 android:id="@+id/numeroRipetizioni"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:textSize="18dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
 
@@ -135,17 +147,20 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:text="Timer:"
-                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:gravity="left"
                 ></TextView>
 
             <EditText
                 android:id="@+id/numeroTimer"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:textSize="18dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
 
@@ -160,17 +175,20 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:text="Tecnica intensita:"
-                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:gravity="left"
                 ></TextView>
 
             <EditText
                 android:id="@+id/tecnicaIntensita"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:textSize="18dp"
                 android:layout_height="wrap_content"
                 >
             </EditText>
@@ -183,17 +201,20 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:text="Esecuzione:"
-                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:gravity="left"
                 ></TextView>
 
             <EditText
                 android:id="@+id/esecuzione"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:textSize="18dp"
                 android:layout_height="wrap_content"
                 >
             </EditText>
@@ -205,22 +226,23 @@
             android:gravity="center"
             android:layout_marginBottom="20dp"
             >
+
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
+                android:gravity="left"
                 android:text="Note esercizio:"
-                android:gravity="center"
-                ></TextView>
+                android:textColor="@color/black"
+                android:textSize="18dp"></TextView>
 
             <Button
                 android:id="@+id/bottoneNote"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="aggiungi"
-                >
-            </Button>
+                android:layout_weight="0.3"
+                android:background="@drawable/drawable_scheda"
+                android:text="aggiungi"></Button>
         </LinearLayout>
     </LinearLayout>
 
@@ -241,7 +263,7 @@
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:text="Azzera"
-            android:background="@drawable/drawable_botton_grey"
+            android:background="@drawable/drawable_scheda"
             >
         </Button>
         <Button
@@ -253,7 +275,7 @@
             android:layout_marginTop="10dp"
             android:text="Salva"
             android:layout_marginRight="10dp"
-            android:background="@drawable/drawable_botton_green"
+            android:background="@drawable/drawable_scheda"
             >
 
         </Button>
@@ -267,7 +289,7 @@
             android:layout_marginTop="10dp"
             android:text="Back"
             android:onClick="back"
-            android:background="@drawable/drawable_botton_grey"
+            android:background="@drawable/drawable_scheda"
             >
         </Button>
     </LinearLayout>

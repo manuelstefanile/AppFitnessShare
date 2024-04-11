@@ -17,11 +17,12 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="kcal Attuali:"
-                android:gravity="center"
+                android:text="Kcal Attuali:"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:gravity="left"
                 ></TextView>
             <EditText
                 android:id="@+id/kcalAttual"
@@ -38,11 +39,13 @@
             android:layout_height="wrap_content"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:text="Fase di:"
-                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:gravity="left"
                 ></TextView>
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -93,7 +96,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:text="Carbo"
+                android:text="Carbs"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 android:background="@color/arancione"
                 android:gravity="center"
 
@@ -103,7 +108,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:text="Proteine"
+                android:text="Protein"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 android:background="@color/azzurrino"
                 android:gravity="center"
                 >
@@ -112,7 +119,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:text="Grassi"
+                android:text="Fat"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 android:background="@color/giallo"
                 android:gravity="center"
                 >
@@ -123,6 +132,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:gravity="center"
                 android:background="@color/arancione"
                 android:layout_marginTop="5dp"
                 android:inputType="numberDecimal"
@@ -135,6 +145,7 @@
                 android:layout_columnWeight="1"
                 android:background="@color/azzurrino"
                 android:layout_marginTop="5dp"
+                android:gravity="center"
                 android:inputType="numberDecimal"
                 >
             </EditText>
@@ -143,6 +154,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:gravity="center"
                 android:background="@color/giallo"
                 android:layout_marginTop="5dp"
                 android:inputType="numberDecimal"
@@ -159,16 +171,17 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sodio:"
-                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:gravity="left"
                 ></TextView>
             <EditText
                 android:id="@+id/sale"
                 android:layout_width="0dp"
-                android:layout_weight="0.8"
+                android:layout_weight="0.1"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 >
@@ -178,6 +191,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
                 android:text="mg"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 >
             </TextView>
         </LinearLayout>
@@ -189,16 +204,17 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Acqua:"
-                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:gravity="left"
                 ></TextView>
             <EditText
                 android:id="@+id/acqua"
                 android:layout_width="0dp"
-                android:layout_weight="0.8"
+                android:layout_weight="0.1"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 >
@@ -207,7 +223,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
-                android:text="L"
+                android:text="litri"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 >
             </TextView>
         </LinearLayout>
@@ -219,11 +237,12 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Note:"
-                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:gravity="left"
                 ></TextView>
             <EditText
                 android:id="@+id/noteDettaglio"
@@ -243,7 +262,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DATA"
+                android:text="Seleziona una data"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 >
 
             </TextView>
@@ -266,6 +287,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Salva"
+                android:background="@drawable/drawable_scheda"
                 android:layout_marginRight="20dp"
                 >
             </Button>
@@ -273,7 +295,8 @@
                 android:id="@+id/OkKcal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ok"
+                android:text="Back"
+                android:background="@drawable/drawable_scheda"
                 >
             </Button>
         </LinearLayout>

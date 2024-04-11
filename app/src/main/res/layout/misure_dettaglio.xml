@@ -22,6 +22,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Braccia:"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 android:gravity="center"
                 ></TextView>
             <LinearLayout
@@ -34,6 +36,8 @@
                     android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="DX"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
                     >
                 </TextView>
                 <EditText
@@ -49,6 +53,8 @@
                     android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="cm"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
                     android:layout_marginRight="20dp"
                     ></TextView>
 
@@ -57,6 +63,8 @@
                     android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="SX"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
                     >
 
                 </TextView>
@@ -73,6 +81,8 @@
                     android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="cm"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
                     ></TextView>
             </LinearLayout>
         </LinearLayout>
@@ -82,13 +92,16 @@
             android:orientation="vertical"
             android:layout_marginBottom="20dp"
             >
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Gambe:"
+                android:layout_weight="1"
                 android:gravity="center"
-                ></TextView>
+                android:text="Gambe:"
+                android:textColor="@color/black"
+                android:textSize="18dp"></TextView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,6 +112,8 @@
                     android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="DX"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
                     >
                 </TextView>
                 <EditText
@@ -114,6 +129,8 @@
                     android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="cm"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
                     android:layout_marginRight="20dp"
                     ></TextView>
 
@@ -122,6 +139,8 @@
                     android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="SX"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
                     >
 
                 </TextView>
@@ -138,6 +157,8 @@
                     android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="cm"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
                     ></TextView>
             </LinearLayout>
         </LinearLayout>
@@ -152,6 +173,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Petto:"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 android:gravity="center"
                 ></TextView>
         </LinearLayout>
@@ -179,6 +202,8 @@
                 android:layout_weight="0.2"
                 android:layout_height="wrap_content"
                 android:text="cm"
+                android:textColor="@color/black"
+                android:textSize="14dp"
                 ></TextView>
             <TextView
                 android:layout_width="0dp"
@@ -198,6 +223,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Spalle:"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 android:gravity="center"
                 ></TextView>
         </LinearLayout>
@@ -225,6 +252,8 @@
                 android:layout_weight="0.2"
                 android:layout_height="wrap_content"
                 android:text="cm"
+                android:textColor="@color/black"
+                android:textSize="14dp"
                 ></TextView>
             <TextView
                 android:layout_width="0dp"
@@ -243,6 +272,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Addome:"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 android:gravity="center"
                 ></TextView>
         </LinearLayout>
@@ -270,6 +301,8 @@
                 android:layout_weight="0.2"
                 android:layout_height="wrap_content"
                 android:text="cm"
+                android:textColor="@color/black"
+                android:textSize="14dp"
                 ></TextView>
             <TextView
                 android:layout_width="0dp"
@@ -291,6 +324,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salva"
+            android:background="@drawable/drawable_scheda"
             android:layout_marginRight="20dp"
             >
         </Button>
@@ -298,7 +332,8 @@
             android:id="@+id/OkMisure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ok"
+            android:text="Back"
+            android:background="@drawable/drawable_scheda"
             >
         </Button>
     </LinearLayout>

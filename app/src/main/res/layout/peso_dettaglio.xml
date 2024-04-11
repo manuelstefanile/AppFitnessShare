@@ -17,10 +17,11 @@
                 android:layout_marginBottom="20dp"
                 >
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Peso attuale:"
+                    android:text="Peso attuale"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
                     android:gravity="center"
                     ></TextView>
                 <EditText
@@ -36,14 +37,18 @@
                     android:layout_weight="0.2"
                     android:layout_height="wrap_content"
                     android:text="Kg:"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
                     ></TextView>
 
             </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Data peso"
+                android:text="Seleziona una data:"
                 android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 >
             </TextView>
             <CalendarView
@@ -57,6 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Salva"
+                android:background="@drawable/drawable_scheda"
                 android:layout_gravity="center"
                 >
             </Button>
@@ -64,7 +70,8 @@
             android:id="@+id/okButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ok"
+            android:text="Back"
+            android:background="@drawable/drawable_scheda"
             android:layout_gravity="center"
             >
 

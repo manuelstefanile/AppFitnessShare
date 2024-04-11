@@ -391,7 +391,7 @@ public class Registrazione_Pag2 extends Activity {
 
             titolo.setText("INFO UTENTE");
         }else
-            titolo.setText("MODIFICA");
+            titolo.setText("MODIFICA DATI");
 
     }
     public static void StampaTutto() {

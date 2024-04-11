@@ -11,10 +11,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Scheda1"
+        android:textSize="18dp"
         android:layout_weight="1"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/drawable_item_giorno"
+        android:background="@drawable/drawable_scheda"
         >
     </Button>
     <Button
