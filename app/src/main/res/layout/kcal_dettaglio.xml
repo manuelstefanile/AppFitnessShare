@@ -27,6 +27,7 @@
                 android:id="@+id/kcalAttual"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:text=""
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 >
@@ -84,7 +85,7 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="4"
+            android:columnCount="3"
             android:rowCount="2"
 
             >
@@ -116,19 +117,11 @@
                 android:gravity="center"
                 >
             </TextView>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:text="Sale"
-                android:background="@color/grigio"
-                android:gravity="center"
-                >
-            </TextView>
+
             <EditText
                 android:id="@+id/carbo"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:background="@color/arancione"
                 android:layout_marginTop="5dp"
@@ -138,7 +131,7 @@
             <EditText
                 android:id="@+id/proteine"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:background="@color/azzurrino"
                 android:layout_marginTop="5dp"
@@ -148,25 +141,46 @@
             <EditText
                 android:id="@+id/grassi"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:background="@color/giallo"
                 android:layout_marginTop="5dp"
                 android:inputType="numberDecimal"
                 >
             </EditText>
+
+
+        </GridLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Sodio:"
+                android:gravity="center"
+                ></TextView>
             <EditText
                 android:id="@+id/sale"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_columnWeight="1"
-                android:background="@color/grigio"
-                android:layout_marginTop="5dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 >
             </EditText>
-
-        </GridLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="mg"
+                >
+            </TextView>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
