@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.appfitness.Bean.Giorno;
@@ -64,7 +65,7 @@ public class PopupSchede {
         Point size = new Point();
         display.getSize(size);
 
-        LinearLayout ll = dialogView.findViewById(R.id.origineScheda);
+        RelativeLayout ll = dialogView.findViewById(R.id.origineScheda);
         ViewGroup.LayoutParams llParams = ll.getLayoutParams();
         llParams.height = size.y; // Altezza dello schermo
         ll.setLayoutParams(llParams);
@@ -157,7 +158,7 @@ public class PopupSchede {
         Point size = new Point();
         display.getSize(size);
 
-        LinearLayout ll = dialogView.findViewById(R.id.origineScheda);
+        RelativeLayout ll = dialogView.findViewById(R.id.origineScheda);
         ViewGroup.LayoutParams llParams = ll.getLayoutParams();
         llParams.height = size.y; // Altezza dello schermo
         ll.setLayoutParams(llParams);

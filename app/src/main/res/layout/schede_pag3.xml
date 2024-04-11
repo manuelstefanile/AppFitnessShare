@@ -61,7 +61,7 @@
         android:text="Crea Scheda"
         android:onClick="CreaScheda"
         android:background="@drawable/drawable_botton_grey"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="30dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         >

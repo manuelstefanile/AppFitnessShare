@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/origineScheda"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/drawable_creascheda"
     android:padding="20dp"
     >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="80dp"
+
+        >
+
 
         <Button
             android:id="@+id/xChiudiScheda"
@@ -18,79 +26,84 @@
             >
         </Button>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="20dp"
-        >
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="0.4"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nome scheda:"
-            android:textColor="@color/white"
+            android:orientation="horizontal"
             android:gravity="center"
-            ></TextView>
-
-        <EditText
-            android:id="@+id/nomeScheda"
-            android:layout_width="0dp"
-            android:layout_weight="0.4"
-            android:layout_marginRight="20dp"
-            android:layout_height="wrap_content"
-
+            android:layout_marginBottom="20dp"
             >
-        </EditText>
-        <ImageButton
-            android:id="@+id/aggiungiImmagineScheda"
-            android:layout_width="0dp"
-            android:layout_weight="0.2"
-            android:layout_height="50dp"
-            android:text="cm"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
+                android:layout_height="wrap_content"
+                android:text="Nome scheda:"
+                android:textColor="@color/white"
+                android:gravity="center"
+                ></TextView>
 
-            ></ImageButton>
+            <EditText
+                android:id="@+id/nomeScheda"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
+                android:layout_marginRight="20dp"
+                android:layout_height="wrap_content"
+
+                >
+            </EditText>
+            <ImageButton
+                android:id="@+id/aggiungiImmagineScheda"
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="50dp"
+                android:text="cm"
+
+                ></ImageButton>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listaGiorniView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listaGiorniView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
-    <Button
-        android:id="@+id/CreaGiorno"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Aggiungi giorno"
-        android:layout_gravity="center"
-        android:onClick="AggiungiGiorno"
-        android:padding="10dp"
-
-        android:background="@drawable/drawable_item_giorno"
-        >
-    </Button>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
         >
         <Button
-            android:id="@+id/backScheda"
-            android:layout_width="100dp"
+            android:id="@+id/CreaGiorno"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:text="Aggiungi giorno"
+            android:onClick="AggiungiGiorno"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/drawable_item_giorno"
+            >
+        </Button>
+        <Button
+            android:id="@+id/backScheda"
+            android:layout_width="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="Back"
             android:background="@drawable/drawable_botton_grey"
 
             >
         </Button>
+
+
     </LinearLayout>
 
-
-
-</LinearLayout>
+</RelativeLayout>

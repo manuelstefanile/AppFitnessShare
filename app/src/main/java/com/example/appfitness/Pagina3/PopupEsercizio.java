@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.appfitness.Bean.Esercizio;
@@ -84,7 +85,7 @@ public class PopupEsercizio {
         Point size = new Point();
         display.getSize(size);
 
-        LinearLayout ll = dialogView.findViewById((int)R.id.origineEsercizio);
+        RelativeLayout ll = dialogView.findViewById((int)R.id.origineEsercizio);
         ViewGroup.LayoutParams llParams = ll.getLayoutParams();
         llParams.height = size.y; // Altezza dello schermo
         ll.setLayoutParams(llParams);
@@ -227,7 +228,7 @@ public class PopupEsercizio {
         Point size = new Point();
         display.getSize(size);
 
-        LinearLayout ll = dialogView.findViewById((int)R.id.origineEsercizio);
+        RelativeLayout ll = dialogView.findViewById((int)R.id.origineEsercizio);
         ViewGroup.LayoutParams llParams = ll.getLayoutParams();
         llParams.height = size.y; // Altezza dello schermo
         ll.setLayoutParams(llParams);

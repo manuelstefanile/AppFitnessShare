@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -255,50 +256,53 @@
                 >
             </Button>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
+        <Button
+            android:id="@+id/salvaButtonReg"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:text="Salva"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/drawable_scheda"
+            android:layout_marginRight="10dp"
+
             >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp"
-                >
-                <Button
-                    android:id="@+id/salvaButtonReg"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Salva"
-                    android:background="@color/azzurrino"
-                    android:layout_marginRight="10dp"
 
-                    >
+        </Button>
+        <Button
+            android:id="@+id/bottoneNextRegistrazione"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/drawable_scheda"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            >
+        </Button>
+        <Button
+            android:id="@+id/ripristinaDatiButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Ripristina"
+            android:background="@drawable/drawable_scheda"
+            >
+        </Button>
 
-                </Button>
-                <Button
-                    android:id="@+id/ripristinaDatiButton"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Ripristina"
-                    android:background="@color/azzurrino"
-                    >
-                </Button>
-            </LinearLayout>
-            <Button
-                android:id="@+id/bottoneNextRegistrazione"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Next"
-                android:background="@color/grigio"
-                android:textColor="@color/black"
-                android:layout_gravity="center"
-                >
-            </Button>
-        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>
