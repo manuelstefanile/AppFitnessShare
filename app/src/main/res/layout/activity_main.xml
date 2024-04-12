@@ -4,14 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gliglio_sculo"
     tools:context=".MainActivity">
+
+
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:adjustViewBounds="true"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo">
 
+        </ImageView>
         <TextView
             android:id="@+id/testoUtenteInizia"
             android:layout_width="wrap_content"
@@ -20,7 +34,7 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:text="Benvenuto,"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20dp"
 
             >
@@ -32,12 +46,14 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:text="clicca il tasto in basso per iniziare"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20dp"
 
             >
 
         </TextView>
+
+
 
 
     </LinearLayout>

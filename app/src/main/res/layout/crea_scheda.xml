@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:id="@+id/origineScheda"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/drawable_creascheda"
     android:padding="20dp"
     >
 
@@ -37,6 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:textSize="24dp"
+                android:textAlignment="center"
                 android:layout_height="wrap_content"
 
                 >
@@ -69,15 +70,15 @@
                 android:gravity="right"
                 android:layout_marginRight="10dp"
                 ></TextView>
+
             <Button
                 android:id="@+id/bottoneNoteScheda"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:textSize="18dp"
                 android:layout_weight="1"
-                android:layout_marginRight="10dp"
                 android:background="@drawable/drawable_scheda"
-                android:text="aggiungi"></Button>
+                android:text="aggiungi"
+                android:textSize="18dp"></Button>
 
             <TextView
                 android:layout_width="0dp"

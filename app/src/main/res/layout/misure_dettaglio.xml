@@ -43,6 +43,7 @@
                     android:id="@+id/braccioDX"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     >
@@ -71,6 +72,7 @@
                     android:id="@+id/braccioSX"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     >
@@ -119,6 +121,7 @@
                     android:id="@+id/gambaDX"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     >
@@ -147,6 +150,7 @@
                     android:id="@+id/gambaSX"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     >
@@ -195,6 +199,7 @@
                 android:id="@+id/petto"
                 android:layout_width="0dp"
                 android:layout_weight="0.8"
+                android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 >
@@ -246,6 +251,7 @@
                 android:id="@+id/spalle"
                 android:layout_width="0dp"
                 android:layout_weight="0.8"
+                android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 >
@@ -296,6 +302,7 @@
                 android:id="@+id/addome"
                 android:layout_width="0dp"
                 android:layout_weight="0.8"
+                android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 >
@@ -325,22 +332,26 @@
         android:layout_alignParentBottom="true"
         >
         <Button
+        android:id="@+id/OkMisure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:textSize="18dp"
+            android:layout_margin="10dp"
+        android:background="@drawable/drawable_scheda"
+        >
+    </Button>
+        <Button
             android:id="@+id/SalvaMisure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salva"
+            android:textSize="18dp"
             android:background="@drawable/drawable_scheda"
-            android:layout_marginRight="20dp"
+            android:layout_margin="10dp"
             >
         </Button>
-        <Button
-            android:id="@+id/OkMisure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:background="@drawable/drawable_scheda"
-            >
-        </Button>
+
     </LinearLayout>
 
 </RelativeLayout>

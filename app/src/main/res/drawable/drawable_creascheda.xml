@@ -4,10 +4,11 @@
     <shape
         android:shape="rectangle">
         <corners
+            android:radius="40dp"
             >
         </corners>
         <solid
-            android:color="@color/azzurrino">
+            android:color="@color/white">
         </solid>
 
     </shape>

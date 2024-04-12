@@ -389,7 +389,7 @@ public class Registrazione_Pag2 extends Activity {
 
             //titolo= MODIFICA
 
-            titolo.setText("INFO UTENTE");
+            titolo.setText("DATI PERSONALI");
         }else
             titolo.setText("MODIFICA DATI");
 
