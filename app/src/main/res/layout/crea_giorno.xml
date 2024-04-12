@@ -70,7 +70,7 @@
                 android:layout_marginRight="10dp"
                 ></TextView>
             <Button
-                android:id="@+id/bottoneNote"
+                android:id="@+id/bottoneNoteGiorno"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:textSize="18dp"
@@ -93,30 +93,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="20dp"
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.3"
-                android:layout_height="wrap_content"
-                android:text="Note:"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:gravity="center"
-                android:layout_marginRight="10dp"
-                ></TextView>
-            <EditText
-                android:id="@+id/noteGiorno"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                >
-            </EditText>
-        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

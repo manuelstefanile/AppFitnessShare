@@ -3,6 +3,7 @@ package com.example.appfitness.Pagina3;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -22,12 +23,16 @@ import android.widget.Toast;
 
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
+import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Scheda;
 import com.example.appfitness.DB.EsercizioDAO;
 import com.example.appfitness.DB.GiornoDAO;
 import com.example.appfitness.DB.ListaEserciziDAO;
 import com.example.appfitness.DB.ListaGiorniDAO;
+import com.example.appfitness.Eccezioni.Eccezioni;
+import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
+import com.example.appfitness.Registrazione_Pag2;
 
 import java.util.ArrayList;
 
@@ -35,9 +40,15 @@ public class PopupGiorno {
 
 
     public static ArrayList<Long> idGiorniSalvati= new ArrayList<>();
+    private static Note noteScheda;
 
     public static void CreaGiorno(LayoutInflater inflater, Scheda schedaRiferimento)
     {
+        SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit=shp.edit();
+        noteScheda = Note.fromJson(shp.getString("notePassate", null));
+        edit.putString("notePassate",new Note().toJson());
+        edit.commit();
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_giorno, null);
@@ -68,7 +79,7 @@ public class PopupGiorno {
         alertDialog.getWindow().setLayout(size.x, size.y);
 
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
-        EditText noteGiorno=dialogView.findViewById((int)R.id.noteGiorno);
+        Button bottoneNote=dialogView.findViewById((int)R.id.bottoneNoteGiorno);
         Button creaEsercizio=dialogView.findViewById((int)R.id.CreaEsercizio);
         Button salvaGiorno=dialogView.findViewById((int)R.id.salvaGiorno);
         //prima devi mettere un nome per il giorno e poi puoi andare avanti
@@ -99,12 +110,29 @@ public class PopupGiorno {
         /*
          */
 
+        bottoneNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Registrazione_Pag2.editGlobal=true;
+                    NotificheDialog.NotificaNote(inflater, shp);
+                } catch (Eccezioni e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Global.listaGiornidao.Insert(schedaRiferimento.getId(),schedaRiferimento.getListaGiorni());
                 //una volta inseriti i giorni, posso liberare la lista
                 schedaRiferimento.setListaGiorni(new ArrayList<>());
+
+                //ripristina notifiche di scheda
+                SharedPreferences.Editor edit=shp.edit();
+                edit.putString("notePassate",noteScheda.toJson());
+                edit.commit();
                 alertDialog.dismiss();
             }
         });
@@ -124,15 +152,18 @@ public class PopupGiorno {
         salvaGiorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
+
                 String testoInserito = nomeGiorno.getText().toString().trim();
                 if(testoInserito.length()>0) {
                     nomeGiorno.setEnabled(false);
-                    noteGiorno.setEnabled(false);
+                    bottoneNote.setEnabled(false);
                     salvaGiorno.setEnabled(false);
                     creaEsercizio.setEnabled(true);
                     creaEsercizio.setBackgroundResource(R.drawable.drawable_scheda);
                     giornoNuovo.setNomeGiorno(testoInserito);
-                    giornoNuovo.setNote(noteGiorno.getText().toString());
+                    giornoNuovo.setNote(note.getNote());
                     Global.giornoDao.InsertGiorno(giornoNuovo);
                     schedaRiferimento.getListaGiorni().add(giornoNuovo.getId());
                     Global.adapterGiorni.add(giornoNuovo);
@@ -145,6 +176,11 @@ public class PopupGiorno {
 
 
     public static void ApriGiornoSelezionato(Giorno giorno,LayoutInflater inflater){
+
+        SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit=shp.edit();
+        noteScheda = Note.fromJson(shp.getString("notePassate", null));
+        edit.commit();
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_giorno, null);
@@ -190,10 +226,11 @@ public class PopupGiorno {
         }
 
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
-        EditText noteGiorno=dialogView.findViewById((int)R.id.noteGiorno);
+        Button bottoneNote=dialogView.findViewById((int)R.id.bottoneNoteGiorno);
         Button creaEsercizio=dialogView.findViewById((int)R.id.CreaEsercizio);
         Button salvaGiorno=dialogView.findViewById((int)R.id.salvaGiorno);
         Button back=dialogView.findViewById((int)R.id.backGiorno);
+        bottoneNote.setText("Mostra");
 
         //modifico il weight di edit
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) nomeGiorno.getLayoutParams();
@@ -202,8 +239,6 @@ public class PopupGiorno {
 
         nomeGiorno.setText(giorno.getNomeGiorno());
         nomeGiorno.setInputType(InputType.TYPE_NULL);
-        noteGiorno.setText(giorno.getNote());
-        noteGiorno.setInputType(InputType.TYPE_NULL);
         salvaGiorno.setVisibility(View.GONE);
 
         creaEsercizio.setOnClickListener(new View.OnClickListener() {
@@ -221,7 +256,31 @@ public class PopupGiorno {
                     //Global.giornoDao.AggiornaGiorno(giorno.getNomeGiorno(),Global.schedaNuova.getNomeScheda());
                 }
 
+                //ripristina notifiche di scheda
+                SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit=shp.edit();
+                edit.putString("notePassate",noteScheda.toJson());
+                edit.commit();
+
                 alertDialog.dismiss();
+            }
+        });
+
+        bottoneNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit= sh.edit();
+                PaginaScheda_Pag3.StampaTutto();
+                Note notaDaMostrare= new Note(giorno.getNote());
+                edit.putString("notePassate", notaDaMostrare.toJson());
+                edit.apply();
+                try {
+                    Registrazione_Pag2.editGlobal=false;
+                    NotificheDialog.NotificaNote(inflater,sh);
+                } catch (Eccezioni e) {
+                    e.printStackTrace();
+                }
             }
         });
 
