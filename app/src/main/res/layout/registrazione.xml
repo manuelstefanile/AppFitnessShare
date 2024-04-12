@@ -28,7 +28,9 @@
             android:padding="20px"
             >
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:text="Nome:"
                 android:textColor="@color/black"
@@ -53,7 +55,8 @@
             android:gravity="center"
             >
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Cognome:"
@@ -78,7 +81,8 @@
             android:gravity="center"
             >
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Età:"
@@ -104,10 +108,12 @@
             android:gravity="center"
             >
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Nome Utente:"
+                android:layout_marginRight="20px"
                 android:textColor="@color/black"
                 android:textSize="18dp"
 
@@ -129,7 +135,9 @@
             android:gravity="center"
             >
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_marginRight="20px"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Altezza:"
@@ -166,7 +174,8 @@
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:layout_marginRight="20px"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Peso:"
@@ -196,7 +205,8 @@
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:layout_marginRight="20px"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Misure:"
@@ -227,12 +237,13 @@
             >
             <TextView
                 android:layout_width="0dp"
+                android:layout_marginRight="20px"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Kcal Attuali:"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 >
             </TextView>
             <Button
@@ -259,9 +270,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Note:"
+                android:layout_marginRight="20px"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 >
             </TextView>
             <Button

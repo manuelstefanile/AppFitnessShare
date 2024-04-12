@@ -31,12 +31,12 @@
         </Button>
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.3"
             android:layout_height="wrap_content"
             android:text="Nome:"
             android:textSize="24dp"
             android:textColor="@color/black"
-            android:gravity="right
+            android:gravity="center
 "
             ></TextView>
 
@@ -44,7 +44,7 @@
             android:id="@+id/nomeGiorno"
             android:layout_width="0dp"
             android:textSize="24dp"
-            android:layout_weight="0.4"
+            android:layout_weight="0.45"
             android:layout_height="wrap_content"
 
             >
@@ -52,7 +52,7 @@
         <Button
             android:id="@+id/salvaGiorno"
             android:layout_width="0dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.15"
             android:text="save"
             android:background="@drawable/drawable_scheda"
             android:layout_height="wrap_content"

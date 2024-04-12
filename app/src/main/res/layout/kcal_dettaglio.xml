@@ -17,12 +17,13 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:text="Kcal Attuali:"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:gravity="left"
+                android:gravity="center"
                 ></TextView>
             <EditText
                 android:id="@+id/kcalAttual"
@@ -37,15 +38,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="wrap_content"
-
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:text="Fase di:"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:gravity="left"
+                android:gravity="center"
                 ></TextView>
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -90,7 +92,7 @@
             android:layout_height="wrap_content"
             android:columnCount="3"
             android:rowCount="2"
-
+            android:layout_marginBottom="20dp"
             >
             <TextView
                 android:layout_width="0dp"
@@ -171,17 +173,18 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:text="Sodio:"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:gravity="left"
+                android:gravity="center"
                 ></TextView>
             <EditText
                 android:id="@+id/sale"
                 android:layout_width="0dp"
-                android:layout_weight="0.1"
+                android:layout_weight="0.4"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 >
@@ -189,7 +192,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
+                android:layout_weight="0.6"
                 android:text="mg"
                 android:textColor="@color/black"
                 android:textSize="18dp"
@@ -204,17 +207,18 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:text="Acqua:"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:gravity="left"
+                android:gravity="center"
                 ></TextView>
             <EditText
                 android:id="@+id/acqua"
                 android:layout_width="0dp"
-                android:layout_weight="0.1"
+                android:layout_weight="0.4"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 >
@@ -222,7 +226,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
+                android:layout_weight="0.6"
                 android:text="litri"
                 android:textColor="@color/black"
                 android:textSize="18dp"
@@ -237,12 +241,13 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:text="Note:"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:gravity="left"
+                android:gravity="center"
                 ></TextView>
             <EditText
                 android:id="@+id/noteDettaglio"

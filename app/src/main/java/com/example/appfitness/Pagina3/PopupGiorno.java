@@ -188,6 +188,12 @@ public class PopupGiorno {
         Button creaEsercizio=dialogView.findViewById((int)R.id.CreaEsercizio);
         Button salvaGiorno=dialogView.findViewById((int)R.id.salvaGiorno);
         Button back=dialogView.findViewById((int)R.id.backGiorno);
+
+        //modifico il weight di edit
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) nomeGiorno.getLayoutParams();
+        params.weight = 0.6f; // Impostare il layout_weight a 0.6
+        nomeGiorno.setLayoutParams(params);
+
         nomeGiorno.setText(giorno.getNomeGiorno());
         nomeGiorno.setInputType(InputType.TYPE_NULL);
         salvaGiorno.setVisibility(View.GONE);

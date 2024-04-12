@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="20dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp"
+
 
         >
             <LinearLayout
@@ -17,8 +18,10 @@
                 android:layout_marginBottom="20dp"
                 >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10px"
                     android:text="Peso attuale"
                     android:textColor="@color/black"
                     android:textSize="18dp"
@@ -27,7 +30,7 @@
                 <EditText
                     android:id="@+id/pesoAttual"
                     android:layout_width="0dp"
-                    android:layout_weight="0.8"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     >
@@ -36,7 +39,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.2"
                     android:layout_height="wrap_content"
-                    android:text="Kg:"
+                    android:text="Kg"
                     android:textColor="@color/black"
                     android:textSize="18dp"
                     ></TextView>
@@ -57,15 +60,25 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 ></CalendarView>
-            <Button
-                android:id="@+id/salvaButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Salva"
-                android:background="@drawable/drawable_scheda"
-                android:layout_gravity="center"
-                >
-            </Button>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        >
+        <Button
+            android:id="@+id/salvaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Salva"
+            android:background="@drawable/drawable_scheda"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            >
+        </Button>
         <Button
             android:id="@+id/okButton"
             android:layout_width="wrap_content"
@@ -78,5 +91,6 @@
         </Button>
 
     </LinearLayout>
+
 
 </RelativeLayout>

@@ -27,6 +27,7 @@
             <Button
                 android:onClick="ChiudTuttoNonSalva"
                 android:layout_width="30dp"
+
                 android:layout_height="30dp"
                 android:background="@drawable/ic_baseline_home_24"
                 android:contentDescription="Cancella Tutto"
@@ -39,16 +40,16 @@
                 android:text="Nome:"
                 android:textSize="24dp"
                 android:textColor="@color/black"
-                android:gravity="right"
+                android:gravity="center"
                 ></TextView>
 
             <EditText
                 android:id="@+id/nomeEsercizio"
-                android:layout_width="0.5dp"
+                android:layout_width="0.6dp"
+                android:gravity="center"
                 android:textSize="24dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-
                 >
             </EditText>
 
@@ -62,8 +63,8 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="wrap_content"
-
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
                 android:layout_height="wrap_content"
                 android:text="Immagine macchinario:"
                 android:textSize="18dp"
@@ -77,7 +78,7 @@
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 >
             </ImageButton>
 
@@ -90,8 +91,8 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="wrap_content"
-
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
                 android:layout_height="wrap_content"
                 android:text="Numero Serie:"
                 android:textSize="18dp"
@@ -103,6 +104,7 @@
                 android:id="@+id/numeroSerie"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:textSize="18dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
@@ -118,8 +120,8 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="wrap_content"
-
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
                 android:layout_height="wrap_content"
                 android:text="Numero ripetizioni:"
                 android:textSize="18dp"
@@ -132,6 +134,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:textSize="18dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
 
@@ -147,8 +150,8 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="wrap_content"
-
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
                 android:layout_height="wrap_content"
                 android:text="Timer:"
                 android:textSize="18dp"
@@ -161,6 +164,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:textSize="18dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
 
@@ -175,8 +179,8 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="wrap_content"
-
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
                 android:layout_height="wrap_content"
                 android:text="Tecnica intensita:"
                 android:textSize="18dp"
@@ -188,6 +192,7 @@
                 android:id="@+id/tecnicaIntensita"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:textSize="18dp"
                 android:layout_height="wrap_content"
                 >
@@ -201,8 +206,8 @@
             android:layout_marginBottom="20dp"
             >
             <TextView
-                android:layout_width="wrap_content"
-
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
                 android:layout_height="wrap_content"
                 android:text="Esecuzione:"
                 android:textSize="18dp"
@@ -214,6 +219,7 @@
                 android:id="@+id/esecuzione"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:textSize="18dp"
                 android:layout_height="wrap_content"
                 >
@@ -228,7 +234,8 @@
             >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
                 android:layout_height="wrap_content"
 
                 android:gravity="left"
@@ -240,7 +247,7 @@
                 android:id="@+id/bottoneNote"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
+                android:layout_weight="1"
                 android:background="@drawable/drawable_scheda"
                 android:text="aggiungi"></Button>
         </LinearLayout>
