@@ -68,6 +68,7 @@ public class PopupGiorno {
         alertDialog.getWindow().setLayout(size.x, size.y);
 
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
+        EditText noteGiorno=dialogView.findViewById((int)R.id.noteGiorno);
         Button creaEsercizio=dialogView.findViewById((int)R.id.CreaEsercizio);
         Button salvaGiorno=dialogView.findViewById((int)R.id.salvaGiorno);
         //prima devi mettere un nome per il giorno e poi puoi andare avanti
@@ -126,10 +127,12 @@ public class PopupGiorno {
                 String testoInserito = nomeGiorno.getText().toString().trim();
                 if(testoInserito.length()>0) {
                     nomeGiorno.setEnabled(false);
+                    noteGiorno.setEnabled(false);
                     salvaGiorno.setEnabled(false);
                     creaEsercizio.setEnabled(true);
                     creaEsercizio.setBackgroundResource(R.drawable.drawable_scheda);
                     giornoNuovo.setNomeGiorno(testoInserito);
+                    giornoNuovo.setNote(noteGiorno.getText().toString());
                     Global.giornoDao.InsertGiorno(giornoNuovo);
                     schedaRiferimento.getListaGiorni().add(giornoNuovo.getId());
                     Global.adapterGiorni.add(giornoNuovo);
@@ -187,6 +190,7 @@ public class PopupGiorno {
         }
 
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
+        EditText noteGiorno=dialogView.findViewById((int)R.id.noteGiorno);
         Button creaEsercizio=dialogView.findViewById((int)R.id.CreaEsercizio);
         Button salvaGiorno=dialogView.findViewById((int)R.id.salvaGiorno);
         Button back=dialogView.findViewById((int)R.id.backGiorno);
@@ -198,6 +202,8 @@ public class PopupGiorno {
 
         nomeGiorno.setText(giorno.getNomeGiorno());
         nomeGiorno.setInputType(InputType.TYPE_NULL);
+        noteGiorno.setText(giorno.getNote());
+        noteGiorno.setInputType(InputType.TYPE_NULL);
         salvaGiorno.setVisibility(View.GONE);
 
         creaEsercizio.setOnClickListener(new View.OnClickListener() {

@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Scheda extends ListeClasseMarker {
     private long id;
-    private String nomeScheda;
+    private String nomeScheda,note;
     private byte[] imgBytes;
     private ArrayList<? extends Number> listaIdGiorni=new ArrayList<>() ;
 
@@ -26,6 +26,7 @@ public class Scheda extends ListeClasseMarker {
     public Scheda(String nomeScheda, byte[] img) {
         this.nomeScheda = nomeScheda;
         this.imgBytes = img;
+
     }
 
     public long getId() {
@@ -42,6 +43,14 @@ public class Scheda extends ListeClasseMarker {
 
     public Scheda(String temp) {
         this.nomeScheda=temp;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getNomeScheda() {

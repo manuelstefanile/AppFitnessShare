@@ -77,6 +77,7 @@ public class DbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + SchemaDB.SchedaDB.TABLE_NAME + " ("
                     + SchemaDB.SchedaDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + SchemaDB.SchedaDB.COLUMN_nomeScheda + " TEXT NOT NULL UNIQUE, "
+                    + SchemaDB.SchedaDB.COLUMN_noteScheda + " TEXT, "
                     + SchemaDB.SchedaDB.COLUMN_immagineScheda + " BLOB "
                     + ");";
 
@@ -91,6 +92,7 @@ public class DbHelper extends SQLiteOpenHelper {
     final private static String CREATE_GIORNO =
             "CREATE TABLE " + SchemaDB.GiornoDB.TABLE_NAME + " ("
                     + SchemaDB.GiornoDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + SchemaDB.GiornoDB.COLUMN_noteGiorno + " TEXT, "
                     + SchemaDB.GiornoDB.COLUMN_nomeGiorno + " TEXT NOT NULL"
                     + ");";
 

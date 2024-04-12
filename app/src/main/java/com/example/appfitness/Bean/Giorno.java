@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Giorno extends ListeClasseMarker {
     private long id;
-    private String nomeGiorno;
+    private String nomeGiorno,note;
     private ArrayList<Long> listaIdEsercizi=new ArrayList<>();
 
     public Giorno(String nomeGiorno, ArrayList<Long> listaEsercizi) {
@@ -24,6 +24,14 @@ public class Giorno extends ListeClasseMarker {
 
     public Giorno() {
 
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getNomeGiorno() {

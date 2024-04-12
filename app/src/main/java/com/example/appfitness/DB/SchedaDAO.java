@@ -46,8 +46,10 @@ public class SchedaDAO {
             do {
                 int id=cursor.getInt(cursor.getColumnIndex(SchemaDB.SchedaDB._ID));
                 String nomeScheda=cursor.getString(cursor.getColumnIndex(SchemaDB.SchedaDB.COLUMN_nomeScheda));
+                String noteScheda=cursor.getString(cursor.getColumnIndex(SchemaDB.SchedaDB.COLUMN_noteScheda));
                 byte[] immagine=cursor.getBlob(cursor.getColumnIndex(SchemaDB.SchedaDB.COLUMN_immagineScheda));
                 Scheda sch=new Scheda(nomeScheda,immagine);
+                sch.setNote(noteScheda);
                 sch.setId(id);
                 sch.setListaGiorni(new ArrayList<>());
                 result.add(sch);
@@ -79,6 +81,7 @@ public class SchedaDAO {
 
         ContentValues valuesScheda = new ContentValues();
         valuesScheda.put(SchemaDB.SchedaDB.COLUMN_nomeScheda, scheda.getNomeScheda());
+        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_noteScheda, scheda.getNote());
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         if(scheda.getImg()!=null) {
             Bitmap bitmap = ((BitmapDrawable) scheda.getImg()).getBitmap();

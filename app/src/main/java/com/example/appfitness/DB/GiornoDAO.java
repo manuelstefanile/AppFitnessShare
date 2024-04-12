@@ -31,6 +31,7 @@ public class GiornoDAO {
 
         ContentValues valuesGiorno = new ContentValues();
         valuesGiorno.put(SchemaDB.GiornoDB.COLUMN_nomeGiorno, giorno.getNomeGiorno());
+        valuesGiorno.put(SchemaDB.GiornoDB.COLUMN_noteGiorno, giorno.getNote());
         long idDBGiorno=dbWritable.insert(SchemaDB.GiornoDB.TABLE_NAME,null,valuesGiorno);
         giorno.setId(idDBGiorno);
 
@@ -58,6 +59,7 @@ public class GiornoDAO {
             result = new Giorno();
             result.setId(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.GiornoDB._ID)));
             result.setNomeGiorno(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.GiornoDB.COLUMN_nomeGiorno)));
+            result.setNote(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.GiornoDB.COLUMN_noteGiorno)));
 
             // Chiudi il cursore
             cursor.close();

@@ -59,6 +59,7 @@ public static abstract class UtenteDB implements BaseColumns {
     public static abstract class SchedaDB implements BaseColumns {
         public static final String TABLE_NAME = "Scheda";
         public static final String COLUMN_nomeScheda = "nomeScheda";
+        public static final String COLUMN_noteScheda = "noteScheda";
         public static final String COLUMN_immagineScheda = "imagineScheda";
     }
     public static abstract class ListaGiorniDB implements BaseColumns {
@@ -70,6 +71,7 @@ public static abstract class UtenteDB implements BaseColumns {
     public static abstract class GiornoDB implements BaseColumns {
         public static final String TABLE_NAME = "Giorno";
         public static final String COLUMN_nomeGiorno = "nomeGiorno";
+        public static final String COLUMN_noteGiorno = "noteGiorno";
 
 
     }
