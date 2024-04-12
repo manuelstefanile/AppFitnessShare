@@ -102,7 +102,6 @@ public class PopupEsercizio {
         EditText intensitaEsercizio = dialogView.findViewById((int) R.id.tecnicaIntensita);
         EditText esecuzioneEsercizio = dialogView.findViewById((int) R.id.esecuzione);
         Button salva=dialogView.findViewById((int)R.id.salvaEsercizio);
-        Button ripristina=dialogView.findViewById((int)R.id.ripristinaEsercizio);
         Button back=dialogView.findViewById((int)R.id.backEsercizio);
         Button bottoneNote = dialogView.findViewById(R.id.bottoneNote);
 
@@ -245,7 +244,6 @@ public class PopupEsercizio {
         EditText intensitaEsercizio = dialogView.findViewById((int) R.id.tecnicaIntensita);
         EditText esecuzioneEsercizio = dialogView.findViewById((int) R.id.esecuzione);
         Button salva=dialogView.findViewById((int)R.id.salvaEsercizio);
-        Button ripristina=dialogView.findViewById((int)R.id.ripristinaEsercizio);
         Button back=dialogView.findViewById((int)R.id.backEsercizio);
         Button bottoneNote = dialogView.findViewById(R.id.bottoneNote);
         bottoneNote.setText("Mostra");
@@ -265,7 +263,6 @@ public class PopupEsercizio {
         intensitaEsercizio.setInputType(InputType.TYPE_NULL);
         esecuzioneEsercizio.setInputType(InputType.TYPE_NULL);
         salva.setVisibility(View.GONE);
-        ripristina.setVisibility(View.GONE);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

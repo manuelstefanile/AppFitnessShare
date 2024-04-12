@@ -24,31 +24,23 @@
             android:gravity="center"
             android:layout_marginBottom="20dp"
             >
-            <Button
-                android:onClick="ChiudTuttoNonSalva"
-                android:layout_width="30dp"
 
-                android:layout_height="30dp"
-                android:background="@drawable/ic_baseline_home_24"
-                android:contentDescription="Cancella Tutto"
-                >
-            </Button>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.45"
                 android:layout_height="wrap_content"
                 android:text="Nome:"
-                android:textSize="24dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"
-                android:gravity="center"
+                android:gravity="left"
                 ></TextView>
 
             <EditText
                 android:id="@+id/nomeEsercizio"
-                android:layout_width="0.6dp"
-                android:gravity="center"
-                android:textSize="24dp"
+                android:layout_width="0dp"
+                android:textSize="18dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 >
             </EditText>
@@ -237,7 +229,6 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.45"
                 android:layout_height="wrap_content"
-
                 android:gravity="left"
                 android:text="Note esercizio:"
                 android:textColor="@color/black"
@@ -262,26 +253,25 @@
         android:gravity="center"
         >
         <Button
-            android:id="@+id/ripristinaEsercizio"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:text="Azzera"
-            android:background="@drawable/drawable_scheda"
+            android:onClick="ChiudTuttoNonSalva"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_baseline_home_24"
+            android:contentDescription="Cancella Tutto"
             >
         </Button>
         <Button
             android:id="@+id/salvaEsercizio"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:text="Salva"
-            android:layout_marginRight="10dp"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/drawable_scheda"
             >
 
@@ -289,14 +279,12 @@
 
         <Button
             android:id="@+id/backEsercizio"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:text="Back"
             android:onClick="back"
-            android:background="@drawable/drawable_scheda"
+            android:background="@drawable/ic_baseline_keyboard_backspace_24"
             >
         </Button>
     </LinearLayout>
