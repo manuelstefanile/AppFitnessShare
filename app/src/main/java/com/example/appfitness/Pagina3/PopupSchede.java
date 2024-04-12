@@ -82,7 +82,6 @@ public class PopupSchede {
 
 
         EditText nomeScheda= dialogView.findViewById((int)R.id.nomeScheda);
-        EditText noteScheda= dialogView.findViewById((int)R.id.noteScheda);
         imgScheda=dialogView.findViewById((int)R.id.aggiungiImmagineScheda);
         Button creaGiorno=dialogView.findViewById((int)R.id.CreaGiorno);
         Button back=dialogView.findViewById((int)R.id.backScheda);
@@ -122,7 +121,6 @@ public class PopupSchede {
                 }else {
                     schedaTemp.setNomeScheda(nomeScheda.getText().toString());
                     schedaTemp.setImg(imgScheda.getDrawable());
-                    schedaTemp.setNote(noteScheda.getText().toString());
                     Global.adapterSchede.add(schedaTemp);
                     Global.schedadao.ModificaSchedaTemp(schedaTemp);
                     Global.schedadao.ModificaSchedaTemp(schedaTemp);
@@ -182,14 +180,12 @@ public class PopupSchede {
         }
 
         EditText nomeScheda= dialogView.findViewById((int)R.id.nomeScheda);
-        EditText noteScheda= dialogView.findViewById((int)R.id.noteScheda);
         imgScheda=dialogView.findViewById((int)R.id.aggiungiImmagineScheda);
         Button creaGiorno=dialogView.findViewById((int)R.id.CreaGiorno);
         Button back=dialogView.findViewById((int)R.id.backScheda);
         nomeScheda.setText(sched.getNomeScheda());
         nomeScheda.setInputType(InputType.TYPE_NULL);
-        noteScheda.setText(sched.getNote());
-        noteScheda.setInputType(InputType.TYPE_NULL);
+
         creaGiorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

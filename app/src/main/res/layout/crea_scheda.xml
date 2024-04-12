@@ -19,23 +19,23 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             >
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.2"
                 android:layout_height="wrap_content"
                 android:text="Nome:"
                 android:textColor="@color/black"
                 android:textSize="24dp"
-                android:gravity="center"
+                android:gravity="left"
                 ></TextView>
 
             <EditText
                 android:id="@+id/nomeScheda"
                 android:layout_width="0dp"
-                android:layout_weight="0.45"
+                android:layout_weight="0.5"
                 android:textSize="24dp"
                 android:layout_height="wrap_content"
 
@@ -50,18 +50,14 @@
 
                 ></ImageButton>
 
+
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/listaGiorniView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ListView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             >
             <TextView
                 android:layout_width="0dp"
@@ -69,18 +65,36 @@
                 android:layout_height="wrap_content"
                 android:text="Note:"
                 android:textColor="@color/black"
-                android:textSize="18dp"
-                android:gravity="center"
+                android:textSize="20dp"
+                android:gravity="right"
                 android:layout_marginRight="10dp"
                 ></TextView>
-            <EditText
-                android:id="@+id/noteScheda"
+            <Button
+                android:id="@+id/bottoneNote"
                 android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:textSize="18dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                >
-            </EditText>
+                android:layout_marginRight="10dp"
+                android:background="@drawable/drawable_scheda"
+                android:text="aggiungi"></Button>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="0dp"
+                android:text=""
+                ></TextView>
+
+
         </LinearLayout>
+
+        <ListView
+            android:id="@+id/listaGiorniView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ListView>
+
+
 
     </LinearLayout>
 

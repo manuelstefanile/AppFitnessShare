@@ -30,7 +30,7 @@
                 android:layout_weight="0.45"
                 android:layout_height="wrap_content"
                 android:text="Nome:"
-                android:textSize="18dp"
+                android:textSize="24dp"
                 android:textColor="@color/black"
                 android:gravity="left"
                 ></TextView>
@@ -59,7 +59,7 @@
                 android:layout_weight="0.45"
                 android:layout_height="wrap_content"
                 android:text="Immagine macchinario:"
-                android:textSize="18dp"
+                android:textSize="19dp"
                 android:textColor="@color/black"
                 android:gravity="left"
                 ></TextView>
