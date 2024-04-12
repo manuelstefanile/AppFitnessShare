@@ -335,7 +335,8 @@ public class Registrazione_Pag2 extends Activity {
                 NotificheDialog.NotificaKcal(getLayoutInflater(),sharedPreferences);
                 break;
             case "note":
-                NotificheDialog.NotificaNote(getLayoutInflater(),sharedPreferences,true);
+                Registrazione_Pag2.editGlobal=true;
+                NotificheDialog.NotificaNote(getLayoutInflater(),sharedPreferences);
                 break;
             default:
                 break;

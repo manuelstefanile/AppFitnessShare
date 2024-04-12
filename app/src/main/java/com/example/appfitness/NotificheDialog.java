@@ -279,6 +279,15 @@ public class NotificheDialog {
 
             radiogroup.setFocusable(false);
             radiogroup.setClickable(false);
+            radioMassa.setFocusable(false);
+            radioMassa.setClickable(false);
+            radioDeficit.setFocusable(false);
+            radioDeficit.setClickable(false);
+            radioNormo.setFocusable(false);
+            radioNormo.setClickable(false);
+            radioRicomposizione.setFocusable(false);
+            radioRicomposizione.setClickable(false);
+
 
             carbo.setClickable(false);
             carbo.setFocusable(false);
@@ -394,14 +403,14 @@ public class NotificheDialog {
 
     }
 
-    public static void NotificaNote(LayoutInflater inflater,SharedPreferences sh,boolean modifica) throws Eccezioni {
+    public static void NotificaNote(LayoutInflater inflater,SharedPreferences sh) throws Eccezioni {
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.note_dettaglio, null);
         Button salvaButton = dialogView.findViewById((int) R.id.SalvaNote);
         Button okButton = dialogView.findViewById((int) R.id.OkNote);
         EditText noteDettaglio = dialogView.findViewById((int) R.id.noteDettaglio);
-        if(!modifica||!Registrazione_Pag2.editGlobal){
+        if(!Registrazione_Pag2.editGlobal){
             //non far scrivere
             noteDettaglio.setInputType(InputType.TYPE_NULL);
             //rimuovi il tasto salva
@@ -427,7 +436,7 @@ public class NotificheDialog {
         if(noteStorage.getNote()!=null){
             noteDettaglio.setText(noteStorage.getNote());
         }else noteDettaglio.setText("");
-        if(modifica){
+        if(Registrazione_Pag2.editGlobal){
             salvaButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

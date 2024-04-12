@@ -38,6 +38,7 @@ import com.example.appfitness.DB.SchemaDB;
 import com.example.appfitness.Eccezioni.Eccezioni;
 import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
+import com.example.appfitness.Registrazione_Pag2;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -111,7 +112,8 @@ public class PopupEsercizio {
             public void onClick(View view) {
                 System.out.println("noteClick");
                 try {
-                    NotificheDialog.NotificaNote(inflater, shp,true);
+                    Registrazione_Pag2.editGlobal=true;
+                    NotificheDialog.NotificaNote(inflater, shp);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }
@@ -284,7 +286,8 @@ public class PopupEsercizio {
                 edit.apply();
                 System.out.println("*****" + esercizioNew.getNote());
                 try {
-                    NotificheDialog.NotificaNote(inflater,sh,false);
+                    Registrazione_Pag2.editGlobal=false;
+                    NotificheDialog.NotificaNote(inflater,sh);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }
