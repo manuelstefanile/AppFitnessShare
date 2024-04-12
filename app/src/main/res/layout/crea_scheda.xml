@@ -70,7 +70,7 @@
                 android:layout_marginRight="10dp"
                 ></TextView>
             <Button
-                android:id="@+id/bottoneNote"
+                android:id="@+id/bottoneNoteScheda"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:textSize="18dp"

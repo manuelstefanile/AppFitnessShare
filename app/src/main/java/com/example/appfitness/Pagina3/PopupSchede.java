@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -26,9 +27,13 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.appfitness.Bean.Giorno;
+import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Scheda;
 import com.example.appfitness.DB.ListaGiorniDAO;
+import com.example.appfitness.Eccezioni.Eccezioni;
+import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
+import com.example.appfitness.Registrazione_Pag2;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,6 +48,12 @@ public class PopupSchede {
     }
 
     public  void CreaScheda(LayoutInflater inflater){
+
+        SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        //note all inizio della creazione dell ex è vuoto
+        SharedPreferences.Editor edit=shp.edit();
+        edit.putString("notePassate",new Note().toJson());
+        edit.commit();
 
 
         // Creazione del layout della tua View
@@ -85,7 +96,7 @@ public class PopupSchede {
         imgScheda=dialogView.findViewById((int)R.id.aggiungiImmagineScheda);
         Button creaGiorno=dialogView.findViewById((int)R.id.CreaGiorno);
         Button back=dialogView.findViewById((int)R.id.backScheda);
-
+        Button bottoneNote = dialogView.findViewById((int)R.id.bottoneNoteScheda);
 
         imgScheda.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,14 +130,39 @@ public class PopupSchede {
                 if(nomeScheda.getText().toString().trim().length()==0){
                     Toast.makeText(dialogView.getContext(), "Inserisci un nome", Toast.LENGTH_SHORT).show();
                 }else {
+                    //per le note
+                    SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
+
                     schedaTemp.setNomeScheda(nomeScheda.getText().toString());
                     schedaTemp.setImg(imgScheda.getDrawable());
+                    schedaTemp.setNote(note.getNote());
                     Global.adapterSchede.add(schedaTemp);
                     Global.schedadao.ModificaSchedaTemp(schedaTemp);
                     Global.schedadao.ModificaSchedaTemp(schedaTemp);
                     PaginaScheda_Pag3.StampaTutto();
+
+                    //ripristino le note
+                    SharedPreferences.Editor edit=shp.edit();
+                    edit.putString("notePassate",new Note().toJson());
+                    edit.commit();
+
                     alertDialog.dismiss();
                     ResettaVariabili();
+                }
+            }
+        });
+
+
+        bottoneNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("noteClick");
+                try {
+                    Registrazione_Pag2.editGlobal=true;
+                    NotificheDialog.NotificaNote(inflater, shp);
+                } catch (Eccezioni e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -183,6 +219,8 @@ public class PopupSchede {
         imgScheda=dialogView.findViewById((int)R.id.aggiungiImmagineScheda);
         Button creaGiorno=dialogView.findViewById((int)R.id.CreaGiorno);
         Button back=dialogView.findViewById((int)R.id.backScheda);
+        Button bottoneNote = dialogView.findViewById((int)R.id.bottoneNoteScheda);
+        bottoneNote.setText("Mostra");
         nomeScheda.setText(sched.getNomeScheda());
         nomeScheda.setInputType(InputType.TYPE_NULL);
 
@@ -202,6 +240,27 @@ public class PopupSchede {
                 ResettaVariabili();
             }
         });
+
+        bottoneNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit= sh.edit();
+                PaginaScheda_Pag3.StampaTutto();
+                Note notaDaMostrare= new Note(sched.getNote());
+                edit.putString("notePassate", notaDaMostrare.toJson());
+                edit.apply();
+                try {
+                    Registrazione_Pag2.editGlobal=false;
+                    NotificheDialog.NotificaNote(inflater,sh);
+                } catch (Eccezioni e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
 
 
 
