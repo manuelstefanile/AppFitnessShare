@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:id="@+id/origineGiorno"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/drawable_creascheda"
     android:padding="20dp"
     >
     <LinearLayout
