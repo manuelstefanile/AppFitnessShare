@@ -14,16 +14,14 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical">
+
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="200dp"
+            android:layout_height="145dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
             android:adjustViewBounds="true"
-            android:layout_margin="5dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/logo">
+            android:src="@drawable/adesivo">
 
         </ImageView>
         <TextView
@@ -70,9 +68,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/drawable_scheda"
-
         android:onClick="Inizia"
-        android:padding="10dp"
-        android:text="Let's go Buddy"
-        android:textSize="18dp" />
+        android:padding="15dp"
+        android:text="Let's go"
+        android:textSize="20dp" />
 </RelativeLayout>

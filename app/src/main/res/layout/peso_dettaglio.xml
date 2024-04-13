@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="@drawable/drawable_creascheda"
+    android:background="@color/white"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,35 +18,37 @@
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:layout_marginTop="50dp"
-                android:layout_marginBottom="70dp"
+                android:layout_marginBottom="20dp"
+
                 >
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="0.6"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10px"
-                    android:text="Peso attuale:"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    ></TextView>
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.175"
+                    android:gravity="left"
+                    android:text=""></TextView>
                 <EditText
                     android:id="@+id/pesoAttual"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
+                    android:padding="6dp"
+                    android:background="@drawable/drawable_botton_grigio"
                     android:textAlignment="center"
+                    android:hint="Peso attuale"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     >
                 </EditText>
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="0.2"
                     android:layout_height="wrap_content"
-                    android:text="Kg"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    ></TextView>
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.175"
+                    android:gravity="left"
+                    android:text=""></TextView>
 
             </LinearLayout>
 
@@ -59,21 +61,31 @@
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:text="Note:"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:gravity="center"
-                ></TextView>
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="0.175"
+                android:gravity="left"
+                android:text=""></TextView>
             <EditText
                 android:id="@+id/notePeso"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.7"
+                android:padding="6dp"
+                android:hint="Note"
+                android:background="@drawable/drawable_botton_grigio"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 >
             </EditText>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="0.175"
+                android:gravity="left"
+                android:text=""></TextView>
         </LinearLayout>
 
 
@@ -106,7 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
-        android:textSize="18dp"
+        android:textSize="15dp"
         android:background="@drawable/drawable_scheda"
         android:layout_gravity="center"
             android:layout_margin="10dp"
@@ -118,7 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salva"
-            android:textSize="18dp"
+            android:textSize="15dp"
             android:background="@drawable/drawable_scheda"
             android:layout_gravity="center"
             android:layout_margin="10dp"

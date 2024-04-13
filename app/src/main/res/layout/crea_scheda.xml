@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/origineScheda"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/drawable_creascheda"
     android:padding="20dp"
     >
@@ -21,34 +21,36 @@
             android:gravity="center"
             android:layout_marginBottom="10dp"
             >
-
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.2"
-                android:layout_height="wrap_content"
-                android:text="Nome:"
-                android:textColor="@color/black"
-                android:textSize="24dp"
-                android:gravity="left"
+                android:layout_weight="0.1"
+                android:layout_height="0dp"
+                android:text=""
                 ></TextView>
 
             <EditText
                 android:id="@+id/nomeScheda"
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
-                android:textSize="24dp"
-                android:textAlignment="center"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@drawable/drawable_botton_grigio"
+                android:hint="Nome Scheda"
+                android:padding="6dp"
+                android:textAlignment="center"
+                android:textSize="24dp"
 
-                >
-            </EditText>
+                ></EditText>
+
             <ImageButton
                 android:id="@+id/aggiungiImmagineScheda"
                 android:layout_width="0dp"
-                android:layout_weight="0.15"
-                android:layout_height="50dp"
-                android:text="cm"
-
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_weight="0.1"
+                android:layout_marginLeft="10dp"
+                android:layout_height="40dp"
+                android:background="@drawable/drawable_botton_white"
+                android:src="@drawable/noimg"
                 ></ImageButton>
 
 
@@ -62,12 +64,11 @@
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.2"
                 android:layout_height="wrap_content"
-                android:text="Note:"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="20dp"
-                android:gravity="right"
                 android:layout_marginRight="10dp"
                 ></TextView>
 
@@ -75,16 +76,21 @@
                 android:id="@+id/bottoneNoteScheda"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@drawable/drawable_scheda"
-                android:text="aggiungi"
-                android:textSize="18dp"></Button>
+                android:layout_weight="0.5"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/drawable_botton_grigio"
+                android:text="Note"
+                android:textSize="15dp"></Button>
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.3"
-                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="wrap_content"
                 android:text=""
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginLeft="10dp"
                 ></TextView>
 
 
@@ -109,7 +115,8 @@
         <Button
             android:id="@+id/xChiudiScheda"
             android:onClick="ChiudTuttoNonSalva"
-            android:layout_width="40dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
             android:layout_height="40dp"
             android:background="@drawable/ic_baseline_home_24"
             android:contentDescription="Cancella Tutto"
@@ -119,30 +126,29 @@
         <Button
             android:id="@+id/CreaGiorno"
             android:layout_width="0dp"
-            android:layout_weight="0.6"
             android:layout_height="wrap_content"
-            android:text="Add new Day"
-            android:onClick="AggiungiGiorno"
-            android:textSize="18dp"
-            android:textColor="@color/black"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0.5"
             android:background="@drawable/drawable_scheda"
-            >
-        </Button>
+            android:onClick="AggiungiGiorno"
+            android:text="Nuovo Giorno"
+            android:textColor="@color/black"
+            android:textSize="20dp"></Button>
+
         <Button
             android:id="@+id/backScheda"
-            android:layout_width="40dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:textColor="@color/black"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0.1"
             android:background="@drawable/ic_baseline_keyboard_backspace_24"
+            android:textColor="@color/black"
 
-            >
-        </Button>
+            ></Button>
 
 
     </LinearLayout>

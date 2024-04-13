@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/drawable_creascheda"
+    android:background="@color/white"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,23 +19,32 @@
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:text="Kcal Attuali:"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:gravity="center"
-                ></TextView>
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="0.175"
+                android:gravity="left"
+                android:text=""></TextView>
             <EditText
                 android:id="@+id/kcalAttual"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.7"
                 android:textAlignment="center"
-                android:text=""
+                android:background="@drawable/drawable_botton_grigio"
+                android:padding="6dp"
+                android:hint="Kcal Attuali"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 >
             </EditText>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="0.175"
+                android:gravity="left"
+                android:text=""></TextView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,12 +53,11 @@
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:layout_height="wrap_content"
-                android:text="Fase di:"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:gravity="center"
+                android:gravity="left"
                 ></TextView>
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -62,14 +70,16 @@
                     android:id="@+id/radioMassa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Massa"
+                    android:text="Bulk"
+                    android:textSize="18dp"
                     >
                 </RadioButton>
                 <RadioButton
                     android:id="@+id/radioNormo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Normo"
+                    android:text="Normocalorica"
+                    android:textSize="18dp"
                     >
                 </RadioButton>
                 <RadioButton
@@ -77,13 +87,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Deficit"
+                    android:textSize="18dp"
                     >
                 </RadioButton>
                 <RadioButton
                     android:id="@+id/radioRicomposizione"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ricomposizione"
+                    android:text="Ricomposizione corporea"
+                    android:textSize="18dp"
                     >
                 </RadioButton>
             </RadioGroup>
@@ -103,6 +115,7 @@
                 android:text="Carbs"
                 android:textColor="@color/black"
                 android:textSize="18dp"
+                android:padding="6dp"
                 android:background="@color/arancione"
                 android:gravity="center"
 
@@ -115,6 +128,7 @@
                 android:text="Protein"
                 android:textColor="@color/black"
                 android:textSize="18dp"
+                android:padding="6dp"
                 android:background="@color/azzurrino"
                 android:gravity="center"
                 >
@@ -126,6 +140,7 @@
                 android:text="Fat"
                 android:textColor="@color/black"
                 android:textSize="18dp"
+                android:padding="6dp"
                 android:background="@color/giallo"
                 android:gravity="center"
                 >
@@ -139,6 +154,7 @@
                 android:gravity="center"
                 android:background="@color/arancione"
                 android:layout_marginTop="5dp"
+                android:padding="6dp"
                 android:inputType="numberDecimal"
                 >
             </EditText>
@@ -150,6 +166,7 @@
                 android:background="@color/azzurrino"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
+                android:padding="6dp"
                 android:inputType="numberDecimal"
                 >
             </EditText>
@@ -159,6 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:gravity="center"
+                android:padding="6dp"
                 android:background="@color/giallo"
                 android:layout_marginTop="5dp"
                 android:inputType="numberDecimal"
@@ -170,38 +188,102 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:gravity="center"
+            android:padding="5dp"
             android:layout_marginBottom="20dp"
+
+
             >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.5"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sodio:"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:gravity="center"
-                ></TextView>
-            <EditText
-                android:id="@+id/sale"
-                android:layout_width="0dp"
-                android:layout_weight="0.4"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:orientation="horizontal"
                 >
-            </EditText>
-            <TextView
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.35"
+                    android:layout_height="wrap_content"
+                    ></TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.1"
+                    android:layout_height="wrap_content"
+                    android:text="Sodio"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:gravity="left"
+                    ></TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.25"
+                    android:layout_height="wrap_content"
+                    ></TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content"
+                    android:text="Acqua"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:gravity="right"
+                    ></TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.35"
+                    android:layout_height="wrap_content"
+                    ></TextView>
+            </LinearLayout>
+            <LinearLayout
+
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.6"
-                android:text="mg"
-                android:textColor="@color/black"
-                android:textSize="18dp"
+                android:orientation="horizontal"
+
                 >
-            </TextView>
+
+                <EditText
+                    android:id="@+id/sale"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:background="@drawable/drawable_botton_grigio"
+                    android:inputType="numberDecimal"
+                    android:hint="mg"
+                    android:padding="6dp"
+                    android:textAlignment="center">
+                </EditText>
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    ></TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    ></TextView>
+                <EditText
+                    android:id="@+id/acqua"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.6"
+                    android:padding="6dp"
+                    android:hint="litri"
+                    android:background="@drawable/drawable_botton_grigio"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    >
+                </EditText>
+
+
+
+
+            </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -211,56 +293,31 @@
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:text="Acqua:"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:gravity="center"
-                ></TextView>
-            <EditText
-                android:id="@+id/acqua"
-                android:layout_width="0dp"
-                android:layout_weight="0.4"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                >
-            </EditText>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.6"
-                android:text="litri"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                >
-            </TextView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="20dp"
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.5"
-                android:layout_height="wrap_content"
-                android:text="Note:"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:gravity="center"
-                ></TextView>
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="0.175"
+                android:gravity="left"
+                android:text=""></TextView>
             <EditText
                 android:id="@+id/noteDettaglio"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.7"
+                android:padding="6dp"
+                android:hint="Note"
+                android:background="@drawable/drawable_botton_grigio"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 >
             </EditText>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="0.175"
+                android:gravity="left"
+                android:text=""></TextView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -296,7 +353,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back"
-            android:textSize="18dp"
+            android:textSize="15dp"
                 android:layout_margin="10dp"
             android:background="@drawable/drawable_scheda"
             >
@@ -306,7 +363,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Salva"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 android:background="@drawable/drawable_scheda"
                 android:layout_margin="10dp"
                 >

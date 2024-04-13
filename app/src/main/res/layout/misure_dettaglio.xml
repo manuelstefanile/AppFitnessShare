@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/drawable_creascheda"
+    android:background="@color/white"
     android:padding="20dp">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,17 +19,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp"
+                android:padding="5dp"
+                android:layout_margin="10dp"
                 >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Braccia:"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    ></TextView>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -37,77 +29,186 @@
                     >
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="0.2"
+                        android:layout_weight="0.1"
                         android:layout_height="wrap_content"
-                        android:text="DX"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1.1"
+                        android:layout_height="wrap_content"
+                        android:text="Braccio dx"
                         android:textColor="@color/black"
-                        android:textSize="14dp"
-                        >
-                    </TextView>
+                        android:textSize="18dp"
+                        android:gravity="left"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.25"
+                        android:layout_height="wrap_content"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1.2"
+                        android:layout_height="wrap_content"
+                        android:text="Braccio sx"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:gravity="right"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.1"
+                        android:layout_height="wrap_content"
+                        ></TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
                     <EditText
                         android:id="@+id/braccioDX"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="0.6"
+                        android:padding="6dp"
+                        android:hint="cm"
+                        android:background="@drawable/drawable_botton_grigio"
                         android:textAlignment="center"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
                         >
                     </EditText>
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="0.2"
                         android:layout_height="wrap_content"
-                        android:text="cm"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"
-                        android:layout_marginRight="20dp"
                         ></TextView>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="0.2"
                         android:layout_height="wrap_content"
-                        android:text="SX"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"
-                        >
-
-                    </TextView>
+                        ></TextView>
                     <EditText
                         android:id="@+id/braccioSX"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="0.6"
+                        android:padding="6dp"
+                        android:hint="cm"
+                        android:background="@drawable/drawable_botton_grigio"
                         android:textAlignment="center"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
                         >
                     </EditText>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.1"
+                        android:layout_height="wrap_content"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1.1"
+                        android:layout_height="wrap_content"
+                        android:text="Gamba dx"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:gravity="left"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.25"
+                        android:layout_height="wrap_content"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1.2"
+                        android:layout_height="wrap_content"
+                        android:text="Gamba sx"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:gravity="right"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.1"
+                        android:layout_height="wrap_content"
+                        ></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+
+                    <EditText
+                        android:id="@+id/gambaDX"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:hint="cm"
+                        android:background="@drawable/drawable_botton_grigio"
+                        android:inputType="numberDecimal"
+                        android:padding="6dp"
+                        android:textAlignment="center"></EditText>
+
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="0.2"
                         android:layout_height="wrap_content"
-                        android:text="cm"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"
                         ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.2"
+                        android:layout_height="wrap_content"
+                        ></TextView>
+                    <EditText
+                        android:id="@+id/gambaSX"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:hint="cm"
+                        android:background="@drawable/drawable_botton_grigio"
+                        android:inputType="numberDecimal"
+                        android:padding="6dp"
+                        android:textAlignment="center"></EditText>
+
+
+
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_margin="10dp"
+
                 >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Gambe:"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"></TextView>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -117,57 +218,83 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.2"
                         android:layout_height="wrap_content"
-                        android:text="DX"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"
-                        >
-                    </TextView>
-                    <EditText
-                        android:id="@+id/gambaDX"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textAlignment="center"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
-                        >
-                    </EditText>
+                        ></TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.1"
+                    android:layout_height="wrap_content"
+                    android:text="Petto"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:gravity="left"
+                    ></TextView>
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="0.2"
+                        android:layout_weight="0.25"
                         android:layout_height="wrap_content"
-                        android:text="cm"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"
-                        android:layout_marginRight="20dp"
                         ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1.2"
+                        android:layout_height="wrap_content"
+                        android:text="Spalle"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:gravity="right"
+                        ></TextView>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"></TextView>
+                </LinearLayout>
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/petto"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:background="@drawable/drawable_botton_grigio"
+                        android:inputType="numberDecimal"
+                        android:hint="cm"
+                        android:padding="6dp"
+                        android:textAlignment="center">
+                    </EditText>
+
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="0.2"
                         android:layout_height="wrap_content"
-                        android:text="SX"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"
-                        >
-
-                    </TextView>
-                    <EditText
-                        android:id="@+id/gambaSX"
+                        ></TextView>
+                    <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="0.2"
+                        android:layout_height="wrap_content"
+                        ></TextView>
+                    <EditText
+                        android:id="@+id/spalle"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:padding="6dp"
+                        android:hint="cm"
+                        android:background="@drawable/drawable_botton_grigio"
                         android:textAlignment="center"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
                         >
                     </EditText>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.2"
-                        android:layout_height="wrap_content"
-                        android:text="cm"
-                        android:textColor="@color/black"
-                        android:textSize="14dp"
-                        ></TextView>
+
+
+
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -176,157 +303,98 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:padding="5dp"
+                android:layout_margin="10dp"
 
                 >
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Petto:"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    ></TextView>
-            </LinearLayout>
-            <LinearLayout
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.2"
+                        android:layout_height="wrap_content"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1.1"
+                        android:layout_height="wrap_content"
+                        android:text="Addome"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:gravity="left"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.25"
+                        android:layout_height="wrap_content"
+                        ></TextView>
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="20dp"
-                >
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    >
-                </TextView>
-                <EditText
-                    android:id="@+id/petto"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.8"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    >
-                </EditText>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.2"
-                    android:layout_height="wrap_content"
-                    android:text="cm"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    ></TextView>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    >
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1.2"
+                        android:layout_height="wrap_content"
+                        android:text="Fianchi"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:gravity="right"
+                        ></TextView>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"></TextView>
+                </LinearLayout>
+                <LinearLayout
 
-                >
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Spalle:"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    ></TextView>
+                    android:orientation="horizontal"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/addome"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:background="@drawable/drawable_botton_grigio"
+                        android:inputType="numberDecimal"
+                        android:padding="6dp"
+                        android:hint="cm"
+                        android:textAlignment="center"></EditText>
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.2"
+                        android:layout_height="wrap_content"
+                        ></TextView>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.2"
+                        android:layout_height="wrap_content"
+                        ></TextView>
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_weight="0.6"
+                        android:padding="6dp"
+                        android:hint="cm"
+                        android:background="@drawable/drawable_botton_grigio"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        >
+                    </EditText>
+
+
+
+                </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="20dp"
-                >
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    >
-                </TextView>
-                <EditText
-                    android:id="@+id/spalle"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.8"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    >
-                </EditText>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.2"
-                    android:layout_height="wrap_content"
-                    android:text="cm"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    ></TextView>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    >
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Addome:"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    ></TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="20dp"
-                >
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    >
-                </TextView>
-                <EditText
-                    android:id="@+id/addome"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.8"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    >
-                </EditText>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.2"
-                    android:layout_height="wrap_content"
-                    android:text="cm"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    ></TextView>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    >
-                </TextView>
-            </LinearLayout>
+
+
 
 
             <LinearLayout
@@ -334,25 +402,37 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginBottom="20dp"
+                android:layout_margin="10dp"
+                android:padding="5dp"
                 >
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="0.5"
                     android:layout_height="wrap_content"
-                    android:text="Note:"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    ></TextView>
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.175"
+                    android:gravity="left"
+                    android:text=""></TextView>
+
                 <EditText
                     android:id="@+id/noteMisure"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:padding="6dp"
+                    android:layout_weight="1.7"
+                    android:hint="Note"
+                    android:background="@drawable/drawable_botton_grigio"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     >
                 </EditText>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.175"
+                    android:gravity="left"
+                    android:text=""></TextView>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -393,7 +473,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Back"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 android:layout_margin="10dp"
                 android:background="@drawable/drawable_scheda"
                 >
@@ -403,7 +483,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Salva"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 android:background="@drawable/drawable_scheda"
                 android:layout_margin="10dp"
                 >

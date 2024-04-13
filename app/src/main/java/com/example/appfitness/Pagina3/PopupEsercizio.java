@@ -96,7 +96,7 @@ public class PopupEsercizio {
 
         EditText nomeEsercizio = dialogView.findViewById((int) R.id.nomeEsercizio);
         immagineEsercizio = dialogView.findViewById((int) R.id.immagineEsercizio);
-        EditText numeroSerieEsercizio = dialogView.findViewById((int) R.id.numeroSerie);
+        EditText numeroSerieEsercizio = dialogView.findViewById((int) R.id.numberPicker);
         EditText numeroRipetEsercizio = dialogView.findViewById((int) R.id.numeroRipetizioni);
         EditText numeroTimetEsercizio = dialogView.findViewById((int) R.id.numeroTimer);
         EditText intensitaEsercizio = dialogView.findViewById((int) R.id.tecnicaIntensita);
@@ -238,7 +238,7 @@ public class PopupEsercizio {
 
         EditText nomeEsercizio = dialogView.findViewById((int) R.id.nomeEsercizio);
         immagineEsercizio = dialogView.findViewById((int) R.id.immagineEsercizio);
-        EditText numeroSerieEsercizio = dialogView.findViewById((int) R.id.numeroSerie);
+        EditText numeroSerieEsercizio = dialogView.findViewById((int) R.id.numberPicker);
         EditText numeroRipetEsercizio = dialogView.findViewById((int) R.id.numeroRipetizioni);
         EditText numeroTimetEsercizio = dialogView.findViewById((int) R.id.numeroTimer);
         EditText intensitaEsercizio = dialogView.findViewById((int) R.id.tecnicaIntensita);

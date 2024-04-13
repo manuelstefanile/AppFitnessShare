@@ -5,14 +5,20 @@
     android:orientation="horizontal"
     android:padding="20dp"
     >
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="0.1"
+        android:layout_height="wrap_content"
+        android:text=""
+        ></TextView>
 
     <Button
         android:id="@+id/visualizzaGiorni"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Scheda1"
+        android:text="Giorno"
         android:textSize="18dp"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:layout_marginRight="10dp"
         android:background="@drawable/drawable_scheda"
         >
@@ -24,7 +30,7 @@
         android:textColor="@color/white"
         android:background="@drawable/ic_baseline_close_24"
         android:onClick="OnDeleteGiornoClick"
-        android:layout_weight="0.2"
+        android:layout_weight="0.1"
         android:layout_marginRight="10dp"
         >
     </Button>

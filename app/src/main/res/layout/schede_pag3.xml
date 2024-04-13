@@ -16,37 +16,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        >
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:background="@drawable/edit"
-            android:onClick="EditUtente"
+        android:layout_margin="10dp"
 
+        >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/edit"
+            android:background="@drawable/drawable_botton_grigio"
+            android:onClick="EditUtente"
             >
-        </Button>
+        </ImageView>
 
         <TextView
             android:id="@+id/nomeUtente"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="30dp"
-            android:layout_margin="5dp"
-            ></TextView>
+            android:textSize="30dp"></TextView>
 
-        <Button
+        <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:layout_marginTop="5dp"
             android:onClick="SeeUtente"
-            android:background="@drawable/ic_baseline_info_24"
+            android:background="@drawable/drawable_botton_grigio"
+            android:src="@drawable/ic_baseline_info_24"
             >
-        </Button>
+        </ImageView>
 
     </LinearLayout>
 
@@ -55,7 +62,8 @@
         android:id="@+id/listaSchedeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="70dp"
+        >
     </ListView>
 
     </LinearLayout>
@@ -65,11 +73,12 @@
         android:layout_height="wrap_content"
         android:text="Nuova Scheda"
         android:onClick="CreaScheda"
+        android:minWidth="100dp"
         android:background="@drawable/drawable_scheda"
         android:layout_marginBottom="30dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textSize="18dp"
+        android:textSize="20dp"
         android:padding="10dp"
         >
     </Button>

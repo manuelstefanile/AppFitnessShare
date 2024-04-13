@@ -24,12 +24,9 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.1"
             android:layout_height="wrap_content"
-            android:text="Nome:"
-            android:textSize="24dp"
-            android:textColor="@color/black"
-            android:gravity="left"
+            android:text=""
             ></TextView>
 
         <EditText
@@ -39,14 +36,17 @@
             android:textAlignment="center"
             android:layout_weight="0.5"
             android:layout_height="wrap_content"
+            android:background="@drawable/drawable_botton_grigio"
+            android:hint="Nome Giorno"
+            android:padding="6dp"
 
-            >
-        </EditText>
+            ></EditText>
         <Button
             android:id="@+id/salvaGiorno"
             android:layout_width="0dp"
-            android:layout_weight="0.15"
+            android:layout_weight="0.1"
             android:text="save"
+            android:layout_marginLeft="3dp"
             android:background="@drawable/drawable_scheda"
             android:layout_height="wrap_content"
             >
@@ -62,29 +62,32 @@
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.2"
                 android:layout_height="wrap_content"
-                android:text="Note:"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="20dp"
-                android:gravity="right"
                 android:layout_marginRight="10dp"
                 ></TextView>
             <Button
                 android:id="@+id/bottoneNoteGiorno"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:textSize="18dp"
-                android:layout_weight="1"
+                android:textSize="15dp"
+                android:layout_weight="0.5"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/drawable_scheda"
-                android:text="aggiungi"></Button>
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/drawable_botton_grigio"
+                android:text="Note"></Button>
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.3"
-                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="wrap_content"
                 android:text=""
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginLeft="10dp"
                 ></TextView>
 
 
@@ -104,7 +107,8 @@
         >
         <Button
             android:onClick="ChiudTuttoNonSalva"
-            android:layout_width="40dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
             android:layout_height="40dp"
             android:background="@drawable/ic_baseline_home_24"
             android:contentDescription="Cancella Tutto"
@@ -113,10 +117,10 @@
         <Button
             android:id="@+id/CreaEsercizio"
             android:layout_width="0dp"
-            android:layout_weight="0.6"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
-            android:text="Add new Exercise"
-            android:textSize="18dp"
+            android:text="Nuovo Esercizio"
+            android:textSize="20dp"
             android:textColor="@color/black"
             android:background="@drawable/drawable_scheda"
             android:onClick="AggiungiGiorno"
@@ -128,12 +132,11 @@
         </Button>
         <Button
             android:id="@+id/backGiorno"
-            android:layout_width="40dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
             android:layout_height="40dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:textSize="18dp"
-            android:textColor="@color/black"
             android:layout_gravity="center"
             android:background="@drawable/ic_baseline_keyboard_backspace_24"
 
