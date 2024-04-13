@@ -182,6 +182,8 @@ public class PopupGiorno {
         noteScheda = Note.fromJson(shp.getString("notePassate", null));
         edit.commit();
 
+
+
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_giorno, null);
         Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);

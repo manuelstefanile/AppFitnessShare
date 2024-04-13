@@ -83,8 +83,6 @@ public class PopupSchede {
 
         alertDialog.getWindow().setLayout(size.x, size.y);
 
-
-
         //creo la scheda temp e l aggiungo al db
         Scheda schedaTemp=Global.schedadao.CreaSchedaTemp();
 
@@ -159,7 +157,7 @@ public class PopupSchede {
         bottoneNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("noteClick");
+
                 try {
                     Registrazione_Pag2.editGlobal=true;
                     NotificheDialog.NotificaNote(inflater, shp);
@@ -171,7 +169,6 @@ public class PopupSchede {
     }
 
     public void ApriSchedaSelezionata(Scheda sched,LayoutInflater inflater){
-        //per rendere accessibile la scheda ai giorni con oclick dell adapter
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_scheda, null);
@@ -247,7 +244,12 @@ public class PopupSchede {
                     Global.listaGiornidao.InserisciListaGiorni(sched);
                 sched.setNomeScheda(nomeScheda.getText().toString());
                 sched.setImg(imgScheda.getDrawable());
+
+                SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
+                sched.setNote(note.getNote());
                 Global.schedadao.updateScheda(sched);
+
                 PaginaScheda_Pag3.StampaTutto();
                 alertDialog.dismiss();
                 ResettaVariabili();
@@ -260,11 +262,18 @@ public class PopupSchede {
                 SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit= sh.edit();
                 PaginaScheda_Pag3.StampaTutto();
-                Note notaDaMostrare= new Note(sched.getNote());
+
+                Note note=Note.fromJson(sh.getString("notePassate", null));
+                Note notaDaMostrare;
+                if(note!=null){
+                    notaDaMostrare=note;
+                }else
+                    notaDaMostrare= new Note(sched.getNote());
+
                 edit.putString("notePassate", notaDaMostrare.toJson());
                 edit.apply();
                 try {
-                    Registrazione_Pag2.editGlobal=false;
+                    Registrazione_Pag2.editGlobal=true;
                     NotificheDialog.NotificaNote(inflater,sh);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
