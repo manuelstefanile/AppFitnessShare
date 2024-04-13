@@ -83,6 +83,8 @@ public class PopupSchede {
 
         alertDialog.getWindow().setLayout(size.x, size.y);
 
+
+
         //creo la scheda temp e l aggiungo al db
         Scheda schedaTemp=Global.schedadao.CreaSchedaTemp();
 
@@ -215,6 +217,8 @@ public class PopupSchede {
             //adapterGiorni.notify();
         }
 
+
+
         EditText nomeScheda= dialogView.findViewById((int)R.id.nomeScheda);
         imgScheda=dialogView.findViewById((int)R.id.aggiungiImmagineScheda);
         Button creaGiorno=dialogView.findViewById((int)R.id.CreaGiorno);
@@ -222,7 +226,13 @@ public class PopupSchede {
         Button bottoneNote = dialogView.findViewById((int)R.id.bottoneNoteScheda);
         bottoneNote.setText("Mostra");
         nomeScheda.setText(sched.getNomeScheda());
-        nomeScheda.setInputType(InputType.TYPE_NULL);
+
+        imgScheda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupSchede.selectImageFromGallery();
+            }
+        });
 
         creaGiorno.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,6 +245,9 @@ public class PopupSchede {
             public void onClick(View view) {
                 if(sched.getListaGiorni().size()>0)
                     Global.listaGiornidao.InserisciListaGiorni(sched);
+                sched.setNomeScheda(nomeScheda.getText().toString());
+                sched.setImg(imgScheda.getDrawable());
+                Global.schedadao.updateScheda(sched);
                 PaginaScheda_Pag3.StampaTutto();
                 alertDialog.dismiss();
                 ResettaVariabili();

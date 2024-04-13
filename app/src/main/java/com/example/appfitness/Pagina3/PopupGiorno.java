@@ -238,7 +238,7 @@ public class PopupGiorno {
         nomeGiorno.setLayoutParams(params);
 
         nomeGiorno.setText(giorno.getNomeGiorno());
-        nomeGiorno.setInputType(InputType.TYPE_NULL);
+        //nomeGiorno.setInputType(InputType.TYPE_NULL);
         salvaGiorno.setVisibility(View.GONE);
 
         creaEsercizio.setOnClickListener(new View.OnClickListener() {
@@ -255,6 +255,11 @@ public class PopupGiorno {
                 if(giorno.getListaEsercizi().size()>0){
                     //Global.giornoDao.AggiornaGiorno(giorno.getNomeGiorno(),Global.schedaNuova.getNomeScheda());
                 }
+
+                Global.adapterGiorni.remove(giorno);
+                giorno.setNomeGiorno(nomeGiorno.getText().toString());
+                Global.giornoDao.updateGiorno(giorno);
+                Global.adapterGiorni.add(giorno);
 
                 //ripristina notifiche di scheda
                 SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);

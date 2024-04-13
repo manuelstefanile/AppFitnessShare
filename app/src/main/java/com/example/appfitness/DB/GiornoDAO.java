@@ -104,6 +104,20 @@ public class GiornoDAO {
 
     }
 
+    public void updateGiorno(Giorno giorno) {
+        SQLiteDatabase dbW = db.getWritableDatabase();
 
+        ContentValues valuesGiorno = new ContentValues();
+        valuesGiorno.put(SchemaDB.GiornoDB.COLUMN_nomeGiorno, giorno.getNomeGiorno());
+        valuesGiorno.put(SchemaDB.GiornoDB.COLUMN_noteGiorno, giorno.getNote());
+
+        int rowsUpdated = dbW.update(
+                SchemaDB.GiornoDB.TABLE_NAME,
+                valuesGiorno,
+                SchemaDB.GiornoDB._ID + " = ?",
+                new String[]{String.valueOf(giorno.getId())});
+
+        db.close();
+    }
 
 }

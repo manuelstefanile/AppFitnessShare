@@ -196,5 +196,31 @@ public class SchedaDAO {
          */
     }
 
+    public void updateScheda(Scheda scheda) {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        ContentValues valuesScheda = new ContentValues();
+        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_nomeScheda, scheda.getNomeScheda());
+        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_noteScheda, scheda.getNote());
+
+        // Converto l'immagine in un byte array
+        byte[] byteArray = null;
+        if (scheda.getImg() != null) {
+            Bitmap bitmap = ((BitmapDrawable) scheda.getImg()).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byteArray = stream.toByteArray();
+        }
+        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_immagineScheda, byteArray);
+
+        int rowsUpdated = dbW.update(
+                SchemaDB.SchedaDB.TABLE_NAME,
+                valuesScheda,
+                SchemaDB.SchedaDB._ID + " = ?",
+                new String[]{String.valueOf(scheda.getId())});
+
+        db.close();
+    }
+
 
 }
