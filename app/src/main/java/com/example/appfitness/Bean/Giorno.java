@@ -62,9 +62,11 @@ public class Giorno extends ListeClasseMarker {
 
     @Override
     public String toString() {
-        return "\nGiorno{" +
-                "nomeGiorno='" + nomeGiorno + '\'' +
-                ", listaEsercizi=" + listaIdEsercizi +
+        return "Giorno{" +
+                "id=" + id +
+                ", nomeGiorno='" + nomeGiorno + '\'' +
+                ", note='" + note + '\'' +
+                ", listaIdEsercizi=" + listaIdEsercizi +
                 '}';
     }
 }

@@ -177,11 +177,12 @@ public class PopupGiorno {
 
     public static void ApriGiornoSelezionato(Giorno giorno,LayoutInflater inflater){
 
+        System.out.println("___"+giorno);
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit=shp.edit();
         noteScheda = Note.fromJson(shp.getString("notePassate", null));
+        edit.putString("notePassate",new Note().toJson());
         edit.commit();
-
 
 
         // Creazione del layout della tua View
@@ -260,6 +261,9 @@ public class PopupGiorno {
 
                 Global.adapterGiorni.remove(giorno);
                 giorno.setNomeGiorno(nomeGiorno.getText().toString());
+                SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
+                giorno.setNote(note.getNote());
                 Global.giornoDao.updateGiorno(giorno);
                 Global.adapterGiorni.add(giorno);
 
@@ -279,11 +283,18 @@ public class PopupGiorno {
                 SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit= sh.edit();
                 PaginaScheda_Pag3.StampaTutto();
-                Note notaDaMostrare= new Note(giorno.getNote());
+
+                Note note=Note.fromJson(sh.getString("notePassate", null));
+                Note notaDaMostrare;
+                if(note.getNote()!=null){
+                    notaDaMostrare=note;
+                }else
+                    notaDaMostrare= new Note(giorno.getNote());
+                System.out.println("___"+notaDaMostrare.getNote());
                 edit.putString("notePassate", notaDaMostrare.toJson());
                 edit.apply();
                 try {
-                    Registrazione_Pag2.editGlobal=false;
+                    Registrazione_Pag2.editGlobal=true;
                     NotificheDialog.NotificaNote(inflater,sh);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
