@@ -31,7 +31,8 @@ public class DbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + SchemaDB.PesoDB.TABLE_NAME + " ("
                     + SchemaDB.PesoDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + SchemaDB.PesoDB.COLUMN_pesoKg + " FLOAT, "
-                    + SchemaDB.PesoDB.COLUMN_calendario + " LONG NOT NULL"
+                    + SchemaDB.PesoDB.COLUMN_calendario + " LONG NOT NULL,"
+                    + SchemaDB.PesoDB.COLUMN_note + " TEXT"
                     + "); ";
 
     final private static String CREATE_KCAL =

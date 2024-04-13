@@ -37,6 +37,7 @@ public class PesoDAO {
                 Peso peso = new Peso();
                 peso.setId(cursor.getLong(cursor.getColumnIndex(SchemaDB.PesoDB._ID)));
                 peso.setPesoKg(cursor.getFloat(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_pesoKg)));
+                peso.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_note)));
 
                 // Converti il valore del timestamp in un oggetto Calendar
                 long timestamp = cursor.getLong(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_calendario));
@@ -74,6 +75,7 @@ public class PesoDAO {
             peso = new Peso();
             peso.setId(cursor.getLong(cursor.getColumnIndex(SchemaDB.PesoDB._ID)));
             peso.setPesoKg(cursor.getFloat(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_pesoKg)));
+            peso.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_note)));
 
             Calendar c=Calendar.getInstance();
             long time=cursor.getLong(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_calendario));
@@ -92,6 +94,7 @@ public class PesoDAO {
 
         ContentValues values = new ContentValues();
         values.put(SchemaDB.PesoDB.COLUMN_pesoKg, peso.getPesoKg());
+        values.put(SchemaDB.PesoDB.COLUMN_note, peso.getNote());
         values.put(SchemaDB.PesoDB.COLUMN_calendario, peso.getCalendario().getTimeInMillis());
 
         // Esempio di clausola WHERE se vuoi aggiornare basandoti sull'ID
@@ -113,6 +116,7 @@ public class PesoDAO {
 
         ContentValues values = new ContentValues();
         values.put(SchemaDB.PesoDB.COLUMN_pesoKg, peso.getPesoKg());
+        values.put(SchemaDB.PesoDB.COLUMN_note, peso.getNote());
         values.put(SchemaDB.PesoDB.COLUMN_calendario, peso.getCalendario().getTimeInMillis());
 
         // Esegui l'operazione di inserimento

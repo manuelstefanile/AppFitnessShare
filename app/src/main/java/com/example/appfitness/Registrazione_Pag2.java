@@ -177,30 +177,34 @@ public class Registrazione_Pag2 extends Activity {
 
         //se ci sono differenze, allora salva nel db, altrimenti non salvare niente
         Peso pOld=utente.getPeso();
-        if(pOld.getCalendario().getTimeInMillis()!=pesoSalvato.getCalendario().getTimeInMillis()||
-            pOld.getPesoKg()!=pesoSalvato.getPesoKg())
+        if(pOld.getCalendario().getTimeInMillis()!=pesoSalvato.getCalendario().getTimeInMillis())
             pOld=pesodao.insertPeso(pesoSalvato);
+        //faccio l update
+        else{
+            pOld.setNote(pesoSalvato.getNote());
+            pOld.setPesoKg(pesoSalvato.getPesoKg());
+            pOld.setCalendario(pesoSalvato.getCalendario());
+            pesodao.updatePeso(pOld);
+        }
 
         Misure mOld=utente.getMisure();
-        if(mOld.getBraccioDx()!=misureSalvato.getBraccioDx()||
-            mOld.getBraccioSx()!=misureSalvato.getBraccioSx()||
-            mOld.getGambaDx()!=misureSalvato.getGambaDx()||mOld.getGambaSx()!=misureSalvato.getGambaSx()||
-            mOld.getAddome()!=misureSalvato.getAddome()||mOld.getPetto()!=misureSalvato.getPetto()||
-            mOld.getSpalle()!=misureSalvato.getSpalle())
+        if(mOld.getData().getTimeInMillis()!=misureSalvato.getData().getTimeInMillis())
             mOld=misuradao.insertMisure(misureSalvato);
+        else{
+            misureSalvato.setId(mOld.getId());
+            mOld=misureSalvato;
+            //update di mOld che
+            misuradao.updateMisure(mOld);
+        }
 
         Kcal kOld=utente.getKcal();
-
-        if(kOld.getData().getTimeInMillis()!=chiloK.getData().getTimeInMillis()||
-            kOld.getAcqua()!=chiloK.getAcqua()||
-                kOld.getKcal()!=chiloK.getKcal()||
-                kOld.getNote()!=chiloK.getNote()||
-                kOld.getSale()!=chiloK.getSale()||
-                kOld.getGrassi()!=chiloK.getGrassi() ||
-                kOld.getProteine()!=chiloK.getProteine()||
-                kOld.getCarbo()!=chiloK.getCarbo()||
-                kOld.getFase().toString()!=chiloK.getFase().toString())
+        if(kOld.getData().getTimeInMillis()!=chiloK.getData().getTimeInMillis())
             kOld=kcalDAO.insertKcal(chiloK);
+        else{
+            chiloK.setId(kOld.getId());
+            kOld=chiloK;
+            kcalDAO.updateKcal(kOld);
+        }
 
 
 
@@ -242,6 +246,7 @@ public class Registrazione_Pag2 extends Activity {
         ContentValues valuesPeso = new ContentValues();
         valuesPeso.put(SchemaDB.PesoDB.COLUMN_pesoKg, pesoSalvato.getPesoKg());
         valuesPeso.put(SchemaDB.PesoDB.COLUMN_calendario, pesoSalvato.getCalendario().getTimeInMillis());
+        valuesPeso.put(SchemaDB.PesoDB.COLUMN_note, pesoSalvato.getNote());
         long PesoID = dbWritable.insert(SchemaDB.PesoDB.TABLE_NAME, null, valuesPeso);
 
         ContentValues valuesMisura = new ContentValues();

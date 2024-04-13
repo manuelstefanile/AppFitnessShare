@@ -47,11 +47,15 @@ public class NotificheDialog {
 
         CalendarView calendario=dialogView.findViewById((int)R.id.calendarioPeso);
         EditText kiliEdit= dialogView.findViewById(R.id.pesoAttual);
+        EditText noteDettaglio=dialogView.findViewById((int)R.id.notePeso);
         if(!Registrazione_Pag2.editGlobal){
             calendario.setFocusable(false);
             calendario.setClickable(false);
             kiliEdit.setFocusable(false);
             kiliEdit.setClickable(false);
+            noteDettaglio.setFocusable(false);
+            noteDettaglio.setClickable(false);
+
             salvaButton.setVisibility(View.GONE);
             okButton.setText("Back");
         }
@@ -63,6 +67,9 @@ public class NotificheDialog {
         if(pesoStorage.getPesoKg()!=0&&pesoStorage.getCalendario()!=null){
             calendario.setDate(pesoStorage.getCalendario().getTimeInMillis());
             kiliEdit.setText(String.valueOf(pesoStorage.getPesoKg()));
+        }
+        if(pesoStorage.getNote()!=null){
+            noteDettaglio.setText(pesoStorage.getNote());
         }
 
         Calendar dataSalvare=pesoStorage.getCalendario();
@@ -93,9 +100,11 @@ public class NotificheDialog {
                 }
                 pesoStorage.setPesoKg(pesoInserito);
                 pesoStorage.setCalendario(dataSalvare);
+                pesoStorage.setNote(noteDettaglio.getText().toString());
                 SharedPreferences.Editor edi=sh.edit();
                 edi.putString("pesoPassato",pesoStorage.toJson());
                 edi.apply();
+                System.out.println("___peso "+pesoStorage);
 
                 //alertDialog.dismiss(); // Chiudi il dialog
             }
@@ -235,6 +244,7 @@ public class NotificheDialog {
 
                     misureStorage.setNote(noteDettaglio.getText().toString());
                     misureStorage.setData(dataSalvare);
+
 
 
                 }catch (Exception e){

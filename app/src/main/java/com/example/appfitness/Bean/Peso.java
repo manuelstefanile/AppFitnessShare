@@ -7,6 +7,7 @@ import java.util.Calendar;
 public class Peso {
     private long id;
     private float pesoKg;
+    private String note;
     private Calendar calendario=Calendar.getInstance();
 
     public Peso(float pesoKg, Calendar calendario) {
@@ -24,6 +25,14 @@ public class Peso {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public float getPesoKg() {
@@ -55,7 +64,9 @@ public class Peso {
     @Override
     public String toString() {
         return "Peso{" +
-                "pesoKg=" + pesoKg +
+                "id=" + id +
+                ", pesoKg=" + pesoKg +
+                ", note='" + note + '\'' +
                 ", calendario=" + calendario +
                 '}';
     }

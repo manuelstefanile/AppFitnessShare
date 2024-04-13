@@ -135,4 +135,31 @@ public class kcalDAO {
     }
 
 
+    public boolean updateKcal(Kcal kcal) {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SchemaDB.KcalDB.COLUMN_kcal, kcal.getKcal());
+        values.put(SchemaDB.KcalDB.COLUMN_fase, kcal.getFase().toString());
+        values.put(SchemaDB.KcalDB.COLUMN_carboidrati, kcal.getCarbo());
+        values.put(SchemaDB.KcalDB.COLUMN_proteine, kcal.getProteine());
+        values.put(SchemaDB.KcalDB.COLUMN_grassi, kcal.getGrassi());
+        values.put(SchemaDB.KcalDB.COLUMN_sale, kcal.getSale());
+        values.put(SchemaDB.KcalDB.COLUMN_acqua, kcal.getAcqua());
+        values.put(SchemaDB.KcalDB.COLUMN_note, kcal.getNote());
+        values.put(SchemaDB.KcalDB.COLUMN_calendario, kcal.getData().getTimeInMillis());
+
+        String selection = SchemaDB.KcalDB._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(kcal.getId()) };
+
+        int count = dbW.update(
+                SchemaDB.KcalDB.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        db.close();
+
+        return count > 0;
+    }
 }

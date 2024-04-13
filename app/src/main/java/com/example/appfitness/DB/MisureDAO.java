@@ -124,4 +124,32 @@ public class MisureDAO {
         return misure; // Ritorna l'ID del nuovo record inserito
     }
 
+    public boolean updateMisure(Misure misure) {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SchemaDB.MisureDB.COLUMN_braccioDX, misure.getBraccioDx());
+        values.put(SchemaDB.MisureDB.COLUMN_braccioSX, misure.getBraccioSx());
+        values.put(SchemaDB.MisureDB.COLUMN_gambaDX, misure.getGambaDx());
+        values.put(SchemaDB.MisureDB.COLUMN_gambaSX, misure.getGambaSx());
+        values.put(SchemaDB.MisureDB.COLUMN_petto, misure.getPetto());
+        values.put(SchemaDB.MisureDB.COLUMN_spalle, misure.getSpalle());
+        values.put(SchemaDB.MisureDB.COLUMN_addome, misure.getAddome());
+        values.put(SchemaDB.MisureDB.COLUMN_note, misure.getNote());
+        values.put(SchemaDB.MisureDB.COLUMN_calendario, misure.getData().getTimeInMillis());
+
+        String selection = SchemaDB.MisureDB._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(misure.getId()) };
+
+        int count = dbW.update(
+                SchemaDB.MisureDB.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        db.close();
+
+        return count > 0;
+    }
+
 }

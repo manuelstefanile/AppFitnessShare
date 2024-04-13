@@ -25,6 +25,7 @@ public static abstract class UtenteDB implements BaseColumns {
         public static final String TABLE_NAME = "Peso";
         public static final String COLUMN_pesoKg = "pesoKg";
         public static final String COLUMN_calendario = "calendario";
+        public static final String COLUMN_note = "note";
 
     }
 
