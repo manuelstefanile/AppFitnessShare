@@ -3,44 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="20dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        >
-        <Button
-        android:id="@+id/OkNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:background="@drawable/drawable_scheda"
-        android:text="Back"
-            android:layout_margin="10dp"
-        >
-    </Button>
-        <Button
-            android:id="@+id/SalvaNote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Salva"
-            android:textSize="18dp"
-            android:background="@drawable/drawable_scheda"
-            android:layout_margin="10dp"
-            >
-        </Button>
 
-    </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearTesto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="200dp"
         >
         <TextView
             android:layout_width="0dp"
@@ -60,6 +32,35 @@
             android:layout_height="wrap_content"
             >
         </EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_below="@id/linearTesto"
+        >
+        <Button
+            android:id="@+id/OkNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:background="@drawable/drawable_scheda"
+            android:text="Back"
+            android:layout_margin="10dp"
+            >
+        </Button>
+        <Button
+            android:id="@+id/SalvaNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Salva"
+            android:textSize="18dp"
+            android:background="@drawable/drawable_scheda"
+            android:layout_margin="10dp"
+            >
+        </Button>
+
     </LinearLayout>
 
 </RelativeLayout>
