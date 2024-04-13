@@ -50,6 +50,8 @@ public static abstract class UtenteDB implements BaseColumns {
         public static final String COLUMN_petto = "petto";
         public static final String COLUMN_spalle = "spalle";
         public static final String COLUMN_addome = "addome";
+        public static final String COLUMN_calendario = "calendario";
+        public static final String COLUMN_note = "note";
 
 
     }

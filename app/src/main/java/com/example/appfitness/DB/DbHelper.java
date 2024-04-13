@@ -57,7 +57,9 @@ public class DbHelper extends SQLiteOpenHelper {
                     + SchemaDB.MisureDB.COLUMN_gambaSX + " FLOAT, "
                     + SchemaDB.MisureDB.COLUMN_petto + " FLOAT, "
                     + SchemaDB.MisureDB.COLUMN_spalle + " FLOAT, "
-                    + SchemaDB.MisureDB.COLUMN_addome + " FLOAT"
+                    + SchemaDB.MisureDB.COLUMN_addome + " FLOAT,"
+                    + SchemaDB.MisureDB.COLUMN_note + " TEXT, "
+                    + SchemaDB.MisureDB.COLUMN_calendario + " LONG NOT NULL"
                     + ");";
 
     final private static String CREATE_ESERCIZIO =

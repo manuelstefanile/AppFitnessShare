@@ -252,6 +252,8 @@ public class Registrazione_Pag2 extends Activity {
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_addome, misureSalvato.getAddome());
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_petto, misureSalvato.getPetto());
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_spalle, misureSalvato.getSpalle());
+        valuesMisura.put(SchemaDB.MisureDB.COLUMN_note, misureSalvato.getNote());
+        valuesMisura.put(SchemaDB.MisureDB.COLUMN_calendario, misureSalvato.getData().getTimeInMillis());
         System.out.println("___________________"+valuesMisura);
         long MisuraID = dbWritable.insert(SchemaDB.MisureDB.TABLE_NAME, null,valuesMisura);
 

@@ -136,7 +136,10 @@ public class NotificheDialog {
         EditText petto=dialogView.findViewById(R.id.petto);
         EditText spalle=dialogView.findViewById(R.id.spalle);
         EditText addome=dialogView.findViewById(R.id.addome);
-        HashMap<String,EditText> mappa=new HashMap<>();
+        EditText noteDettaglio=dialogView.findViewById((int)R.id.noteMisure);
+        CalendarView calendario=dialogView.findViewById((int)R.id.calendarioMisure);
+
+        HashMap<String,View> mappa=new HashMap<>();
         mappa.put("braccioDx",braccioDx);
         mappa.put("braccioSx",braccioSx);
         mappa.put("gambaDx",gambaDx);
@@ -144,6 +147,8 @@ public class NotificheDialog {
         mappa.put("petto",petto);
         mappa.put("spalle",spalle);
         mappa.put("addome",addome);
+        mappa.put("note",noteDettaglio);
+        mappa.put("data",calendario);
         if(!Registrazione_Pag2.editGlobal){
             braccioDx.setFocusable(false);
             braccioDx.setClickable(false);
@@ -159,6 +164,11 @@ public class NotificheDialog {
             addome.setClickable(false);
             spalle.setFocusable(false);
             spalle.setClickable(false);
+            calendario.setFocusable(false);
+            calendario.setClickable(false);
+            noteDettaglio.setFocusable(false);
+            noteDettaglio.setClickable(false);
+
             salvaButton.setVisibility(View.GONE);
             okButton.setText("Back");
         }
@@ -173,14 +183,22 @@ public class NotificheDialog {
                 //prendo il valore del campo
                 Object valoreCampo = campo.get(misureStorage);
                 //se il campo è float e il valore è !=0 allora c è qualcosa
-                if (campo.getType()==float.class&& (float)valoreCampo != 0) {
+                if ((campo.getType()==float.class&& (float)valoreCampo != 0)||
+                        (campo.getType()==String.class&&valoreCampo!=null)) {
                     //prendo l'edit text da aggiornare e setto il testo
-                    mappa.get(campo.getName()).setText(String.valueOf(valoreCampo));
+                    ((EditText) mappa.get(campo.getName())).setText(valoreCampo.toString());
+                } else if(campo.getType()==Calendar.class&&valoreCampo!=null){
+                    ((CalendarView)mappa.get(campo.getName())).setDate(((Calendar)valoreCampo).getTimeInMillis());
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
+
+
+        Calendar dataSalvare=misureStorage.getData();
+        ImpostaCalendario(calendario,dialogView,dataSalvare);
+
 
         salvaButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,6 +232,9 @@ public class NotificheDialog {
                     float valoreAddome=addome.getText().toString().trim().length()!=0?Float.parseFloat(addome.getText().toString()):0;
                     misureStorage.setAddome(valoreAddome);
                     addome.setText(String.valueOf(misureStorage.getAddome()));
+
+                    misureStorage.setNote(noteDettaglio.getText().toString());
+                    misureStorage.setData(dataSalvare);
 
 
                 }catch (Exception e){

@@ -43,6 +43,13 @@ public class MisureDAO {
                 misure.setPetto(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_petto)));
                 misure.setSpalle(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_spalle)));
                 misure.setAddome(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_addome)));
+                misure.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_note)));
+
+                // Converti il valore del timestamp in un oggetto Calendar
+                long timestamp = cursor.getLong(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_calendario));
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(timestamp);
+                misure.setData(calendar);
 
                 misureList.add(misure);
             } while (cursor.moveToNext());
@@ -79,6 +86,14 @@ public class MisureDAO {
             misure.setPetto(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_petto)));
             misure.setSpalle(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_spalle)));
             misure.setAddome(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_addome)));
+            misure.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_note)));
+
+            // Converti il valore del timestamp in un oggetto Calendar
+            long timestamp = cursor.getLong(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_calendario));
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(timestamp);
+            misure.setData(calendar);
+
 
             cursor.close();
         }
@@ -98,6 +113,8 @@ public class MisureDAO {
         values.put(SchemaDB.MisureDB.COLUMN_petto, misure.getPetto());
         values.put(SchemaDB.MisureDB.COLUMN_spalle, misure.getSpalle());
         values.put(SchemaDB.MisureDB.COLUMN_addome, misure.getAddome());
+        values.put(SchemaDB.MisureDB.COLUMN_note, misure.getNote());
+        values.put(SchemaDB.MisureDB.COLUMN_calendario, misure.getData().getTimeInMillis());
 
         // Esegui l'operazione di inserimento
         long newRowId = dbW.insert(SchemaDB.MisureDB.TABLE_NAME, null, values);

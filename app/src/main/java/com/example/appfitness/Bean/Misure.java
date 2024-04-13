@@ -2,6 +2,8 @@ package com.example.appfitness.Bean;
 
 import com.google.gson.Gson;
 
+import java.util.Calendar;
+
 public class Misure {
     private long id;
     private float braccioDx;
@@ -11,6 +13,8 @@ public class Misure {
     private float petto;
     private float spalle;
     private float addome;
+    private Calendar data=Calendar.getInstance();
+    private String note;
 
     public Misure(float braccioDx, float braccioSx, float gambaDx, float gambaSx, float petto, float spalle, float addome) {
         this.braccioDx = braccioDx;
@@ -32,6 +36,22 @@ public class Misure {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Calendar getData() {
+        return data;
+    }
+
+    public void setData(Calendar data) {
+        this.data = data;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public float getBraccioDx() {
@@ -103,13 +123,16 @@ public class Misure {
     @Override
     public String toString() {
         return "Misure{" +
-                "braccioDx=" + braccioDx +
+                "id=" + id +
+                ", braccioDx=" + braccioDx +
                 ", braccioSx=" + braccioSx +
                 ", gambaDx=" + gambaDx +
                 ", gambaSx=" + gambaSx +
                 ", petto=" + petto +
                 ", spalle=" + spalle +
                 ", addome=" + addome +
+                ", data=" + data +
+                ", note='" + note + '\'' +
                 '}';
     }
 }
