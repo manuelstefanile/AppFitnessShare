@@ -134,10 +134,10 @@ public class Registrazione_Pag2 extends Activity {
                     ModalitaEdit(true);
                     break;
                 case "see":
-                    bottonePeso.setText("Mostra");
-                    bottoneNote.setText("Mostra");
-                    bottoneKcal.setText("Mostra");
-                    bottoneMisure.setText("Mostra");
+                    bottonePeso.setText("Peso");
+                    bottoneNote.setText("Note");
+                    bottoneKcal.setText("Kcal");
+                    bottoneMisure.setText("Misure");
                     bottoneNext.setEnabled(true);
                     bottoneNext.setVisibility(View.GONE);
                     bottoneSalva.setVisibility(View.GONE);
@@ -263,16 +263,18 @@ public class Registrazione_Pag2 extends Activity {
         long MisuraID = dbWritable.insert(SchemaDB.MisureDB.TABLE_NAME, null,valuesMisura);
 
         ContentValues valuesKcal = new ContentValues();
-        valuesKcal.put(SchemaDB.KcalDB.COLUMN_kcal, chiloK.getKcal());
-        valuesKcal.put(SchemaDB.KcalDB.COLUMN_acqua, chiloK.getAcqua());
-        valuesKcal.put(SchemaDB.KcalDB.COLUMN_carboidrati, chiloK.getCarbo());
-        valuesKcal.put(SchemaDB.KcalDB.COLUMN_grassi, chiloK.getGrassi());
-        valuesKcal.put(SchemaDB.KcalDB.COLUMN_note, chiloK.getNote());
-        valuesKcal.put(SchemaDB.KcalDB.COLUMN_proteine, chiloK.getProteine());
-        valuesKcal.put(SchemaDB.KcalDB.COLUMN_sale, chiloK.getSale());
-        valuesKcal.put(SchemaDB.KcalDB.COLUMN_fase, chiloK.getFase().toString());
-        valuesKcal.put(SchemaDB.KcalDB.COLUMN_calendario, chiloK.getData().getTimeInMillis());
-        long KcalID = dbWritable.insert(SchemaDB.KcalDB.TABLE_NAME, null, valuesKcal);
+        if (chiloK.getKcal() != 0) {
+            valuesKcal.put(SchemaDB.KcalDB.COLUMN_kcal, chiloK.getKcal());
+            valuesKcal.put(SchemaDB.KcalDB.COLUMN_acqua, chiloK.getAcqua());
+            valuesKcal.put(SchemaDB.KcalDB.COLUMN_carboidrati, chiloK.getCarbo());
+            valuesKcal.put(SchemaDB.KcalDB.COLUMN_grassi, chiloK.getGrassi());
+            valuesKcal.put(SchemaDB.KcalDB.COLUMN_note, chiloK.getNote());
+            valuesKcal.put(SchemaDB.KcalDB.COLUMN_proteine, chiloK.getProteine());
+            valuesKcal.put(SchemaDB.KcalDB.COLUMN_sale, chiloK.getSale());
+            valuesKcal.put(SchemaDB.KcalDB.COLUMN_fase, chiloK.getFase().toString());
+            valuesKcal.put(SchemaDB.KcalDB.COLUMN_calendario, chiloK.getData().getTimeInMillis());}
+            long KcalID = dbWritable.insert(SchemaDB.KcalDB.TABLE_NAME, null, valuesKcal);
+
 
         ContentValues valuesUtente = new ContentValues();
         valuesUtente.put(SchemaDB.UtenteDB.COLUMN_nome, utente.getNome());
@@ -288,7 +290,7 @@ public class Registrazione_Pag2 extends Activity {
 
         Toast.makeText(getApplicationContext(), "Salvato", Toast.LENGTH_SHORT).show();
         bottoneNext.setEnabled(true);
-        bottoneNext.setBackgroundColor((int)R.color.azzurrino);
+        bottoneNext.setBackgroundColor((int)R.color.grigio);
         dbWritable.close();
         StampaTutto();
 

@@ -2,15 +2,12 @@ package com.example.appfitness.Pagina3;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
-import android.text.InputType;
 import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -19,16 +16,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Scheda;
 import com.example.appfitness.DB.EsercizioDAO;
-import com.example.appfitness.DB.GiornoDAO;
 import com.example.appfitness.DB.ListaEserciziDAO;
-import com.example.appfitness.DB.ListaGiorniDAO;
 import com.example.appfitness.Eccezioni.Eccezioni;
 import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
@@ -85,7 +79,7 @@ public class PopupGiorno {
         //prima devi mettere un nome per il giorno e poi puoi andare avanti
         Button back=dialogView.findViewById((int)R.id.backGiorno);
         creaEsercizio.setEnabled(false);
-        creaEsercizio.setBackgroundResource(R.drawable.drawable_botton_grey);
+        creaEsercizio.setBackgroundResource(R.drawable.drawable_botton_grigio);
 
         Giorno giornoNuovo=new Giorno();
         //schedaRiferimento.getListaGiorni().add(giornoNuovo);
