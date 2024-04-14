@@ -51,6 +51,7 @@ public class PopupEsercizio {
     public static ArrayList<Long> idEserciziSalvati= new ArrayList<>();
 
     public static ImageButton immagineEsercizio;
+    private static Note noteGiorno;
 
 
 
@@ -192,7 +193,7 @@ public class PopupEsercizio {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor edit=shp.edit();
-                edit.putString("notePassate",new Note().toJson());
+
                 edit.commit();
                 alertDialog.dismiss();
             }
@@ -203,10 +204,15 @@ public class PopupEsercizio {
     }
 
     public static void ApriEsercizioSelezionato(Esercizio esercizio,LayoutInflater inflater){
-        System.out.println("_____-OLD EX " + esercizio);
-        Esercizio esercizioNew=Global.esercizioDao.getEsercizioByNome(esercizio.getNomeEsercizio());
-        System.out.println("_____-NEW EX " + esercizio);
 
+        SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit=shp.edit();
+        noteGiorno = Note.fromJson(shp.getString("notePassate", null));
+        System.out.println("notegiorno"+noteGiorno.getNote());
+        edit.putString("notePassate",new Note().toJson());
+        edit.commit();
+
+        Esercizio esercizioNew=Global.esercizioDao.getEsercizioByNome(esercizio.getNomeEsercizio());
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_esercizio, null);
         Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
@@ -256,6 +262,7 @@ public class PopupEsercizio {
         intensitaEsercizio.setText(esercizioNew.getTecnica_intensita());
         esecuzioneEsercizio.setText(esercizioNew.getEsecuzione());
 
+        /*
         nomeEsercizio.setInputType(InputType.TYPE_NULL);
         numeroSerieEsercizio.setInputType(InputType.TYPE_NULL);
         numeroRipetEsercizio.setInputType(InputType.TYPE_NULL);
@@ -264,10 +271,14 @@ public class PopupEsercizio {
         esecuzioneEsercizio.setInputType(InputType.TYPE_NULL);
         salva.setVisibility(View.GONE);
 
+         */
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                edit.putString("notePassate",noteGiorno.toJson());
+                edit.commit();
                 alertDialog.dismiss();
             }
         });
@@ -281,15 +292,50 @@ public class PopupEsercizio {
                 Note notaDaMostrare= new Note(esercizioNew.getNote());
                 edit.putString("notePassate", notaDaMostrare.toJson());
                 edit.apply();
-                System.out.println("*****" + esercizioNew.getNote());
                 try {
-                    Registrazione_Pag2.editGlobal=false;
+                    Registrazione_Pag2.editGlobal=true;
                     NotificheDialog.NotificaNote(inflater,sh);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }
             }
         });
+
+        salva.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //prendo le note
+                SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
+
+                Esercizio eser=new Esercizio(nomeEsercizio.getText().toString().trim().length()>0?nomeEsercizio.getText().toString().trim():"",
+                        intensitaEsercizio.getText().toString(),
+                        esecuzioneEsercizio.getText().toString(),immagineEsercizio.getDrawable(),
+                        Integer.parseInt(numeroSerieEsercizio.getText().toString().trim().length()!=0?numeroSerieEsercizio.getText().toString():"0"),
+                        Integer.parseInt(numeroRipetEsercizio.getText().toString().trim().length()!=0?numeroRipetEsercizio.getText().toString():"0"),
+                        Float.parseFloat(numeroTimetEsercizio.getText().toString().trim().length()!=0?numeroTimetEsercizio.getText().toString():"0"),
+                        note.getNote()
+
+                );
+                if(eser.getNomeEsercizio()==""){
+                    Toast.makeText(dialogView.getContext(), "Inserisci almeno il nome", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Esercizio ex=Global.esercizioDao.getEsercizioByNome(eser.getNomeEsercizio());
+                    if(ex!=null){
+                        Toast.makeText(dialogView.getContext(), "Nome già presente", Toast.LENGTH_SHORT).show();
+                    }else{
+                        eser.setId(esercizioNew.getId());
+                        Global.adapterEsercizi.remove(esercizio);
+                        Global.esercizioDao.updateEsercizio(eser);
+                        Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
+                        Global.adapterEsercizi.add(eser);
+                    }
+
+                }
+            }
+        });
+
 
 
     }

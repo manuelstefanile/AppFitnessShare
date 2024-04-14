@@ -154,6 +154,7 @@ public class Esercizio extends ListeClasseMarker {
     @Override
     public String toString() {
         return "\nEsercizio{" +
+                "id='" + id + '\'' +
                 "nomeEsercizio='" + nomeEsercizio + '\'' +
                 ", tecnica_intensita='" + tecnica_intensita + '\'' +
                 ", esecuzione='" + esecuzione + '\'' +

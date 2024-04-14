@@ -14,8 +14,10 @@ import android.graphics.drawable.Drawable;
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Pagina3.Global;
+import com.example.appfitness.Pagina3.PaginaScheda_Pag3;
 import com.example.appfitness.Pagina3.PopupEsercizio;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class EsercizioDAO {
@@ -26,6 +28,7 @@ public class EsercizioDAO {
         this.ct = ct;
         db=new DbHelper(ct);
     }
+
 
     public Esercizio getEsercizioById(int id) {
         SQLiteDatabase dbRead = db.getReadableDatabase();
@@ -121,6 +124,69 @@ public class EsercizioDAO {
 
     }
 
+    public Esercizio inserisciEsercizio(Esercizio esercizio) {
+        //inserisco l ex nel db
+        SQLiteDatabase dbWritable = db.getWritableDatabase();
 
+        ContentValues valuesEsercizio = new ContentValues();
+        valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_nomeEsercizio, esercizio.getNomeEsercizio());
+        valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_tecnica_intensita, esercizio.getTecnica_intensita());
+        valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_esecuzione, esercizio.getEsecuzione());
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        if(esercizio.getImmagineMacchinario()!=null) {
+            Bitmap bitmap = ((BitmapDrawable) esercizio.getImmagineMacchinario()).getBitmap();
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+            scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        }
+
+        valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario, stream.toByteArray());
+        valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroSerie, esercizio.getNumeroSerie());
+        valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni, esercizio.getNumeroRipetizioni());
+        valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_timer, esercizio.getTimer());
+        valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_note,esercizio.getNote());
+
+        long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
+        esercizio.setId(EsercizioId);
+
+        return esercizio;
+    }
+
+    public boolean updateEsercizio(Esercizio esercizio) {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SchemaDB.EsercizioDB.COLUMN_nomeEsercizio, esercizio.getNomeEsercizio());
+        values.put(SchemaDB.EsercizioDB.COLUMN_esecuzione, esercizio.getEsecuzione());
+        values.put(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni, esercizio.getNumeroRipetizioni());
+        values.put(SchemaDB.EsercizioDB.COLUMN_numeroSerie, esercizio.getNumeroSerie());
+        values.put(SchemaDB.EsercizioDB.COLUMN_tecnica_intensita, esercizio.getTecnica_intensita());
+        values.put(SchemaDB.EsercizioDB.COLUMN_timer, esercizio.getTimer());
+
+        // Converti l'immagine in un byte array
+        byte[] immagineByteArray = null;
+        Drawable immagineDrawable = esercizio.getImmagineMacchinario();
+        if (immagineDrawable != null) {
+            Bitmap bitmap = ((BitmapDrawable) immagineDrawable).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            immagineByteArray = stream.toByteArray();
+        }
+        values.put(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario, immagineByteArray);
+
+        values.put(SchemaDB.EsercizioDB.COLUMN_note, esercizio.getNote());
+
+        String whereClause = SchemaDB.EsercizioDB._ID + " = ?";
+        String[] whereArgs = {String.valueOf(esercizio.getId())};
+
+        int rowsAffected = dbW.update(SchemaDB.EsercizioDB.TABLE_NAME, values, whereClause, whereArgs);
+
+        dbW.close();
+
+        PaginaScheda_Pag3.StampaTutto();
+        System.out.println("______"+esercizio);
+
+        return rowsAffected > 0;
+    }
 
 }
