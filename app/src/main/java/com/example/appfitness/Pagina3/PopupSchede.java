@@ -215,6 +215,8 @@ public class PopupSchede {
         bottoneNote.setText("Mostra");
         nomeScheda.setText(sched.getNomeScheda());
 
+        if(sched.getImg()!=null)
+            imgScheda.setImageDrawable(sched.getImg());
         imgScheda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -16,6 +16,7 @@
         android:layout_weight="0.3"
         android:layout_marginRight="20dp"
         android:src="@drawable/noimg"
+        android:onClick="OnImmagineClick"
         >
 
     </ImageView>

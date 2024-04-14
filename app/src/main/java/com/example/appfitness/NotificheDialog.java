@@ -3,12 +3,15 @@ package com.example.appfitness;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -281,8 +284,6 @@ public class NotificheDialog {
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.kcal_dettaglio, null);
-
-
         // Creazione dell'AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
         builder.setView(dialogView);
@@ -441,6 +442,34 @@ public class NotificheDialog {
             }
         });
 
+
+    }
+    public static void NotificaImmagine(LayoutInflater inflater, Drawable immagine){
+        // Creazione del layout della tua View
+        View dialogView = inflater.inflate(R.layout.immagine_big, null);
+        // Creazione dell'AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
+        builder.setView(dialogView);
+
+
+        builder.setPositiveButton(null,null);
+        builder.setNegativeButton(null,null);
+        // Mostra l'AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        ImageView immagineSet=dialogView.findViewById(R.id.immagineIngrandita);
+        ImageButton closeButton=dialogView.findViewById(R.id.btnChiudi);
+
+        immagineSet.setImageDrawable(immagine);
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss(); // Chiudi il dialog
+
+            }
+        });
 
     }
 

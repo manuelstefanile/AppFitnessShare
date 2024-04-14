@@ -3,19 +3,14 @@ package com.example.appfitness.Pagina3;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
@@ -27,20 +22,20 @@ import com.example.appfitness.DB.ListaEserciziDAO;
 import com.example.appfitness.DB.ListaGiorniDAO;
 import com.example.appfitness.DB.SchedaDAO;
 import com.example.appfitness.DB.SchemaDB;
+import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
 import com.example.appfitness.Registrazione_Pag2;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import kotlin.Suppress;
 
 public class PaginaScheda_Pag3 extends Activity {
     ListView lista;
     PopupSchede popS=new PopupSchede(this);
     TextView nomeutenteR;
     private Scheda schedaTemp;
+
+
 
     @Override
     @SuppressLint({"Range", "WrongThread"})
@@ -290,5 +285,10 @@ public class PaginaScheda_Pag3 extends Activity {
             }
         }
 
+    }
+
+    public void OnImmagineClick(View v){
+        ImageView imag= (ImageView)v;
+        NotificheDialog.NotificaImmagine(getLayoutInflater(),imag.getDrawable());
     }
 }
