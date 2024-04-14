@@ -177,9 +177,11 @@ public class Registrazione_Pag2 extends Activity {
 
         //se ci sono differenze, allora salva nel db, altrimenti non salvare niente
         Peso pOld=utente.getPeso();
-        if(pOld.getCalendario().getTimeInMillis()!=pesoSalvato.getCalendario().getTimeInMillis())
+        System.out.println("uguale="+!(Global.ConversioneCalendarString(pOld.getCalendario()).equals(
+                Global.ConversioneCalendarString(pesoSalvato.getCalendario()))));
+        if(!(Global.ConversioneCalendarString(pOld.getCalendario()).equals(
+                Global.ConversioneCalendarString(pesoSalvato.getCalendario()))))
             pOld=pesodao.insertPeso(pesoSalvato);
-        //faccio l update
         else{
             pOld.setNote(pesoSalvato.getNote());
             pOld.setPesoKg(pesoSalvato.getPesoKg());
@@ -188,7 +190,8 @@ public class Registrazione_Pag2 extends Activity {
         }
 
         Misure mOld=utente.getMisure();
-        if(mOld.getData().getTimeInMillis()!=misureSalvato.getData().getTimeInMillis())
+        if(!(Global.ConversioneCalendarString(mOld.getData()).equals(
+                Global.ConversioneCalendarString(misureSalvato.getData()))))
             mOld=misuradao.insertMisure(misureSalvato);
         else{
             misureSalvato.setId(mOld.getId());
@@ -198,16 +201,14 @@ public class Registrazione_Pag2 extends Activity {
         }
 
         Kcal kOld=utente.getKcal();
-        if(kOld.getData().getTimeInMillis()!=chiloK.getData().getTimeInMillis())
+        if(!(Global.ConversioneCalendarString(kOld.getData()).equals(
+                Global.ConversioneCalendarString(chiloK.getData()))))
             kOld=kcalDAO.insertKcal(chiloK);
         else{
             chiloK.setId(kOld.getId());
             kOld=chiloK;
             kcalDAO.updateKcal(kOld);
         }
-
-
-
 
         utente=new Utente(nome,cognome,nomeUtente,eta,altezza,pesoSalvato,misureSalvato,chiloK,noteSalvate);
         utente.setId(idUtente);
@@ -245,8 +246,9 @@ public class Registrazione_Pag2 extends Activity {
 
         ContentValues valuesPeso = new ContentValues();
         valuesPeso.put(SchemaDB.PesoDB.COLUMN_pesoKg, pesoSalvato.getPesoKg());
-        valuesPeso.put(SchemaDB.PesoDB.COLUMN_calendario, pesoSalvato.getCalendario().getTimeInMillis());
+        valuesPeso.put(SchemaDB.PesoDB.COLUMN_calendario, Global.ConversioneCalendarString(pesoSalvato.getCalendario()));
         valuesPeso.put(SchemaDB.PesoDB.COLUMN_note, pesoSalvato.getNote());
+
         long PesoID = dbWritable.insert(SchemaDB.PesoDB.TABLE_NAME, null, valuesPeso);
 
         ContentValues valuesMisura = new ContentValues();
@@ -259,7 +261,7 @@ public class Registrazione_Pag2 extends Activity {
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_spalle, misureSalvato.getSpalle());
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_fianchi, misureSalvato.getFianchi());
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_note, misureSalvato.getNote());
-        valuesMisura.put(SchemaDB.MisureDB.COLUMN_calendario, misureSalvato.getData().getTimeInMillis());
+        valuesMisura.put(SchemaDB.MisureDB.COLUMN_calendario, Global.ConversioneCalendarString(misureSalvato.getData()));
         long MisuraID = dbWritable.insert(SchemaDB.MisureDB.TABLE_NAME, null,valuesMisura);
 
         chiloK=kcalDAO.insertKcal(chiloK);

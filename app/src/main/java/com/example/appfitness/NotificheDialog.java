@@ -22,11 +22,16 @@ import com.example.appfitness.Bean.Kcal;
 import com.example.appfitness.Bean.Misure;
 import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Peso;
+import com.example.appfitness.DB.MisureDAO;
+import com.example.appfitness.DB.PesoDAO;
+import com.example.appfitness.DB.kcalDAO;
 import com.example.appfitness.Eccezioni.Eccezioni;
+import com.example.appfitness.Pagina3.Global;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 public class NotificheDialog {
 
@@ -76,7 +81,7 @@ public class NotificheDialog {
         }
 
         Calendar dataSalvare=pesoStorage.getCalendario();
-        ImpostaCalendario(calendario,dialogView,dataSalvare);
+        ImpostaCalendario(calendario,dialogView,dataSalvare,new Peso());
 
 
         salvaButton.setOnClickListener(new View.OnClickListener() {
@@ -213,7 +218,7 @@ public class NotificheDialog {
 
 
         Calendar dataSalvare=misureStorage.getData();
-        ImpostaCalendario(calendario,dialogView,dataSalvare);
+        ImpostaCalendario(calendario,dialogView,dataSalvare,new Misure());
 
 
         salvaButton.setOnClickListener(new View.OnClickListener() {
@@ -403,7 +408,7 @@ public class NotificheDialog {
         }
 
         Calendar dataSalvare=kcalStorage.getData();
-        ImpostaCalendario(calendario,dialogView,dataSalvare);
+        ImpostaCalendario(calendario,dialogView,dataSalvare,new Kcal());
 
 
 
@@ -529,12 +534,143 @@ public class NotificheDialog {
     }
 
 
-    private static void ImpostaCalendario(CalendarView calendario, View dialogView, Calendar dataSalvare){
+
+
+
+    private static void SettaVarDialogView(Object oggettoC,View dialogView,Object ogg){
+        if (oggettoC.getClass() == Kcal.class) {
+            Kcal oggettoKcal = (Kcal) ogg;
+
+            // Prendi gli EditText e altri elementi dalla View del dialog
+            EditText kcalAttuali = dialogView.findViewById(R.id.kcalAttual);
+            RadioGroup radioGroup = dialogView.findViewById(R.id.radioGroup);
+            RadioButton radioMassa = dialogView.findViewById(R.id.radioMassa);
+            RadioButton radioNormo = dialogView.findViewById(R.id.radioNormo);
+            RadioButton radioDeficit = dialogView.findViewById(R.id.radioDeficit);
+            RadioButton radioRicomposizione = dialogView.findViewById(R.id.radioRicomposizione);
+            EditText carbo = dialogView.findViewById(R.id.carbo);
+            EditText proteine = dialogView.findViewById(R.id.proteine);
+            EditText grassi = dialogView.findViewById(R.id.grassi);
+            EditText sale = dialogView.findViewById(R.id.sale);
+            EditText acqua = dialogView.findViewById(R.id.acqua);
+            EditText noteDettaglio = dialogView.findViewById(R.id.noteDettaglio);
+            CalendarView calendario = dialogView.findViewById(R.id.calendarioKcal);
+
+            // Imposta i valori dell'oggetto Kcal nei rispettivi elementi della View
+            kcalAttuali.setText(String.valueOf(oggettoKcal.getKcal()));
+
+            switch (oggettoKcal.getFase()) {
+                case MASSA:
+                    radioMassa.setChecked(true);
+                    break;
+                case NORMO:
+                    radioNormo.setChecked(true);
+                    break;
+                case DEFINIZIONE:
+                    radioDeficit.setChecked(true);
+                    break;
+                case RICOMPOSIZIONE:
+                    radioRicomposizione.setChecked(true);
+                    break;
+            }
+
+            carbo.setText(String.valueOf(oggettoKcal.getCarbo()));
+            proteine.setText(String.valueOf(oggettoKcal.getProteine()));
+            grassi.setText(String.valueOf(oggettoKcal.getGrassi()));
+            sale.setText(String.valueOf(oggettoKcal.getSale()));
+            acqua.setText(String.valueOf(oggettoKcal.getAcqua()));
+            noteDettaglio.setText(oggettoKcal.getNote());
+
+            // Imposta la data nel CalendarView
+            if (calendario != null) {
+                Calendar dataKcal = oggettoKcal.getData();
+                if (dataKcal != null) {
+                    calendario.setDate(dataKcal.getTimeInMillis());
+                }
+            }
+        }else if(oggettoC.getClass()==Misure.class){
+            Misure oggettoMisure = (Misure) ogg;
+            EditText braccioDx=dialogView.findViewById(R.id.braccioDX);
+            EditText braccioSx=dialogView.findViewById(R.id.braccioSX);
+            EditText gambaDx=dialogView.findViewById(R.id.gambaDX);
+            EditText gambaSx=dialogView.findViewById(R.id.gambaSX);
+            EditText petto=dialogView.findViewById(R.id.petto);
+            EditText spalle=dialogView.findViewById(R.id.spalle);
+            EditText addome=dialogView.findViewById(R.id.addome);
+            EditText fianchi=dialogView.findViewById((int)R.id.fianchi);
+            EditText noteDettaglio=dialogView.findViewById((int)R.id.noteMisure);
+            CalendarView calendario=dialogView.findViewById((int)R.id.calendarioMisure);
+
+            // Impostare i valori negli EditText
+            braccioDx.setText(String.valueOf(oggettoMisure.getBraccioDx()));
+            braccioSx.setText(String.valueOf(oggettoMisure.getBraccioSx()));
+            gambaDx.setText(String.valueOf(oggettoMisure.getGambaDx()));
+            gambaSx.setText(String.valueOf(oggettoMisure.getGambaSx()));
+            petto.setText(String.valueOf(oggettoMisure.getPetto()));
+            spalle.setText(String.valueOf(oggettoMisure.getSpalle()));
+            addome.setText(String.valueOf(oggettoMisure.getAddome()));
+            fianchi.setText(String.valueOf(oggettoMisure.getFianchi()));
+            noteDettaglio.setText(oggettoMisure.getNote());
+
+            // Impostare la data nel CalendarView
+            calendario.setDate(oggettoMisure.getData().getTimeInMillis());
+        }else if(oggettoC.getClass()==Peso.class){
+            Peso peso=(Peso)ogg;
+            CalendarView calendario=dialogView.findViewById((int)R.id.calendarioPeso);
+            EditText kiliEdit= dialogView.findViewById(R.id.pesoAttual);
+            EditText noteDettaglio=dialogView.findViewById((int)R.id.notePeso);
+
+            // Impostare il valore di peso e note nei rispettivi EditText
+            kiliEdit.setText(String.valueOf(peso.getPesoKg()));
+            noteDettaglio.setText(peso.getNote());
+            calendario.setDate(peso.getCalendario().getTimeInMillis());
+
+        }
+
+    }
+
+
+
+
+
+
+    private static void ImpostaCalendario(CalendarView calendario, View dialogView, Calendar dataSalvare,Object oggetto){
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int anno, int mese, int giorno) {
+                /*dammi *****************/
+                Calendar calendarioMostra=Calendar.getInstance();
+                calendarioMostra.set(anno,mese,giorno)
+                ;
+                if(oggetto.getClass()==Kcal.class) {
+                    System.out.println("kcalkcal");
+                    kcalDAO kcalDAO=new kcalDAO(dialogView.getContext());
+                    Kcal oggKcal=kcalDAO.getKcalPerData(Global.ConversioneCalendarString(calendarioMostra));
+                    System.out.println("datad"+calendarioMostra.getTimeInMillis());
+                    if(oggKcal!=null){
+                        System.out.println("datad"+oggKcal.getData().getTimeInMillis());
+                        System.out.println("kcalkcalSetto");
+                        SettaVarDialogView(oggetto,dialogView,oggKcal);
+                    }
+
+                }else if(oggetto.getClass()==Misure.class) {
+                    MisureDAO misureDAO=new MisureDAO(dialogView.getContext());
+                    Misure oggMisure=misureDAO.getMisureperData(Global.ConversioneCalendarString(calendarioMostra));
+                    if(oggMisure!=null){
+                        System.out.println("kcalkcalSetto");
+                        SettaVarDialogView(oggetto,dialogView,oggMisure);
+                    }
+
+                }else if(oggetto.getClass()==Peso.class) {
+                    PesoDAO pesoDAO=new PesoDAO(dialogView.getContext());
+                    Peso oggPeso=pesoDAO.getPesoPerData(Global.ConversioneCalendarString(calendarioMostra));
+                    if(oggPeso!=null){
+                        SettaVarDialogView(oggetto,dialogView,oggPeso);
+                    }
+
+                }
+
                 Calendar calendarioAtutale= Calendar.getInstance();
-                System.out.println("dat "+ giorno + " m " + mese +"anno "+ anno);
                 try{
                     if(anno>calendarioAtutale.get(Calendar.YEAR)){
                         calendario.setDate(calendarioAtutale.getTimeInMillis());

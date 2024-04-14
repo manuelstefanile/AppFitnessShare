@@ -8,6 +8,11 @@ import com.example.appfitness.DB.ListaEserciziDAO;
 import com.example.appfitness.DB.ListaGiorniDAO;
 import com.example.appfitness.DB.SchedaDAO;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Global {
     public static AdapterListaScheda adapterSchede;
 
@@ -26,4 +31,29 @@ public class Global {
     public static DbHelper db;
 
     public static boolean aperturaSchedaVisualizzazione=false;
+
+    public static String ConversioneCalendarString(Calendar calendar){
+        // Ottenere la data corrente
+        Date currentDate = calendar.getTime();
+        // Definire un formato per la data
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        // Formattare la data corrente
+        return sdf.format(currentDate);
+    }
+    public static Calendar ConversioneStringCalendar(String dateString){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+
+        try {
+            // Convertire la stringa in un oggetto Date
+            Date date = sdf.parse(dateString);
+            calendar.setTime(date);
+
+        } catch (  ParseException e) {
+            e.printStackTrace();
+        }
+        return calendar;
+    }
+
 }

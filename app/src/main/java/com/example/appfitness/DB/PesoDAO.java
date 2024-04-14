@@ -6,9 +6,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.appfitness.Bean.Misure;
 import com.example.appfitness.Bean.Peso;
 import com.example.appfitness.Bean.Scheda;
 import com.example.appfitness.Bean.Utente;
+import com.example.appfitness.Pagina3.Global;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,12 +41,11 @@ public class PesoDAO {
                 peso.setPesoKg(cursor.getFloat(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_pesoKg)));
                 peso.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_note)));
 
-                // Converti il valore del timestamp in un oggetto Calendar
-                long timestamp = cursor.getLong(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_calendario));
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(timestamp);
-                peso.setCalendario(calendar);
 
+                // Converti il valore del timestamp in un oggetto Calendar
+                String striData = cursor.getString(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_calendario));
+                Calendar data=Global.ConversioneStringCalendar(striData);
+                peso.setCalendario(data);
                 pesoList.add(peso);
             } while (cursor.moveToNext());
         }
@@ -77,15 +78,16 @@ public class PesoDAO {
             peso.setPesoKg(cursor.getFloat(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_pesoKg)));
             peso.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_note)));
 
-            Calendar c=Calendar.getInstance();
-            long time=cursor.getLong(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_calendario));
-            c.setTimeInMillis(time);
-            peso.setCalendario(c);
+            // Converti il valore del timestamp in un oggetto Calendar
+            String striData = cursor.getString(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_calendario));
+            Calendar data=Global.ConversioneStringCalendar(striData);
+            peso.setCalendario(data);
+
             // Se hai altre colonne nel modello, aggiungile qui
             cursor.close();
         }
 
-        db.close();
+        dbW.close();
         return peso;
     }
 
@@ -95,7 +97,7 @@ public class PesoDAO {
         ContentValues values = new ContentValues();
         values.put(SchemaDB.PesoDB.COLUMN_pesoKg, peso.getPesoKg());
         values.put(SchemaDB.PesoDB.COLUMN_note, peso.getNote());
-        values.put(SchemaDB.PesoDB.COLUMN_calendario, peso.getCalendario().getTimeInMillis());
+        values.put(SchemaDB.PesoDB.COLUMN_calendario, Global.ConversioneCalendarString(peso.getCalendario()));
 
         // Esempio di clausola WHERE se vuoi aggiornare basandoti sull'ID
         String selection = SchemaDB.PesoDB._ID + "=?";
@@ -117,7 +119,7 @@ public class PesoDAO {
         ContentValues values = new ContentValues();
         values.put(SchemaDB.PesoDB.COLUMN_pesoKg, peso.getPesoKg());
         values.put(SchemaDB.PesoDB.COLUMN_note, peso.getNote());
-        values.put(SchemaDB.PesoDB.COLUMN_calendario, peso.getCalendario().getTimeInMillis());
+        values.put(SchemaDB.PesoDB.COLUMN_calendario, Global.ConversioneCalendarString(peso.getCalendario()));
 
         // Esegui l'operazione di inserimento
         long newRowId = dbW.insert(SchemaDB.PesoDB.TABLE_NAME, null, values);
@@ -125,4 +127,38 @@ public class PesoDAO {
         db.close();
         return peso; // Ritorna l'ID del nuovo record inserito
     }
+
+    @SuppressLint("Range")
+    public Peso getPesoPerData(String dataString) {
+        SQLiteDatabase dbW = db.getReadableDatabase();
+        // Creare un oggetto Calendar
+        Calendar calendar = Calendar.getInstance();
+
+        String selectQuery = "SELECT * FROM " + SchemaDB.PesoDB.TABLE_NAME +
+                " WHERE "+SchemaDB.PesoDB.COLUMN_calendario+" = ?";
+        String[] selectionArgs = {String.valueOf(dataString)};
+
+        System.out.println("___"+selectQuery);
+        Cursor cursor = dbW.rawQuery(selectQuery, selectionArgs);
+
+        Peso peso=null;
+        if (cursor != null && cursor.moveToFirst()) {
+            peso = new Peso();
+            peso.setId(cursor.getLong(cursor.getColumnIndex(SchemaDB.PesoDB._ID)));
+            peso.setPesoKg(cursor.getFloat(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_pesoKg)));
+            peso.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_note)));
+
+            // Converti il valore del timestamp in un oggetto Calendar
+            String striData = cursor.getString(cursor.getColumnIndex(SchemaDB.PesoDB.COLUMN_calendario));
+            Calendar data=Global.ConversioneStringCalendar(striData);
+            peso.setCalendario(data);
+
+            // Se hai altre colonne nel modello, aggiungile qui
+            cursor.close();
+        }
+
+        dbW.close();
+        return peso;
+    }
+
 }

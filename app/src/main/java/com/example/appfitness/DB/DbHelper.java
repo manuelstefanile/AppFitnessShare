@@ -31,7 +31,7 @@ public class DbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + SchemaDB.PesoDB.TABLE_NAME + " ("
                     + SchemaDB.PesoDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + SchemaDB.PesoDB.COLUMN_pesoKg + " FLOAT, "
-                    + SchemaDB.PesoDB.COLUMN_calendario + " LONG NOT NULL,"
+                    + SchemaDB.PesoDB.COLUMN_calendario + " TEXT NOT NULL,"
                     + SchemaDB.PesoDB.COLUMN_note + " TEXT"
                     + "); ";
 
@@ -46,7 +46,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     + SchemaDB.KcalDB.COLUMN_sale + " FLOAT, "
                     + SchemaDB.KcalDB.COLUMN_acqua + " FLOAT, "
                     + SchemaDB.KcalDB.COLUMN_note + " TEXT, "
-                    + SchemaDB.KcalDB.COLUMN_calendario + " LONG NOT NULL"
+                    + SchemaDB.KcalDB.COLUMN_calendario + " TEXT NOT NULL"
                     + "); ";
 
     final private static String CREATE_MISURE =
@@ -61,7 +61,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     + SchemaDB.MisureDB.COLUMN_addome + " FLOAT,"
                     + SchemaDB.MisureDB.COLUMN_fianchi + " FLOAT, "
                     + SchemaDB.MisureDB.COLUMN_note + " TEXT, "
-                    + SchemaDB.MisureDB.COLUMN_calendario + " LONG NOT NULL"
+                    + SchemaDB.MisureDB.COLUMN_calendario + " TEXT NOT NULL"
                     + ");";
 
     final private static String CREATE_ESERCIZIO =

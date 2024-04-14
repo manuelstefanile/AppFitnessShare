@@ -10,6 +10,7 @@ import com.example.appfitness.Bean.Misure;
 import com.example.appfitness.Bean.Peso;
 import com.example.appfitness.Bean.Scheda;
 import com.example.appfitness.Bean.Utente;
+import com.example.appfitness.Pagina3.Global;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,10 +48,9 @@ public class MisureDAO {
                 misure.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_note)));
 
                 // Converti il valore del timestamp in un oggetto Calendar
-                long timestamp = cursor.getLong(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_calendario));
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(timestamp);
-                misure.setData(calendar);
+                String striData = cursor.getString(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_calendario));
+                Calendar data=Global.ConversioneStringCalendar(striData);
+                misure.setData(data);
 
                 misureList.add(misure);
             } while (cursor.moveToNext());
@@ -91,10 +91,9 @@ public class MisureDAO {
             misure.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_note)));
 
             // Converti il valore del timestamp in un oggetto Calendar
-            long timestamp = cursor.getLong(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_calendario));
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(timestamp);
-            misure.setData(calendar);
+            String striData = cursor.getString(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_calendario));
+            Calendar data=Global.ConversioneStringCalendar(striData);
+            misure.setData(data);
 
 
             cursor.close();
@@ -117,12 +116,12 @@ public class MisureDAO {
         values.put(SchemaDB.MisureDB.COLUMN_addome, misure.getAddome());
         values.put(SchemaDB.MisureDB.COLUMN_fianchi, misure.getFianchi());
         values.put(SchemaDB.MisureDB.COLUMN_note, misure.getNote());
-        values.put(SchemaDB.MisureDB.COLUMN_calendario, misure.getData().getTimeInMillis());
+        values.put(SchemaDB.MisureDB.COLUMN_calendario, Global.ConversioneCalendarString(misure.getData()));
 
         // Esegui l'operazione di inserimento
         long newRowId = dbW.insert(SchemaDB.MisureDB.TABLE_NAME, null, values);
         misure.setId(newRowId);
-        db.close();
+        dbW.close();
 
         return misure; // Ritorna l'ID del nuovo record inserito
     }
@@ -140,7 +139,7 @@ public class MisureDAO {
         values.put(SchemaDB.MisureDB.COLUMN_addome, misure.getAddome());
         values.put(SchemaDB.MisureDB.COLUMN_fianchi, misure.getFianchi());
         values.put(SchemaDB.MisureDB.COLUMN_note, misure.getNote());
-        values.put(SchemaDB.MisureDB.COLUMN_calendario, misure.getData().getTimeInMillis());
+        values.put(SchemaDB.MisureDB.COLUMN_calendario, Global.ConversioneCalendarString(misure.getData()));
 
         String selection = SchemaDB.MisureDB._ID + " = ?";
         String[] selectionArgs = { String.valueOf(misure.getId()) };
@@ -154,6 +153,42 @@ public class MisureDAO {
         db.close();
 
         return count > 0;
+    }
+
+    @SuppressLint("Range")
+    public Misure getMisureperData(String dataString) {
+        SQLiteDatabase dbW = db.getReadableDatabase();
+        Misure misure = null;
+
+        String selectQuery = "SELECT * FROM " + SchemaDB.MisureDB.TABLE_NAME +
+                " WHERE "+SchemaDB.MisureDB.COLUMN_calendario+" = ?";
+        String[] selectionArgs = {String.valueOf(dataString)};
+
+        Cursor cursor = dbW.rawQuery(selectQuery, selectionArgs);
+
+        if (cursor != null && cursor.moveToFirst()) {
+                misure = new Misure();
+                misure.setId(cursor.getLong(cursor.getColumnIndex(SchemaDB.MisureDB._ID)));
+                misure.setBraccioDx(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_braccioDX)));
+                misure.setBraccioSx(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_braccioSX)));
+                misure.setGambaDx(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_gambaDX)));
+                misure.setGambaSx(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_gambaSX)));
+                misure.setPetto(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_petto)));
+                misure.setSpalle(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_spalle)));
+                misure.setAddome(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_addome)));
+                misure.setFianchi(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_fianchi)));
+                misure.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_note)));
+
+                // Converti il valore del timestamp in un oggetto Calendar
+                String striData = cursor.getString(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_calendario));
+                Calendar data=Global.ConversioneStringCalendar(striData);
+                misure.setData(data);
+
+                cursor.close();
+            }
+
+        dbW.close();
+        return misure;
     }
 
 }
