@@ -242,6 +242,9 @@ public class PopupSchede {
             public void onClick(View view) {
                 if(sched.getListaGiorni().size()>0)
                     Global.listaGiornidao.InserisciListaGiorni(sched);
+                //rimuovo dalla lista giorni
+                Global.adapterSchede.remove(sched);
+
                 sched.setNomeScheda(nomeScheda.getText().toString());
                 sched.setImg(imgScheda.getDrawable());
 
@@ -249,6 +252,8 @@ public class PopupSchede {
                 Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
                 sched.setNote(note.getNote());
                 Global.schedadao.updateScheda(sched);
+
+                Global.adapterSchede.add(sched);
 
                 PaginaScheda_Pag3.StampaTutto();
                 alertDialog.dismiss();
@@ -265,7 +270,7 @@ public class PopupSchede {
 
                 Note note=Note.fromJson(sh.getString("notePassate", null));
                 Note notaDaMostrare;
-                if(note!=null){
+                if(note.getNote()!=null){
                     notaDaMostrare=note;
                 }else
                     notaDaMostrare= new Note(sched.getNote());
