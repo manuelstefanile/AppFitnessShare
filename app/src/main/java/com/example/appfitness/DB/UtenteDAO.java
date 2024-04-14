@@ -70,6 +70,7 @@ public class UtenteDAO {
         dbW.close();
 
 
+        System.out.println("___"+utente);
         return utente;
     }
 

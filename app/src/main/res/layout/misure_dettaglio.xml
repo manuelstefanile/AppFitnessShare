@@ -378,6 +378,7 @@
                         android:layout_height="wrap_content"
                         ></TextView>
                     <EditText
+                        android:id="@+id/fianchi"
                         android:layout_width="0dp"
                         android:layout_weight="0.6"
                         android:padding="6dp"

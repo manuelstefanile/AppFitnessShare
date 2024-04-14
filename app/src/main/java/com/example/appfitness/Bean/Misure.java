@@ -13,6 +13,7 @@ public class Misure {
     private float petto;
     private float spalle;
     private float addome;
+    private float fianchi;
     private Calendar data=Calendar.getInstance();
     private String note;
 
@@ -110,6 +111,14 @@ public class Misure {
         this.addome = addome;
     }
 
+    public float getFianchi() {
+        return fianchi;
+    }
+
+    public void setFianchi(float fianchi) {
+        this.fianchi = fianchi;
+    }
+
     public String toJson() {
         Gson gson = new Gson();
         return gson.toJson(this);
@@ -131,6 +140,7 @@ public class Misure {
                 ", petto=" + petto +
                 ", spalle=" + spalle +
                 ", addome=" + addome +
+                ", fianchi=" + fianchi +
                 ", data=" + data +
                 ", note='" + note + '\'' +
                 '}';

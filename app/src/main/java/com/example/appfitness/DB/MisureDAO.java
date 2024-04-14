@@ -43,6 +43,7 @@ public class MisureDAO {
                 misure.setPetto(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_petto)));
                 misure.setSpalle(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_spalle)));
                 misure.setAddome(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_addome)));
+                misure.setFianchi(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_fianchi)));
                 misure.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_note)));
 
                 // Converti il valore del timestamp in un oggetto Calendar
@@ -85,6 +86,7 @@ public class MisureDAO {
             misure.setGambaSx(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_gambaSX)));
             misure.setPetto(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_petto)));
             misure.setSpalle(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_spalle)));
+            misure.setFianchi(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_fianchi)));
             misure.setAddome(cursor.getFloat(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_addome)));
             misure.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.MisureDB.COLUMN_note)));
 
@@ -113,6 +115,7 @@ public class MisureDAO {
         values.put(SchemaDB.MisureDB.COLUMN_petto, misure.getPetto());
         values.put(SchemaDB.MisureDB.COLUMN_spalle, misure.getSpalle());
         values.put(SchemaDB.MisureDB.COLUMN_addome, misure.getAddome());
+        values.put(SchemaDB.MisureDB.COLUMN_fianchi, misure.getFianchi());
         values.put(SchemaDB.MisureDB.COLUMN_note, misure.getNote());
         values.put(SchemaDB.MisureDB.COLUMN_calendario, misure.getData().getTimeInMillis());
 
@@ -135,6 +138,7 @@ public class MisureDAO {
         values.put(SchemaDB.MisureDB.COLUMN_petto, misure.getPetto());
         values.put(SchemaDB.MisureDB.COLUMN_spalle, misure.getSpalle());
         values.put(SchemaDB.MisureDB.COLUMN_addome, misure.getAddome());
+        values.put(SchemaDB.MisureDB.COLUMN_fianchi, misure.getFianchi());
         values.put(SchemaDB.MisureDB.COLUMN_note, misure.getNote());
         values.put(SchemaDB.MisureDB.COLUMN_calendario, misure.getData().getTimeInMillis());
 

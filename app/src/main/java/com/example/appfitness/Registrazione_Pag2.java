@@ -257,24 +257,14 @@ public class Registrazione_Pag2 extends Activity {
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_addome, misureSalvato.getAddome());
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_petto, misureSalvato.getPetto());
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_spalle, misureSalvato.getSpalle());
+        valuesMisura.put(SchemaDB.MisureDB.COLUMN_fianchi, misureSalvato.getFianchi());
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_note, misureSalvato.getNote());
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_calendario, misureSalvato.getData().getTimeInMillis());
-        System.out.println("___________________"+valuesMisura);
         long MisuraID = dbWritable.insert(SchemaDB.MisureDB.TABLE_NAME, null,valuesMisura);
 
-        ContentValues valuesKcal = new ContentValues();
-        if (chiloK.getKcal() != 0) {
-            valuesKcal.put(SchemaDB.KcalDB.COLUMN_kcal, chiloK.getKcal());
-            valuesKcal.put(SchemaDB.KcalDB.COLUMN_acqua, chiloK.getAcqua());
-            valuesKcal.put(SchemaDB.KcalDB.COLUMN_carboidrati, chiloK.getCarbo());
-            valuesKcal.put(SchemaDB.KcalDB.COLUMN_grassi, chiloK.getGrassi());
-            valuesKcal.put(SchemaDB.KcalDB.COLUMN_note, chiloK.getNote());
-            valuesKcal.put(SchemaDB.KcalDB.COLUMN_proteine, chiloK.getProteine());
-            valuesKcal.put(SchemaDB.KcalDB.COLUMN_sale, chiloK.getSale());
-            valuesKcal.put(SchemaDB.KcalDB.COLUMN_fase, chiloK.getFase().toString());
-            valuesKcal.put(SchemaDB.KcalDB.COLUMN_calendario, chiloK.getData().getTimeInMillis());}
-            long KcalID = dbWritable.insert(SchemaDB.KcalDB.TABLE_NAME, null, valuesKcal);
-
+        chiloK=kcalDAO.insertKcal(chiloK);
+        long KcalID = chiloK.getId();
+        System.out.println("___"+chiloK);
 
         ContentValues valuesUtente = new ContentValues();
         valuesUtente.put(SchemaDB.UtenteDB.COLUMN_nome, utente.getNome());
@@ -372,6 +362,7 @@ public class Registrazione_Pag2 extends Activity {
         misureSalvato=utente.getMisure();
         chiloK=utente.getKcal();
         noteSalvate=utente.getNote();
+
 
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

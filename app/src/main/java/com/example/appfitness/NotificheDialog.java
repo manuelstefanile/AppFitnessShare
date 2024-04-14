@@ -145,6 +145,7 @@ public class NotificheDialog {
         EditText petto=dialogView.findViewById(R.id.petto);
         EditText spalle=dialogView.findViewById(R.id.spalle);
         EditText addome=dialogView.findViewById(R.id.addome);
+        EditText fianchi=dialogView.findViewById((int)R.id.fianchi);
         EditText noteDettaglio=dialogView.findViewById((int)R.id.noteMisure);
         CalendarView calendario=dialogView.findViewById((int)R.id.calendarioMisure);
 
@@ -156,6 +157,7 @@ public class NotificheDialog {
         mappa.put("petto",petto);
         mappa.put("spalle",spalle);
         mappa.put("addome",addome);
+        mappa.put("fianchi",fianchi);
         mappa.put("note",noteDettaglio);
         mappa.put("data",calendario);
         if(!Registrazione_Pag2.editGlobal){
@@ -173,6 +175,8 @@ public class NotificheDialog {
             addome.setClickable(false);
             spalle.setFocusable(false);
             spalle.setClickable(false);
+            fianchi.setFocusable(false);
+            fianchi.setClickable(false);
             calendario.setFocusable(false);
             calendario.setClickable(false);
             noteDettaglio.setFocusable(false);
@@ -242,8 +246,14 @@ public class NotificheDialog {
                     misureStorage.setAddome(valoreAddome);
                     addome.setText(String.valueOf(misureStorage.getAddome()));
 
+                    float valoreFianchi=fianchi.getText().toString().trim().length()!=0?Float.parseFloat(fianchi.getText().toString()):0;
+                    misureStorage.setFianchi(valoreFianchi);
+                    fianchi.setText(String.valueOf(misureStorage.getFianchi()));
+
                     misureStorage.setNote(noteDettaglio.getText().toString());
                     misureStorage.setData(dataSalvare);
+
+                    System.out.println("___+"+misureStorage);
 
 
 
