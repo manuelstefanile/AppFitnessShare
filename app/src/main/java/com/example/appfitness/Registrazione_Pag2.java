@@ -280,7 +280,7 @@ public class Registrazione_Pag2 extends Activity {
 
         Toast.makeText(getApplicationContext(), "Salvato", Toast.LENGTH_SHORT).show();
         bottoneNext.setEnabled(true);
-        bottoneNext.setBackgroundColor((int)R.color.grigio);
+        bottoneNext.setBackground((getDrawable((int)R.drawable.drawable_botton_grigio)));
         dbWritable.close();
         StampaTutto();
 
@@ -314,7 +314,7 @@ public class Registrazione_Pag2 extends Activity {
 
         dbWritable.close();
         bottoneNext.setEnabled(false);
-        bottoneNext.setBackgroundColor((int)R.color.grigio);
+        bottoneNext.setBackground((getDrawable((int)R.drawable.drawable_botton_white)));
 
         Toast.makeText(getApplicationContext(), "Ripristinato con successo", Toast.LENGTH_SHORT).show();
 

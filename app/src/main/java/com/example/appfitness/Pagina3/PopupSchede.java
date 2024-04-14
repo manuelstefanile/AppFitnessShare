@@ -114,15 +114,6 @@ public class PopupSchede {
             }
         });
 
-        final View backgroundView = alertDialog.getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
-        backgroundView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                back.callOnClick();
-                return true; // Indica che l'evento è stato consumato
-            }
-        });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
