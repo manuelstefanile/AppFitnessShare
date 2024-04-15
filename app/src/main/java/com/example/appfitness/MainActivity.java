@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //se l utente è gia registrato, vai a pagina 3
         DbHelper db=new DbHelper(getApplicationContext());
         //db.deleteDatabase();
@@ -55,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(count==0){
 
+
         }else {
-            te.setText("Bentornato, "+nomeUtente);
+            te.setText("Bentornato");
             te.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             te.setGravity(Gravity.CENTER);
 

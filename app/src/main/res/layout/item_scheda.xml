@@ -10,10 +10,10 @@
         android:id="@+id/immagineScheda"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        android:layout_marginTop="5dp"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="0.3"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:layout_gravity="center_vertical"
         android:layout_marginRight="20dp"
         android:src="@drawable/noimg"
         android:onClick="OnImmagineClick"
@@ -22,27 +22,27 @@
     </ImageView>
     <Button
         android:id="@+id/visualizzaScheda"
+        android:onClick="OnSchedaClick"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Scheda"
         android:textColor="@color/black"
         android:textSize="18dp"
+        android:layout_gravity="center_vertical"
         android:padding="10dp"
+        android:layout_weight="0.5"
         android:background="@drawable/drawable_scheda"
-        android:onClick="OnSchedaClick"
-        android:layout_weight="1"
-        android:layout_marginRight="10dp"
         >
     </Button>
     <Button
         android:id="@+id/eliminaScheda"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:textColor="@color/white"
-        android:background="@drawable/ic_baseline_close_24"
         android:onClick="OnDeleteSchedaClick"
-        android:layout_weight="0.3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
+        android:layout_weight="0.1"
+        android:background="@drawable/ic_baseline_close_24"
         >
     </Button>
 

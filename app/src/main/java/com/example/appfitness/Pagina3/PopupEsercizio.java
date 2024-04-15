@@ -252,7 +252,7 @@ public class PopupEsercizio {
         Button salva=dialogView.findViewById((int)R.id.salvaEsercizio);
         Button back=dialogView.findViewById((int)R.id.backEsercizio);
         Button bottoneNote = dialogView.findViewById(R.id.bottoneNote);
-        bottoneNote.setText("Mostra");
+        bottoneNote.setText("Note");
 
         nomeEsercizio.setText(esercizioNew.getNomeEsercizio());
         immagineEsercizio.setImageDrawable(esercizioNew.getImmagineMacchinario());

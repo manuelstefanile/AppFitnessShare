@@ -68,6 +68,9 @@ public class Registrazione_Pag2 extends Activity {
         bottoneSalva=findViewById((int)R.id.salvaButtonReg);
         bottoneNext=findViewById((int)R.id.bottoneNextRegistrazione);
         bottoneNext.setEnabled(false);
+        bottoneNext.setBackground((getDrawable((int) R.drawable.drawable_botton_grigio)));
+        //Toast.makeText(getApplicationContext(), "Devi prima salvare i dati per poter proseguire!", Toast.LENGTH_LONG).show();
+
         //apreo il db
         db=new DbHelper(getApplicationContext());
         Global.db=db;
@@ -222,28 +225,34 @@ public class Registrazione_Pag2 extends Activity {
     @SuppressLint("Range")
     public void SalvaAll(View v){
 
-        //elimina il salvataggio precendente se presente.
+// Elimina il salvataggio precedente se presente.
         SQLiteDatabase dbWritable = db.getWritableDatabase();
         dbWritable.delete(SchemaDB.PesoDB.TABLE_NAME, null, null);
         dbWritable.delete(SchemaDB.KcalDB.TABLE_NAME, null, null);
         dbWritable.delete(SchemaDB.MisureDB.TABLE_NAME, null, null);
         dbWritable.delete(SchemaDB.UtenteDB.TABLE_NAME, null, null);
 
+// Controlli e prendo i valori associati all'edittext
+        String nome = nomeR.getText().toString();
+        String cognome = cognomeR.getText().toString();
+        String nomeUtente = nomeUtenteR.getText().toString().trim();
+        String[] paroleNomeUtente = nomeUtente.split("\\s+"); // Dividi il nome utente in parole
+        int numeroParole = paroleNomeUtente.length;
+            if(numeroParole > 10) {
+                // Se il nome utente ha più di 10 parole, mostra un messaggio di errore
+                Toast.makeText(getApplicationContext(), "Il nome utente non può contenere più di 10 parole.", Toast.LENGTH_LONG).show();
+                return; // Esce dal metodo senza salvare i dati
+            }
 
-        //controlli e prendo i valori associati all edittext
-        String nome=nomeR.getText().toString();
-        String cognome=cognomeR.getText().toString();
-        String nomeUtente=nomeUtenteR.getText().toString();
-        int eta= Integer.parseInt(etaR.getText().toString().trim().length()!=0?etaR.getText().toString():"0");
-        float altezza=Float.parseFloat(altezzaR.getText().toString().trim().length()!=0?altezzaR.getText().toString():"0");
+        int eta = Integer.parseInt(etaR.getText().toString().trim().length() != 0 ? etaR.getText().toString() : "0");
+        float altezza = Float.parseFloat(altezzaR.getText().toString().trim().length() != 0 ? altezzaR.getText().toString() : "0");
 
-
-        pesoSalvato=Peso.fromJson(sharedPreferences.getString("pesoPassato",null));
+        pesoSalvato = Peso.fromJson(sharedPreferences.getString("pesoPassato", null));
         noteSalvate = Note.fromJson(sharedPreferences.getString("notePassate", null));
         misureSalvato = Misure.fromJson(sharedPreferences.getString("misurePassate", null));
         chiloK = Kcal.fromJson(sharedPreferences.getString("kcalPassate", null));
 
-        utente=new Utente(nome,cognome,nomeUtente,eta,altezza,pesoSalvato,misureSalvato,chiloK,noteSalvate);
+        utente = new Utente(nome, cognome, nomeUtente, eta, altezza, pesoSalvato, misureSalvato, chiloK, noteSalvate);
 
         ContentValues valuesPeso = new ContentValues();
         valuesPeso.put(SchemaDB.PesoDB.COLUMN_pesoKg, pesoSalvato.getPesoKg());
@@ -263,11 +272,11 @@ public class Registrazione_Pag2 extends Activity {
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_fianchi, misureSalvato.getFianchi());
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_note, misureSalvato.getNote());
         valuesMisura.put(SchemaDB.MisureDB.COLUMN_calendario, Global.ConversioneCalendarString(misureSalvato.getData()));
-        long MisuraID = dbWritable.insert(SchemaDB.MisureDB.TABLE_NAME, null,valuesMisura);
+        long MisuraID = dbWritable.insert(SchemaDB.MisureDB.TABLE_NAME, null, valuesMisura);
 
-        chiloK=kcalDAO.insertKcal(chiloK);
+        chiloK = kcalDAO.insertKcal(chiloK);
         long KcalID = chiloK.getId();
-        System.out.println("___"+chiloK);
+        System.out.println("___" + chiloK);
 
         ContentValues valuesUtente = new ContentValues();
         valuesUtente.put(SchemaDB.UtenteDB.COLUMN_nome, utente.getNome());
@@ -283,7 +292,7 @@ public class Registrazione_Pag2 extends Activity {
 
         Toast.makeText(getApplicationContext(), "Dati salvati. Potrai modificarli direttamente nella HomePage!", Toast.LENGTH_LONG).show();
         bottoneNext.setEnabled(true);
-        bottoneNext.setBackground((getDrawable((int)R.drawable.drawable_botton_grigio)));
+        bottoneNext.setBackground((getDrawable((int) R.drawable.drawable_scheda)));
         dbWritable.close();
         StampaTutto();
 

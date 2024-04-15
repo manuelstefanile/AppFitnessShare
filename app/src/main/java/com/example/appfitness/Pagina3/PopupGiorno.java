@@ -80,7 +80,6 @@ public class PopupGiorno {
         //prima devi mettere un nome per il giorno e poi puoi andare avanti
         Button back=dialogView.findViewById((int)R.id.backGiorno);
         creaEsercizio.setEnabled(false);
-        creaEsercizio.setBackgroundResource(R.drawable.drawable_botton_grigio);
 
         Giorno giornoNuovo=new Giorno();
         //schedaRiferimento.getListaGiorni().add(giornoNuovo);
@@ -227,10 +226,11 @@ public class PopupGiorno {
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
         Button bottoneNote=dialogView.findViewById((int)R.id.bottoneNoteGiorno);
         Button creaEsercizio=dialogView.findViewById((int)R.id.CreaEsercizio);
-        Button salvaGiorno=dialogView.findViewById((int)R.id.salvaGiorno);{
-        Toast.makeText(dialogView.getContext(), "Inserisci un nome per salvare la giornata.", Toast.LENGTH_LONG).show();}
+        Button salvaGiorno=dialogView.findViewById((int)R.id.salvaGiorno);
+        /*da controllare sto toast
+        Toast.makeText(dialogView.getContext(), "Inserisci un nome per salvare la giornata.", Toast.LENGTH_LONG).show();*/
         Button back=dialogView.findViewById((int)R.id.backGiorno);
-        bottoneNote.setText("Mostra");
+        bottoneNote.setText("Note");
 
         //modifico il weight di edit
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) nomeGiorno.getLayoutParams();

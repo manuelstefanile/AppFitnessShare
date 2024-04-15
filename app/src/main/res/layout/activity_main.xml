@@ -24,6 +24,7 @@
             android:src="@drawable/adesivo">
 
         </ImageView>
+
         <TextView
             android:id="@+id/testoUtenteInizia"
             android:layout_width="wrap_content"
@@ -31,7 +32,7 @@
             android:layout_alignTop="@id/bottoneStart"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:text="Benvenuto,"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="20dp"
 
@@ -43,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:text="clicca il tasto in basso per iniziare"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="20dp"
 

@@ -35,6 +35,24 @@ import java.util.TimeZone;
 
 public class NotificheDialog {
 
+    //vabbe ho iniziato quantomeno a scriverlo per vedere se parte
+    public static void NotificaFisico(LayoutInflater inflater, SharedPreferences sh) throws Eccezioni {
+        // Creazione del layout della tua View
+        View dialogView = inflater.inflate(R.layout.fisico_dettaglio, null);
+        Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
+        Button okButton=dialogView.findViewById((int)R.id.okButton);
+
+        // Creazione dell'AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
+        builder.setView(dialogView);
+
+        builder.setPositiveButton(null,null);
+        builder.setNegativeButton(null,null);
+        // Mostra l'AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     public static void NotificaPeso(LayoutInflater inflater, SharedPreferences sh) throws Eccezioni {
 
         // Creazione del layout della tua View

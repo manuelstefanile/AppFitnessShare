@@ -12,61 +12,39 @@
 
 
         >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="50dp"
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Peso Attuale"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
-                android:textColor="@color/black"
-                android:textSize="18dp"></TextView>
-
-        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
+                android:layout_marginTop="50dp"
                 android:layout_marginBottom="20dp"
 
                 >
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="0.175"
-                    android:gravity="left"
-                    android:text=""></TextView>
+
                 <EditText
-                    android:id="@+id/pesoAttual"
+                    android:id="@+id/posaFisico"
                     android:layout_width="0dp"
-                    android:layout_weight="1.7"
+                    android:layout_weight="1"
                     android:padding="6dp"
                     android:background="@drawable/drawable_botton_grigio"
                     android:textAlignment="center"
-                    android:hint="kg"
+                    android:hint="Nome Posa"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
                     >
                 </EditText>
-                <TextView
+                <ImageButton
+                    android:id="@+id/immaginefisico"
                     android:layout_width="0dp"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:layout_weight="0.1"
+                    android:layout_marginLeft="10dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="0.175"
-                    android:gravity="left"
-                    android:text=""></TextView>
+                    android:background="@drawable/drawable_botton_white"
+                    android:src="@drawable/noimg"
+                    >
+                </ImageButton>
 
             </LinearLayout>
 
@@ -86,7 +64,7 @@
                 android:gravity="left"
                 android:text=""></TextView>
             <EditText
-                android:id="@+id/notePeso"
+                android:id="@+id/noteFisico"
                 android:layout_width="0dp"
                 android:layout_weight="1.7"
                 android:padding="6dp"
@@ -117,7 +95,7 @@
                 >
             </TextView>
             <CalendarView
-                android:id="@+id/calendarioPeso"
+                android:id="@+id/calendarioFisico"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

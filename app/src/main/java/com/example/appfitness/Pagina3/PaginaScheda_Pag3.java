@@ -270,7 +270,6 @@ public class PaginaScheda_Pag3 extends Activity {
 
         if(nomeUtente!=null){
 
-            nomeutenteR.setText("");
             nomeutenteR.setText(nomeUtente);
         }
     }

@@ -29,36 +29,27 @@
                     >
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="0.1"
                         android:layout_height="wrap_content"
-                        ></TextView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1.1"
-                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Braccio dx"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:gravity="left"
-                        ></TextView>
+                        android:textSize="18dp"></TextView>
+
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="0.25"
-                        android:layout_height="wrap_content"
-                        ></TextView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1.2"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Braccio sx"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="18dp"
-                        android:gravity="right"
-                        ></TextView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.1"
-                        android:layout_height="wrap_content"
                         ></TextView>
                 </LinearLayout>
                 <LinearLayout
@@ -70,38 +61,31 @@
                     <EditText
                         android:id="@+id/braccioDX"
                         android:layout_width="0dp"
-                        android:layout_weight="0.6"
-                        android:padding="6dp"
-                        android:hint="cm"
-                        android:background="@drawable/drawable_botton_grigio"
-                        android:textAlignment="center"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_botton_grigio"
                         android:inputType="numberDecimal"
-                        >
+                        android:hint="cm"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:padding="6dp"
+                        android:textAlignment="center">
+
                     </EditText>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.2"
-                        android:layout_height="wrap_content"
-                        ></TextView>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.2"
-                        android:layout_height="wrap_content"
-                        ></TextView>
                     <EditText
                         android:id="@+id/braccioSX"
                         android:layout_width="0dp"
-                        android:layout_weight="0.6"
-                        android:padding="6dp"
-                        android:hint="cm"
-                        android:background="@drawable/drawable_botton_grigio"
-                        android:textAlignment="center"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_botton_grigio"
                         android:inputType="numberDecimal"
-                        >
+                        android:hint="cm"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:padding="6dp"
+                        android:textAlignment="center">
+
                     </EditText>
 
 
@@ -122,36 +106,27 @@
                     >
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="0.1"
                         android:layout_height="wrap_content"
-                        ></TextView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1.1"
-                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Gamba dx"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:gravity="left"
-                        ></TextView>
+                        android:textSize="18dp"></TextView>
+
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="0.25"
-                        android:layout_height="wrap_content"
-                        ></TextView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1.2"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Gamba sx"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:layout_marginBottom="5dp"
                         android:textColor="@color/black"
                         android:textSize="18dp"
-                        android:gravity="right"
-                        ></TextView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.1"
-                        android:layout_height="wrap_content"
                         ></TextView>
                 </LinearLayout>
 
@@ -166,32 +141,25 @@
                         android:id="@+id/gambaDX"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:hint="cm"
+                        android:layout_weight="1"
                         android:background="@drawable/drawable_botton_grigio"
                         android:inputType="numberDecimal"
+                        android:hint="cm"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:padding="6dp"
                         android:textAlignment="center"></EditText>
 
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.2"
-                        android:layout_height="wrap_content"
-                        ></TextView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.2"
-                        android:layout_height="wrap_content"
-                        ></TextView>
                     <EditText
                         android:id="@+id/gambaSX"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:hint="cm"
+                        android:layout_weight="1"
                         android:background="@drawable/drawable_botton_grigio"
                         android:inputType="numberDecimal"
+                        android:hint="cm"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:padding="6dp"
                         android:textAlignment="center"></EditText>
 
@@ -222,6 +190,7 @@
                         android:gravity="center"
                         android:text="Petto"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_marginRight="10dp"
                         android:textColor="@color/black"
                         android:textSize="18dp"></TextView>
@@ -232,6 +201,7 @@
                         android:layout_height="wrap_content"
                         android:text="Spalle"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_marginRight="10dp"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -298,37 +268,28 @@
                     >
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="0.2"
                         android:layout_height="wrap_content"
-                        ></TextView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1.1"
-                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Addome"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:gravity="left"
-                        ></TextView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.25"
-                        android:layout_height="wrap_content"
-                        ></TextView>
+                        android:textSize="18dp"></TextView>
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1.2"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Fianchi"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:layout_marginBottom="5dp"
                         android:textColor="@color/black"
                         android:textSize="18dp"
-                        android:gravity="right"
                         ></TextView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.2"></TextView>
                 </LinearLayout>
                 <LinearLayout
 
@@ -342,36 +303,28 @@
                         android:id="@+id/addome"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
+                        android:layout_weight="1"
                         android:background="@drawable/drawable_botton_grigio"
                         android:inputType="numberDecimal"
-                        android:padding="6dp"
                         android:hint="cm"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:padding="6dp"
                         android:textAlignment="center"></EditText>
 
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.2"
-                        android:layout_height="wrap_content"
-                        ></TextView>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.2"
-                        android:layout_height="wrap_content"
-                        ></TextView>
                     <EditText
                         android:id="@+id/fianchi"
                         android:layout_width="0dp"
-                        android:layout_weight="0.6"
-                        android:padding="6dp"
-                        android:hint="cm"
-                        android:background="@drawable/drawable_botton_grigio"
-                        android:textAlignment="center"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_botton_grigio"
                         android:inputType="numberDecimal"
-                        >
+                        android:hint="cm"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:padding="6dp"
+                        android:textAlignment="center">
                     </EditText>
 
 

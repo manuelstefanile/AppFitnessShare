@@ -14,24 +14,27 @@
 
     <Button
         android:id="@+id/visualizzaGiorni"
+        android:onClick="OnSchedaClick"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Giorno"
+        android:text="Giorni"
+        android:textColor="@color/black"
         android:textSize="18dp"
+        android:layout_gravity="center_vertical"
+        android:padding="10dp"
         android:layout_weight="0.5"
-        android:layout_marginRight="10dp"
         android:background="@drawable/drawable_scheda"
         >
     </Button>
     <Button
         android:id="@+id/eliminaGiorno"
+        android:onClick="OnDeleteGiornoClick"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:background="@drawable/ic_baseline_close_24"
-        android:onClick="OnDeleteGiornoClick"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
         android:layout_weight="0.1"
-        android:layout_marginRight="10dp"
+        android:background="@drawable/ic_baseline_close_24"
         >
     </Button>
 

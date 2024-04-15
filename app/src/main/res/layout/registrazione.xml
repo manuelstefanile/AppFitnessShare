@@ -13,36 +13,25 @@
         >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="20dp"
+
            >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/drawable_botton_white"
-                android:layout_marginTop="5dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_baseline_fitness_center_24">
 
-            </ImageView>
 
             <TextView
                 android:id="@+id/titoloPaginaReg"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:layout_margin="15dp"
                 android:text="REGISTRAZIONE"
+                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="90px"></TextView>
+                android:textSize="80px"></TextView>
+
 
 
         </LinearLayout>
@@ -56,8 +45,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,14 +53,7 @@
                     android:orientation="horizontal"
                     android:padding="20px">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0.175"
-                        android:gravity="left"
-                        android:text=""></TextView>
+
 
                     <EditText
                         android:id="@+id/nomeRegistrazione"
@@ -81,6 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1.7"
+                        android:layout_marginLeft="10dp"
                         android:background="@drawable/drawable_botton_white"
                         android:hint="Nome"
                         android:padding="6dp"
@@ -90,30 +71,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_weight="0.175"
-                        android:gravity="left"
-                        android:text=""
-                        android:textColor="@color/white"
-                        android:textSize="18dp"></TextView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="20px">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0.175"
+                        android:layout_weight="0"
                         android:gravity="left"
                         android:text=""></TextView>
-
                     <EditText
                         android:id="@+id/cognomeRegistrazione"
                         android:layout_width="0dp"
@@ -121,16 +81,9 @@
                         android:layout_weight="1.7"
                         android:background="@drawable/drawable_botton_white"
                         android:hint="Cognome"
+                        android:layout_marginRight="10dp"
                         android:padding="6dp"
                         android:textAlignment="center"></EditText>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0.175"
-                        android:gravity="left"
-                        android:text=""></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -140,15 +93,6 @@
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:padding="20px">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0.175"
-                        android:gravity="left"
-                        android:text=""></TextView>
 
                     <EditText
                         android:id="@+id/etaRegistrazione"
@@ -157,18 +101,35 @@
                         android:layout_weight="1.7"
                         android:background="@drawable/drawable_botton_white"
                         android:hint="Età"
+                        android:layout_marginLeft="10dp"
                         android:inputType="numberDecimal"
                         android:padding="6dp"
                         android:textAlignment="center"></EditText>
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_weight="0.175"
+                        android:layout_weight="0"
                         android:gravity="left"
                         android:text=""></TextView>
+
+
+                    <EditText
+                        android:id="@+id/altezzaRegistrazione"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.7"
+                        android:background="@drawable/drawable_botton_white"
+                        android:hint="Altezza"
+                        android:layout_marginRight="10dp"
+                        android:inputType="numberDecimal"
+                        android:padding="6dp"
+                        android:textAlignment="center"></EditText>
                 </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -179,14 +140,6 @@
                     android:padding="20px"
                     android:textAlignment="center">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0.175"
-                        android:gravity="left"
-                        android:text=""></TextView>
 
                     <EditText
                         android:id="@+id/nomeUtenteRegistrazione"
@@ -195,56 +148,14 @@
                         android:layout_weight="1.7"
                         android:background="@drawable/drawable_botton_white"
                         android:hint="Username"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:padding="6dp"
                         android:textAlignment="center"></EditText>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0.175"
-                        android:gravity="left"
-                        android:text=""></TextView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="20px">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0.175"
-                        android:gravity="left"
-                        android:text=""></TextView>
-
-                    <EditText
-                        android:id="@+id/altezzaRegistrazione"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.7"
-                        android:background="@drawable/drawable_botton_white"
-                        android:hint="Altezza"
-                        android:inputType="numberDecimal"
-                        android:padding="6dp"
-                        android:textAlignment="center"></EditText>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0.175"
-                        android:gravity="left"
-                        android:text=""></TextView>
-
 
                 </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -256,14 +167,6 @@
 
                     >
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0"
-                        android:gravity="left"
-                        android:text=""></TextView>
 
                     <Button
                         android:id="@+id/buttonPeso"
@@ -271,6 +174,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
                         android:minHeight="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/drawable_botton_grigio"
                         android:onClick="FunzioniInserisciRegistrazioni"
                         android:tag="peso"
@@ -278,14 +183,7 @@
                         android:textSize="16dp">
 
                     </Button>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0"
-                        android:gravity="left"
-                        android:text=""></TextView>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -296,14 +194,7 @@
                     android:orientation="horizontal"
                     android:padding="20px">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0"
-                        android:gravity="left"
-                        android:text=""></TextView>
+
 
                     <Button
                         android:id="@+id/buttonMisure"
@@ -311,6 +202,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
                         android:minHeight="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/drawable_botton_grigio"
                         android:onClick="FunzioniInserisciRegistrazioni"
                         android:tag="misure"
@@ -318,14 +211,7 @@
                         android:textSize="16dp">
 
                     </Button>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0"
-                        android:gravity="left"
-                        android:text=""></TextView>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -336,14 +222,7 @@
                     android:orientation="horizontal"
                     android:padding="20px">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0"
-                        android:gravity="left"
-                        android:text=""></TextView>
+
 
                     <Button
                         android:id="@+id/buttonKcal"
@@ -351,19 +230,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
                         android:minHeight="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/drawable_botton_grigio"
                         android:onClick="FunzioniInserisciRegistrazioni"
                         android:tag="kcal"
-                        android:text="Kcal"
+                        android:text="Calorie"
                         android:textSize="16dp"></Button>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0"
-                        android:gravity="left"
-                        android:text=""></TextView>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -374,14 +248,7 @@
                     android:orientation="horizontal"
                     android:padding="20px">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0"
-                        android:gravity="left"
-                        android:text=""></TextView>
+
 
                     <Button
                         android:id="@+id/buttonNote"
@@ -389,21 +256,41 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
                         android:minHeight="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/drawable_botton_grigio"
                         android:onClick="FunzioniInserisciRegistrazioni"
                         android:tag="note"
                         android:text="Note"
                         android:textSize="16dp"></Button>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="0"
-                        android:gravity="left"
-                        android:text=""></TextView>
                 </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="20px">
+
+
+
+                        <Button
+                            android:id="@+id/immaginiFisico"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.7"
+                            android:minHeight="40dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/drawable_botton_grigio"
+                            android:onClick="FunzioniInserisciRegistrazioni"
+                            android:tag="note"
+                            android:text="Check Fisico"
+                            android:textSize="16dp"></Button>
+
+                    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -452,7 +339,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/drawable_scheda"
-                android:text="Avanti"
+                android:text="Iniziamo"
                 android:textColor="@color/black"
                 android:textSize="15dp"></Button>
         </LinearLayout>

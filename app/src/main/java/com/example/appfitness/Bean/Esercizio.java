@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 public class Esercizio extends ListeClasseMarker {
     private long id;
+
     private String nomeEsercizio,tecnica_intensita,esecuzione,note;
     private byte[] immagineMacchinario;
     private int numeroSerie,numeroRipetizioni;

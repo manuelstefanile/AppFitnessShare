@@ -14,6 +14,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Calorie Attuali"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/black"
+                android:textSize="18dp"></TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginBottom="20dp"
             >
@@ -30,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1.7"
                 android:padding="6dp"
-                android:hint="Kcal attuali"
+                android:hint="kcal"
                 android:background="@drawable/drawable_botton_grigio"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
@@ -202,36 +220,27 @@
                 >
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="0.35"
                     android:layout_height="wrap_content"
-                    ></TextView>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1.1"
-                    android:layout_height="wrap_content"
-                    android:text="Sodio"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:gravity="left"
-                    ></TextView>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.25"
-                    android:layout_height="wrap_content"
-                    ></TextView>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1.2"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="Acqua"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
                     android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:gravity="right"
-                    ></TextView>
+                    android:textSize="18dp"></TextView>
+
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="0.35"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:text="Sale"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
                     ></TextView>
             </LinearLayout>
             <LinearLayout
@@ -243,38 +252,31 @@
                 >
 
                 <EditText
-                    android:id="@+id/sale"
+                    android:id="@+id/acqua"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
                     android:background="@drawable/drawable_botton_grigio"
                     android:inputType="numberDecimal"
-                    android:hint="mg"
+                    android:hint="litri"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:padding="6dp"
                     android:textAlignment="center">
                 </EditText>
 
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.2"
-                    android:layout_height="wrap_content"
-                    ></TextView>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.2"
-                    android:layout_height="wrap_content"
-                    ></TextView>
                 <EditText
-                    android:id="@+id/acqua"
+                    android:id="@+id/sale"
                     android:layout_width="0dp"
-                    android:layout_weight="0.6"
-                    android:padding="6dp"
-                    android:hint="litri"
-                    android:background="@drawable/drawable_botton_grigio"
-                    android:textAlignment="center"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_botton_grigio"
                     android:inputType="numberDecimal"
+                    android:hint="mg"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="6dp"
+                    android:textAlignment="center"
                     >
                 </EditText>
 

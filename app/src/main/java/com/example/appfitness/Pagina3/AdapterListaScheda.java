@@ -139,7 +139,8 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
 
 
             Esercizio c = (Esercizio) getItem(position);
-
+            //nonno devi aggiungere la parte per poter visualizzare le immagini
+            //ImageView im= v.findViewById(R.id.immagineScheda);
             Button bottone=v.findViewById(R.id.visualizzaEsercizi);
             Button bottoneDelete=v.findViewById(R.id.deleteEsercizi);
 
