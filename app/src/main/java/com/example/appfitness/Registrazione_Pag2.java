@@ -30,6 +30,7 @@ import com.example.appfitness.Eccezioni.Eccezioni;
 import com.example.appfitness.Pagina3.Global;
 import com.example.appfitness.Pagina3.PaginaScheda_Pag3;
 
+
 import java.sql.Date;
 
 public class Registrazione_Pag2 extends Activity {
@@ -215,7 +216,7 @@ public class Registrazione_Pag2 extends Activity {
 
         utentedao.updateUtente(utente);
 
-        Toast.makeText(getApplicationContext(), "Aggiornato", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Dati aggiornati con successo", Toast.LENGTH_SHORT).show();
         StampaTutto();
     }
     @SuppressLint("Range")
@@ -280,7 +281,7 @@ public class Registrazione_Pag2 extends Activity {
         valuesUtente.put(SchemaDB.UtenteDB.COLUMN_note, utente.getNote().getNote());
         long IdUtente = dbWritable.insert(SchemaDB.UtenteDB.TABLE_NAME, null, valuesUtente);
 
-        Toast.makeText(getApplicationContext(), "Salvato", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Dati salvati. Potrai modificarli direttamente nella HomePage!", Toast.LENGTH_LONG).show();
         bottoneNext.setEnabled(true);
         bottoneNext.setBackground((getDrawable((int)R.drawable.drawable_botton_grigio)));
         dbWritable.close();
@@ -316,9 +317,8 @@ public class Registrazione_Pag2 extends Activity {
 
         dbWritable.close();
         bottoneNext.setEnabled(false);
-        bottoneNext.setBackground((getDrawable((int)R.drawable.drawable_botton_white)));
 
-        Toast.makeText(getApplicationContext(), "Ripristinato con successo", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Dati ripristinati", Toast.LENGTH_SHORT).show();
 
 
     }

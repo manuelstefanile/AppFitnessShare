@@ -89,30 +89,38 @@ public class NotificheDialog {
             public void onClick(View view) {
                 System.out.println("sono in on salva");
                 //salva i dati che inserisci
-                float pesoInserito=0;
+                float pesoInserito = 0;
+                String pesoStringa = kiliEdit.getText().toString().trim(); // Rimuovi spazi vuoti
+
+                // Verifica se la stringa del peso è vuota
+                if (pesoStringa.isEmpty()) {
+                    Toast.makeText(dialogView.getContext(), "Non stiamo pesando l'aria.", Toast.LENGTH_SHORT).show();
+                    return; // Esci dal metodo in caso di peso non valido
+                }
+
                 //gestisci eccezione
-                try{
-
-                    pesoInserito=Float.parseFloat(kiliEdit.getText().toString());
-                }catch (NumberFormatException e){
-                    try {
-                        throw new Eccezioni(Eccezioni.tipiEccezioni.FORMATO_NON_VALIDO,dialogView);
-                    } catch (Eccezioni ex) {
-                        ex.printStackTrace();
-                    }
-
+                try {
+                    pesoInserito = Float.parseFloat(pesoStringa);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(dialogView.getContext(), "Formato peso non valido.", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                    return; // Esci dal metodo in caso di formato non valido
                 }
 
-                if(pesoInserito!=0){
-                    Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
+                if (pesoInserito != 0) {
+                    Toast.makeText(dialogView.getContext(), "Peso salvato, Keep going Buddy!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(dialogView.getContext(), "Pesi 0 kg? Non avere paura della bilancia!", Toast.LENGTH_LONG).show();
+                    return; // Esci dal metodo in caso di peso uguale a zero
                 }
+
                 pesoStorage.setPesoKg(pesoInserito);
                 pesoStorage.setCalendario(dataSalvare);
                 pesoStorage.setNote(noteDettaglio.getText().toString());
-                SharedPreferences.Editor edi=sh.edit();
-                edi.putString("pesoPassato",pesoStorage.toJson());
+                SharedPreferences.Editor edi = sh.edit();
+                edi.putString("pesoPassato", pesoStorage.toJson());
                 edi.apply();
-                System.out.println("___peso "+pesoStorage);
+                System.out.println("___peso " + pesoStorage);
 
                 //alertDialog.dismiss(); // Chiudi il dialog
             }
@@ -224,55 +232,75 @@ public class NotificheDialog {
         salvaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-
-                    float valoreBracicoDx=braccioDx.getText().toString().trim().length()!=0?Float.parseFloat(braccioDx.getText().toString()):0;
+                try {
+                    // Ottenere i valori delle misure
+                    float valoreBracicoDx = braccioDx.getText().toString().trim().length() != 0 ? Float.parseFloat(braccioDx.getText().toString()) : 0;
                     misureStorage.setBraccioDx(valoreBracicoDx);
                     braccioDx.setText(String.valueOf(misureStorage.getBraccioDx()));
 
-                    float valoreBracicoSx=braccioSx.getText().toString().trim().length()!=0?Float.parseFloat(braccioSx.getText().toString()):0;
+                    float valoreBracicoSx = braccioSx.getText().toString().trim().length() != 0 ? Float.parseFloat(braccioSx.getText().toString()) : 0;
                     misureStorage.setBraccioSx(valoreBracicoSx);
                     braccioSx.setText(String.valueOf(misureStorage.getBraccioSx()));
 
-                    float valoreGambaDx=gambaDx.getText().toString().trim().length()!=0?Float.parseFloat(gambaDx.getText().toString()):0;
+                    float valoreGambaDx = gambaDx.getText().toString().trim().length() != 0 ? Float.parseFloat(gambaDx.getText().toString()) : 0;
                     misureStorage.setGambaDx(valoreGambaDx);
                     gambaDx.setText(String.valueOf(misureStorage.getGambaDx()));
 
-                    float valoreGambaSx=gambaSx.getText().toString().trim().length()!=0?Float.parseFloat(gambaSx.getText().toString()):0;
+                    float valoreGambaSx = gambaSx.getText().toString().trim().length() != 0 ? Float.parseFloat(gambaSx.getText().toString()) : 0;
                     misureStorage.setGambaSx(valoreGambaSx);
                     gambaSx.setText(String.valueOf(misureStorage.getGambaSx()));
 
-                    float valorePetto=petto.getText().toString().trim().length()!=0?Float.parseFloat(petto.getText().toString()):0;
+                    float valorePetto = petto.getText().toString().trim().length() != 0 ? Float.parseFloat(petto.getText().toString()) : 0;
                     misureStorage.setPetto(valorePetto);
                     petto.setText(String.valueOf(misureStorage.getPetto()));
 
-                    float valoreSpalle=spalle.getText().toString().trim().length()!=0?Float.parseFloat(spalle.getText().toString()):0;
+                    float valoreSpalle = spalle.getText().toString().trim().length() != 0 ? Float.parseFloat(spalle.getText().toString()) : 0;
                     misureStorage.setSpalle(valoreSpalle);
                     spalle.setText(String.valueOf(misureStorage.getSpalle()));
 
-                    float valoreAddome=addome.getText().toString().trim().length()!=0?Float.parseFloat(addome.getText().toString()):0;
+                    float valoreAddome = addome.getText().toString().trim().length() != 0 ? Float.parseFloat(addome.getText().toString()) : 0;
                     misureStorage.setAddome(valoreAddome);
                     addome.setText(String.valueOf(misureStorage.getAddome()));
 
-                    float valoreFianchi=fianchi.getText().toString().trim().length()!=0?Float.parseFloat(fianchi.getText().toString()):0;
+                    float valoreFianchi = fianchi.getText().toString().trim().length() != 0 ? Float.parseFloat(fianchi.getText().toString()) : 0;
                     misureStorage.setFianchi(valoreFianchi);
                     fianchi.setText(String.valueOf(misureStorage.getFianchi()));
+
+                    // Controllare se almeno una misura è stata inserita correttamente e tutte le altre sono 0
+                    boolean almenoUnaMisuraInserita = valoreBracicoDx != 0 || valoreBracicoSx != 0 || valoreGambaDx != 0 ||
+                            valoreGambaSx != 0 || valorePetto != 0 || valoreSpalle != 0 || valoreAddome != 0 || valoreFianchi != 0;
+
+                    if (!almenoUnaMisuraInserita) {
+                        Toast.makeText(dialogView.getContext(), "Prendi quel metro altrimenti le misure saranno 0 cm!", Toast.LENGTH_LONG).show();
+                        return; // Esci dal metodo
+                    }
+
+                    // Controllare se alcune misure sono vuote mentre altre no
+                    if ((valoreBracicoDx == 0 || valoreBracicoSx == 0 || valoreGambaDx == 0 || valoreGambaSx == 0 ||
+                            valorePetto == 0 || valoreSpalle == 0 || valoreAddome == 0 || valoreFianchi == 0) &&
+                            almenoUnaMisuraInserita) {
+                        Toast.makeText(dialogView.getContext(), "Le misure non inserite saranno impostate a 0 cm.", Toast.LENGTH_LONG).show();
+                    }
 
                     misureStorage.setNote(noteDettaglio.getText().toString());
                     misureStorage.setData(dataSalvare);
 
-                    System.out.println("___+"+misureStorage);
+                    System.out.println("___+" + misureStorage);
 
+                    // Mostra il Toast solo se tutte le misure sono state inserite correttamente
+                    Toast.makeText(dialogView.getContext(), "Misure salvate. Keep going Buddy!", Toast.LENGTH_LONG).show();
 
-
-                }catch (Exception e){
+                    SharedPreferences.Editor edi = sh.edit();
+                    edi.putString("misurePassate", misureStorage.toJson());
+                    edi.apply();
+                } catch (NumberFormatException e) {
+                    // Eccezione se il formato della misura non è valido
+                    Toast.makeText(dialogView.getContext(), "Formato misura non valido.", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    // Altro tipo di eccezione
                     e.printStackTrace();
                 }
-                Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
-
-                SharedPreferences.Editor edi=sh.edit();
-                edi.putString("misurePassate",misureStorage.toJson());
-                edi.apply();
             }
         });
         okButton.setOnClickListener(new View.OnClickListener() {
@@ -306,6 +334,7 @@ public class NotificheDialog {
 
         //prendo gli edit
         EditText kcalAttuali=dialogView.findViewById((int)R.id.kcalAttual);
+        kcalAttuali.setText(null);
         RadioGroup radiogroup=dialogView.findViewById((int)R.id.radioGroup);
         RadioButton radioMassa=dialogView.findViewById((int)R.id.radioMassa);
         RadioButton radioNormo=dialogView.findViewById((int)R.id.radioNormo);
@@ -415,29 +444,54 @@ public class NotificheDialog {
         salvaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                kcalStorage.setKcal(Integer.parseInt(kcalAttuali.getText().toString().trim().length()!=0?kcalAttuali.getText().toString():"0"));
-                if(radioMassa.isChecked()){
-                    kcalStorage.setFase(Kcal.Fase.MASSA);
-                }else if(radioNormo.isChecked()){
-                    kcalStorage.setFase(Kcal.Fase.NORMO);
-                }else if(radioDeficit.isChecked()){
-                    kcalStorage.setFase(Kcal.Fase.DEFINIZIONE);
-                }else{
-                    kcalStorage.setFase(Kcal.Fase.RICOMPOSIZIONE);
+                try {
+                    // Imposta le kcal attuali
+                    int kcalAttualiValue = Integer.parseInt(kcalAttuali.getText().toString().trim().length() != 0 ? kcalAttuali.getText().toString() : "0");
+                    kcalStorage.setKcal(kcalAttualiValue);
+
+                    // Imposta la fase delle kcal
+                    if (radioMassa.isChecked()) {
+                        kcalStorage.setFase(Kcal.Fase.MASSA);
+                    } else if (radioNormo.isChecked()) {
+                        kcalStorage.setFase(Kcal.Fase.NORMO);
+                    } else if (radioDeficit.isChecked()) {
+                        kcalStorage.setFase(Kcal.Fase.DEFINIZIONE);
+                    } else {
+                        kcalStorage.setFase(Kcal.Fase.RICOMPOSIZIONE);
+                    }
+
+                    // Imposta gli altri valori
+                    kcalStorage.setCarbo(Float.parseFloat(carbo.getText().toString().trim().length() != 0 ? carbo.getText().toString() : "0"));
+                    kcalStorage.setProteine(Float.parseFloat(proteine.getText().toString().trim().length() != 0 ? proteine.getText().toString() : "0"));
+                    kcalStorage.setSale(Float.parseFloat(sale.getText().toString().trim().length() != 0 ? sale.getText().toString() : "0"));
+                    kcalStorage.setGrassi(Float.parseFloat(grassi.getText().toString().trim().length() != 0 ? grassi.getText().toString() : "0"));
+                    kcalStorage.setAcqua(Float.parseFloat(acqua.getText().toString().trim().length() != 0 ? acqua.getText().toString() : "0"));
+                    kcalStorage.setNote(noteDettaglio.getText().toString());
+                    kcalStorage.setData(dataSalvare);
+
+                    // Salva le kcal nel SharedPreferences
+                    SharedPreferences.Editor edi = sh.edit();
+                    edi.putString("kcalPassate", kcalStorage.toJson());
+                    edi.apply();
+
+                    // Controlla se le kcal attuali sono pari a 0
+                    if (kcalAttualiValue == 0) {
+                        Toast.makeText(dialogView.getContext(), "Le kcal pari a 0? Digiuno estremo?", Toast.LENGTH_LONG).show();
+                    } else if (kcalAttuali.getText().toString().trim().isEmpty()) {
+                        // Controlla se le kcal attuali sono vuote
+                        Toast.makeText(dialogView.getContext(), "Dovrai pur mangiare qualcosa.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Mostra il Toast di successo se tutte le operazioni sono andate a buon fine
+                        Toast.makeText(dialogView.getContext(), "Kcal salvate, Keep going Buddy!", Toast.LENGTH_LONG).show();
+                    }
+                } catch (NumberFormatException e) {
+                    // Gestisci l'eccezione se il formato non è valido
+                    Toast.makeText(dialogView.getContext(), "Formato non valido.", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    // Gestisci altre eccezioni
+                    e.printStackTrace();
                 }
-                kcalStorage.setCarbo(Float.parseFloat(carbo.getText().toString().trim().length()!=0?carbo.getText().toString():"0"));
-                kcalStorage.setProteine(Float.parseFloat(proteine.getText().toString().trim().length()!=0?proteine.getText().toString():"0"));
-                kcalStorage.setSale(Float.parseFloat(sale.getText().toString().trim().length()!=0?sale.getText().toString():"0"));
-                kcalStorage.setGrassi(Float.parseFloat(grassi.getText().toString().trim().length()!=0?grassi.getText().toString():"0"));
-                kcalStorage.setAcqua(Float.parseFloat(acqua.getText().toString().trim().length()!=0?acqua.getText().toString():"0"));
-                kcalStorage.setNote(noteDettaglio.getText().toString());
-                kcalStorage.setData(dataSalvare);
-
-                SharedPreferences.Editor edi=sh.edit();
-                edi.putString("kcalPassate",kcalStorage.toJson());
-                edi.apply();
-
-                Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
             }
         });
         okButton.setOnClickListener(new View.OnClickListener() {
@@ -446,7 +500,6 @@ public class NotificheDialog {
                 alertDialog.dismiss(); // Chiudi il dialog
             }
         });
-
 
     }
     public static void NotificaImmagine(LayoutInflater inflater, Drawable immagine){
@@ -520,7 +573,7 @@ public class NotificheDialog {
                     edi.putString("notePassate", noteStorage.toJson());
                     edi.apply();
 
-                    Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(dialogView.getContext(), "Note salvate.", Toast.LENGTH_SHORT).show();
                 }
             });
         }

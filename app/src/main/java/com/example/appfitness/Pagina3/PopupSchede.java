@@ -119,7 +119,7 @@ public class PopupSchede {
             @Override
             public void onClick(View view) {
                 if(nomeScheda.getText().toString().trim().length()==0){
-                    Toast.makeText(dialogView.getContext(), "Inserisci un nome", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(dialogView.getContext(), "Inserisci un nome per salvare la scheda.", Toast.LENGTH_LONG).show();
                 }else {
                     //per le note
                     SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -138,8 +138,9 @@ public class PopupSchede {
                     edit.putString("notePassate",new Note().toJson());
                     edit.commit();
 
-                    alertDialog.dismiss();
+                    //alertDialog.dismiss();
                     ResettaVariabili();
+                    Toast.makeText(dialogView.getContext(), "Scheda salvata, Keep going Buddy!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -212,7 +213,7 @@ public class PopupSchede {
         Button creaGiorno=dialogView.findViewById((int)R.id.CreaGiorno);
         Button back=dialogView.findViewById((int)R.id.backScheda);
         Button bottoneNote = dialogView.findViewById((int)R.id.bottoneNoteScheda);
-        bottoneNote.setText("Mostra");
+        bottoneNote.setText("Note");
         nomeScheda.setText(sched.getNomeScheda());
 
         if(sched.getImg()!=null)

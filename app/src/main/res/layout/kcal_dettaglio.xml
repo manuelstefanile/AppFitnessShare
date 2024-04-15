@@ -29,12 +29,12 @@
                 android:id="@+id/kcalAttual"
                 android:layout_width="0dp"
                 android:layout_weight="1.7"
-                android:textAlignment="center"
-                android:background="@drawable/drawable_botton_grigio"
                 android:padding="6dp"
-                android:hint="Kcal Attuali"
+                android:hint="Kcal attuali"
+                android:background="@drawable/drawable_botton_grigio"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
+                android:textAlignment="center"
                 >
             </EditText>
             <TextView

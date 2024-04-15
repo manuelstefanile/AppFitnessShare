@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
@@ -151,9 +152,10 @@ public class PopupGiorno {
 
                 String testoInserito = nomeGiorno.getText().toString().trim();
                 if(testoInserito.length()>0) {
-                    nomeGiorno.setEnabled(false);
-                    bottoneNote.setEnabled(false);
-                    salvaGiorno.setEnabled(false);
+                    nomeGiorno.setEnabled(true);
+                    bottoneNote.setEnabled(true);
+                    salvaGiorno.setEnabled(true);{
+                    Toast.makeText(dialogView.getContext(), "Giorno salvato con successo", Toast.LENGTH_SHORT).show();}
                     creaEsercizio.setEnabled(true);
                     creaEsercizio.setBackgroundResource(R.drawable.drawable_scheda);
                     giornoNuovo.setNomeGiorno(testoInserito);
@@ -225,7 +227,8 @@ public class PopupGiorno {
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
         Button bottoneNote=dialogView.findViewById((int)R.id.bottoneNoteGiorno);
         Button creaEsercizio=dialogView.findViewById((int)R.id.CreaEsercizio);
-        Button salvaGiorno=dialogView.findViewById((int)R.id.salvaGiorno);
+        Button salvaGiorno=dialogView.findViewById((int)R.id.salvaGiorno);{
+        Toast.makeText(dialogView.getContext(), "Inserisci un nome per salvare la giornata.", Toast.LENGTH_LONG).show();}
         Button back=dialogView.findViewById((int)R.id.backGiorno);
         bottoneNote.setText("Mostra");
 
@@ -236,7 +239,7 @@ public class PopupGiorno {
 
         nomeGiorno.setText(giorno.getNomeGiorno());
         //nomeGiorno.setInputType(InputType.TYPE_NULL);
-        salvaGiorno.setVisibility(View.GONE);
+        //4salvaGiorno.setVisibility(View.GONE);
 
         creaEsercizio.setOnClickListener(new View.OnClickListener() {
             @Override
