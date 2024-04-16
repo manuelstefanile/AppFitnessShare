@@ -25,7 +25,7 @@
             android:onClick="ChiudTuttoNonSalva"
             android:layout_width="0dp"
             android:layout_weight="0.1"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/ic_baseline_home_24"
             android:contentDescription="Cancella Tutto"
@@ -44,9 +44,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:background="@drawable/drawable_botton_grigio"
-            android:hint="Nome Giorno"
+            android:hint="Giorno"
             android:padding="6dp"
 
             ></EditText>
@@ -87,7 +88,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/drawable_botton_grigio"
-                android:text="Note Giorno"
+                android:text="Note"
+                android:textStyle="italic"
                 android:textSize="15dp"></Button>
 
             <TextView
@@ -120,7 +122,7 @@
             android:layout_width="0dp"
             android:layout_weight="0.1"
             android:layout_gravity="center_vertical"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_baseline_keyboard_backspace_24"
@@ -138,6 +140,7 @@
             android:textColor="@color/black"
             android:background="@drawable/drawable_scheda"
             android:onClick="AggiungiGiorno"
+            android:textStyle="bold"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
@@ -150,10 +153,9 @@
             android:id="@+id/salvaGiorno"
             android:layout_width="0dp"
             android:layout_weight="0.1"
-            android:text="save"
             android:layout_marginLeft="3dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/drawable_scheda"
+            android:background="@drawable/ic_baseline_save_24"
             android:layout_height="wrap_content"
             >
         </Button>

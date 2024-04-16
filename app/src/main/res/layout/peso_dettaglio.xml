@@ -28,6 +28,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="18dp"></TextView>
 
         </LinearLayout>
@@ -112,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:text="Seleziona una data:"
                 android:layout_gravity="center"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 >
@@ -136,6 +138,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
+            android:textStyle="bold"
         android:textSize="15dp"
         android:background="@drawable/drawable_scheda"
         android:layout_gravity="center"
@@ -148,6 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salva"
+            android:textStyle="bold"
             android:textSize="15dp"
             android:background="@drawable/drawable_scheda"
             android:layout_gravity="center"

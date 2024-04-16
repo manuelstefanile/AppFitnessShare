@@ -161,6 +161,7 @@
                 android:layout_height="wrap_content"
                 android:text="Seleziona una data:"
                 android:layout_gravity="center"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 >

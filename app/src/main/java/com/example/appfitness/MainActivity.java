@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         }else {
-            te.setText("Bentornato");
+            te.setText("Bentornato, " +nomeUtente);
             te.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             te.setGravity(Gravity.CENTER);
 
