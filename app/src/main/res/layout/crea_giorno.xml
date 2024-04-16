@@ -21,17 +21,18 @@
         android:gravity="center"
         android:layout_marginBottom="10dp"
         >
-
-        <ImageView
+        <Button
+            android:onClick="ChiudTuttoNonSalva"
             android:layout_width="0dp"
-            android:layout_height="40dp"
             android:layout_weight="0.1"
-            android:adjustViewBounds="true"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:scaleType="centerCrop"
+            android:background="@drawable/ic_baseline_home_24"
+            android:contentDescription="Cancella Tutto"
             >
+        </Button>
 
-        </ImageView>
+
 
         <EditText
             android:id="@+id/nomeGiorno"
@@ -49,18 +50,18 @@
             android:padding="6dp"
 
             ></EditText>
-        <Button
-            android:id="@+id/salvaGiorno"
-            android:layout_width="0dp"
-            android:layout_weight="0.1"
-            android:text="save"
-            android:layout_marginLeft="3dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/drawable_scheda"
-            android:layout_height="wrap_content"
-            >
-        </Button>
 
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.1"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerCrop"
+            >
+
+        </ImageView>
 
     </LinearLayout>
         <LinearLayout
@@ -82,12 +83,12 @@
                 android:id="@+id/bottoneNoteGiorno"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:textSize="15dp"
                 android:layout_weight="0.5"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/drawable_botton_grigio"
-                android:text="Note"></Button>
+                android:text="Note Giorno"
+                android:textSize="15dp"></Button>
 
             <TextView
                 android:layout_width="0dp"
@@ -115,15 +116,18 @@
         android:gravity="center"
         >
         <Button
-            android:onClick="ChiudTuttoNonSalva"
+            android:id="@+id/backGiorno"
             android:layout_width="0dp"
             android:layout_weight="0.1"
-            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/ic_baseline_home_24"
-            android:contentDescription="Cancella Tutto"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_baseline_keyboard_backspace_24"
+
             >
         </Button>
+
         <Button
             android:id="@+id/CreaEsercizio"
             android:layout_width="0dp"
@@ -141,16 +145,16 @@
             android:layout_marginTop="10dp"
             >
         </Button>
+
         <Button
-            android:id="@+id/backGiorno"
+            android:id="@+id/salvaGiorno"
             android:layout_width="0dp"
             android:layout_weight="0.1"
+            android:text="save"
+            android:layout_marginLeft="3dp"
             android:layout_gravity="center_vertical"
-            android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_baseline_keyboard_backspace_24"
-
+            android:background="@drawable/drawable_scheda"
+            android:layout_height="wrap_content"
             >
         </Button>
 

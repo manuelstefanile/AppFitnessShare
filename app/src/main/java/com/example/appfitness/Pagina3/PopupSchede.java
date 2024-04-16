@@ -1,5 +1,7 @@
 package com.example.appfitness.Pagina3;
 
+import static com.google.android.material.resources.MaterialResources.getDrawable;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -102,6 +104,7 @@ public class PopupSchede {
         Button back=dialogView.findViewById((int)R.id.backScheda);
         Button bottoneNote = dialogView.findViewById((int)R.id.bottoneNoteScheda);
         creaGiorno.setEnabled(false);
+        //creaGiorno.setBackground((getDrawable((int) R.drawable.drawable_botton_grigio)));
 
 
         creaGiorno.setOnClickListener(new View.OnClickListener() {

@@ -15,5 +15,6 @@
     <color name="lightGreen">#90ee90</color>
     <color name="red">#ff0000</color>
     <color name="gliglio_sculo">#3c3d3c</color>
+    <color name="transparent">#00FFFFFF</color>
 
 </resources>

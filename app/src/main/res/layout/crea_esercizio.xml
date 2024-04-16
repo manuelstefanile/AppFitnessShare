@@ -27,16 +27,20 @@
             android:layout_marginBottom="10dp"
             >
 
-
-            <ImageView
+            <ImageButton
+                android:id="@+id/immagineEsercizio"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="0.1"
-                android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:layout_gravity="center_vertical">
+                android:adjustViewBounds="true"
+                android:layout_weight="0.1"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/drawable_botton_white"
+                android:src="@drawable/noimg"
+                >
+            </ImageButton>
 
-            </ImageView>
 
             <EditText
                 android:id="@+id/nomeEsercizio"
@@ -55,19 +59,17 @@
                 >
             </EditText>
 
-            <ImageButton
-                android:id="@+id/immagineEsercizio"
+            <ImageView
                 android:layout_width="0dp"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
+                android:layout_height="40dp"
                 android:layout_weight="0.1"
-                android:layout_marginLeft="10dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/drawable_botton_white"
-                android:src="@drawable/noimg"
-                >
-            </ImageButton>
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_vertical">
+
+            </ImageView>
+
+
 
         </LinearLayout>
         <LinearLayout
@@ -85,17 +87,17 @@
                 android:textSize="20dp"
                 android:layout_marginRight="10dp"
                 ></TextView>
+
             <Button
                 android:id="@+id/bottoneNote"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:textSize="15dp"
-                android:layout_weight="0.5"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.5"
                 android:background="@drawable/drawable_botton_grigio"
-                android:text="Note"></Button>
+                android:text="Note Esercizio"
+                android:textSize="15dp"></Button>
 
             <TextView
                 android:layout_width="0dp"
@@ -117,12 +119,12 @@
             >
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.175"
                 android:layout_height="wrap_content"
-                android:gravity="left"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                ></TextView>
+                android:layout_weight="0.175"
+                android:gravity="left"
+                android:text=""></TextView>
             <EditText
                 android:id="@+id/numberPicker"
                 android:layout_width="0dp"
@@ -130,19 +132,20 @@
                 android:textSize="18dp"
                 android:textAlignment="center"
                 android:layout_height="wrap_content"
-                android:hint="Serie"
+                android:hint="Numero di Serie"
                 android:inputType="numberDecimal"
                 android:padding="6dp"
                 android:background="@drawable/drawable_scheda">
             </EditText>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.175"
                 android:layout_height="wrap_content"
-                android:gravity="left"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                ></TextView>
+                android:layout_weight="0.175"
+                android:gravity="left"
+                android:text=""></TextView>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -151,14 +154,7 @@
             android:gravity="center"
             android:layout_marginBottom="30dp"
             >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.175"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                ></TextView>
+
 
             <EditText
                 android:id="@+id/numeroRipetizioni"
@@ -172,13 +168,7 @@
                 android:background="@drawable/drawable_scheda"
                 >
             </EditText>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.175"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                ></TextView>
+
         </LinearLayout>
 
         <LinearLayout
@@ -189,13 +179,6 @@
             android:layout_marginBottom="30dp"
             >
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.175"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                ></TextView>
 
             <EditText
                 android:id="@+id/numeroTimer"
@@ -204,7 +187,7 @@
                 android:textSize="18dp"
                 android:textAlignment="center"
                 android:layout_height="wrap_content"
-                android:hint="Recupero"
+                android:hint="Minuti"
                 android:inputType="numberDecimal"
                 android:padding="6dp"
                 android:background="@drawable/drawable_scheda"
@@ -217,6 +200,20 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 ></TextView>
+            <EditText
+                android:id="@+id/numeroTimer2"
+                android:layout_width="0dp"
+                android:layout_weight="1.7"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:hint="Secondi"
+                android:inputType="numberDecimal"
+                android:padding="6dp"
+                android:background="@drawable/drawable_scheda"
+                >
+            </EditText>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -225,14 +222,6 @@
             android:gravity="center"
             android:layout_marginBottom="30dp"
             >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="0.175"
-                android:gravity="left"
-                android:text=""></TextView>
 
             <EditText
                 android:id="@+id/tecnicaIntensita"
@@ -247,14 +236,7 @@
                 android:background="@drawable/drawable_scheda"
                 >
             </EditText>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="0.175"
-                android:gravity="left"
-                android:text=""></TextView>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -263,14 +245,7 @@
             android:gravity="center"
             android:layout_marginBottom="30dp"
             >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="0.175"
-                android:gravity="left"
-                android:text=""></TextView>
+
 
             <EditText
                 android:id="@+id/esecuzione"
@@ -286,14 +261,7 @@
 
                 >
             </EditText>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="0.175"
-                android:gravity="left"
-                android:text=""></TextView>
+
         </LinearLayout>
 
         <LinearLayout
@@ -303,14 +271,6 @@
             android:gravity="center"
             android:layout_marginBottom="30dp"
             >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="0.175"
-                android:gravity="left"
-                android:text=""></TextView>
 
             <EditText
                 android:id="@+id/pesoKG"
@@ -319,21 +279,14 @@
                 android:gravity="center"
                 android:textAlignment="center"
                 android:textSize="18dp"
-                android:hint="Peso utilizzato"
+                android:hint="Carichi utilizzati"
                 android:layout_height="wrap_content"
                 android:background="@drawable/drawable_scheda"
                 android:padding="6dp"
 
                 >
             </EditText>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="0.175"
-                android:gravity="left"
-                android:text=""></TextView>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -347,34 +300,6 @@
         android:gravity="center"
         >
         <Button
-            android:onClick="ChiudTuttoNonSalva"
-            android:layout_width="0dp"
-            android:layout_weight="0.1"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/ic_baseline_home_24"
-            android:contentDescription="Cancella Tutto"
-            >
-        </Button>
-        <Button
-            android:id="@+id/salvaEsercizio"
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Salva"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/drawable_scheda"
-            >
-
-        </Button>
-
-        <Button
             android:id="@+id/backEsercizio"
             android:layout_width="0dp"
             android:layout_weight="0.1"
@@ -386,5 +311,35 @@
 
             >
         </Button>
+
+        <Button
+            android:id="@+id/salvaEsercizio"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Salva esericizio"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/drawable_scheda"
+            >
+
+        </Button>
+        <Button
+            android:onClick="ChiudTuttoNonSalva"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_baseline_home_24"
+            android:contentDescription="Cancella Tutto"
+            >
+        </Button>
+
+
     </LinearLayout>
 </RelativeLayout>

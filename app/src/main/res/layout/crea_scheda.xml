@@ -21,17 +21,20 @@
             android:gravity="center"
             android:layout_marginBottom="10dp"
             >
-            <ImageView
+
+
+            <ImageButton
+                android:id="@+id/aggiungiImmagineScheda"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="0.1"
-                android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-             >
-
-            </ImageView>
-
-
+                android:adjustViewBounds="true"
+                android:layout_weight="0.1"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_botton_white"
+                android:src="@drawable/noimg"
+                ></ImageButton>
             <EditText
                 android:id="@+id/nomeScheda"
                 android:layout_width="0dp"
@@ -48,19 +51,17 @@
                 android:textSize="24dp"
 
                 ></EditText>
-
-            <ImageButton
-                android:id="@+id/aggiungiImmagineScheda"
+            <ImageView
                 android:layout_width="0dp"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
+                android:layout_height="40dp"
                 android:layout_weight="0.1"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:background="@drawable/drawable_botton_white"
-                android:src="@drawable/noimg"
-                ></ImageButton>
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                >
+
+            </ImageView>
+
+
 
 
         </LinearLayout>
@@ -89,7 +90,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/drawable_botton_grigio"
-                android:text="Note"
+                android:text="Note Scheda"
                 android:textSize="15dp"></Button>
 
             <TextView

@@ -47,6 +47,77 @@
                 </ImageButton>
 
             </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="20dp"
+
+            >
+
+            <EditText
+                android:id="@+id/posaFisico2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="6dp"
+                android:background="@drawable/drawable_botton_grigio"
+                android:textAlignment="center"
+                android:hint="Nome Posa"
+                android:layout_height="wrap_content"
+                >
+            </EditText>
+            <ImageButton
+                android:id="@+id/immaginefisico2"
+                android:layout_width="0dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_weight="0.1"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_botton_white"
+                android:src="@drawable/noimg"
+                >
+            </ImageButton>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="20dp"
+
+            >
+
+            <EditText
+                android:id="@+id/posaFisico3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="6dp"
+                android:background="@drawable/drawable_botton_grigio"
+                android:textAlignment="center"
+                android:hint="Nome Posa"
+                android:layout_height="wrap_content"
+                >
+            </EditText>
+            <ImageButton
+                android:id="@+id/immaginefisico3"
+                android:layout_width="0dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_weight="0.1"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_botton_white"
+                android:src="@drawable/noimg"
+                >
+            </ImageButton>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

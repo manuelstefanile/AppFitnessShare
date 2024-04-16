@@ -236,14 +236,6 @@ public class Registrazione_Pag2 extends Activity {
         String nome = nomeR.getText().toString();
         String cognome = cognomeR.getText().toString();
         String nomeUtente = nomeUtenteR.getText().toString().trim();
-        String[] paroleNomeUtente = nomeUtente.split("\\s+"); // Dividi il nome utente in parole
-        int numeroParole = paroleNomeUtente.length;
-            if(numeroParole > 10) {
-                // Se il nome utente ha più di 10 parole, mostra un messaggio di errore
-                Toast.makeText(getApplicationContext(), "Il nome utente non può contenere più di 10 parole.", Toast.LENGTH_LONG).show();
-                return; // Esce dal metodo senza salvare i dati
-            }
-
         int eta = Integer.parseInt(etaR.getText().toString().trim().length() != 0 ? etaR.getText().toString() : "0");
         float altezza = Float.parseFloat(altezzaR.getText().toString().trim().length() != 0 ? altezzaR.getText().toString() : "0");
 

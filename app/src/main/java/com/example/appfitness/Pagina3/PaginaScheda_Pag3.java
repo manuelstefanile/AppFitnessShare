@@ -3,11 +3,14 @@ package com.example.appfitness.Pagina3;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -206,30 +209,118 @@ public class PaginaScheda_Pag3 extends Activity {
     public void OnDeleteSchedaClick(View v){
         int position = Integer.parseInt(v.getTag().toString());
         Scheda c = (Scheda) Global.adapterSchede.getItem(position);
-        //metto l id della listagiorni
-        ArrayList<Integer> listaGiorniId=Global.listaGiornidao.getIDListaGiorniPerScheda(c.getId());
-        c.setListaGiorni(listaGiorniId);
-        Global.schedadao.DeleteScheda(c);
-        Global.adapterSchede.remove(c);
-        StampaTutto();
-    }
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Imposta il layout personalizzato come vista del dialog box
+        View customLayout = getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
+        builder.setView(customLayout);
+
+        // Ora puoi trovare i pulsanti all'interno del layout e aggiungere i listener di click
+        Button buttonYes = customLayout.findViewById(R.id.button_yes);
+        Button buttonNo = customLayout.findViewById(R.id.button_no);
+
+        // Creazione dell'AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Aggiunta dei listener di click ai pulsanti
+        buttonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Elimina la scheda
+                ArrayList<Integer> listaGiorniId = Global.listaGiornidao.getIDListaGiorniPerScheda(c.getId());
+                c.setListaGiorni(listaGiorniId);
+                Global.schedadao.DeleteScheda(c);
+                Global.adapterSchede.remove(c);
+                dialog.dismiss(); // Chiudi il dialog box
+                StampaTutto();
+            }
+        });
+
+        buttonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Annulla l'eliminazione
+                dialog.dismiss(); // Chiudi il dialog box
+            }
+        });
+    }
     public void OnDeleteExPerGiornoClick(View v){
 
         int position = Integer.parseInt(v.getTag().toString());
         Esercizio c = (Esercizio) Global.adapterEsercizi.getItem(position);
 
-        //elimino la lista esercizi , non l esercizio in se. Perchè potrebbe servire
-        Global.ledao.DeleteListaPerNomeEsercizi(c.getId());
-        Global.adapterEsercizi.remove(c);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        // Imposta il layout personalizzato come vista del dialog box
+        View customLayout = getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
+        builder.setView(customLayout);
+
+        // Ora puoi trovare i pulsanti all'interno del layout e aggiungere i listener di click
+        Button buttonYes = customLayout.findViewById(R.id.button_yes);
+        Button buttonNo = customLayout.findViewById(R.id.button_no);
+
+        // Creazione dell'AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Aggiunta dei listener di click ai pulsanti
+        buttonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Elimina la lista di esercizi
+                Global.ledao.DeleteListaPerNomeEsercizi(c.getId());
+                Global.adapterEsercizi.remove(c);
+                dialog.dismiss(); // Chiudi il dialog box
+            }
+        });
+
+        buttonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Annulla l'eliminazione
+                dialog.dismiss(); // Chiudi il dialog box
+            }
+        });
     }
 
     public void OnDeleteGiornoClick(View v){
         int position = Integer.parseInt(v.getTag().toString());
         Giorno c = (Giorno) Global.adapterGiorni.getItem(position);
-        Global.giornoDao.DeleteGiornoByGiorno(c);
-        Global.adapterGiorni.remove(c);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Imposta il layout personalizzato come vista del dialog box
+        View customLayout = getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
+        builder.setView(customLayout);
+
+        // Ora puoi trovare i pulsanti all'interno del layout e aggiungere i listener di click
+        Button buttonYes = customLayout.findViewById(R.id.button_yes);
+        Button buttonNo = customLayout.findViewById(R.id.button_no);
+
+        // Creazione dell'AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Aggiunta dei listener di click ai pulsanti
+        buttonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Elimina il giorno
+                Global.giornoDao.DeleteGiornoByGiorno(c);
+                Global.adapterGiorni.remove(c);
+                dialog.dismiss(); // Chiudi il dialog box
+            }
+        });
+
+        buttonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Annulla l'eliminazione
+                dialog.dismiss(); // Chiudi il dialog box
+            }
+        });
     }
     public void CreaScheda(View v){
 
