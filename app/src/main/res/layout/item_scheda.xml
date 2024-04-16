@@ -6,20 +6,18 @@
     android:padding="20dp">
 
 
-    <ImageView
-        android:id="@+id/immagineScheda"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
+
+    <Button
+        android:id="@+id/eliminaScheda"
+        android:onClick="OnDeleteSchedaClick"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/noimg"
-        android:onClick="OnImmagineClick"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.1"
+        android:background="@drawable/ic_baseline_close_24"
         >
-
-    </ImageView>
+    </Button>
     <Button
         android:id="@+id/visualizzaScheda"
         android:onClick="OnSchedaClick"
@@ -35,17 +33,22 @@
         android:background="@drawable/drawable_scheda"
         >
     </Button>
-    <Button
-        android:id="@+id/eliminaScheda"
-        android:onClick="OnDeleteSchedaClick"
+    <ImageView
+        android:id="@+id/immagineScheda"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
         android:layout_weight="0.1"
-        android:background="@drawable/ic_baseline_close_24"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/noimg"
+        android:onClick="OnImmagineClick"
         >
-    </Button>
+
+    </ImageView>
+
+
 
 
 </LinearLayout>

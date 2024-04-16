@@ -154,6 +154,21 @@
                         android:padding="6dp"
                         android:textAlignment="center"></EditText>
 
+                    <ImageView
+                        android:id="@+id/immagineProfilo"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/noimg"
+                        >
+
+                    </ImageView>
+
                 </LinearLayout>
 
 

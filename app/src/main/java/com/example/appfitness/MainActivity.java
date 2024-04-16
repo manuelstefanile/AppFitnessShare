@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }else {
             te.setText("Bentornato, " +nomeUtente);
             te.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            te.setTypeface(null, Typeface.BOLD);
             te.setGravity(Gravity.CENTER);
 
         }

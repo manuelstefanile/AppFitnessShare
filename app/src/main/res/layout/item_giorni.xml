@@ -5,12 +5,18 @@
     android:orientation="horizontal"
     android:padding="20dp"
     >
-    <TextView
+    <Button
+        android:id="@+id/eliminaGiorno"
+        android:onClick="OnDeleteGiornoClick"
         android:layout_width="0dp"
-        android:layout_weight="0.1"
         android:layout_height="wrap_content"
-        android:text=""
-        ></TextView>
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.1"
+        android:background="@drawable/ic_baseline_close_24"
+        >
+    </Button>
+
 
     <Button
         android:id="@+id/visualizzaGiorni"
@@ -27,17 +33,14 @@
         android:background="@drawable/drawable_scheda"
         >
     </Button>
-    <Button
-        android:id="@+id/eliminaGiorno"
-        android:onClick="OnDeleteGiornoClick"
+
+    <TextView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
         android:layout_weight="0.1"
-        android:background="@drawable/ic_baseline_close_24"
-        >
-    </Button>
+        android:layout_height="wrap_content"
+        android:text=""
+        ></TextView>
+
 
 
 </LinearLayout>
