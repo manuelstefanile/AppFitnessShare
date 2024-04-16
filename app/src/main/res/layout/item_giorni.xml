@@ -34,12 +34,17 @@
         >
     </Button>
 
-    <TextView
+    <Button
+        android:id="@+id/startAllenamento"
+
         android:layout_width="0dp"
-        android:layout_weight="0.1"
         android:layout_height="wrap_content"
-        android:text=""
-        ></TextView>
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="0.1"
+        android:background="@drawable/ic_baseline_not_started_24"
+        >
+    </Button>
 
 
 
