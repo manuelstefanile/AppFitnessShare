@@ -151,9 +151,9 @@ public class PopupGiorno {
 
                 String testoInserito = nomeGiorno.getText().toString().trim();
                 if(testoInserito.length()>0) {
-                    nomeGiorno.setEnabled(true);
-                    bottoneNote.setEnabled(true);
-                    salvaGiorno.setEnabled(true);{
+                    nomeGiorno.setEnabled(false);
+                    bottoneNote.setEnabled(false);
+                    salvaGiorno.setEnabled(false);{
                     Toast.makeText(dialogView.getContext(), "Giorno salvato con successo", Toast.LENGTH_SHORT).show();}
                     creaEsercizio.setEnabled(true);
                     creaEsercizio.setBackgroundResource(R.drawable.drawable_scheda);
@@ -248,7 +248,7 @@ public class PopupGiorno {
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
+        salvaGiorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //se la lista degli esercizzi è maggiore di 1 allora va inserito nel db e aggiornato
@@ -269,6 +269,14 @@ public class PopupGiorno {
                 SharedPreferences.Editor edit=shp.edit();
                 edit.putString("notePassate",noteScheda.toJson());
                 edit.commit();
+                Toast.makeText(dialogView.getContext(), "Giorno salvato con successo", Toast.LENGTH_SHORT).show();
+        }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
 
                 alertDialog.dismiss();
             }

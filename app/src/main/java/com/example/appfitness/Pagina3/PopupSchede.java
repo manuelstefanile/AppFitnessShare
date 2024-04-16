@@ -112,6 +112,13 @@ public class PopupSchede {
             }
         });
 
+        imgScheda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupSchede.selectImageFromGallery();
+            }
+        });
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,6 +226,9 @@ public class PopupSchede {
 
         if(sched.getImg()!=null)
             imgScheda.setImageDrawable(sched.getImg());
+
+
+
         imgScheda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,7 +249,6 @@ public class PopupSchede {
                     Global.listaGiornidao.InserisciListaGiorni(sched);
                 //rimuovo dalla lista giorni
                 Global.adapterSchede.remove(sched);
-
                 String nomeSchedaPrimaModifica = sched.getNomeScheda(); // Nome della scheda prima della modifica
 
                 sched.setNomeScheda(nomeScheda.getText().toString());
@@ -263,7 +272,7 @@ public class PopupSchede {
                 }
 
                 //alertDialog.dismiss();
-                ResettaVariabili();
+                //ResettaVariabili();
             }
         });
         bottoneNote.setOnClickListener(new View.OnClickListener() {
