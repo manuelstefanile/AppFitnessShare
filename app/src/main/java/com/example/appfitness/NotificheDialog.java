@@ -557,7 +557,8 @@ public class NotificheDialog {
         Button okButton = dialogView.findViewById((int) R.id.OkNote);
         EditText noteDettaglio = dialogView.findViewById((int) R.id.noteDettaglio);
         if(!Registrazione_Pag2.editGlobal){
-            //non far scrivere
+            //non far scrivere (QUESTO è L'ERRORE CHE NON FA VISUALIZZARE LE NOTE IN EDIT, PERò SE LEVI QUESTO POI VENGONO SALVATE LE STESSE NOTE
+            // ANCHE IN SCHEDA, GIONI ED ESERCIZI PRESUMO)
             noteDettaglio.setInputType(InputType.TYPE_NULL);
             //rimuovi il tasto salva
             salvaButton.setVisibility(View.GONE);
