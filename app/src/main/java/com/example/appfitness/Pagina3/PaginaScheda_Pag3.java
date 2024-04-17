@@ -45,6 +45,10 @@ public class PaginaScheda_Pag3 extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schede_pag3);
+        // Mostra il popup di benvenuto solo la prima volta
+        PopupSchede.mostraPopupBenvenuto(this);
+
+
 
 
         /*************************************************/

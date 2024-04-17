@@ -65,10 +65,10 @@ public class Registrazione_Pag2 extends Activity {
         Button bottoneMisure=findViewById((int)R.id.buttonMisure);
         Button bottoneNote=findViewById((int)R.id.buttonNote);
         bottoneripristinaDati=findViewById((int)R.id.ripristinaDatiButton);
+        bottoneripristinaDati.setVisibility(View.INVISIBLE);
         bottoneSalva=findViewById((int)R.id.salvaButtonReg);
         bottoneNext=findViewById((int)R.id.bottoneNextRegistrazione);
-        bottoneNext.setEnabled(false);
-        bottoneNext.setBackground((getDrawable((int) R.drawable.drawable_botton_grigio)));
+        bottoneNext.setVisibility(View.INVISIBLE);
         //Toast.makeText(getApplicationContext(), "Devi prima salvare i dati per poter proseguire!", Toast.LENGTH_LONG).show();
 
         //apreo il db
@@ -283,7 +283,8 @@ public class Registrazione_Pag2 extends Activity {
         long IdUtente = dbWritable.insert(SchemaDB.UtenteDB.TABLE_NAME, null, valuesUtente);
 
         Toast.makeText(getApplicationContext(), "Dati salvati. Potrai modificarli direttamente nella HomePage!", Toast.LENGTH_LONG).show();
-        bottoneNext.setEnabled(true);
+        bottoneripristinaDati.setVisibility(View.VISIBLE);
+        bottoneNext.setVisibility(View.VISIBLE);
         bottoneNext.setBackground((getDrawable((int) R.drawable.drawable_scheda)));
         dbWritable.close();
         StampaTutto();
@@ -375,6 +376,8 @@ public class Registrazione_Pag2 extends Activity {
         editor.putString("notePassate", noteSalvate.toJson());
         editor.apply();
         StampaTutto();
+        //per far comparire il tasto nella pagina di Modifica dati e Visualizza dati
+        bottoneripristinaDati.setVisibility(View.VISIBLE);
 
         TextView titolo=findViewById(R.id.titoloPaginaReg);
         //modalita see

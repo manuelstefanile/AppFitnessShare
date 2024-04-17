@@ -16,8 +16,13 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputType;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -44,13 +49,51 @@ import com.example.appfitness.Registrazione_Pag2;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class PopupSchede {
     private static final int PICK_IMAGE_REQUEST = 1;
     public static Activity act; // Aggiunto
     private static ImageButton imgScheda;
+    private static final String PREFS_NAME = "PopupPrefs";
+    private static final String PREF_POPUP_SHOW = "popup_show";
+
 
     public PopupSchede(Activity activity) { // Costruttore aggiunto
         this.act = activity;
+    }
+
+    public static void mostraPopupBenvenuto(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        boolean popupShow = prefs.getBoolean(PREF_POPUP_SHOW, false);
+
+        if (!popupShow) {
+            // Mostra il popup di benvenuto solo se non è stato mostrato in precedenza
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Benvenuto Buddy");
+            String titleText = "Benvenuto Buddy";
+            SpannableStringBuilder titleBuilder = new SpannableStringBuilder(titleText);
+            titleBuilder.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.setTitle(titleBuilder);
+            SpannableStringBuilder message = new SpannableStringBuilder();
+            message.append("In questa pagina potrai trovare:\n");
+
+            // Aggiungi ciascun messaggio con stile italic
+            message.append(Html.fromHtml("<i>- in alto a sinistra il tasto per modificare il tuo profilo,</i><br>"));
+            message.append(Html.fromHtml("<i>- in alto a destra il tasto per poter visualizzare le tue informazioni,</i><br>"));
+            message.append(Html.fromHtml("<i>- in basso al centro il tasto per poter creare una nuova scheda di allenamento.</i><br>"));
+
+            // Imposta il messaggio nel builder
+            builder.setMessage(message);
+
+            builder.setPositiveButton("Capito!", (dialog, which) -> {
+                // Salva lo stato del popup mostrato nella SharedPreferences
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean(PREF_POPUP_SHOW, true);
+                editor.apply();
+            });
+
+            builder.show();
+        }
     }
 
     public  void CreaScheda(LayoutInflater inflater){
@@ -60,6 +103,7 @@ public class PopupSchede {
         SharedPreferences.Editor edit=shp.edit();
         edit.putString("notePassate",new Note().toJson());
         edit.commit();
+
 
 
         // Creazione del layout della tua View
