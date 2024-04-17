@@ -2,9 +2,11 @@ package com.example.appfitness;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -63,6 +65,7 @@ public class NotificheDialog {
         // Creazione dell'AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
         builder.setView(dialogView);
+        builder.setCancelable(false);
 
 
         builder.setPositiveButton(null,null);
@@ -163,6 +166,7 @@ public class NotificheDialog {
         // Creazione dell'AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
         builder.setView(dialogView);
+        builder.setCancelable(false);
 
 
         builder.setPositiveButton(null,null);
@@ -170,6 +174,7 @@ public class NotificheDialog {
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
 
 
         EditText braccioDx=dialogView.findViewById(R.id.braccioDX);
@@ -338,6 +343,7 @@ public class NotificheDialog {
         // Creazione dell'AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
         builder.setView(dialogView);
+        builder.setCancelable(false);
 
 
         builder.setPositiveButton(null,null);
@@ -345,6 +351,7 @@ public class NotificheDialog {
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
 
         //prendo l oggetto
         Kcal kcalStorage= Kcal.fromJson(sh.getString("kcalPassate",null));
@@ -567,6 +574,8 @@ public class NotificheDialog {
         // Creazione dell'AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
         builder.setView(dialogView);
+        // Impedisci la chiusura premendo al di fuori della finestra di dialogo
+        builder.setCancelable(false);
 
         builder.setPositiveButton(null, null);
         builder.setNegativeButton(null, null);
@@ -603,6 +612,19 @@ public class NotificheDialog {
                     alertDialog.dismiss(); // Chiudi il dialog
                 }
             });
+        // Interceptarre il tasto Indietro(Funziona se vuoi attivare il tasto back di sistema, al momento
+        // è disattivato per il comando setCancelable
+        /*alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                    // Chiudi il dialog solo se l'utente preme il tasto Indietro
+                    alertDialog.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });*/
     }
 
 
