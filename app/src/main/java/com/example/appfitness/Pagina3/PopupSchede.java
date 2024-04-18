@@ -78,9 +78,13 @@ public class PopupSchede {
             message.append("In questa pagina potrai trovare:\n");
 
             // Aggiungi ciascun messaggio con stile italic
-            message.append(Html.fromHtml("<i>- in alto a sinistra il tasto per modificare il tuo profilo,</i><br>"));
-            message.append(Html.fromHtml("<i>- in alto a destra il tasto per poter visualizzare le tue informazioni,</i><br>"));
+            message.append(Html.fromHtml("<br>"));
+            message.append(Html.fromHtml("<i>- in alto a sinistra il tasto per modificare il tuo profilo.</i><br>"));
+            message.append(Html.fromHtml("<br>"));
+            message.append(Html.fromHtml("<i>- in alto a destra il tasto per poter visualizzare le tue informazioni.</i><br>"));
+            message.append(Html.fromHtml("<br>"));
             message.append(Html.fromHtml("<i>- in basso al centro il tasto per poter creare una nuova scheda di allenamento.</i><br>"));
+
 
             // Imposta il messaggio nel builder
             builder.setMessage(message);
