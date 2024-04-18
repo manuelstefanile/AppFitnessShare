@@ -92,6 +92,7 @@ public static abstract class UtenteDB implements BaseColumns {
         public static final String COLUMN_immagineMacchinario = "immagineMacchinario";
         public static final String COLUMN_numeroSerie = "numeroSerie";
         public static final String COLUMN_numeroRipetizioni = "numeroRipetizioni";
+        public static final String COLUMN_pesoKG = "pesoKG";
         public static final String COLUMN_note = "note";
         public static final String COLUMN_timer = "timer";
     }

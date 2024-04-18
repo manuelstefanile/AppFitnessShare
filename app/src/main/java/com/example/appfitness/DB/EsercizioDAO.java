@@ -78,10 +78,11 @@ public class EsercizioDAO {
             result.setId(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB._ID)));
             result.setNomeEsercizio(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_nomeEsercizio)));
             result.setEsecuzione(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_esecuzione)));
-            result.setNumeroRipetizioni(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni)));
+            result.setNumeroRipetizioni(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni)));
             result.setNumeroSerie(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_numeroSerie)));
             result.setTecnica_intensita(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_tecnica_intensita)));
             result.setTimer(cursor.getFloat(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_timer)));
+            result.setPesoKG(cursor.getFloat(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_pesoKG)));
             @SuppressLint("Range") byte[] immagine=cursor.getBlob(cursor.getColumnIndex(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario));
             Bitmap bitmap = BitmapFactory.decodeByteArray(immagine, 0, immagine.length);
             Drawable immDraw= new BitmapDrawable(Resources.getSystem(), bitmap);
@@ -144,6 +145,7 @@ public class EsercizioDAO {
         valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroSerie, esercizio.getNumeroSerie());
         valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni, esercizio.getNumeroRipetizioni());
         valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_timer, esercizio.getTimer());
+        valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_pesoKG, esercizio.getPesoKG());
         valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_note,esercizio.getNote());
 
         long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
@@ -161,6 +163,7 @@ public class EsercizioDAO {
         values.put(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni, esercizio.getNumeroRipetizioni());
         values.put(SchemaDB.EsercizioDB.COLUMN_numeroSerie, esercizio.getNumeroSerie());
         values.put(SchemaDB.EsercizioDB.COLUMN_tecnica_intensita, esercizio.getTecnica_intensita());
+        values.put(SchemaDB.EsercizioDB.COLUMN_pesoKG, esercizio.getPesoKG());
         values.put(SchemaDB.EsercizioDB.COLUMN_timer, esercizio.getTimer());
 
         // Converti l'immagine in un byte array

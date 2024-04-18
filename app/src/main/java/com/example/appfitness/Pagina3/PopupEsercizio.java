@@ -100,6 +100,8 @@ public class PopupEsercizio {
         EditText numeroSerieEsercizio = dialogView.findViewById((int) R.id.numberPicker);
         EditText numeroRipetEsercizio = dialogView.findViewById((int) R.id.numeroRipetizioni);
         EditText numeroTimetEsercizio = dialogView.findViewById((int) R.id.numeroTimer);
+        EditText numeroTimet2Esercizio = dialogView.findViewById((int) R.id.numeroTimer2);
+        EditText pesoKgEsercizio = dialogView.findViewById((int) R.id.pesoKG);
         EditText intensitaEsercizio = dialogView.findViewById((int) R.id.tecnicaIntensita);
         EditText esecuzioneEsercizio = dialogView.findViewById((int) R.id.esecuzione);
         Button salva=dialogView.findViewById((int)R.id.salvaEsercizio);
@@ -136,13 +138,17 @@ public class PopupEsercizio {
                 SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
 
+                float minuti=Float.parseFloat(numeroTimetEsercizio.getText().toString().trim().length()!=0?numeroTimetEsercizio.getText().toString():"0");
+                float secondi=Float.parseFloat(numeroTimet2Esercizio.getText().toString().trim().length()!=0?numeroTimet2Esercizio.getText().toString():"0");
+                float seconditotali=(minuti*60)+ secondi;
                 Esercizio esercizio=new Esercizio(nomeEsercizio.getText().toString().trim().length()>0?nomeEsercizio.getText().toString().trim():"",
                         intensitaEsercizio.getText().toString(),
                         esecuzioneEsercizio.getText().toString(),immagineEsercizio.getDrawable(),
                         Integer.parseInt(numeroSerieEsercizio.getText().toString().trim().length()!=0?numeroSerieEsercizio.getText().toString():"0"),
-                        Integer.parseInt(numeroRipetEsercizio.getText().toString().trim().length()!=0?numeroRipetEsercizio.getText().toString():"0"),
-                        Float.parseFloat(numeroTimetEsercizio.getText().toString().trim().length()!=0?numeroTimetEsercizio.getText().toString():"0"),
-                        note.getNote()
+                        numeroRipetEsercizio.getText().toString()
+                        ,seconditotali,
+                        note.getNote(),
+                        Float.parseFloat(pesoKgEsercizio.getText().toString().trim().length()!=0?pesoKgEsercizio.getText().toString():"0")
 
                 );
                 //inserisco l ex nel db
@@ -165,6 +171,7 @@ public class PopupEsercizio {
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroSerie, esercizio.getNumeroSerie());
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni, esercizio.getNumeroRipetizioni());
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_timer, esercizio.getTimer());
+                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_pesoKG, esercizio.getPesoKG());
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_note,note.getNote());
 
                 long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
@@ -247,6 +254,8 @@ public class PopupEsercizio {
         EditText numeroSerieEsercizio = dialogView.findViewById((int) R.id.numberPicker);
         EditText numeroRipetEsercizio = dialogView.findViewById((int) R.id.numeroRipetizioni);
         EditText numeroTimetEsercizio = dialogView.findViewById((int) R.id.numeroTimer);
+        EditText numeroTimet2Esercizio = dialogView.findViewById((int) R.id.numeroTimer2);
+        EditText pesoKgEsercizio = dialogView.findViewById((int) R.id.pesoKG);
         EditText intensitaEsercizio = dialogView.findViewById((int) R.id.tecnicaIntensita);
         EditText esecuzioneEsercizio = dialogView.findViewById((int) R.id.esecuzione);
         Button salva=dialogView.findViewById((int)R.id.salvaEsercizio);
@@ -254,11 +263,18 @@ public class PopupEsercizio {
         Button bottoneNote = dialogView.findViewById(R.id.bottoneNote);
         bottoneNote.setText("Note");
 
+        float totaleSecondi=esercizioNew.getTimer();
+        int minuti = (int) (totaleSecondi / 60);
+        float secondi = totaleSecondi % 60;
+
+
         nomeEsercizio.setText(esercizioNew.getNomeEsercizio());
         immagineEsercizio.setImageDrawable(esercizioNew.getImmagineMacchinario());
         numeroSerieEsercizio.setText(String.valueOf(esercizioNew.getNumeroSerie()));
         numeroRipetEsercizio.setText(String.valueOf(esercizioNew.getNumeroRipetizioni()));
-        numeroTimetEsercizio.setText(String.valueOf(esercizioNew.getTimer()));
+        numeroTimetEsercizio.setText(String.valueOf(minuti));
+        numeroTimet2Esercizio.setText(String.valueOf(secondi));
+        pesoKgEsercizio.setText(String.valueOf(esercizioNew.getPesoKG()));
         intensitaEsercizio.setText(esercizioNew.getTecnica_intensita());
         esecuzioneEsercizio.setText(esercizioNew.getEsecuzione());
 
@@ -308,28 +324,44 @@ public class PopupEsercizio {
                 SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
 
+                float minuti=Float.parseFloat(numeroTimetEsercizio.getText().toString().trim().length()!=0?numeroTimetEsercizio.getText().toString():"0");
+                float secondi=Float.parseFloat(numeroTimet2Esercizio.getText().toString().trim().length()!=0?numeroTimet2Esercizio.getText().toString():"0");
+                float seconditotali=(minuti*60)+ secondi;
+
                 Esercizio eser=new Esercizio(nomeEsercizio.getText().toString().trim().length()>0?nomeEsercizio.getText().toString().trim():"",
                         intensitaEsercizio.getText().toString(),
                         esecuzioneEsercizio.getText().toString(),immagineEsercizio.getDrawable(),
                         Integer.parseInt(numeroSerieEsercizio.getText().toString().trim().length()!=0?numeroSerieEsercizio.getText().toString():"0"),
-                        Integer.parseInt(numeroRipetEsercizio.getText().toString().trim().length()!=0?numeroRipetEsercizio.getText().toString():"0"),
-                        Float.parseFloat(numeroTimetEsercizio.getText().toString().trim().length()!=0?numeroTimetEsercizio.getText().toString():"0"),
-                        note.getNote()
+                        numeroRipetEsercizio.getText().toString(),
+                        seconditotali,
+                        note.getNote(),
+                        Float.parseFloat(pesoKgEsercizio.getText().toString().trim().length()!=0?pesoKgEsercizio.getText().toString():"0")
 
                 );
                 if(eser.getNomeEsercizio()==""){
                     Toast.makeText(dialogView.getContext(), "Inserisci almeno il nome", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Esercizio ex=Global.esercizioDao.getEsercizioByNome(eser.getNomeEsercizio());
-                    if(ex!=null){
-                        Toast.makeText(dialogView.getContext(), "Nome già presente", Toast.LENGTH_SHORT).show();
-                    }else{
+                    System.out.println(eser.getNomeEsercizio()+" "+esercizioNew.getNomeEsercizio());
+                    if(eser.getNomeEsercizio().equals(esercizioNew.getNomeEsercizio())){
                         eser.setId(esercizioNew.getId());
                         Global.adapterEsercizi.remove(esercizio);
                         Global.esercizioDao.updateEsercizio(eser);
                         Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
                         Global.adapterEsercizi.add(eser);
+
+                        //nomi diversi, allora controlla
+                    }else{
+                        Esercizio ex=Global.esercizioDao.getEsercizioByNome(eser.getNomeEsercizio());
+                        if(ex!=null){
+                            Toast.makeText(dialogView.getContext(), "Nome esercizio già presente", Toast.LENGTH_SHORT).show();
+                        }else{
+                            eser.setId(esercizioNew.getId());
+                            Global.adapterEsercizi.remove(esercizio);
+                            Global.esercizioDao.updateEsercizio(eser);
+                            Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
+                            Global.adapterEsercizi.add(eser);
+                        }
                     }
 
                 }

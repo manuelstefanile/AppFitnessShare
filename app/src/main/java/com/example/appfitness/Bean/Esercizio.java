@@ -16,11 +16,12 @@ public class Esercizio extends ListeClasseMarker {
 
     private String nomeEsercizio,tecnica_intensita,esecuzione,note;
     private byte[] immagineMacchinario;
-    private int numeroSerie,numeroRipetizioni;
-    private float timer;
+    private int numeroSerie;
+    private String numeroRipetizioni;
+    private float timer,pesoKG;
 
     public Esercizio(String nomeEsercizio, String tecnica_intensita, String esecuzione, Drawable immagineMacchinario,
-                     int numeroSerie, int numeroRipetizioni, float timer,String note) {
+                     int numeroSerie, String numeroRipetizioni, float timer,String note,float pesoKG) {
         this.nomeEsercizio = nomeEsercizio;
         this.tecnica_intensita = tecnica_intensita;
         this.esecuzione = esecuzione;
@@ -29,6 +30,7 @@ public class Esercizio extends ListeClasseMarker {
         this.numeroRipetizioni = numeroRipetizioni;
         this.timer = timer;
         this.note=note;
+        this.pesoKG=pesoKG;
     }
 
     public Esercizio() {
@@ -67,10 +69,13 @@ public class Esercizio extends ListeClasseMarker {
         this.esecuzione = esecuzione;
     }
 
+    public float getPesoKG() {
+        return pesoKG;
+    }
 
-
-
-
+    public void setPesoKG(float pesoKG) {
+        this.pesoKG = pesoKG;
+    }
 
     public Drawable getImmagineMacchinario() {
         return byteArrayToDrawable(immagineMacchinario);
@@ -118,11 +123,11 @@ public class Esercizio extends ListeClasseMarker {
         this.numeroSerie = numeroSerie;
     }
 
-    public int getNumeroRipetizioni() {
+    public String getNumeroRipetizioni() {
         return numeroRipetizioni;
     }
 
-    public void setNumeroRipetizioni(int numeroRipetizioni) {
+    public void setNumeroRipetizioni(String numeroRipetizioni) {
         this.numeroRipetizioni = numeroRipetizioni;
     }
 
@@ -154,16 +159,17 @@ public class Esercizio extends ListeClasseMarker {
 
     @Override
     public String toString() {
-        return "\nEsercizio{" +
-                "id='" + id + '\'' +
-                "nomeEsercizio='" + nomeEsercizio + '\'' +
+        return "Esercizio{" +
+                "id=" + id +
+                ", nomeEsercizio='" + nomeEsercizio + '\'' +
                 ", tecnica_intensita='" + tecnica_intensita + '\'' +
                 ", esecuzione='" + esecuzione + '\'' +
+                ", note='" + note + '\'' +
                 ", immagineMacchinario=" + Arrays.toString(immagineMacchinario) +
                 ", numeroSerie=" + numeroSerie +
-                ", numeroRipetizioni=" + numeroRipetizioni +
+                ", numeroRipetizioni='" + numeroRipetizioni + '\'' +
                 ", timer=" + timer +
-                ", note=" + note +
+                ", pesoKG=" + pesoKG +
                 '}';
     }
 }
