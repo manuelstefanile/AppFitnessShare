@@ -169,11 +169,11 @@ public class Registrazione_Pag2 extends Activity {
         String cognome=cognomeR.getText().toString();
         String nomeUtente=nomeUtenteR.getText().toString();
 
-        if(eta<0){
+        if(eta<=0){
             Toast.makeText(getApplicationContext(), "Inserire un numero >0 in età", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(altezza<0){
+        if(altezza<=0){
             Toast.makeText(getApplicationContext(), "Inserire un numero >0 in altezza", Toast.LENGTH_SHORT).show();
             return;
         }
