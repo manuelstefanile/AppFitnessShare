@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -582,6 +583,18 @@ public class NotificheDialog {
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
+
+        final View backgroundView = alertDialog.getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
+        backgroundView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                return true; // Indica che l'evento è stato consumato
+            }
+        });
+
+
 
 
         //prendo l oggetto
