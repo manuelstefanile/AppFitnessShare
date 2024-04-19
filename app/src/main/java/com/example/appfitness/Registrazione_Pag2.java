@@ -162,14 +162,22 @@ public class Registrazione_Pag2 extends Activity {
 
     }
     public void AggiornaDati(){
-
-        //controlli e prendo i valori associati all edittext
-        String nome=nomeR.getText().toString();
-        System.out.println("nome **" + nome);
-        String cognome=cognomeR.getText().toString();
-        String nomeUtente=nomeUtenteR.getText().toString();
         int eta= Integer.parseInt(etaR.getText().toString().trim().length()!=0?etaR.getText().toString():"0");
         float altezza=Float.parseFloat(altezzaR.getText().toString().trim().length()!=0?altezzaR.getText().toString():"0");
+        //controlli e prendo i valori associati all edittext
+        String nome=nomeR.getText().toString();
+        String cognome=cognomeR.getText().toString();
+        String nomeUtente=nomeUtenteR.getText().toString();
+
+        if(eta<0){
+            Toast.makeText(getApplicationContext(), "Inserire un numero >0 in età", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(altezza<0){
+            Toast.makeText(getApplicationContext(), "Inserire un numero >0 in altezza", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
 
         pesoSalvato=Peso.fromJson(sharedPreferences.getString("pesoPassato",null));

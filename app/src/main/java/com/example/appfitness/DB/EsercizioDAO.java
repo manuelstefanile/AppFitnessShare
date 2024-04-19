@@ -49,6 +49,11 @@ public class EsercizioDAO {
             result = new Esercizio();
             result.setId(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB._ID)));
             result.setNomeEsercizio(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_nomeEsercizio)));
+
+            @SuppressLint("Range") byte[] immagine=cursor.getBlob(cursor.getColumnIndex(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario));
+            Bitmap bitmap = BitmapFactory.decodeByteArray(immagine, 0, immagine.length);
+            Drawable immDraw= new BitmapDrawable(Resources.getSystem(), bitmap);
+            result.setImmagineMacchinario(immDraw);
             // Chiudi il cursore
             cursor.close();
         }

@@ -143,10 +143,21 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             //ImageView im= v.findViewById(R.id.immagineScheda);
             Button bottone=v.findViewById(R.id.visualizzaEsercizi);
             Button bottoneDelete=v.findViewById(R.id.deleteEsercizi);
+            ImageView im= v.findViewById(R.id.immagineEsercizi);
+            Bitmap bitmap =null;
+            System.out.println("??+"+c);
+            if(c.getImmagineMacchinario()!=null)
+                bitmap=((BitmapDrawable) c.getImmagineMacchinario()).getBitmap();
+
+            if (bitmap==null){
+                im.setImageResource(R.drawable.noimg);
+            }else
+                im.setImageDrawable(c.getImmagineMacchinario());
 
             bottone.setText(c.getNomeEsercizio());
             bottone.setTag(position);
             bottoneDelete.setTag(position);
+            im.setTag(position);
 
             bottone.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -158,6 +169,21 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
         }
 
         return v;
+    }
+
+
+    public void UpdateEsercizio(@Nullable T object) {
+        if(object.getClass().equals(Esercizio.class)){
+            for (T e: itemList) {
+                if(((Esercizio)object).getId()==((Esercizio)e).getId()){
+                    itemList.remove(object);
+                    System.out.println("RRRRRRIMUOVO"+e);
+                    notifyDataSetChanged(); // Aggiorna la vista dopo la rimozione
+                }
+            }
+
+
+        }
     }
 
 }

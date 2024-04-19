@@ -289,6 +289,14 @@ public class PopupEsercizio {
 
          */
 
+        immagineEsercizio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PopupEsercizio.selectImageFromGallery();
+            }
+        });
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -345,10 +353,13 @@ public class PopupEsercizio {
                     System.out.println(eser.getNomeEsercizio()+" "+esercizioNew.getNomeEsercizio());
                     if(eser.getNomeEsercizio().equals(esercizioNew.getNomeEsercizio())){
                         eser.setId(esercizioNew.getId());
-                        Global.adapterEsercizi.remove(esercizio);
+
+                        Global.adapterEsercizi.UpdateEsercizio(eser);
                         Global.esercizioDao.updateEsercizio(eser);
                         Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
-                        Global.adapterEsercizi.add(eser);
+
+
+                        ;
 
                         //nomi diversi, allora controlla
                     }else{
