@@ -589,7 +589,7 @@ public class NotificheDialog {
         backgroundView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
+                /**/
                 return true; // Indica che l'evento è stato consumato
             }
         });
