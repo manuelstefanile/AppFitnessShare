@@ -368,10 +368,10 @@ public class PopupEsercizio {
                             Toast.makeText(dialogView.getContext(), "Nome esercizio già presente", Toast.LENGTH_SHORT).show();
                         }else{
                             eser.setId(esercizioNew.getId());
-                            Global.adapterEsercizi.remove(esercizio);
+
                             Global.esercizioDao.updateEsercizio(eser);
                             Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
-                            Global.adapterEsercizi.add(eser);
+                            Global.adapterEsercizi.UpdateEsercizio(eser);
                         }
                     }
 
