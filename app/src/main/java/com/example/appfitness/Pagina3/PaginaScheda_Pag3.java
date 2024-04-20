@@ -381,6 +381,14 @@ public class PaginaScheda_Pag3 extends Activity {
 
     }
 
+    public void AvviaGiorno(View v){
+        int position = Integer.parseInt(v.getTag().toString());
+        Giorno c = (Giorno) Global.adapterGiorni.getItem(position);
+
+        PopupGiorno.AvviaGiornoSelezionato(c,getLayoutInflater());
+
+    }
+
     public void OnImmagineClick(View v){
         ImageView imag= (ImageView)v;
         NotificheDialog.NotificaImmagine(getLayoutInflater(),imag.getDrawable());

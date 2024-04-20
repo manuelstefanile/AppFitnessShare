@@ -16,6 +16,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.database.SQLException;
 
 import android.graphics.drawable.ColorDrawable;
+import android.os.CountDownTimer;
 import android.text.InputType;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appfitness.Bean.Esercizio;
@@ -287,6 +289,7 @@ public class PopupEsercizio {
         esecuzioneEsercizio.setInputType(InputType.TYPE_NULL);
         salva.setVisibility(View.GONE);
 
+
          */
 
         immagineEsercizio.setOnClickListener(new View.OnClickListener() {
@@ -383,6 +386,165 @@ public class PopupEsercizio {
 
     }
 
+    public static void AvviaEsercizioSelezionato(Esercizio esercizio,LayoutInflater inflater){
+
+        System.out.println("AAAAVVVVI");
+        SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit=shp.edit();
+        noteGiorno = Note.fromJson(shp.getString("notePassate", null));
+        System.out.println("notegiorno"+noteGiorno.getNote());
+        edit.putString("notePassate",new Note().toJson());
+        edit.commit();
+
+        Esercizio esercizioNew=Global.esercizioDao.getEsercizioByNome(esercizio.getNomeEsercizio());
+        // Creazione del layout della tua View
+        View dialogView = inflater.inflate(R.layout.avvia_esercizo, null);
+        Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
+        Button okButton=dialogView.findViewById((int)R.id.okButton);
+
+        // Creazione dell'AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
+        builder.setView(dialogView);
+
+
+        builder.setPositiveButton(null,null);
+        builder.setNegativeButton(null,null);
+        // Mostra l'AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        WindowManager wm = (WindowManager) dialogView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        RelativeLayout ll = dialogView.findViewById((int)R.id.origineEsercizio);
+        ViewGroup.LayoutParams llParams = ll.getLayoutParams();
+        llParams.height = size.y; // Altezza dello schermo
+        ll.setLayoutParams(llParams);
+
+        alertDialog.getWindow().setLayout(size.x, size.y);
+
+        TextView nomeEsercizio = dialogView.findViewById((int) R.id.nomeEsercizio);
+        immagineEsercizio = dialogView.findViewById((int) R.id.immagineEsercizio);
+        TextView numeroSerieEsercizio = dialogView.findViewById((int) R.id.numberPicker);
+        TextView numeroRipetEsercizio = dialogView.findViewById((int) R.id.numeroRipetizioni);
+
+        Button bottoneTimer=dialogView.findViewById((int) R.id.bottoneTimer);
+
+        EditText pesoKgEsercizio = dialogView.findViewById((int) R.id.pesoKG);
+        TextView intensitaEsercizio = dialogView.findViewById((int) R.id.tecnicaIntensita);
+        TextView esecuzioneEsercizio = dialogView.findViewById((int) R.id.esecuzione);
+
+        Button terminaEx=dialogView.findViewById((int)R.id.TerminaEsercizio);
+        terminaEx.setVisibility(View.GONE);
+
+        Button bottoneNote = dialogView.findViewById(R.id.bottoneNote);
+        bottoneNote.setText("Note");
+
+        float totaleSecondi=esercizioNew.getTimer();
+
+
+
+
+        nomeEsercizio.setText(esercizioNew.getNomeEsercizio());
+        immagineEsercizio.setImageDrawable(esercizioNew.getImmagineMacchinario());
+        numeroSerieEsercizio.setText(String.valueOf(esercizioNew.getNumeroSerie()));
+        numeroRipetEsercizio.setText(String.valueOf(esercizioNew.getNumeroRipetizioni()));
+
+
+        pesoKgEsercizio.setText(String.valueOf(esercizioNew.getPesoKG()));
+        intensitaEsercizio.setText(esercizioNew.getTecnica_intensita());
+        esecuzioneEsercizio.setText(esercizioNew.getEsecuzione());
+
+
+        immagineEsercizio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PopupEsercizio.selectImageFromGallery();
+            }
+        });
+
+        terminaEx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                edit.putString("notePassate",noteGiorno.toJson());
+                edit.commit();
+                alertDialog.dismiss();
+            }
+        });
+
+        bottoneTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AvviaTimer(inflater,totaleSecondi,numeroSerieEsercizio);
+            }
+        });
+
+        bottoneNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit= sh.edit();
+                PaginaScheda_Pag3.StampaTutto();
+                Note notaDaMostrare= new Note(esercizioNew.getNote());
+                edit.putString("notePassate", notaDaMostrare.toJson());
+                edit.apply();
+                try {
+                    Registrazione_Pag2.editGlobal=false;
+                    NotificheDialog.NotificaNote(inflater,sh);
+                } catch (Eccezioni e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    private static void AvviaTimer(LayoutInflater inflater,float totaleSecondi,TextView numeroSerie){
+// Creazione del layout della tua View
+        View dialogView = inflater.inflate(R.layout.timer, null);
+        Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
+        Button okButton=dialogView.findViewById((int)R.id.okButton);
+
+        // Creazione dell'AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
+        builder.setView(dialogView);
+
+
+        builder.setPositiveButton(null,null);
+        builder.setNegativeButton(null,null);
+        // Mostra l'AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        TextView timerTesto=dialogView.findViewById(R.id.timer);
+
+
+        long totalTimeInMillis =(long) (totaleSecondi * 1000);
+        CountDownTimer countDownTimer = new CountDownTimer(totalTimeInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                // Converti millisUntilFinished in minuti e secondi
+                int minutes = (int) (millisUntilFinished / 1000) / 60;
+                int seconds = (int) (millisUntilFinished / 1000) % 60;
+
+                String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
+                timerTesto.setText(timeLeftFormatted);
+            }
+
+            @Override
+            public void onFinish() {
+                numeroSerie.setText(Integer.parseInt(numeroSerie.getText().toString())-1);
+                // Azioni da intraprendere quando il cronometro è finito
+                alertDialog.dismiss();
+            }
+        }.start();
+    }
 
 
     private static void selectImageFromGallery(){

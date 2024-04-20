@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/origineEsercizio"
+    android:layout_height="match_parent"
+    android:background="@drawable/drawable_creascheda"
+    android:paddingTop="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="20dp">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="80dp"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            >
+
+            <ImageButton
+                android:id="@+id/immagineEsercizio"
+                android:layout_width="0dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_weight="0.1"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/drawable_botton_white"
+                android:src="@drawable/noimg"
+                >
+            </ImageButton>
+
+
+            <TextView
+                android:id="@+id/nomeEsercizio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/drawable_botton_grigio"
+                android:hint="Esercizio"
+                android:padding="6dp"
+                android:textAlignment="center"
+                android:textSize="24dp"
+                >
+            </TextView>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="0.1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_vertical">
+
+            </ImageView>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="70dp"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginRight="10dp"
+                ></TextView>
+
+            <Button
+                android:id="@+id/bottoneNote"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.5"
+                android:textStyle="italic"
+                android:background="@drawable/drawable_botton_grigio"
+                android:text="Note"
+                android:textSize="15dp"></Button>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginLeft="10dp"
+                ></TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="0.175"
+                android:gravity="left"
+                android:text=""></TextView>
+            <TextView
+                android:id="@+id/numberPicker"
+                android:layout_width="0dp"
+                android:layout_weight="1.7"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:hint="Numero di Serie"
+                android:inputType="numberDecimal"
+                android:padding="6dp"
+                android:background="@drawable/drawable_scheda">
+            </TextView>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="0.175"
+                android:gravity="left"
+                android:text=""></TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            >
+
+
+            <TextView
+                android:id="@+id/numeroRipetizioni"
+                android:layout_width="0dp"
+                android:layout_weight="1.7"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:hint="Numero Ripetizioni"
+                android:background="@drawable/drawable_scheda"
+                >
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            >
+
+        <Button
+            android:id="@+id/bottoneTimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TIMER"
+            ></Button>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            >
+
+            <TextView
+                android:id="@+id/tecnicaIntensita"
+                android:layout_width="0dp"
+                android:layout_weight="1.7"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:hint="Tecnica d'Intensità"
+                android:textSize="18dp"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:background="@drawable/drawable_scheda"
+                >
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            >
+
+
+            <TextView
+                android:id="@+id/esecuzione"
+                android:layout_width="0dp"
+                android:layout_weight="1.7"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                android:hint="Modalità Esecuzione"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_scheda"
+                android:padding="6dp"
+
+                >
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            >
+
+            <EditText
+                android:id="@+id/pesoKG"
+                android:layout_width="0dp"
+                android:layout_weight="1.7"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                android:hint="Carichi utilizzati"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_scheda"
+                android:padding="6dp"
+
+                >
+            </EditText>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        >
+        <Button
+            android:id="@+id/TerminaEsercizio"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Termina Esercizio"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/drawable_scheda"
+            >
+
+        </Button>
+
+    </LinearLayout>
+</RelativeLayout>

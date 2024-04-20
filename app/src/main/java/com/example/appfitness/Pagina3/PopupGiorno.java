@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.text.InputType;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.example.appfitness.R;
 import com.example.appfitness.Registrazione_Pag2;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PopupGiorno {
 
@@ -310,5 +312,119 @@ public class PopupGiorno {
 
 
     }
+
+    public static void AvviaGiornoSelezionato(Giorno giorno,LayoutInflater inflater){
+
+        System.out.println("___"+giorno);
+        SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit=shp.edit();
+        noteScheda = Note.fromJson(shp.getString("notePassate", null));
+        edit.putString("notePassate",new Note().toJson());
+        edit.commit();
+
+
+        // Creazione del layout della tua View
+        View dialogView = inflater.inflate(R.layout.crea_giorno, null);
+        Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
+        Button okButton=dialogView.findViewById((int)R.id.okButton);
+
+        // Creazione dell'AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
+        builder.setView(dialogView);
+
+
+        builder.setPositiveButton(null,null);
+        builder.setNegativeButton(null,null);
+        // Mostra l'AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        WindowManager wm = (WindowManager) dialogView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        RelativeLayout ll = dialogView.findViewById((int)R.id.origineGiorno);
+        ViewGroup.LayoutParams llParams = ll.getLayoutParams();
+        llParams.height = size.y; // Altezza dello schermo
+        ll.setLayoutParams(llParams);
+
+        alertDialog.getWindow().setLayout(size.x, size.y);
+
+        ListView listaEserciziiView = (ListView)dialogView.findViewById(R.id.listaEserciziView);
+        Global.adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi_avvia, new ArrayList<Esercizio>(),true);
+        listaEserciziiView.setAdapter(Global.adapterEsercizi);
+
+        Global.ledao= new ListaEserciziDAO(PopupSchede.act.getApplicationContext());
+        Global.esercizioDao=new EsercizioDAO(PopupSchede.act.getApplicationContext());
+
+        ArrayList<Integer> listaDiID=Global.ledao.getListaEserciziPerGiorno(giorno.getId());
+
+        //per ogni id, ricercami l'elemento giorno e aggiungilo alla lista di giorni visibile
+        for(Integer id:listaDiID){
+            Global.adapterEsercizi.add(Global.esercizioDao.getEsercizioById(id));
+        }
+
+
+
+
+        EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
+        Button bottoneNote=dialogView.findViewById((int)R.id.bottoneNoteGiorno);
+        Button creaEsercizio=dialogView.findViewById((int)R.id.CreaEsercizio);
+        Button salvaGiorno=dialogView.findViewById((int)R.id.salvaGiorno);
+        /*da controllare sto toast
+        Toast.makeText(dialogView.getContext(), "Inserisci un nome per salvare la giornata.", Toast.LENGTH_LONG).show();*/
+        Button back=dialogView.findViewById((int)R.id.backGiorno);
+        bottoneNote.setText("Note");
+
+        //modifico il weight di edit
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) nomeGiorno.getLayoutParams();
+        params.weight = 0.6f; // Impostare il layout_weight a 0.6
+        nomeGiorno.setLayoutParams(params);
+
+        nomeGiorno.setText(giorno.getNomeGiorno());
+        nomeGiorno.setInputType(InputType.TYPE_NULL);
+        salvaGiorno.setVisibility(View.GONE);
+        back.setVisibility(View.GONE);
+        creaEsercizio.setText("Fine Allenamento");
+
+        //fine allenamento
+        creaEsercizio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+
+        bottoneNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit= sh.edit();
+                PaginaScheda_Pag3.StampaTutto();
+
+                Note note=Note.fromJson(sh.getString("notePassate", null));
+                Note notaDaMostrare;
+                if(note.getNote()!=null){
+                    notaDaMostrare=note;
+                }else
+                    notaDaMostrare= new Note(giorno.getNote());
+                System.out.println("___"+notaDaMostrare.getNote());
+                edit.putString("notePassate", notaDaMostrare.toJson());
+                edit.apply();
+                try {
+                    Registrazione_Pag2.editGlobal=false;
+                    NotificheDialog.NotificaNote(inflater,sh);
+                } catch (Eccezioni e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
+    }
+
 
 }
