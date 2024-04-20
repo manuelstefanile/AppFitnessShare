@@ -539,7 +539,7 @@ public class PopupEsercizio {
 
             @Override
             public void onFinish() {
-                numeroSerie.setText(Integer.parseInt(numeroSerie.getText().toString())-1);
+                numeroSerie.setText(String.valueOf(Integer.parseInt(numeroSerie.getText().toString())-1));
                 // Azioni da intraprendere quando il cronometro è finito
                 alertDialog.dismiss();
             }

@@ -80,6 +80,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             //ImageView im= v.findViewById(R.id.immagineScheda);
             Button bottone = v.findViewById(R.id.visualizzaEsercizi);
             Button bottoneDelete = v.findViewById(R.id.deleteEsercizi);
+            bottoneDelete.setVisibility(View.GONE);
             ImageView im = v.findViewById(R.id.immagineEsercizi);
             Bitmap bitmap = null;
             System.out.println("??+" + c);
