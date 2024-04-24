@@ -260,35 +260,35 @@ public class NotificheDialog {
                     // Ottenere i valori delle misure
                     float valoreBracicoDx = braccioDx.getText().toString().trim().length() != 0 ? Float.parseFloat(braccioDx.getText().toString()) : 0;
                     misureStorage.setBraccioDx(valoreBracicoDx);
-                    braccioDx.setText(String.valueOf(misureStorage.getBraccioDx()));
+
 
                     float valoreBracicoSx = braccioSx.getText().toString().trim().length() != 0 ? Float.parseFloat(braccioSx.getText().toString()) : 0;
                     misureStorage.setBraccioSx(valoreBracicoSx);
-                    braccioSx.setText(String.valueOf(misureStorage.getBraccioSx()));
+
 
                     float valoreGambaDx = gambaDx.getText().toString().trim().length() != 0 ? Float.parseFloat(gambaDx.getText().toString()) : 0;
                     misureStorage.setGambaDx(valoreGambaDx);
-                    gambaDx.setText(String.valueOf(misureStorage.getGambaDx()));
+
 
                     float valoreGambaSx = gambaSx.getText().toString().trim().length() != 0 ? Float.parseFloat(gambaSx.getText().toString()) : 0;
                     misureStorage.setGambaSx(valoreGambaSx);
-                    gambaSx.setText(String.valueOf(misureStorage.getGambaSx()));
+
 
                     float valorePetto = petto.getText().toString().trim().length() != 0 ? Float.parseFloat(petto.getText().toString()) : 0;
                     misureStorage.setPetto(valorePetto);
-                    petto.setText(String.valueOf(misureStorage.getPetto()));
+
 
                     float valoreSpalle = spalle.getText().toString().trim().length() != 0 ? Float.parseFloat(spalle.getText().toString()) : 0;
                     misureStorage.setSpalle(valoreSpalle);
-                    spalle.setText(String.valueOf(misureStorage.getSpalle()));
+
 
                     float valoreAddome = addome.getText().toString().trim().length() != 0 ? Float.parseFloat(addome.getText().toString()) : 0;
                     misureStorage.setAddome(valoreAddome);
-                    addome.setText(String.valueOf(misureStorage.getAddome()));
+
 
                     float valoreFianchi = fianchi.getText().toString().trim().length() != 0 ? Float.parseFloat(fianchi.getText().toString()) : 0;
                     misureStorage.setFianchi(valoreFianchi);
-                    fianchi.setText(String.valueOf(misureStorage.getFianchi()));
+
 
                     // Controllare se almeno una misura è stata inserita correttamente e tutte le altre sono 0
                     boolean almenoUnaMisuraInserita = valoreBracicoDx != 0 || valoreBracicoSx != 0 || valoreGambaDx != 0 ||
@@ -309,7 +309,6 @@ public class NotificheDialog {
                     misureStorage.setNote(noteDettaglio.getText().toString());
                     misureStorage.setData(dataSalvare);
 
-                    System.out.println("___+" + misureStorage);
 
                     // Mostra il Toast solo se tutte le misure sono state inserite correttamente
                     Toast.makeText(dialogView.getContext(), "Misure salvate. Keep going Buddy!", Toast.LENGTH_LONG).show();
@@ -664,7 +663,7 @@ public class NotificheDialog {
             CalendarView calendario = dialogView.findViewById(R.id.calendarioKcal);
 
             // Imposta i valori dell'oggetto Kcal nei rispettivi elementi della View
-            kcalAttuali.setText(String.valueOf(oggettoKcal.getKcal()));
+            if(oggettoKcal.getKcal()!=0)kcalAttuali.setText(String.valueOf(oggettoKcal.getKcal()));
 
             switch (oggettoKcal.getFase()) {
                 case MASSA:
@@ -681,11 +680,11 @@ public class NotificheDialog {
                     break;
             }
 
-            carbo.setText(String.valueOf(oggettoKcal.getCarbo()));
-            proteine.setText(String.valueOf(oggettoKcal.getProteine()));
-            grassi.setText(String.valueOf(oggettoKcal.getGrassi()));
-            sale.setText(String.valueOf(oggettoKcal.getSale()));
-            acqua.setText(String.valueOf(oggettoKcal.getAcqua()));
+            if(oggettoKcal.getCarbo()!=0)carbo.setText(String.valueOf(oggettoKcal.getCarbo()));
+            if(oggettoKcal.getProteine()!=0)proteine.setText(String.valueOf(oggettoKcal.getProteine()));
+            if(oggettoKcal.getGrassi()!=0)grassi.setText(String.valueOf(oggettoKcal.getGrassi()));
+            if(oggettoKcal.getSale()!=0)sale.setText(String.valueOf(oggettoKcal.getSale()));
+            if(oggettoKcal.getAcqua()!=0)acqua.setText(String.valueOf(oggettoKcal.getAcqua()));
             noteDettaglio.setText(oggettoKcal.getNote());
 
             // Imposta la data nel CalendarView
@@ -709,14 +708,14 @@ public class NotificheDialog {
             CalendarView calendario=dialogView.findViewById((int)R.id.calendarioMisure);
 
             // Impostare i valori negli EditText
-            braccioDx.setText(String.valueOf(oggettoMisure.getBraccioDx()));
-            braccioSx.setText(String.valueOf(oggettoMisure.getBraccioSx()));
-            gambaDx.setText(String.valueOf(oggettoMisure.getGambaDx()));
-            gambaSx.setText(String.valueOf(oggettoMisure.getGambaSx()));
-            petto.setText(String.valueOf(oggettoMisure.getPetto()));
-            spalle.setText(String.valueOf(oggettoMisure.getSpalle()));
-            addome.setText(String.valueOf(oggettoMisure.getAddome()));
-            fianchi.setText(String.valueOf(oggettoMisure.getFianchi()));
+            if(oggettoMisure.getBraccioDx()!=0)braccioDx.setText(String.valueOf(oggettoMisure.getBraccioDx()));
+            if(oggettoMisure.getBraccioSx()!=0)braccioSx.setText(String.valueOf(oggettoMisure.getBraccioSx()));
+            if(oggettoMisure.getGambaDx()!=0)gambaDx.setText(String.valueOf(oggettoMisure.getGambaDx()));
+            if(oggettoMisure.getBraccioSx()!=0)gambaSx.setText(String.valueOf(oggettoMisure.getGambaSx()));
+            if(oggettoMisure.getPetto()!=0)petto.setText(String.valueOf(oggettoMisure.getPetto()));
+            if(oggettoMisure.getSpalle()!=0)spalle.setText(String.valueOf(oggettoMisure.getSpalle()));
+            if(oggettoMisure.getAddome()!=0)addome.setText(String.valueOf(oggettoMisure.getAddome()));
+            if(oggettoMisure.getFianchi()!=0)fianchi.setText(String.valueOf(oggettoMisure.getFianchi()));
             noteDettaglio.setText(oggettoMisure.getNote());
 
             // Impostare la data nel CalendarView
@@ -728,9 +727,70 @@ public class NotificheDialog {
             EditText noteDettaglio=dialogView.findViewById((int)R.id.notePeso);
 
             // Impostare il valore di peso e note nei rispettivi EditText
-            kiliEdit.setText(String.valueOf(peso.getPesoKg()));
+            if(peso.getPesoKg()!=0)kiliEdit.setText(String.valueOf(peso.getPesoKg()));
             noteDettaglio.setText(peso.getNote());
             calendario.setDate(peso.getCalendario().getTimeInMillis());
+
+        }
+
+    }
+
+    private static void SettaTextAVuoto(Object oggettoC,View dialogView,Object ogg){
+        if (oggettoC.getClass() == Kcal.class) {
+
+
+            // Prendi gli EditText e altri elementi dalla View del dialog
+            EditText kcalAttuali = dialogView.findViewById(R.id.kcalAttual);
+            RadioButton radioNormo = dialogView.findViewById(R.id.radioNormo);
+            EditText carbo = dialogView.findViewById(R.id.carbo);
+            EditText proteine = dialogView.findViewById(R.id.proteine);
+            EditText grassi = dialogView.findViewById(R.id.grassi);
+            EditText sale = dialogView.findViewById(R.id.sale);
+            EditText acqua = dialogView.findViewById(R.id.acqua);
+            EditText noteDettaglio = dialogView.findViewById(R.id.noteDettaglio);
+
+            // Imposta i valori dell'oggetto Kcal nei rispettivi elementi della View
+            kcalAttuali.setText("");
+            radioNormo.setChecked(true);
+            carbo.setText("");
+            proteine.setText("");
+            grassi.setText("");
+            sale.setText("");
+            acqua.setText("");
+            noteDettaglio.setText("");
+
+
+        }else if(oggettoC.getClass()==Misure.class){
+
+            EditText braccioDx=dialogView.findViewById(R.id.braccioDX);
+            EditText braccioSx=dialogView.findViewById(R.id.braccioSX);
+            EditText gambaDx=dialogView.findViewById(R.id.gambaDX);
+            EditText gambaSx=dialogView.findViewById(R.id.gambaSX);
+            EditText petto=dialogView.findViewById(R.id.petto);
+            EditText spalle=dialogView.findViewById(R.id.spalle);
+            EditText addome=dialogView.findViewById(R.id.addome);
+            EditText fianchi=dialogView.findViewById((int)R.id.fianchi);
+            EditText noteDettaglio=dialogView.findViewById((int)R.id.noteMisure);
+
+
+            // Impostare i valori negli EditText
+            braccioDx.setText("");
+            braccioSx.setText("");
+            gambaDx.setText("");
+            gambaSx.setText("");
+            petto.setText("");
+            spalle.setText("");
+            addome.setText("");
+            fianchi.setText("");
+            noteDettaglio.setText("");
+        }else if(oggettoC.getClass()==Peso.class){
+
+            EditText kiliEdit= dialogView.findViewById(R.id.pesoAttual);
+            EditText noteDettaglio=dialogView.findViewById((int)R.id.notePeso);
+            // Impostare il valore di peso e note nei rispettivi EditText
+            kiliEdit.setText("");
+            noteDettaglio.setText("");
+
 
         }
 
@@ -758,7 +818,7 @@ public class NotificheDialog {
                         System.out.println("datad"+oggKcal.getData().getTimeInMillis());
                         System.out.println("kcalkcalSetto");
                         SettaVarDialogView(oggetto,dialogView,oggKcal);
-                    }
+                    }else SettaTextAVuoto(oggetto,dialogView,oggKcal);
 
                 }else if(oggetto.getClass()==Misure.class) {
                     MisureDAO misureDAO=new MisureDAO(dialogView.getContext());
@@ -766,14 +826,15 @@ public class NotificheDialog {
                     if(oggMisure!=null){
                         System.out.println("kcalkcalSetto");
                         SettaVarDialogView(oggetto,dialogView,oggMisure);
-                    }
+                    }else SettaTextAVuoto(oggetto,dialogView,oggMisure);
 
                 }else if(oggetto.getClass()==Peso.class) {
                     PesoDAO pesoDAO=new PesoDAO(dialogView.getContext());
                     Peso oggPeso=pesoDAO.getPesoPerData(Global.ConversioneCalendarString(calendarioMostra));
                     if(oggPeso!=null){
                         SettaVarDialogView(oggetto,dialogView,oggPeso);
-                    }
+                    }else SettaTextAVuoto(oggetto,dialogView,oggPeso);
+
 
                 }
 

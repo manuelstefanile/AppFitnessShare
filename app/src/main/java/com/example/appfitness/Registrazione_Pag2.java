@@ -232,6 +232,21 @@ public class Registrazione_Pag2 extends Activity {
     }
     @SuppressLint("Range")
     public void SalvaAll(View v){
+        // Controlli e prendo i valori associati all'edittext
+        String nome = nomeR.getText().toString();
+        String cognome = cognomeR.getText().toString();
+        String nomeUtente = nomeUtenteR.getText().toString().trim();
+        int eta = Integer.parseInt(etaR.getText().toString().trim().length() != 0 ? etaR.getText().toString() : "0");
+        float altezza = Float.parseFloat(altezzaR.getText().toString().trim().length() != 0 ? altezzaR.getText().toString() : "0");
+
+        if(eta<=0){
+            Toast.makeText(getApplicationContext(), "Inserire un numero >0 in età", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(altezza<=0){
+            Toast.makeText(getApplicationContext(), "Inserire un numero >0 in altezza", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
 // Elimina il salvataggio precedente se presente.
         SQLiteDatabase dbWritable = db.getWritableDatabase();
@@ -240,12 +255,7 @@ public class Registrazione_Pag2 extends Activity {
         dbWritable.delete(SchemaDB.MisureDB.TABLE_NAME, null, null);
         dbWritable.delete(SchemaDB.UtenteDB.TABLE_NAME, null, null);
 
-// Controlli e prendo i valori associati all'edittext
-        String nome = nomeR.getText().toString();
-        String cognome = cognomeR.getText().toString();
-        String nomeUtente = nomeUtenteR.getText().toString().trim();
-        int eta = Integer.parseInt(etaR.getText().toString().trim().length() != 0 ? etaR.getText().toString() : "0");
-        float altezza = Float.parseFloat(altezzaR.getText().toString().trim().length() != 0 ? altezzaR.getText().toString() : "0");
+
 
         pesoSalvato = Peso.fromJson(sharedPreferences.getString("pesoPassato", null));
         noteSalvate = Note.fromJson(sharedPreferences.getString("notePassate", null));
