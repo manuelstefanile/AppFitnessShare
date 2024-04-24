@@ -87,7 +87,7 @@ public class EsercizioDAO {
             result.setNumeroSerie(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_numeroSerie)));
             result.setTecnica_intensita(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_tecnica_intensita)));
             result.setTimer(cursor.getFloat(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_timer)));
-            result.setPesoKG(cursor.getFloat(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_pesoKG)));
+            result.setPesoKG(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_pesoKG)));
             @SuppressLint("Range") byte[] immagine=cursor.getBlob(cursor.getColumnIndex(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario));
             Bitmap bitmap = BitmapFactory.decodeByteArray(immagine, 0, immagine.length);
             Drawable immDraw= new BitmapDrawable(Resources.getSystem(), bitmap);

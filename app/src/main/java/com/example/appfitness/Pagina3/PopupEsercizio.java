@@ -17,9 +17,12 @@ import android.database.SQLException;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -146,12 +149,13 @@ public class PopupEsercizio {
                 Esercizio esercizio=new Esercizio(nomeEsercizio.getText().toString().trim().length()>0?nomeEsercizio.getText().toString().trim():"",
                         intensitaEsercizio.getText().toString(),
                         esecuzioneEsercizio.getText().toString(),immagineEsercizio.getDrawable(),
-                        Integer.parseInt(numeroSerieEsercizio.getText().toString().trim().length()!=0?numeroSerieEsercizio.getText().toString():"0"),
+                        Integer.parseInt(numeroSerieEsercizio.getText().toString().trim().length()!=0
+                                &&Integer.parseInt(numeroSerieEsercizio.getText().toString())>0
+                                ?numeroSerieEsercizio.getText().toString():"1"),
                         numeroRipetEsercizio.getText().toString()
                         ,seconditotali,
                         note.getNote(),
-                        Float.parseFloat(pesoKgEsercizio.getText().toString().trim().length()!=0?pesoKgEsercizio.getText().toString():"0")
-
+                        pesoKgEsercizio.getText().toString()
                 );
                 //inserisco l ex nel db
                 DbHelper db = new DbHelper(PopupSchede.act.getApplicationContext());
@@ -276,7 +280,7 @@ public class PopupEsercizio {
         numeroRipetEsercizio.setText(String.valueOf(esercizioNew.getNumeroRipetizioni()));
         numeroTimetEsercizio.setText(String.valueOf(minuti));
         numeroTimet2Esercizio.setText(String.valueOf(secondi));
-        pesoKgEsercizio.setText(String.valueOf(esercizioNew.getPesoKG()));
+        pesoKgEsercizio.setText(esercizioNew.getPesoKG());
         intensitaEsercizio.setText(esercizioNew.getTecnica_intensita());
         esecuzioneEsercizio.setText(esercizioNew.getEsecuzione());
 
@@ -342,11 +346,13 @@ public class PopupEsercizio {
                 Esercizio eser=new Esercizio(nomeEsercizio.getText().toString().trim().length()>0?nomeEsercizio.getText().toString().trim():"",
                         intensitaEsercizio.getText().toString(),
                         esecuzioneEsercizio.getText().toString(),immagineEsercizio.getDrawable(),
-                        Integer.parseInt(numeroSerieEsercizio.getText().toString().trim().length()!=0?numeroSerieEsercizio.getText().toString():"0"),
+                        Integer.parseInt(numeroSerieEsercizio.getText().toString().trim().length()!=0
+                                &&Integer.parseInt(numeroSerieEsercizio.getText().toString())>0
+                                ?numeroSerieEsercizio.getText().toString():"1"),
                         numeroRipetEsercizio.getText().toString(),
                         seconditotali,
                         note.getNote(),
-                        Float.parseFloat(pesoKgEsercizio.getText().toString().trim().length()!=0?pesoKgEsercizio.getText().toString():"0")
+                        pesoKgEsercizio.getText().toString()
 
                 );
                 if(eser.getNomeEsercizio()==""){
@@ -445,19 +451,32 @@ public class PopupEsercizio {
 
         float totaleSecondi=esercizioNew.getTimer();
 
-
-
-
         nomeEsercizio.setText(esercizioNew.getNomeEsercizio());
         immagineEsercizio.setImageDrawable(esercizioNew.getImmagineMacchinario());
         numeroSerieEsercizio.setText(String.valueOf(esercizioNew.getNumeroSerie()));
         numeroRipetEsercizio.setText(String.valueOf(esercizioNew.getNumeroRipetizioni()));
 
-
-        pesoKgEsercizio.setText(String.valueOf(esercizioNew.getPesoKG()));
+        pesoKgEsercizio.setText((esercizioNew.getPesoKG()));
         intensitaEsercizio.setText(esercizioNew.getTecnica_intensita());
         esecuzioneEsercizio.setText(esercizioNew.getEsecuzione());
 
+        numeroSerieEsercizio.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Metodo chiamato quando il testo è stato modificato
+                String inputText = s.toString();
+                if (inputText.equals("0")) {
+                    bottoneTimer.setEnabled(false);
+                    terminaEx.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
 
         immagineEsercizio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -471,6 +490,10 @@ public class PopupEsercizio {
             @Override
             public void onClick(View view) {
 
+                //salva cio che hai scritto
+                esercizioNew.setPesoKG(pesoKgEsercizio.getText().toString());
+                esercizioNew.setNote(Note.fromJson(shp.getString("notePassate", null)).getNote());
+                Global.esercizioDao.updateEsercizio(esercizioNew);
                 edit.putString("notePassate",noteGiorno.toJson());
                 edit.commit();
                 alertDialog.dismiss();
@@ -480,7 +503,7 @@ public class PopupEsercizio {
         bottoneTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AvviaTimer(inflater,totaleSecondi,numeroSerieEsercizio);
+                    AvviaTimer(inflater,totaleSecondi,numeroSerieEsercizio);
             }
         });
 
@@ -489,12 +512,16 @@ public class PopupEsercizio {
             public void onClick(View view) {
                 SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit= sh.edit();
-                PaginaScheda_Pag3.StampaTutto();
+
+                Note notetemp = Note.fromJson(shp.getString("notePassate", null));
+                if(notetemp.getNote()!=null){
+                    esercizioNew.setNote(notetemp.getNote());
+                }
                 Note notaDaMostrare= new Note(esercizioNew.getNote());
                 edit.putString("notePassate", notaDaMostrare.toJson());
                 edit.apply();
                 try {
-                    Registrazione_Pag2.editGlobal=false;
+                    Registrazione_Pag2.editGlobal=true;
                     NotificheDialog.NotificaNote(inflater,sh);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
@@ -524,9 +551,19 @@ public class PopupEsercizio {
 
         TextView timerTesto=dialogView.findViewById(R.id.timer);
 
+        final View backgroundView = alertDialog.getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
+        backgroundView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                /**/
+                return true; // Indica che l'evento è stato consumato
+            }
+        });
 
+
+        final long[] tempotemp = new long[1];
         long totalTimeInMillis =(long) (totaleSecondi * 1000);
-        CountDownTimer countDownTimer = new CountDownTimer(totalTimeInMillis, 1000) {
+        final CountDownTimer[] countDownTimer = {new CountDownTimer(totalTimeInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 // Converti millisUntilFinished in minuti e secondi
@@ -535,15 +572,87 @@ public class PopupEsercizio {
 
                 String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
                 timerTesto.setText(timeLeftFormatted);
+                tempotemp[0] = millisUntilFinished;
+                System.out.println("tempo onTick" + tempotemp[0]);
             }
 
             @Override
             public void onFinish() {
-                numeroSerie.setText(String.valueOf(Integer.parseInt(numeroSerie.getText().toString())-1));
+                numeroSerie.setText(String.valueOf(Integer.parseInt(numeroSerie.getText().toString()) - 1));
                 // Azioni da intraprendere quando il cronometro è finito
                 alertDialog.dismiss();
             }
-        }.start();
+
+        }.start()};
+
+        Button pauseButton = dialogView.findViewById(R.id.pauseButton);
+        Button resumeButton = dialogView.findViewById(R.id.resumeButton);
+        Button backButton = dialogView.findViewById(R.id.backButton);
+        Button terminateButton = dialogView.findViewById(R.id.terminateButton);
+
+        final boolean[] pausa = {false};
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Metti in pausa il timer
+                countDownTimer[0].cancel();
+                pausa[0] =true;
+                ;
+            }
+        });
+
+        resumeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Riprendi il timer
+                if(pausa[0]) {
+                    countDownTimer[0] = new CountDownTimer(tempotemp[0], 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            // Converti millisUntilFinished in minuti e secondi
+                            int minutes = (int) (millisUntilFinished / 1000) / 60;
+                            int seconds = (int) (millisUntilFinished / 1000) % 60;
+
+                            String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
+                            timerTesto.setText(timeLeftFormatted);
+                            tempotemp[0] = millisUntilFinished;
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            numeroSerie.setText(String.valueOf(Integer.parseInt(numeroSerie.getText().toString()) - 1));
+                            // Azioni da intraprendere quando il cronometro è finito
+                            alertDialog.dismiss();
+                        }
+
+                    }.start();
+                    pausa[0]=false;
+                }
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Azioni per tornare indietro
+                countDownTimer[0].cancel();
+                alertDialog.dismiss();
+            }
+        });
+
+        terminateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countDownTimer[0].onTick(10);
+                countDownTimer[0].onFinish();
+                countDownTimer[0].cancel();
+                // Azioni per terminare direttamente
+
+            }
+        });
+
+
     }
 
 

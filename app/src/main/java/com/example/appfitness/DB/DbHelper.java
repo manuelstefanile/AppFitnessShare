@@ -73,7 +73,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     + SchemaDB.EsercizioDB.COLUMN_immagineMacchinario + " BLOB, "
                     + SchemaDB.EsercizioDB.COLUMN_numeroSerie + " INTEGER, "
                     + SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni + " TEXT, "
-                    + SchemaDB.EsercizioDB.COLUMN_pesoKG + " FLOAT,"
+                    + SchemaDB.EsercizioDB.COLUMN_pesoKG + " TEXT,"
                     + SchemaDB.EsercizioDB.COLUMN_note + " TEXT, "
                     + SchemaDB.EsercizioDB.COLUMN_timer + " FLOAT"
                     + ");";

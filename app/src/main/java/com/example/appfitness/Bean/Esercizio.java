@@ -18,10 +18,11 @@ public class Esercizio extends ListeClasseMarker {
     private byte[] immagineMacchinario;
     private int numeroSerie;
     private String numeroRipetizioni;
-    private float timer,pesoKG;
+    private float timer;
+    private String pesoKG;
 
     public Esercizio(String nomeEsercizio, String tecnica_intensita, String esecuzione, Drawable immagineMacchinario,
-                     int numeroSerie, String numeroRipetizioni, float timer,String note,float pesoKG) {
+                     int numeroSerie, String numeroRipetizioni, float timer,String note,String pesoKG) {
         this.nomeEsercizio = nomeEsercizio;
         this.tecnica_intensita = tecnica_intensita;
         this.esecuzione = esecuzione;
@@ -69,11 +70,11 @@ public class Esercizio extends ListeClasseMarker {
         this.esecuzione = esecuzione;
     }
 
-    public float getPesoKG() {
+    public String getPesoKG() {
         return pesoKG;
     }
 
-    public void setPesoKG(float pesoKG) {
+    public void setPesoKG(String pesoKG) {
         this.pesoKG = pesoKG;
     }
 
@@ -104,16 +105,6 @@ public class Esercizio extends ListeClasseMarker {
 
         return new BitmapDrawable(Resources.getSystem(), BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
     }
-
-
-
-
-
-
-
-
-
-
 
     public int getNumeroSerie() {
         return numeroSerie;
