@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appfitness.Bean.COSTANTI;
 import com.example.appfitness.Bean.Kcal;
 import com.example.appfitness.Bean.Misure;
 import com.example.appfitness.Bean.Note;
@@ -90,7 +91,7 @@ public class Registrazione_Pag2 extends Activity {
         editor.putString("pesoPassato", pesoSalvato.toJson());
         editor.putString("misurePassate", misureSalvato.toJson());
         editor.putString("kcalPassate", chiloK.toJson());
-        editor.putString("notePassate", noteSalvate.toJson());
+        editor.putString(COSTANTI.NOTE_REGISTRAZIONE, noteSalvate.toJson());
         editor.apply();
 
         bottoneNext.setOnClickListener(new View.OnClickListener() {
@@ -181,7 +182,7 @@ public class Registrazione_Pag2 extends Activity {
 
 
         pesoSalvato=Peso.fromJson(sharedPreferences.getString("pesoPassato",null));
-        noteSalvate = Note.fromJson(sharedPreferences.getString("notePassate", null));
+        noteSalvate = Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_REGISTRAZIONE, null));
         misureSalvato = Misure.fromJson(sharedPreferences.getString("misurePassate", null));
         chiloK = Kcal.fromJson(sharedPreferences.getString("kcalPassate", null));
 
@@ -258,7 +259,7 @@ public class Registrazione_Pag2 extends Activity {
 
 
         pesoSalvato = Peso.fromJson(sharedPreferences.getString("pesoPassato", null));
-        noteSalvate = Note.fromJson(sharedPreferences.getString("notePassate", null));
+        noteSalvate = Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_REGISTRAZIONE, null));
         misureSalvato = Misure.fromJson(sharedPreferences.getString("misurePassate", null));
         chiloK = Kcal.fromJson(sharedPreferences.getString("kcalPassate", null));
 
@@ -326,7 +327,7 @@ public class Registrazione_Pag2 extends Activity {
         editor.putString("pesoPassato", pesoSalvato.toJson());
         editor.putString("misurePassate", misureSalvato.toJson());
         editor.putString("kcalPassate", chiloK.toJson());
-        editor.putString("notePassate", noteSalvate.toJson());
+        editor.putString(COSTANTI.NOTE_REGISTRAZIONE, noteSalvate.toJson());
         editor.apply();
 
         SQLiteDatabase dbWritable = db.getWritableDatabase();
@@ -356,7 +357,7 @@ public class Registrazione_Pag2 extends Activity {
                 NotificheDialog.NotificaKcal(getLayoutInflater(),sharedPreferences);
                 break;
             case "note":
-                NotificheDialog.NotificaNote(getLayoutInflater(),sharedPreferences);
+                NotificheDialog.NotificaNote(getLayoutInflater(),sharedPreferences, COSTANTI.NOTE_REGISTRAZIONE);
                 break;
             default:
                 break;
@@ -391,7 +392,7 @@ public class Registrazione_Pag2 extends Activity {
         editor.putString("pesoPassato", pesoSalvato.toJson());
         editor.putString("misurePassate", misureSalvato.toJson());
         editor.putString("kcalPassate", chiloK.toJson());
-        editor.putString("notePassate", noteSalvate.toJson());
+        editor.putString(COSTANTI.NOTE_REGISTRAZIONE, noteSalvate.toJson());
         editor.apply();
         StampaTutto();
         //per far comparire il tasto nella pagina di Modifica dati e Visualizza dati

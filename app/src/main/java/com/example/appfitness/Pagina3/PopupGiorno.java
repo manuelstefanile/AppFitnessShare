@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.appfitness.Bean.COSTANTI;
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.Note;
@@ -37,14 +38,13 @@ public class PopupGiorno {
 
 
     public static ArrayList<Long> idGiorniSalvati= new ArrayList<>();
-    private static Note noteScheda;
+
 
     public static void CreaGiorno(LayoutInflater inflater, Scheda schedaRiferimento)
     {
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit=shp.edit();
-        noteScheda = Note.fromJson(shp.getString("notePassate", null));
-        edit.putString("notePassate",new Note().toJson());
+        edit.putString(COSTANTI.NOTE_GIORNO,new Note().toJson());
         edit.commit();
 
         // Creazione del layout della tua View
@@ -111,7 +111,7 @@ public class PopupGiorno {
             public void onClick(View view) {
                 try {
                     Registrazione_Pag2.editGlobal=true;
-                    NotificheDialog.NotificaNote(inflater, shp);
+                    NotificheDialog.NotificaNote(inflater, shp,COSTANTI.NOTE_GIORNO);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }
@@ -124,11 +124,6 @@ public class PopupGiorno {
                 Global.listaGiornidao.Insert(schedaRiferimento.getId(),schedaRiferimento.getListaGiorni());
                 //una volta inseriti i giorni, posso liberare la lista
                 schedaRiferimento.setListaGiorni(new ArrayList<>());
-
-                //ripristina notifiche di scheda
-                SharedPreferences.Editor edit=shp.edit();
-                edit.putString("notePassate",noteScheda.toJson());
-                edit.commit();
                 alertDialog.dismiss();
             }
         });
@@ -149,7 +144,7 @@ public class PopupGiorno {
             @Override
             public void onClick(View view) {
                 SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
+                Note note=Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_GIORNO, null));
 
                 String testoInserito = nomeGiorno.getText().toString().trim();
                 if(testoInserito.length()>0) {
@@ -174,11 +169,10 @@ public class PopupGiorno {
 
     public static void ApriGiornoSelezionato(Giorno giorno,LayoutInflater inflater){
 
-        System.out.println("___"+giorno);
+
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit=shp.edit();
-        noteScheda = Note.fromJson(shp.getString("notePassate", null));
-        edit.putString("notePassate",new Note().toJson());
+        edit.putString(COSTANTI.NOTE_GIORNO,new Note().toJson());
         edit.commit();
 
 
@@ -260,17 +254,15 @@ public class PopupGiorno {
 
                 Global.adapterGiorni.remove(giorno);
                 giorno.setNomeGiorno(nomeGiorno.getText().toString());
+
                 SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
+                Note note=Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_GIORNO, null));
+
                 giorno.setNote(note.getNote());
                 Global.giornoDao.updateGiorno(giorno);
                 Global.adapterGiorni.add(giorno);
 
-                //ripristina notifiche di scheda
-                SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor edit=shp.edit();
-                edit.putString("notePassate",noteScheda.toJson());
-                edit.commit();
+
                 Toast.makeText(dialogView.getContext(), "Giorno salvato con successo", Toast.LENGTH_SHORT).show();
         }
         });
@@ -291,18 +283,18 @@ public class PopupGiorno {
                 SharedPreferences.Editor edit= sh.edit();
                 PaginaScheda_Pag3.StampaTutto();
 
-                Note note=Note.fromJson(sh.getString("notePassate", null));
+                Note note=Note.fromJson(sh.getString(COSTANTI.NOTE_GIORNO, null));
                 Note notaDaMostrare;
                 if(note.getNote()!=null){
                     notaDaMostrare=note;
                 }else
                     notaDaMostrare= new Note(giorno.getNote());
-                System.out.println("___"+notaDaMostrare.getNote());
-                edit.putString("notePassate", notaDaMostrare.toJson());
+
+                edit.putString(COSTANTI.NOTE_GIORNO, notaDaMostrare.toJson());
                 edit.apply();
                 try {
                     Registrazione_Pag2.editGlobal=true;
-                    NotificheDialog.NotificaNote(inflater,sh);
+                    NotificheDialog.NotificaNote(inflater,sh,COSTANTI.NOTE_GIORNO);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }
@@ -318,8 +310,8 @@ public class PopupGiorno {
         System.out.println("___"+giorno);
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit=shp.edit();
-        noteScheda = Note.fromJson(shp.getString("notePassate", null));
-        edit.putString("notePassate",new Note().toJson());
+
+        edit.putString(COSTANTI.NOTE_GIORNO,new Note().toJson());
         edit.commit();
 
 
@@ -404,18 +396,18 @@ public class PopupGiorno {
                 SharedPreferences.Editor edit= sh.edit();
                 PaginaScheda_Pag3.StampaTutto();
 
-                Note note=Note.fromJson(sh.getString("notePassate", null));
+                Note note=Note.fromJson(sh.getString(COSTANTI.NOTE_GIORNO, null));
                 Note notaDaMostrare;
                 if(note.getNote()!=null){
                     notaDaMostrare=note;
                 }else
                     notaDaMostrare= new Note(giorno.getNote());
-                System.out.println("___"+notaDaMostrare.getNote());
-                edit.putString("notePassate", notaDaMostrare.toJson());
+                
+                edit.putString(COSTANTI.NOTE_GIORNO, notaDaMostrare.toJson());
                 edit.apply();
                 try {
                     Registrazione_Pag2.editGlobal=false;
-                    NotificheDialog.NotificaNote(inflater,sh);
+                    NotificheDialog.NotificaNote(inflater,sh,COSTANTI.NOTE_GIORNO);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }

@@ -37,6 +37,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.appfitness.Bean.COSTANTI;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Scheda;
@@ -105,7 +106,7 @@ public class PopupSchede {
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         //note all inizio della creazione dell ex è vuoto
         SharedPreferences.Editor edit=shp.edit();
-        edit.putString("notePassate",new Note().toJson());
+        edit.putString(COSTANTI.NOTE_SCHEDA,new Note().toJson());
         edit.commit();
 
 
@@ -180,7 +181,7 @@ public class PopupSchede {
                 else {
                         //per le note
                         SharedPreferences sharedPreferences = inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                        Note note = Note.fromJson(sharedPreferences.getString("notePassate", null));
+                        Note note = Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_SCHEDA, null));
 
                         schedaTemp.setNomeScheda(nomeScheda.getText().toString());
                         schedaTemp.setImg(imgScheda.getDrawable());
@@ -189,11 +190,6 @@ public class PopupSchede {
                         Global.schedadao.ModificaSchedaTemp(schedaTemp);
                         Global.schedadao.ModificaSchedaTemp(schedaTemp);
                         PaginaScheda_Pag3.StampaTutto();
-
-                        //ripristino le note
-                        SharedPreferences.Editor edit = shp.edit();
-                        edit.putString("notePassate", new Note().toJson());
-                        edit.commit();
 
                         //alertDialog.dismiss();
                         ResettaVariabili();
@@ -211,7 +207,7 @@ public class PopupSchede {
 
                 try {
                     Registrazione_Pag2.editGlobal=true;
-                    NotificheDialog.NotificaNote(inflater, shp);
+                    NotificheDialog.NotificaNote(inflater, shp,COSTANTI.NOTE_SCHEDA);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }
@@ -306,7 +302,7 @@ public class PopupSchede {
                 sched.setImg(imgScheda.getDrawable());
 
                 SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
+                Note note=Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_SCHEDA, null));
                 sched.setNote(note.getNote());
                 Global.schedadao.updateScheda(sched);
 
@@ -333,18 +329,18 @@ public class PopupSchede {
                 SharedPreferences.Editor edit= sh.edit();
                 PaginaScheda_Pag3.StampaTutto();
 
-                Note note=Note.fromJson(sh.getString("notePassate", null));
+                Note note=Note.fromJson(sh.getString(COSTANTI.NOTE_SCHEDA, null));
                 Note notaDaMostrare;
                 if(note.getNote()!=null){
                     notaDaMostrare=note;
                 }else
                     notaDaMostrare= new Note(sched.getNote());
 
-                edit.putString("notePassate", notaDaMostrare.toJson());
+                edit.putString(COSTANTI.NOTE_SCHEDA, notaDaMostrare.toJson());
                 edit.apply();
                 try {
                     Registrazione_Pag2.editGlobal=true;
-                    NotificheDialog.NotificaNote(inflater,sh);
+                    NotificheDialog.NotificaNote(inflater,sh,COSTANTI.NOTE_SCHEDA);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }

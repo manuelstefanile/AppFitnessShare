@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.appfitness.Bean.COSTANTI;
 import com.example.appfitness.Bean.Kcal;
 import com.example.appfitness.Bean.Misure;
 import com.example.appfitness.Bean.Note;
@@ -556,7 +557,7 @@ public class NotificheDialog {
 
     }
 
-    public static void NotificaNote(LayoutInflater inflater,SharedPreferences sh) throws Eccezioni {
+    public static void NotificaNote(LayoutInflater inflater,SharedPreferences sh,String tipoNotifica) throws Eccezioni {
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.note_dettaglio, null);
@@ -593,24 +594,45 @@ public class NotificheDialog {
             }
         });
 
+        Note noteStorage=new Note();
+        switch (tipoNotifica){
+            case COSTANTI.NOTE_REGISTRAZIONE:
+                noteStorage=Note.fromJson(sh.getString(COSTANTI.NOTE_REGISTRAZIONE,null));
+                break;
+            case COSTANTI.NOTE_PESO:
+                noteStorage=Note.fromJson(sh.getString(COSTANTI.NOTE_PESO,null));
+                break;
+            case COSTANTI.NOTE_MISURE:
+                noteStorage=Note.fromJson(sh.getString(COSTANTI.NOTE_MISURE,null));
+                break;
+            case COSTANTI.NOTE_KCAL:
+                noteStorage=Note.fromJson(sh.getString(COSTANTI.NOTE_KCAL,null));
+                break;
+            case COSTANTI.NOTE_SCHEDA:
+                noteStorage=Note.fromJson(sh.getString(COSTANTI.NOTE_SCHEDA,null));
+                break;
+            case COSTANTI.NOTE_GIORNO:
+                noteStorage=Note.fromJson(sh.getString(COSTANTI.NOTE_GIORNO,null));
+                break;
+            case COSTANTI.NOTE_ESERCIZIO:
+                noteStorage=Note.fromJson(sh.getString(COSTANTI.NOTE_ESERCIZIO,null));
+                break;
 
-
-
-        //prendo l oggetto
-        Note noteStorage = Note.fromJson(sh.getString("notePassate", null));
-        //prendo gli edit
+        }
 
 
         if(noteStorage.getNote()!=null){
             noteDettaglio.setText(noteStorage.getNote());
         }else noteDettaglio.setText("");
+
         if(Registrazione_Pag2.editGlobal){
+            Note finalNoteStorage = noteStorage;
             salvaButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    noteStorage.setNote(noteDettaglio.getText().toString());
+                    finalNoteStorage.setNote(noteDettaglio.getText().toString());
                     SharedPreferences.Editor edi = sh.edit();
-                    edi.putString("notePassate", noteStorage.toJson());
+                    edi.putString(tipoNotifica, finalNoteStorage.toJson());
                     edi.apply();
 
                     Toast.makeText(dialogView.getContext(), "Note salvate.", Toast.LENGTH_SHORT).show();

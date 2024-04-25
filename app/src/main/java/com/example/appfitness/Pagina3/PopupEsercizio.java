@@ -34,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appfitness.Bean.COSTANTI;
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.Note;
@@ -56,7 +57,7 @@ public class PopupEsercizio {
     public static ArrayList<Long> idEserciziSalvati= new ArrayList<>();
 
     public static ImageButton immagineEsercizio;
-    private static Note noteGiorno;
+
 
 
 
@@ -67,7 +68,7 @@ public class PopupEsercizio {
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         //note all inizio della creazione dell ex è vuoto
         SharedPreferences.Editor edit=shp.edit();
-        edit.putString("notePassate",new Note().toJson());
+        edit.putString(COSTANTI.NOTE_ESERCIZIO,new Note().toJson());
         edit.commit();
 
         // Creazione del layout della tua View
@@ -120,7 +121,7 @@ public class PopupEsercizio {
                 System.out.println("noteClick");
                 try {
                     Registrazione_Pag2.editGlobal=true;
-                    NotificheDialog.NotificaNote(inflater, shp);
+                    NotificheDialog.NotificaNote(inflater, shp, COSTANTI.NOTE_ESERCIZIO);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }
@@ -141,7 +142,7 @@ public class PopupEsercizio {
             public void onClick(View view) {
                 //prendo le note
                 SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
+                Note note=Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_ESERCIZIO, null));
 
                 float minuti=Float.parseFloat(numeroTimetEsercizio.getText().toString().trim().length()!=0?numeroTimetEsercizio.getText().toString():"0");
                 float secondi=Float.parseFloat(numeroTimet2Esercizio.getText().toString().trim().length()!=0?numeroTimet2Esercizio.getText().toString():"0");
@@ -220,9 +221,9 @@ public class PopupEsercizio {
 
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit=shp.edit();
-        noteGiorno = Note.fromJson(shp.getString("notePassate", null));
-        System.out.println("notegiorno"+noteGiorno.getNote());
-        edit.putString("notePassate",new Note().toJson());
+
+
+        edit.putString(COSTANTI.NOTE_ESERCIZIO,new Note().toJson());
         edit.commit();
 
         Esercizio esercizioNew=Global.esercizioDao.getEsercizioByNome(esercizio.getNomeEsercizio());
@@ -307,9 +308,6 @@ public class PopupEsercizio {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                edit.putString("notePassate",noteGiorno.toJson());
-                edit.commit();
                 alertDialog.dismiss();
             }
         });
@@ -321,11 +319,11 @@ public class PopupEsercizio {
                 SharedPreferences.Editor edit= sh.edit();
                 PaginaScheda_Pag3.StampaTutto();
                 Note notaDaMostrare= new Note(esercizioNew.getNote());
-                edit.putString("notePassate", notaDaMostrare.toJson());
+                edit.putString(COSTANTI.NOTE_ESERCIZIO, notaDaMostrare.toJson());
                 edit.apply();
                 try {
                     Registrazione_Pag2.editGlobal=true;
-                    NotificheDialog.NotificaNote(inflater,sh);
+                    NotificheDialog.NotificaNote(inflater,sh,COSTANTI.NOTE_ESERCIZIO);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }
@@ -337,7 +335,7 @@ public class PopupEsercizio {
             public void onClick(View view) {
                 //prendo le note
                 SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                Note note=Note.fromJson(sharedPreferences.getString("notePassate", null));
+                Note note=Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_ESERCIZIO, null));
 
                 float minuti=Float.parseFloat(numeroTimetEsercizio.getText().toString().trim().length()!=0?numeroTimetEsercizio.getText().toString():"0");
                 float secondi=Float.parseFloat(numeroTimet2Esercizio.getText().toString().trim().length()!=0?numeroTimet2Esercizio.getText().toString():"0");
@@ -397,9 +395,12 @@ public class PopupEsercizio {
         System.out.println("AAAAVVVVI");
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit=shp.edit();
-        noteGiorno = Note.fromJson(shp.getString("notePassate", null));
-        System.out.println("notegiorno"+noteGiorno.getNote());
-        edit.putString("notePassate",new Note().toJson());
+        Note no=new Note(esercizio.getNote());
+        edit.putString(COSTANTI.NOTE_ESERCIZIO, no.toJson());
+        edit.apply();
+
+
+        edit.putString(COSTANTI.NOTE_ESERCIZIO,new Note().toJson());
         edit.commit();
 
         Esercizio esercizioNew=Global.esercizioDao.getEsercizioByNome(esercizio.getNomeEsercizio());
@@ -492,10 +493,8 @@ public class PopupEsercizio {
 
                 //salva cio che hai scritto
                 esercizioNew.setPesoKG(pesoKgEsercizio.getText().toString());
-                esercizioNew.setNote(Note.fromJson(shp.getString("notePassate", null)).getNote());
+                esercizioNew.setNote(Note.fromJson(shp.getString(COSTANTI.NOTE_ESERCIZIO, null)).getNote());
                 Global.esercizioDao.updateEsercizio(esercizioNew);
-                edit.putString("notePassate",noteGiorno.toJson());
-                edit.commit();
                 alertDialog.dismiss();
             }
         });
@@ -513,16 +512,16 @@ public class PopupEsercizio {
                 SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit= sh.edit();
 
-                Note notetemp = Note.fromJson(shp.getString("notePassate", null));
+                Note notetemp = Note.fromJson(shp.getString(COSTANTI.NOTE_ESERCIZIO, null));
                 if(notetemp.getNote()!=null){
                     esercizioNew.setNote(notetemp.getNote());
                 }
                 Note notaDaMostrare= new Note(esercizioNew.getNote());
-                edit.putString("notePassate", notaDaMostrare.toJson());
+                edit.putString(COSTANTI.NOTE_ESERCIZIO, notaDaMostrare.toJson());
                 edit.apply();
                 try {
                     Registrazione_Pag2.editGlobal=true;
-                    NotificheDialog.NotificaNote(inflater,sh);
+                    NotificheDialog.NotificaNote(inflater,sh,COSTANTI.NOTE_ESERCIZIO);
                 } catch (Eccezioni e) {
                     e.printStackTrace();
                 }
