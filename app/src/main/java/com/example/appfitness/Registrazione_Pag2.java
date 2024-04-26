@@ -33,12 +33,11 @@ import com.example.appfitness.Pagina3.PaginaScheda_Pag3;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Registrazione_Pag2 extends Activity {
 
-    Peso pesoSalvato;
-    Misure misureSalvato;
-    Kcal chiloK;
+
     Note noteSalvate;
     EditText nomeR,cognomeR,nomeUtenteR,etaR,altezzaR;
     Utente utente;
@@ -83,14 +82,12 @@ public class Registrazione_Pag2 extends Activity {
         altezzaR=findViewById((int)R.id.altezzaRegistrazione);
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        pesoSalvato=new Peso();
-        misureSalvato=new Misure();
-        chiloK=new Kcal();
+
+
+
         noteSalvate= new Note();
 
-        editor.putString("pesoPassato", pesoSalvato.toJson());
-        editor.putString("misurePassate", misureSalvato.toJson());
-        editor.putString("kcalPassate", chiloK.toJson());
+
         editor.putString(COSTANTI.NOTE_REGISTRAZIONE, noteSalvate.toJson());
         editor.apply();
 
@@ -181,49 +178,34 @@ public class Registrazione_Pag2 extends Activity {
 
 
 
-        pesoSalvato=Peso.fromJson(sharedPreferences.getString("pesoPassato",null));
+
         noteSalvate = Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_REGISTRAZIONE, null));
-        misureSalvato = Misure.fromJson(sharedPreferences.getString("misurePassate", null));
-        chiloK = Kcal.fromJson(sharedPreferences.getString("kcalPassate", null));
 
         long idUtente=utente.getId();
 
-        //se ci sono differenze, allora salva nel db, altrimenti non salvare niente
-        Peso pOld=utente.getPeso();
-        System.out.println("uguale="+!(Global.ConversioneCalendarString(pOld.getCalendario()).equals(
-                Global.ConversioneCalendarString(pesoSalvato.getCalendario()))));
-        if(!(Global.ConversioneCalendarString(pOld.getCalendario()).equals(
-                Global.ConversioneCalendarString(pesoSalvato.getCalendario()))))
-            pOld=pesodao.insertPeso(pesoSalvato);
-        else{
-            pOld.setNote(pesoSalvato.getNote());
-            pOld.setPesoKg(pesoSalvato.getPesoKg());
-            pOld.setCalendario(pesoSalvato.getCalendario());
-            pesodao.updatePeso(pOld);
+        /************************/
+        Peso p=new Peso();
+        ArrayList<Peso> arr=pesodao.getPesoInfo();
+        if(arr.size()>0){
+            p=arr.get(0);
         }
 
-        Misure mOld=utente.getMisure();
-        if(!(Global.ConversioneCalendarString(mOld.getData()).equals(
-                Global.ConversioneCalendarString(misureSalvato.getData()))))
-            mOld=misuradao.insertMisure(misureSalvato);
-        else{
-            misureSalvato.setId(mOld.getId());
-            mOld=misureSalvato;
-            //update di mOld che
-            misuradao.updateMisure(mOld);
+        /******************************/
+        Misure m=new Misure();
+        ArrayList<Misure> arrM=misuradao.getMisureInfo();
+        if(arrM.size()>0){
+            m=arrM.get(0);
         }
 
-        Kcal kOld=utente.getKcal();
-        if(!(Global.ConversioneCalendarString(kOld.getData()).equals(
-                Global.ConversioneCalendarString(chiloK.getData()))))
-            kOld=kcalDAO.insertKcal(chiloK);
-        else{
-            chiloK.setId(kOld.getId());
-            kOld=chiloK;
-            kcalDAO.updateKcal(kOld);
+        /************************/
+        Kcal k=new Kcal();
+        ArrayList<Kcal> arrK=kcalDAO.getKcalInfo();
+        if(arrK.size()>0){
+            k=arrK.get(0);
         }
 
-        utente=new Utente(nome,cognome,nomeUtente,eta,altezza,pesoSalvato,misureSalvato,chiloK,noteSalvate);
+
+        utente=new Utente(nome,cognome,nomeUtente,eta,altezza,p,m,k,noteSalvate);
         utente.setId(idUtente);
 
         utentedao.updateUtente(utente);
@@ -251,43 +233,41 @@ public class Registrazione_Pag2 extends Activity {
 
 // Elimina il salvataggio precedente se presente.
         SQLiteDatabase dbWritable = db.getWritableDatabase();
-        dbWritable.delete(SchemaDB.PesoDB.TABLE_NAME, null, null);
-        dbWritable.delete(SchemaDB.KcalDB.TABLE_NAME, null, null);
         dbWritable.delete(SchemaDB.MisureDB.TABLE_NAME, null, null);
         dbWritable.delete(SchemaDB.UtenteDB.TABLE_NAME, null, null);
 
 
 
-        pesoSalvato = Peso.fromJson(sharedPreferences.getString("pesoPassato", null));
+        //pesoSalvato = Peso.fromJson(sharedPreferences.getString("pesoPassato", null));
         noteSalvate = Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_REGISTRAZIONE, null));
-        misureSalvato = Misure.fromJson(sharedPreferences.getString("misurePassate", null));
-        chiloK = Kcal.fromJson(sharedPreferences.getString("kcalPassate", null));
 
-        utente = new Utente(nome, cognome, nomeUtente, eta, altezza, pesoSalvato, misureSalvato, chiloK, noteSalvate);
 
-        ContentValues valuesPeso = new ContentValues();
-        valuesPeso.put(SchemaDB.PesoDB.COLUMN_pesoKg, pesoSalvato.getPesoKg());
-        valuesPeso.put(SchemaDB.PesoDB.COLUMN_calendario, Global.ConversioneCalendarString(pesoSalvato.getCalendario()));
-        valuesPeso.put(SchemaDB.PesoDB.COLUMN_note, pesoSalvato.getNote());
 
-        long PesoID = dbWritable.insert(SchemaDB.PesoDB.TABLE_NAME, null, valuesPeso);
+        utente = new Utente(nome, cognome, nomeUtente, eta, altezza, new Peso(), new Misure(), new Kcal(), noteSalvate);
 
-        ContentValues valuesMisura = new ContentValues();
-        valuesMisura.put(SchemaDB.MisureDB.COLUMN_braccioDX, misureSalvato.getBraccioDx());
-        valuesMisura.put(SchemaDB.MisureDB.COLUMN_braccioSX, misureSalvato.getBraccioSx());
-        valuesMisura.put(SchemaDB.MisureDB.COLUMN_gambaDX, misureSalvato.getGambaDx());
-        valuesMisura.put(SchemaDB.MisureDB.COLUMN_gambaSX, misureSalvato.getGambaSx());
-        valuesMisura.put(SchemaDB.MisureDB.COLUMN_addome, misureSalvato.getAddome());
-        valuesMisura.put(SchemaDB.MisureDB.COLUMN_petto, misureSalvato.getPetto());
-        valuesMisura.put(SchemaDB.MisureDB.COLUMN_spalle, misureSalvato.getSpalle());
-        valuesMisura.put(SchemaDB.MisureDB.COLUMN_fianchi, misureSalvato.getFianchi());
-        valuesMisura.put(SchemaDB.MisureDB.COLUMN_note, misureSalvato.getNote());
-        valuesMisura.put(SchemaDB.MisureDB.COLUMN_calendario, Global.ConversioneCalendarString(misureSalvato.getData()));
-        long MisuraID = dbWritable.insert(SchemaDB.MisureDB.TABLE_NAME, null, valuesMisura);
 
-        chiloK = kcalDAO.insertKcal(chiloK);
-        long KcalID = chiloK.getId();
-        System.out.println("___" + chiloK);
+        /************************/
+        ArrayList<Peso> arr=pesodao.getPesoInfo();
+        Long PesoID = null;
+        if(arr.size()>0){
+            PesoID=arr.get(0).getId();
+        }
+
+        /************************/
+        ArrayList<Misure> arrM=misuradao.getMisureInfo();
+        Long MisuraID = null;
+        if(arrM.size()>0){
+            MisuraID=arrM.get(0).getId();
+        }
+
+        /************************/
+        ArrayList<Kcal> arrK=kcalDAO.getKcalInfo();
+        Long KcalID = null;
+        if(arrK.size()>0){
+            KcalID=arrK.get(0).getId();
+        }
+
+
 
         ContentValues valuesUtente = new ContentValues();
         valuesUtente.put(SchemaDB.UtenteDB.COLUMN_nome, utente.getNome());
@@ -312,9 +292,7 @@ public class Registrazione_Pag2 extends Activity {
     public void RipristinaDati(View v){
         if(utente!=null)
             utente.RipristinaDatiUtente();
-        pesoSalvato=new Peso();
-        misureSalvato=new Misure();
-        chiloK=new Kcal();
+
         noteSalvate= new Note();
 
         nomeR.setText("");
@@ -324,9 +302,9 @@ public class Registrazione_Pag2 extends Activity {
         altezzaR.setText("");
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("pesoPassato", pesoSalvato.toJson());
-        editor.putString("misurePassate", misureSalvato.toJson());
-        editor.putString("kcalPassate", chiloK.toJson());
+
+
+
         editor.putString(COSTANTI.NOTE_REGISTRAZIONE, noteSalvate.toJson());
         editor.apply();
 
@@ -381,17 +359,15 @@ public class Registrazione_Pag2 extends Activity {
         etaR.setText(String.valueOf(utente.getEta()));
         altezzaR.setText(String.valueOf(utente.getAltezza()));
 
-        pesoSalvato=utente.getPeso();
-        misureSalvato=utente.getMisure();
-        chiloK=utente.getKcal();
+
         noteSalvate=utente.getNote();
 
 
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("pesoPassato", pesoSalvato.toJson());
-        editor.putString("misurePassate", misureSalvato.toJson());
-        editor.putString("kcalPassate", chiloK.toJson());
+
+
+
         editor.putString(COSTANTI.NOTE_REGISTRAZIONE, noteSalvate.toJson());
         editor.apply();
         StampaTutto();
