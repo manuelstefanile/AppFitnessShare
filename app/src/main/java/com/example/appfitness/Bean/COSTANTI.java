@@ -7,6 +7,7 @@ public class COSTANTI {
     public static final String NOTE_KCAL="KCAL";
     public static final String NOTE_SCHEDA="SCHEDA";
     public static final String NOTE_GIORNO="GIORNO";
+    public static final String NOTE_FISICO="FISICO";
     public static final String NOTE_ESERCIZIO="ESERCIZIO";
 
 }

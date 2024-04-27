@@ -110,6 +110,22 @@ public class DbHelper extends SQLiteOpenHelper {
                     + SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi + " INTEGER "
                     + ");";
 
+    final private static String CREATE_FISICO =
+            "CREATE TABLE " + SchemaDB.FisicoDB.TABLE_NAME + " ("
+                    + SchemaDB.FisicoDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + SchemaDB.FisicoDB.COLUMN_note + " TEXT, "
+                    + SchemaDB.FisicoDB.COLUMN_calendario + " TEXT NOT NULL"
+                    + ");";
+
+    final private static String CREATE_LISTAIMGFISICO =
+            "CREATE TABLE " + SchemaDB.ListaImmaginiFisicoDB.TABLE_NAME + " ("
+                    + SchemaDB.ListaImmaginiFisicoDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + SchemaDB.ListaImmaginiFisicoDB.COLUMN_IDFisico + " INTEGER, "
+                    + SchemaDB.ListaImmaginiFisicoDB.COLUMN_Immagine + " BLOB, "
+                    + SchemaDB.ListaImmaginiFisicoDB.COLUMN_NomePosa + " TEXT "
+                    + ");";
+
+
     final private static Integer VERSION = 1;
     final private Context context;
 
@@ -131,6 +147,8 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_LISTAESERCIZI);
         db.execSQL(CREATE_ESERCIZIO);
         db.execSQL(CREATE_GIORNO);
+        db.execSQL(CREATE_FISICO);
+        db.execSQL(CREATE_LISTAIMGFISICO);
 
         System.out.println("DEBUG DatatabaseOpenHelper - onCreate");
     }
@@ -155,6 +173,8 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.GiornoDB.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.ListaEserciziDB.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.EsercizioDB.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.FisicoDB.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.ListaImmaginiFisicoDB.TABLE_NAME);
 
         System.out.println("bo");
         onCreate(db); // Ricrea le tabelle vuote

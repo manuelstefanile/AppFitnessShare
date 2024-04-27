@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,8 +33,11 @@ import com.example.appfitness.DB.kcalDAO;
 import com.example.appfitness.Eccezioni.Eccezioni;
 import com.example.appfitness.Pagina3.Global;
 import com.example.appfitness.Pagina3.PaginaScheda_Pag3;
+import com.example.appfitness.Pagina3.PopupEsercizio;
+import com.example.appfitness.Pagina3.PopupSchede;
 
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -175,9 +181,6 @@ public class Registrazione_Pag2 extends Activity {
             Toast.makeText(getApplicationContext(), "Inserire un numero >0 in altezza", Toast.LENGTH_SHORT).show();
             return;
         }
-
-
-
 
         noteSalvate = Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_REGISTRAZIONE, null));
 
@@ -337,6 +340,9 @@ public class Registrazione_Pag2 extends Activity {
             case "note":
                 NotificheDialog.NotificaNote(getLayoutInflater(),sharedPreferences, COSTANTI.NOTE_REGISTRAZIONE);
                 break;
+            case "fisico":
+                NotificheDialog.NotificaFisico(getLayoutInflater(),sharedPreferences, COSTANTI.NOTE_FISICO,this);
+                break;
             default:
                 break;
         }
@@ -405,6 +411,8 @@ public class Registrazione_Pag2 extends Activity {
         printMisure(Global.db);
 
         printPeso(Global.db);
+        printFisico(Global.db);
+        printFisicoLista(Global.db);
 
         System.out.println("*********************************************************");
 
@@ -429,5 +437,50 @@ public class Registrazione_Pag2 extends Activity {
         Cursor cursor = dbHelper.getAllData(SchemaDB.PesoDB.TABLE_NAME);
         System.out.println("----PESO----");
         PaginaScheda_Pag3.printCursor(cursor);
+    }
+    public static void printFisico(DbHelper dbHelper) {
+        Cursor cursor = dbHelper.getAllData(SchemaDB.FisicoDB.TABLE_NAME);
+        System.out.println("----FISICO----");
+        PaginaScheda_Pag3.printCursor(cursor);
+    }
+    public static void printFisicoLista(DbHelper dbHelper) {
+        Cursor cursor = dbHelper.getAllData(SchemaDB.ListaImmaginiFisicoDB.TABLE_NAME);
+        System.out.println("----ListaFisico----");
+        PaginaScheda_Pag3.printCursor(cursor);
+    }
+
+    //per le immagini e mostrarle a schermo quando pronte
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //sto nelle immagini di esercizio
+        System.out.println("img ig 1" );
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                System.out.println("img ig 2" );
+                int immagineRif= NotificheDialog.immagineRiferimento;
+                NotificheDialog.posa_immagine.add(immagineRif-1,bitmap);
+                switch (immagineRif){
+                    case 1:
+                        NotificheDialog.immagineFisico.setImageBitmap(bitmap);
+                        break;
+                    case 2:
+                        NotificheDialog.immagineFisico2.setImageBitmap(bitmap);
+                        break;
+                    case 3:
+                        NotificheDialog.immagineFisico3.setImageBitmap(bitmap);
+                        break;
+                }
+
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Errore nel caricamento dell'immagine", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

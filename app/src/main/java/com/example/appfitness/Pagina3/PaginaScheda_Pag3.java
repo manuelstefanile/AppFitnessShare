@@ -393,4 +393,5 @@ public class PaginaScheda_Pag3 extends Activity {
         ImageView imag= (ImageView)v;
         NotificheDialog.NotificaImmagine(getLayoutInflater(),imag.getDrawable());
     }
+
 }

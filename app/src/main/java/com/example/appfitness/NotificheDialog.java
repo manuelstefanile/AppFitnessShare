@@ -1,12 +1,14 @@
 package com.example.appfitness;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,26 +24,38 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.appfitness.Bean.COSTANTI;
+import com.example.appfitness.Bean.Fisico;
 import com.example.appfitness.Bean.Kcal;
 import com.example.appfitness.Bean.Misure;
 import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Peso;
+import com.example.appfitness.DB.FisicoDAO;
+import com.example.appfitness.DB.ListaImgFisicoDAO;
 import com.example.appfitness.DB.MisureDAO;
 import com.example.appfitness.DB.PesoDAO;
 import com.example.appfitness.DB.kcalDAO;
 import com.example.appfitness.Eccezioni.Eccezioni;
 import com.example.appfitness.Pagina3.Global;
 
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.TimeZone;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class NotificheDialog {
 
+    public static ArrayList<Bitmap> posa_immagine= new ArrayList<>();
+    public static int immagineRiferimento=0;
+    public static ImageButton immagineFisico, immagineFisico2,immagineFisico3;
+
     //vabbe ho iniziato quantomeno a scriverlo per vedere se parte
-    public static void NotificaFisico(LayoutInflater inflater, SharedPreferences sh) throws Eccezioni {
+    public static void NotificaFisico(LayoutInflater inflater, SharedPreferences sh, String noteFisico, Activity act) throws Eccezioni {
+
+
+
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.fisico_dettaglio, null);
         Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
@@ -56,7 +70,211 @@ public class NotificheDialog {
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
+
+        // Carica l'immagine di default dalla cartella drawable
+        InputStream inputStream = dialogView.getResources().openRawResource((int)R.drawable.noimg);
+        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+        for(int i=0;i<3;i++)posa_immagine.add(bitmap);
+
+
+        EditText testoFisico1=dialogView.findViewById(R.id.posaFisico);
+        EditText testoFisico2=dialogView.findViewById(R.id.posaFisico2);
+        EditText testoFisico3=dialogView.findViewById(R.id.posaFisico3);
+        EditText noteFisicoDialo=dialogView.findViewById(R.id.noteFisico);
+        immagineFisico= dialogView.findViewById(R.id.immaginefisico);
+        immagineFisico2= dialogView.findViewById(R.id.immaginefisico2);
+        immagineFisico3= dialogView.findViewById(R.id.immaginefisico3);
+        CalendarView calendario=dialogView.findViewById((int)R.id.calendarioFisico);
+        Calendar dataSalvare=Calendar.getInstance();
+        ImpostaCalendario(calendario,dialogView,dataSalvare,new Fisico());
+
+        if(!Registrazione_Pag2.editGlobal){
+            calendario.setFocusable(false);
+            calendario.setClickable(false);
+            testoFisico1.setFocusable(false);
+            testoFisico1.setClickable(false);
+            testoFisico2.setFocusable(false);
+            testoFisico2.setClickable(false);
+            testoFisico3.setFocusable(false);
+            testoFisico3.setClickable(false);
+            noteFisicoDialo.setFocusable(false);
+            noteFisicoDialo.setClickable(false);
+
+            salvaButton.setVisibility(View.GONE);
+            okButton.setText("Back");
+        }
+
+
+
+        ListaImgFisicoDAO lifdao=new ListaImgFisicoDAO(dialogView.getContext());
+        FisicoDAO fdao=new FisicoDAO(dialogView.getContext());
+
+        /************ se la data corrente ha il set messo, allora mostra *********/
+        Fisico fAttuale= fdao.getFisicoPerData(Global.ConversioneCalendarString(dataSalvare));
+        if(fAttuale!=null){
+            HashMap<String,byte[]> mappa=lifdao.getImmaginiPerIdFisico(fAttuale.getId());
+            AtomicInteger pos= new AtomicInteger();
+            mappa.entrySet().forEach((stringEntry -> {
+                switch (pos.get()){
+                    case 0:
+                        testoFisico1.setText(controlloStringaFisico(stringEntry.getKey()));
+                        immagineFisico.setImageDrawable(Global.byteArrayToDrawable(stringEntry.getValue()));
+                        break;
+                    case 1:
+                        testoFisico2.setText(controlloStringaFisico(stringEntry.getKey()));
+                        immagineFisico2.setImageDrawable(Global.byteArrayToDrawable(stringEntry.getValue()));
+                        break;
+                    case 2:
+                        testoFisico3.setText(controlloStringaFisico(stringEntry.getKey()));
+                        immagineFisico3.setImageDrawable(Global.byteArrayToDrawable(stringEntry.getValue()));
+                        break;
+                }
+                pos.getAndIncrement();
+            }));
+            noteFisicoDialo.setText(fAttuale.getNote());
+        }
+        /********************************/
+
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        salvaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //controlla che il fisico inserito in quella data sia presente e fai
+                String nome1=testoFisico1.getText().toString().length() != 0 ? testoFisico1.getText().toString() : "_";
+                String nome2=testoFisico2.getText().toString().length() != 0 ? testoFisico2.getText().toString() : "__";
+                String nome3=testoFisico3.getText().toString().length() != 0 ? testoFisico3.getText().toString() : "___";
+
+                System.out.println("NOMI =nome1=  " + nome1 + " nome2=" + nome2+" nom3= "+ nome3);
+                if (!nome1.equals(nome2) && !nome1.equals(nome3) && !nome2.equals(nome3)) {
+
+                    //salvo prima il fisico. prendo l'id poi lista
+                    Fisico f = new Fisico();
+                    //converto in byte
+                    ArrayList<byte[]> arrImg = new ArrayList<>();
+
+                    for (Bitmap bitm : posa_immagine) {
+                        Drawable drawable = new BitmapDrawable(dialogView.getResources(), bitm);
+                        arrImg.add(Global.drawableToByteArray(drawable));
+                    }
+
+                    f.getPosa_immagine().put(
+                            nome1
+                            , arrImg.get(0));
+                    f.getPosa_immagine().put(
+                            nome2
+                            , arrImg.get(1));
+                    f.getPosa_immagine().put(
+                            nome3
+                            , arrImg.get(2));
+
+                    f.setNote(noteFisicoDialo.getText().toString());
+                    f.setCalendario(dataSalvare);
+
+                    //fai update se gia presente
+                    Fisico fSalvato = fdao.getFisicoPerData(Global.ConversioneCalendarString(dataSalvare));
+                    if (fSalvato == null) {
+                        System.out.println("___s");
+                        f = fdao.inserisciFisico(f);
+                        lifdao.inserisciListaImg(f);
+                    } else {
+                        System.out.println("___f keyset " + f.getPosa_immagine().keySet());
+                        f.setId(fSalvato.getId());
+                        fdao.updateFisico(f);
+                        lifdao.updateFis(f);
+                    }
+                    Registrazione_Pag2.StampaTutto();
+
+                    immagineRiferimento = 0;
+                }else{
+                    Toast.makeText(dialogView.getContext(),"Inserire tutti nomi diversi",Toast.LENGTH_SHORT).show();
+                }
+
+
+
+            }
+        });
+
+        immagineFisico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!Registrazione_Pag2.editGlobal) {
+                    NotificaImmagine(inflater,immagineFisico.getDrawable());
+                }else
+                    selectImageFromGallery(act,1);
+            }
+        });
+        immagineFisico2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!Registrazione_Pag2.editGlobal) {
+                    NotificaImmagine(inflater,immagineFisico2.getDrawable());
+                }else
+                    selectImageFromGallery(act,2);
+            }
+        });
+        immagineFisico3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!Registrazione_Pag2.editGlobal) {
+                    NotificaImmagine(inflater,immagineFisico3.getDrawable());
+                }else
+                    selectImageFromGallery(act,3);
+            }
+        });
+
+
     }
+
+    private static String controlloStringaFisico(String stringapassata){
+        switch (stringapassata){
+            case "_":
+            case "__":
+            case "___":
+                return "";
+            default: return stringapassata;
+        }
+    }
+    private static void selectImageFromGallery(Activity act,int posizione){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+
+        immagineRiferimento=posizione;
+        act.startActivityForResult(intent,1); // Modificato qui
+
+    }
+
+
+    private boolean areImagesEqual(Drawable drawable1, Drawable drawable2) {
+        Bitmap bitmap1 = ((BitmapDrawable) drawable1).getBitmap();
+        Bitmap bitmap2 = ((BitmapDrawable) drawable2).getBitmap();
+
+        if (bitmap1 == null || bitmap2 == null) {
+            return false;
+        }
+
+        if (bitmap1.getWidth() != bitmap2.getWidth() || bitmap1.getHeight() != bitmap2.getHeight()) {
+            return false;
+        }
+
+        for (int x = 0; x < bitmap1.getWidth(); x++) {
+            for (int y = 0; y < bitmap1.getHeight(); y++) {
+                if (bitmap1.getPixel(x, y) != bitmap2.getPixel(x, y)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
 
     public static void NotificaPeso(LayoutInflater inflater, SharedPreferences sh) throws Eccezioni {
 
@@ -726,10 +944,6 @@ public class NotificheDialog {
         });*/
     }
 
-
-
-
-
     private static void SettaVarDialogView(Object oggettoC,View dialogView,Object ogg){
         if (oggettoC.getClass() == Kcal.class) {
             Kcal oggettoKcal = (Kcal) ogg;
@@ -832,9 +1046,49 @@ public class NotificheDialog {
 
             // Impostare il valore di peso e note nei rispettivi EditText
             if(peso.getPesoKg()!=0)kiliEdit.setText(String.valueOf(peso.getPesoKg()));
-                else kiliEdit.setText("");
+            else kiliEdit.setText("");
             noteDettaglio.setText(peso.getNote());
             calendario.setDate(peso.getCalendario().getTimeInMillis());
+
+        }else if(oggettoC.getClass()==Fisico.class){
+            Fisico fisico=(Fisico) ogg;
+            CalendarView calendario=dialogView.findViewById((int)R.id.calendarioFisico);
+            EditText posaText1= dialogView.findViewById(R.id.posaFisico);
+            EditText posaText2= dialogView.findViewById(R.id.posaFisico2);
+            EditText posaText3= dialogView.findViewById(R.id.posaFisico3);
+            EditText noteDettaglio=dialogView.findViewById((int)R.id.noteFisico);
+
+            ImageButton immagineFisico11= dialogView.findViewById(R.id.immaginefisico);
+            ImageButton immagineFisico22= dialogView.findViewById(R.id.immaginefisico2);
+            ImageButton immagineFisico33= dialogView.findViewById(R.id.immaginefisico3);
+
+            // Impostare il valore di peso e note nei rispettivi EditText
+            HashMap<String,byte[]> mappa=fisico.getPosa_immagine();
+            int i=0;
+            for (Map.Entry<String, byte[]> entry : mappa.entrySet()) {
+                String chiave = entry.getKey();
+                byte[] valore = entry.getValue();
+                switch (i){
+                    case 0:
+                        posaText1.setText(controlloStringaFisico(chiave));
+                        immagineFisico11.setImageDrawable(Global.byteArrayToDrawable(valore));
+                        break;
+                    case 1:
+                        posaText2.setText(controlloStringaFisico(chiave));
+                        immagineFisico22.setImageDrawable(Global.byteArrayToDrawable(valore));
+                        break;
+                    case 2:
+                        posaText3.setText(controlloStringaFisico(chiave));
+                        immagineFisico33.setImageDrawable(Global.byteArrayToDrawable(valore));
+                        break;
+                }
+                i++;
+
+
+            }
+
+            noteDettaglio.setText(fisico.getNote());
+            calendario.setDate(fisico.getCalendario().getTimeInMillis());
 
         }
 
@@ -897,14 +1151,30 @@ public class NotificheDialog {
             noteDettaglio.setText("");
 
 
+        }else if(oggettoC.getClass()==Fisico.class){
+
+            EditText posaText1= dialogView.findViewById(R.id.posaFisico);
+            EditText posaText2= dialogView.findViewById(R.id.posaFisico2);
+            EditText posaText3= dialogView.findViewById(R.id.posaFisico3);
+
+            ImageButton immagineFisico11= dialogView.findViewById(R.id.immaginefisico);
+            ImageButton immagineFisico22= dialogView.findViewById(R.id.immaginefisico2);
+            ImageButton immagineFisico33= dialogView.findViewById(R.id.immaginefisico3);
+
+            EditText noteDettaglio=dialogView.findViewById((int)R.id.noteFisico);
+            // Impostare il valore di peso e note nei rispettivi EditText
+            posaText1.setText("");
+            posaText2.setText("");
+            posaText3.setText("");
+            noteDettaglio.setText("");
+            immagineFisico11.setImageResource(R.drawable.noimg);
+            immagineFisico22.setImageResource(R.drawable.noimg);
+            immagineFisico33.setImageResource(R.drawable.noimg);
+
+
         }
 
     }
-
-
-
-
-
 
     private static void ImpostaCalendario(CalendarView calendario, View dialogView, Calendar dataSalvare,Object oggetto){
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -940,9 +1210,40 @@ public class NotificheDialog {
                         SettaVarDialogView(oggetto,dialogView,oggPeso);
                     }else SettaTextAVuoto(oggetto,dialogView,oggPeso);
 
+                }else if(oggetto.getClass()==Fisico.class) {
+                    FisicoDAO fdao=new FisicoDAO(dialogView.getContext());
+                    Fisico oggFisico=fdao.getFisicoPerData(Global.ConversioneCalendarString(calendarioMostra));
+
+                    /********************** ripristino ****************/
+                    posa_immagine= new ArrayList<>();
+                    InputStream inputStream = dialogView.getResources().openRawResource((int)R.drawable.noimg);
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    for(int i=0;i<3;i++)posa_immagine.add(bitmap);
+                    /************************************/
+
+
+                    /*********************chiama anche tutti di lista*********/
+                    ListaImgFisicoDAO lfdao=new ListaImgFisicoDAO(dialogView.getContext());
+
+                    if(oggFisico!=null){
+                        HashMap<String, byte[]> listaim =lfdao.getImmaginiPerIdFisico(oggFisico.getId());
+                        oggFisico.setPosa_immagine(listaim);
+
+                        //setta anche la var globale
+                        AtomicInteger i= new AtomicInteger();
+                        listaim.forEach((set,byt)->{
+                            Bitmap bitmaptemp = BitmapFactory.decodeByteArray(byt, 0, byt.length);
+                            posa_immagine.set(i.get(),bitmaptemp);
+                            i.getAndIncrement();
+                        });
+
+
+                        SettaVarDialogView(oggetto,dialogView,oggFisico);
+                    }else SettaTextAVuoto(oggetto,dialogView,oggFisico);
 
                 }
 
+                /****************************************************/
                 Calendar calendarioAtutale= Calendar.getInstance();
                 try{
                     if(anno>calendarioAtutale.get(Calendar.YEAR)){

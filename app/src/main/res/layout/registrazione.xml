@@ -307,7 +307,7 @@
                             android:textStyle="italic"
                             android:background="@drawable/drawable_botton_grigio"
                             android:onClick="FunzioniInserisciRegistrazioni"
-                            android:tag="note"
+                            android:tag="fisico"
                             android:text="Check Fisico"
                             android:textSize="16dp"></Button>
 

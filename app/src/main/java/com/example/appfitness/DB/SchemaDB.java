@@ -97,6 +97,19 @@ public static abstract class UtenteDB implements BaseColumns {
         public static final String COLUMN_timer = "timer";
     }
 
+    public static abstract class FisicoDB implements BaseColumns {
+        public static final String TABLE_NAME = "Fisico";
+        public static final String COLUMN_note = "note";
+        public static final String COLUMN_calendario = "calendario";
+    }
+
+    public static abstract class ListaImmaginiFisicoDB implements BaseColumns {
+        public static final String TABLE_NAME = "ListaImmaginiFisico";
+        public static final String COLUMN_IDFisico = "IdFisicoRicerimento";
+        public static final String COLUMN_NomePosa = "NomePosa";
+        public static final String COLUMN_Immagine = "Immagine";
+    }
+
 
 
 

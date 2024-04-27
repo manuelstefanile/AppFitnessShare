@@ -1,5 +1,11 @@
 package com.example.appfitness.Pagina3;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+
 import com.example.appfitness.Bean.Scheda;
 import com.example.appfitness.DB.DbHelper;
 import com.example.appfitness.DB.EsercizioDAO;
@@ -8,6 +14,7 @@ import com.example.appfitness.DB.ListaEserciziDAO;
 import com.example.appfitness.DB.ListaGiorniDAO;
 import com.example.appfitness.DB.SchedaDAO;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -54,6 +61,28 @@ public class Global {
             e.printStackTrace();
         }
         return calendar;
+    }
+
+
+    public static byte[] drawableToByteArray(Drawable drawable) {
+        if (drawable == null) return null;
+        try{
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            return stream.toByteArray();
+        }catch (Exception e){
+            return null;
+        }
+
+
+    }
+
+    public static Drawable byteArrayToDrawable(byte[] byteArray) {
+        if (byteArray == null) return null;
+
+        return new BitmapDrawable(Resources.getSystem(), BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
     }
 
 }
