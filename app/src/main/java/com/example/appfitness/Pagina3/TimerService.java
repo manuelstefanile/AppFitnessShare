@@ -15,6 +15,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.IBinder;
+import android.os.Vibrator;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -51,6 +53,12 @@ public class TimerService extends Service {
 
                 @Override
                 public void onFinish() {
+                    // Vibra due volte quando il timer è completato
+                    Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    if (vibrator != null) {
+                            // Versioni precedenti ad Android Oreo
+                            vibrator.vibrate(new long[]{0, 100, 200, 300}, -1); // Vibra per 100ms, pausa per 200ms, vibra per 300ms, -1 indica di ripetere solo una volta
+                    }
                     stopSelf(); // Termina il servizio quando il timer è completato
                 }
             };

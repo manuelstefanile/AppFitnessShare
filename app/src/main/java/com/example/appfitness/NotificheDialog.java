@@ -41,6 +41,7 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -1244,27 +1245,32 @@ public class NotificheDialog {
                 }
 
                 /****************************************************/
-                Calendar calendarioAtutale= Calendar.getInstance();
-                try{
-                    if(anno>calendarioAtutale.get(Calendar.YEAR)){
-                        calendario.setDate(calendarioAtutale.getTimeInMillis());
-                        dataSalvare.setTimeInMillis(calendarioAtutale.getTimeInMillis());
-                        throw new Eccezioni(Eccezioni.tipiEccezioni.DATA_NON_VALIDA,dialogView);
-                    }
-                    else if(mese>calendarioAtutale.get(Calendar.MONTH)){
-                        calendario.setDate(calendarioAtutale.getTimeInMillis());
-                        dataSalvare.setTimeInMillis(calendarioAtutale.getTimeInMillis());
-                        throw new Eccezioni(Eccezioni.tipiEccezioni.DATA_NON_VALIDA,dialogView);
-                    }
-                    else if(giorno>calendarioAtutale.get(Calendar.DAY_OF_MONTH)){
-                        calendario.setDate(calendarioAtutale.getTimeInMillis());
-                        dataSalvare.setTimeInMillis(calendarioAtutale.getTimeInMillis());
-                        throw new Eccezioni(Eccezioni.tipiEccezioni.DATA_NON_VALIDA,dialogView);
-                    }else{
-                        dataSalvare.set(anno,mese,giorno);
-                    }
-                }catch (Eccezioni e){
+                Calendar calendarioAttuale = Calendar.getInstance();
+                calendarioAttuale.set(Calendar.HOUR_OF_DAY, 0);
+                calendarioAttuale.set(Calendar.MINUTE, 0);
+                calendarioAttuale.set(Calendar.SECOND, 0);
+                calendarioAttuale.set(Calendar.MILLISECOND, 0);
 
+                Calendar calendarioSelezionato = Calendar.getInstance();
+                calendarioSelezionato.set(anno, mese, giorno);
+                calendarioSelezionato.set(Calendar.HOUR_OF_DAY, 0);
+                calendarioSelezionato.set(Calendar.MINUTE, 0);
+                calendarioSelezionato.set(Calendar.SECOND, 0);
+                calendarioSelezionato.set(Calendar.MILLISECOND, 0);
+
+
+                if (calendarioSelezionato.after(calendarioAttuale)) {
+                    // Data selezionata è successiva alla data attuale
+                    try {
+                        calendario.setDate(calendarioAttuale.getTimeInMillis());
+                        dataSalvare.setTimeInMillis(calendarioAttuale.getTimeInMillis());
+                        throw new Eccezioni(Eccezioni.tipiEccezioni.DATA_NON_VALIDA, dialogView);
+                    } catch (Eccezioni e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    // Data selezionata è valida, puoi procedere con il salvataggio
+                    dataSalvare.set(anno, mese, giorno);
                 }
 
             }
