@@ -501,7 +501,7 @@ public class PopupEsercizio {
             @Override
             public void onClick(View view) {
 
-                PopupEsercizio.selectImageFromGallery();
+                NotificheDialog.NotificaImmagine(inflater,immagineEsercizio.getDrawable());
             }
         });
 
@@ -573,7 +573,7 @@ public class PopupEsercizio {
         builder.setNegativeButton(null,null);
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
         TextView timerTesto=dialogView.findViewById(R.id.timer);
@@ -622,6 +622,7 @@ public class PopupEsercizio {
             @Override
             public void onClick(View v) {
                 // Metti in pausa il timer
+                pauseButton.setBackgroundResource(R.drawable.drawable_botton_grigio);
                 countDownTimer[0].cancel();
                 pausa[0] =true;
                 ;
@@ -639,6 +640,7 @@ public class PopupEsercizio {
                             // Converti millisUntilFinished in minuti e secondi
                             int minutes = (int) (millisUntilFinished / 1000) / 60;
                             int seconds = (int) (millisUntilFinished / 1000) % 60;
+                            pauseButton.setBackgroundResource(R.drawable.drawable_botton_grigio_chiaro);
 
                             String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
                             timerTesto.setText(timeLeftFormatted);
