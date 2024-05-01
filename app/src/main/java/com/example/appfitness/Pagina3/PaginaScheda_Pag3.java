@@ -4,16 +4,23 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
@@ -37,6 +44,10 @@ public class PaginaScheda_Pag3 extends Activity {
     PopupSchede popS=new PopupSchede(this);
     TextView nomeutenteR;
     private Scheda schedaTemp;
+
+
+    private static final String CHANNEL_ID = "TimerChannel";
+    private boolean isInBackground = false;
 
 
 
@@ -358,16 +369,7 @@ public class PaginaScheda_Pag3 extends Activity {
         startActivity(i);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        String nomeUtente=getIntent().getStringExtra("nomeUtente");
 
-        if(nomeUtente!=null){
-
-            nomeutenteR.setText(nomeUtente);
-        }
-    }
 
     public void VisualizzaActivity(){
         ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -392,6 +394,47 @@ public class PaginaScheda_Pag3 extends Activity {
     public void OnImmagineClick(View v){
         ImageView imag= (ImageView)v;
         NotificheDialog.NotificaImmagine(getLayoutInflater(),imag.getDrawable());
+    }
+
+
+
+
+
+
+
+    /***********************************/
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String nomeUtente=getIntent().getStringExtra("nomeUtente");
+
+        if(nomeUtente!=null){
+
+            nomeutenteR.setText(nomeUtente);
+        }
+        isInBackground = false;
+        stopTimerService();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isInBackground = true;
+
+        if(PopupEsercizio.tempotemp!=null &&PopupEsercizio.tempotemp[0]!=0) {
+            TimerService.millisecondi = PopupEsercizio.tempotemp[0];
+            startTimerService();
+        }
+    }
+
+
+    private void startTimerService() {
+        Intent serviceIntent = new Intent(this, TimerService.class);
+        startService(serviceIntent);
+    }
+
+    private void stopTimerService() {
+        Intent serviceIntent = new Intent(this, TimerService.class);
+        stopService(serviceIntent);
     }
 
 }

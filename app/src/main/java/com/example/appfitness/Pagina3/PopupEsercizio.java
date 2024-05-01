@@ -64,6 +64,9 @@ public class PopupEsercizio {
 
     public static ImageButton immagineEsercizio;
 
+    public static  long[] tempotemp;
+    public static  boolean pausaTimer=false;
+
 
 
 
@@ -598,14 +601,17 @@ public class PopupEsercizio {
         });
 
 
-        final long[] tempotemp = new long[1];
+        tempotemp = new long[1];
         long totalTimeInMillis =(long) (totaleSecondi * 1000);
+        //setto la notifica;
+        TimerService.millisecondi=totalTimeInMillis;
         final CountDownTimer[] countDownTimer = {new CountDownTimer(totalTimeInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 // Converti millisUntilFinished in minuti e secondi
                 int minutes = (int) (millisUntilFinished / 1000) / 60;
                 int seconds = (int) (millisUntilFinished / 1000) % 60;
+
 
                 String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
                 timerTesto.setText(timeLeftFormatted);
@@ -617,8 +623,11 @@ public class PopupEsercizio {
             public void onFinish() {
                 numeroSerie.setText(String.valueOf(Integer.parseInt(numeroSerie.getText().toString()) - 1));
                 // Azioni da intraprendere quando il cronometro è finito
+                tempotemp=null;
+                pausaTimer=false;
                 alertDialog.dismiss();
             }
+
 
         }.start()};
 
@@ -635,6 +644,8 @@ public class PopupEsercizio {
                 pauseButton.setBackgroundResource(R.drawable.drawable_botton_grigio);
                 countDownTimer[0].cancel();
                 pausa[0] =true;
+                pausaTimer=true;
+
                 ;
             }
         });
@@ -662,11 +673,13 @@ public class PopupEsercizio {
                         public void onFinish() {
                             numeroSerie.setText(String.valueOf(Integer.parseInt(numeroSerie.getText().toString()) - 1));
                             // Azioni da intraprendere quando il cronometro è finito
+                            tempotemp=null;
                             alertDialog.dismiss();
                         }
 
                     }.start();
                     pausa[0]=false;
+                    pausaTimer=false;
                 }
             }
         });
@@ -676,16 +689,19 @@ public class PopupEsercizio {
             public void onClick(View v) {
                 // Azioni per tornare indietro
                 countDownTimer[0].cancel();
+                tempotemp=null;
                 alertDialog.dismiss();
+                pausaTimer=false;
             }
         });
 
         terminateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                countDownTimer[0].onTick(10);
+                countDownTimer[0].onTick(0);
                 countDownTimer[0].onFinish();
                 countDownTimer[0].cancel();
+                tempotemp=null;
                 // Azioni per terminare direttamente
 
             }
