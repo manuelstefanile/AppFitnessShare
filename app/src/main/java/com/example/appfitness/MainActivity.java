@@ -1,11 +1,16 @@
 package com.example.appfitness;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -24,6 +29,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU){
+            if(ContextCompat.checkSelfPermission(MainActivity.this,
+                    Manifest.permission.POST_NOTIFICATIONS)!=
+                    PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},101);
+
+            }
+        }
+
 
 
         //se l utente è gia registrato, vai a pagina 3

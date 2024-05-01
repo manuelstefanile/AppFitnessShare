@@ -586,7 +586,7 @@ public class PopupEsercizio {
         builder.setNegativeButton(null,null);
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
-        //alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
         TextView timerTesto=dialogView.findViewById(R.id.timer);
@@ -728,7 +728,7 @@ public class PopupEsercizio {
         builder.setNegativeButton(null,null);
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
-        //alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
         TextView timerTesto=dialogView.findViewById((int)R.id.cronometro);

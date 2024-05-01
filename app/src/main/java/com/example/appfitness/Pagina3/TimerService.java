@@ -69,36 +69,43 @@ public class TimerService extends Service {
         // Costruisci l'intent per aprire l'activity principale
         Intent notificationIntent = new Intent(this, PaginaScheda_Pag3.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_MUTABLE);
 
         // Costruisci la notifica con l'intent appena creato
-        Notification notification = new Notification.Builder(this)
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(),getString(R.string.default_notification_channel_id));
+        notification
                 .setContentTitle("Timer")
                 .setContentText("Tempo in pausa ")
                 .setSmallIcon(R.drawable.ic_baseline_close_24)
                 .setContentIntent(pendingIntent) // Associa l'intent alla notifica
-                .build();
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         // Mostra la notifica
-        startForeground(NOTIFICATION_ID, notification);
+        NotificationManager nm=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(0,notification.build());
     }
 
     private void updateNotification(long millisUntilFinished) {
         // Costruisci l'intent per aprire l'activity principale
         Intent notificationIntent = new Intent(this, PaginaScheda_Pag3.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_MUTABLE);
 
         // Costruisci la notifica con l'intent appena creato
-        Notification notification = new Notification.Builder(this)
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(),getString(R.string.default_notification_channel_id));
+        notification
                 .setContentTitle("Timer")
                 .setContentText("Tempo rimanente: " + millisUntilFinished / 1000 + " secondi")
                 .setSmallIcon(R.drawable.ic_baseline_close_24)
                 .setContentIntent(pendingIntent) // Associa l'intent alla notifica
-                .build();
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         // Mostra la notifica
-        startForeground(NOTIFICATION_ID, notification);
+        NotificationManager nm=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(0,notification.build());
+
     }
 
     @Override
