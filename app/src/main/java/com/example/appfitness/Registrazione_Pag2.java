@@ -173,6 +173,7 @@ public class Registrazione_Pag2 extends Activity {
         String cognome=cognomeR.getText().toString();
         String nomeUtente=nomeUtenteR.getText().toString();
 
+        /**
         if(eta<=0){
             Toast.makeText(getApplicationContext(), "Inserire un numero >0 in età", Toast.LENGTH_SHORT).show();
             return;
@@ -180,7 +181,7 @@ public class Registrazione_Pag2 extends Activity {
         if(altezza<=0){
             Toast.makeText(getApplicationContext(), "Inserire un numero >0 in altezza", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
         noteSalvate = Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_REGISTRAZIONE, null));
 
@@ -225,6 +226,7 @@ public class Registrazione_Pag2 extends Activity {
         int eta = Integer.parseInt(etaR.getText().toString().trim().length() != 0 ? etaR.getText().toString() : "0");
         float altezza = Float.parseFloat(altezzaR.getText().toString().trim().length() != 0 ? altezzaR.getText().toString() : "0");
 
+        /**
         if(eta<=0){
             Toast.makeText(getApplicationContext(), "Inserire un numero >0 in età", Toast.LENGTH_SHORT).show();
             return;
@@ -232,7 +234,7 @@ public class Registrazione_Pag2 extends Activity {
         if(altezza<=0){
             Toast.makeText(getApplicationContext(), "Inserire un numero >0 in altezza", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
 // Elimina il salvataggio precedente se presente.
         SQLiteDatabase dbWritable = db.getWritableDatabase();
@@ -362,8 +364,8 @@ public class Registrazione_Pag2 extends Activity {
         nomeR.setText(utente.getNome());
         cognomeR.setText(utente.getCognome());
         nomeUtenteR.setText(utente.getNomeUtente());
-        etaR.setText(String.valueOf(utente.getEta()));
-        altezzaR.setText(String.valueOf(utente.getAltezza()));
+        etaR.setText(utente.getEta()==0?"":String.valueOf(utente.getEta()));
+        altezzaR.setText(utente.getAltezza()==0?"":String.valueOf(utente.getAltezza()));
 
 
         noteSalvate=utente.getNote();
