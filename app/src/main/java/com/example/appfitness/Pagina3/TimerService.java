@@ -56,8 +56,8 @@ public class TimerService extends Service {
                     // Vibra due volte quando il timer è completato
                     Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     if (vibrator != null) {
-                            // Versioni precedenti ad Android Oreo
-                            vibrator.vibrate(new long[]{0, 100, 200, 300}, -1); // Vibra per 100ms, pausa per 200ms, vibra per 300ms, -1 indica di ripetere solo una volta
+                        // Versioni precedenti ad Android Oreo
+                        vibrator.vibrate(new long[]{0, 100, 200, 300}, -1); // Vibra per 100ms, pausa per 200ms, vibra per 300ms, -1 indica di ripetere solo una volta
                     }
                     stopSelf(); // Termina il servizio quando il timer è completato
                 }

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -14,12 +18,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light"
-        tools:targetApi="31">
+        tools:targetApi="33">
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppFitness">
+            android:theme="@style/Theme.AppFitness"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,9 +35,15 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".Registrazione_Pag2" />
-        <activity android:name=".Pagina3.PaginaScheda_Pag3" />
-        <service android:name=".Pagina3.TimerService" />
+        <activity android:name=".Registrazione_Pag2"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Pagina3.PaginaScheda_Pag3"
+            android:configChanges="orientation|screenSize"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        <service android:name=".Pagina3.TimerService"
+            android:exported="true"/>
 
     </application>
 
