@@ -351,9 +351,11 @@ public class Registrazione_Pag2 extends Activity {
         dbWritable.delete(SchemaDB.KcalDB.TABLE_NAME, null, null);
         dbWritable.delete(SchemaDB.MisureDB.TABLE_NAME, null, null);
         dbWritable.delete(SchemaDB.UtenteDB.TABLE_NAME, null, null);
+        dbWritable.delete(SchemaDB.FisicoDB.TABLE_NAME, null, null);
 
         dbWritable.close();
-        bottoneNext.setEnabled(false);
+        bottoneNext.setVisibility(View.GONE);
+        bottoneripristinaDati.setVisibility(View.GONE);
 
         Toast.makeText(getApplicationContext(), "Dati ripristinati", Toast.LENGTH_SHORT).show();
 
@@ -390,6 +392,7 @@ public class Registrazione_Pag2 extends Activity {
         i.putExtra("nomeUtente",nomeUtenteR.getText().toString());
         i.setClass(getApplicationContext(), PaginaScheda_Pag3.class);
         startActivity(i);
+        finish();
 
     }
     private void ModalitaEdit(boolean edit){
