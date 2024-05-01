@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
@@ -21,6 +22,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -192,7 +195,7 @@ public class PopupEsercizio {
                 else{
                     giornoNuovo.getListaEsercizi().add(EsercizioId);
                     Global.adapterEsercizi.add(esercizio);
-                    Global.ledao.Insert(giornoNuovo.getId(),esercizio.getId());
+                    Global.ledao.Insert(giornoNuovo.getId(),esercizio.getId(),0);
                     Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
 
                 }
@@ -392,7 +395,10 @@ public class PopupEsercizio {
 
     public static void AvviaEsercizioSelezionato(Esercizio esercizio,LayoutInflater inflater){
 
-        System.out.println("AAAAVVVVI");
+        //non posso tornare indietro se premo back
+
+
+
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit=shp.edit();
         Note no=new Note(esercizio.getNote());
@@ -430,6 +436,7 @@ public class PopupEsercizio {
         ViewGroup.LayoutParams llParams = ll.getLayoutParams();
         llParams.height = size.y; // Altezza dello schermo
         ll.setLayoutParams(llParams);
+
 
         alertDialog.getWindow().setLayout(size.x, size.y);
 
@@ -473,6 +480,17 @@ public class PopupEsercizio {
                 if (inputText.equals("0")) {
                     bottoneTimer.setEnabled(false);
                     terminaEx.setVisibility(View.VISIBLE);
+
+                    //quando premo il tasto indietro, non torna indietro
+                    alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                        @Override
+                        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                                return true; // Consuma l'evento e non lo passa al sistema
+                            }
+                            return false; // L'evento non è stato gestito, passa al sistema
+                        }});
+
                 }
             }
             @Override
@@ -494,7 +512,17 @@ public class PopupEsercizio {
                 //salva cio che hai scritto
                 esercizioNew.setPesoKG(pesoKgEsercizio.getText().toString());
                 esercizioNew.setNote(Note.fromJson(shp.getString(COSTANTI.NOTE_ESERCIZIO, null)).getNote());
+                //esercizioNew.setCompletato(1);
+
                 Global.esercizioDao.updateEsercizio(esercizioNew);
+                Global.ledao.updateStato(esercizio.idGiornoAvviaRiferimento,esercizioNew.getId(),1);
+
+                /************setta il background a verde*********/
+                int posizioneitem=Global.adapterEsercizi.getPosition(esercizio);
+
+                Global.adapterEsercizi.AggiornaEsercizioCompletato(posizioneitem,esercizioNew);
+                /************setta il background a verde*********/
+
                 alertDialog.dismiss();
             }
         });

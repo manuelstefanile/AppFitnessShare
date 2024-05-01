@@ -105,6 +105,7 @@ public class DbHelper extends SQLiteOpenHelper {
     final private static String CREATE_LISTAESERCIZI =
             "CREATE TABLE " + SchemaDB.ListaEserciziDB.TABLE_NAME + " ("
                     + SchemaDB.ListaEserciziDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + SchemaDB.ListaEserciziDB.COLUMN_Stato + " INTEGER DEFAULT 0 , "
                     + SchemaDB.ListaEserciziDB.IDGiorno + " INTEGER REFERENCES "
                     + SchemaDB.GiornoDB.TABLE_NAME + "(" + SchemaDB.GiornoDB._ID + ") ON DELETE CASCADE, "
                     + SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi + " INTEGER "

@@ -20,6 +20,9 @@ public class Esercizio extends ListeClasseMarker {
     private String numeroRipetizioni;
     private float timer;
     private String pesoKG;
+    private boolean completato=false;
+
+    public Long idGiornoAvviaRiferimento;
 
     public Esercizio(String nomeEsercizio, String tecnica_intensita, String esecuzione, Drawable immagineMacchinario,
                      int numeroSerie, String numeroRipetizioni, float timer,String note,String pesoKG) {
@@ -36,6 +39,12 @@ public class Esercizio extends ListeClasseMarker {
 
     public Esercizio() {
 
+    }
+    public void setCompletato(int valore){
+        completato=valore==1?true:false;
+    }
+    public boolean getCompletato(){
+        return completato;
     }
 
     public long getId() {
@@ -161,6 +170,7 @@ public class Esercizio extends ListeClasseMarker {
                 ", numeroRipetizioni='" + numeroRipetizioni + '\'' +
                 ", timer=" + timer +
                 ", pesoKG=" + pesoKG +
+                ", completato=" + completato +
                 '}';
     }
 }

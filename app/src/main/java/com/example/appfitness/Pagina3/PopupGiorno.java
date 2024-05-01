@@ -212,11 +212,11 @@ public class PopupGiorno {
         Global.ledao= new ListaEserciziDAO(PopupSchede.act.getApplicationContext());
         Global.esercizioDao=new EsercizioDAO(PopupSchede.act.getApplicationContext());
 
-        ArrayList<Integer> listaDiID=Global.ledao.getListaEserciziPerGiorno(giorno.getId());
+        ArrayList<Esercizio> listaDiID=Global.ledao.getListaEserciziPerGiorno(giorno.getId());
 
         //per ogni id, ricercami l'elemento giorno e aggiungilo alla lista di giorni visibile
-        for(Integer id:listaDiID){
-            Global.adapterEsercizi.add(Global.esercizioDao.getEsercizioById(id));
+        for(Esercizio e:listaDiID){
+            Global.adapterEsercizi.add(Global.esercizioDao.getEsercizioById((int) e.getId()));
         }
 
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
@@ -351,11 +351,14 @@ public class PopupGiorno {
         Global.ledao= new ListaEserciziDAO(PopupSchede.act.getApplicationContext());
         Global.esercizioDao=new EsercizioDAO(PopupSchede.act.getApplicationContext());
 
-        ArrayList<Integer> listaDiID=Global.ledao.getListaEserciziPerGiorno(giorno.getId());
+        ArrayList<Esercizio> listaDiID=Global.ledao.getListaEserciziPerGiorno(giorno.getId());
 
         //per ogni id, ricercami l'elemento giorno e aggiungilo alla lista di giorni visibile
-        for(Integer id:listaDiID){
-            Global.adapterEsercizi.add(Global.esercizioDao.getEsercizioById(id));
+        for(Esercizio e:listaDiID){
+            Esercizio extemp=Global.esercizioDao.getEsercizioById((int) e.getId());
+            extemp.setCompletato(e.getCompletato()==true?1:0);
+            extemp.idGiornoAvviaRiferimento=giorno.getId();
+            Global.adapterEsercizi.add(extemp);
         }
 
 

@@ -40,6 +40,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
 
     private LayoutInflater inflater;
     private List<T> itemList; // Riferimento alla lista
+    //variabile per dire che voglio aprire la lista di ex da avviare
     private boolean apri;
 
 
@@ -69,8 +70,8 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
     @Override
     public View getView(int position, View v, ViewGroup parent) {
 
-        System.out.println("parent "+parent);
-        String nomeIdParent= getContext().getResources().getResourceEntryName(parent.getId());
+        String nomeIdParent=null;
+        if(parent!=null)nomeIdParent= getContext().getResources().getResourceEntryName(parent.getId());
         if(this.apri){
             if (v == null) {
                 v = inflater.inflate(R.layout.item_esercizi_avvia, null);
@@ -83,7 +84,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             bottoneDelete.setVisibility(View.GONE);
             ImageView im = v.findViewById(R.id.immagineEsercizi);
             Bitmap bitmap = null;
-            System.out.println("??+" + c);
+
             if (c.getImmagineMacchinario() != null)
                 bitmap = ((BitmapDrawable) c.getImmagineMacchinario()).getBitmap();
 
@@ -96,6 +97,8 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             bottone.setTag(position);
             bottoneDelete.setTag(position);
             im.setTag(position);
+
+            if(c.getCompletato()) bottone.setBackground(inflater.getContext().getResources().getDrawable(R.drawable.drawable_botton_green));
 
 
             bottone.setOnClickListener(new View.OnClickListener() {
@@ -231,6 +234,13 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
 
 
         }
+    }
+
+    public void AggiornaEsercizioCompletato(int pos,Esercizio exnew){
+        itemList.remove(pos);
+        exnew.setCompletato(1);
+        itemList.add((T) exnew);
+        notifyDataSetChanged();
     }
 
 }
