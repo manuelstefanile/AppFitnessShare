@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class Registrazione_Pag2 extends Activity {
     SharedPreferences sharedPreferences;
     DbHelper db;
     Button bottoneNext,bottoneSalva,bottoneripristinaDati;
+    ImageView immagineUtente;
     public static boolean editGlobal=true;
 
     public static PesoDAO pesodao;
@@ -75,6 +77,7 @@ public class Registrazione_Pag2 extends Activity {
         bottoneSalva=findViewById((int)R.id.salvaButtonReg);
         bottoneNext=findViewById((int)R.id.bottoneNextRegistrazione);
         bottoneNext.setVisibility(View.INVISIBLE);
+        immagineUtente=findViewById(R.id.immagineProfilo);
         //Toast.makeText(getApplicationContext(), "Devi prima salvare i dati per poter proseguire!", Toast.LENGTH_LONG).show();
 
         //apreo il db
@@ -139,6 +142,14 @@ public class Registrazione_Pag2 extends Activity {
                         }
                     });
 
+                    immagineUtente.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                                    selectImageFromGallery();
+
+                        }
+                    });
+
                     ModalitaEdit(true);
                     break;
                 case "see":
@@ -157,10 +168,27 @@ public class Registrazione_Pag2 extends Activity {
                         }
                     });
 
+                    immagineUtente.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            NotificheDialog.NotificaImmagine(getLayoutInflater(),immagineUtente.getDrawable());
+                        }
+                    });
+
+
                     editGlobal=false;
                     ModalitaEdit(false);
                     break;
             }
+            /**registrazione per la prima volta*/
+        }else{
+            immagineUtente.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    selectImageFromGallery();
+
+                }
+            });
         }
 
 
@@ -172,6 +200,7 @@ public class Registrazione_Pag2 extends Activity {
         String nome=nomeR.getText().toString();
         String cognome=cognomeR.getText().toString();
         String nomeUtente=nomeUtenteR.getText().toString();
+        byte[] immagineByte =Global.drawableToByteArray(immagineUtente.getDrawable());
 
         /**
         if(eta<=0){
@@ -211,6 +240,7 @@ public class Registrazione_Pag2 extends Activity {
 
         utente=new Utente(nome,cognome,nomeUtente,eta,altezza,p,m,k,noteSalvate);
         utente.setId(idUtente);
+        utente.setImmagine(immagineByte);
 
         utentedao.updateUtente(utente);
 
@@ -225,6 +255,7 @@ public class Registrazione_Pag2 extends Activity {
         String nomeUtente = nomeUtenteR.getText().toString().trim();
         int eta = Integer.parseInt(etaR.getText().toString().trim().length() != 0 ? etaR.getText().toString() : "0");
         float altezza = Float.parseFloat(altezzaR.getText().toString().trim().length() != 0 ? altezzaR.getText().toString() : "0");
+        byte[] immagineByte =Global.drawableToByteArray(immagineUtente.getDrawable());
 
         /**
         if(eta<=0){
@@ -249,6 +280,7 @@ public class Registrazione_Pag2 extends Activity {
 
 
         utente = new Utente(nome, cognome, nomeUtente, eta, altezza, new Peso(), new Misure(), new Kcal(), noteSalvate);
+        utente.setImmagine(immagineByte);
 
 
         /************************/
@@ -284,6 +316,7 @@ public class Registrazione_Pag2 extends Activity {
         valuesUtente.put(SchemaDB.UtenteDB.COLUMN_IdKcal, KcalID);
         valuesUtente.put(SchemaDB.UtenteDB.COLUMN_IdMisure, MisuraID);
         valuesUtente.put(SchemaDB.UtenteDB.COLUMN_note, utente.getNote().getNote());
+        valuesUtente.put(SchemaDB.UtenteDB.COLUMN_immagine, utente.getImmagine());
         long IdUtente = dbWritable.insert(SchemaDB.UtenteDB.TABLE_NAME, null, valuesUtente);
 
         Toast.makeText(getApplicationContext(), "Dati salvati. Potrai modificarli direttamente nella HomePage!", Toast.LENGTH_LONG).show();
@@ -366,7 +399,7 @@ public class Registrazione_Pag2 extends Activity {
         nomeUtenteR.setText(utente.getNomeUtente());
         etaR.setText(utente.getEta()==0?"":String.valueOf(utente.getEta()));
         altezzaR.setText(utente.getAltezza()==0?"":String.valueOf(utente.getAltezza()));
-
+        immagineUtente.setImageDrawable(Global.byteArrayToDrawable(utente.getImmagine()));
 
         noteSalvate=utente.getNote();
 
@@ -483,6 +516,26 @@ public class Registrazione_Pag2 extends Activity {
                 e.printStackTrace();
                 Toast.makeText(this, "Errore nel caricamento dell'immagine", Toast.LENGTH_SHORT).show();
             }
+
+            /**mi trovo nell immagine profilo*/
+        }else if(requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            immagineUtente.setImageBitmap(bitmap);
+
         }
+    }
+
+
+    private  void selectImageFromGallery(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Seleziona Immagine"), 2); // Modificato qui
+
     }
 }

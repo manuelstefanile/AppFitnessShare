@@ -61,6 +61,8 @@ public class UtenteDAO {
             utente.setPeso(p);
             utente.setMisure(m);
             utente.setKcal(k);
+
+            utente.setImmagine(cursor.getBlob(cursor.getColumnIndex(SchemaDB.UtenteDB.COLUMN_immagine)));
             Note n=new Note();
             n.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.UtenteDB.COLUMN_note)));
             utente.setNote(n);
@@ -87,6 +89,7 @@ public class UtenteDAO {
         values.put(SchemaDB.UtenteDB.COLUMN_IdKcal, utente.getKcal().getId());
         values.put(SchemaDB.UtenteDB.COLUMN_IdMisure, utente.getMisure().getId());
         values.put(SchemaDB.UtenteDB.COLUMN_note, utente.getNote().getNote());
+        values.put(SchemaDB.UtenteDB.COLUMN_immagine, utente.getImmagine());
 
         // Esempio di clausola WHERE se vuoi aggiornare basandoti sull'ID
         String selection = SchemaDB.UtenteDB._ID + "=?";

@@ -24,6 +24,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     + SchemaDB.UtenteDB.COLUMN_IdPeso + " INTEGER, "
                     + SchemaDB.UtenteDB.COLUMN_IdKcal + " INTEGER, "
                     + SchemaDB.UtenteDB.COLUMN_IdMisure + " INTEGER, "
+                    + SchemaDB.UtenteDB.COLUMN_immagine + " BLOB,"
                     + SchemaDB.UtenteDB.COLUMN_note + " TEXT"
                     + "); ";
 

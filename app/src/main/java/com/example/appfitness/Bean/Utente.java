@@ -9,6 +9,7 @@ public class Utente {
     private Misure misure;
     private Kcal kcal;
     private Note note;
+    private byte[] immagine;
 
     public Utente(String nome, String cognome, String nomeUtente, int eta, float altezza, Peso peso, Misure misure, Kcal kcal, Note note) {
         this.nome = nome;
@@ -116,6 +117,14 @@ public class Utente {
         misure=null;
         kcal=null;
         note=null;
+    }
+
+    public byte[] getImmagine() {
+        return immagine;
+    }
+
+    public void setImmagine(byte[] immagine) {
+        this.immagine = immagine;
     }
 
     @Override
