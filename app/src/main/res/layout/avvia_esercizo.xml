@@ -181,12 +181,28 @@
             android:layout_marginBottom="30dp"
             >
 
-        <Button
-            android:id="@+id/bottoneTimer"
+            <Button
+                android:id="@+id/bottoneTimer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TIMER"
+                ></Button>
+
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TIMER"
-            ></Button>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            >
+
+            <Button
+                android:id="@+id/bottoneCronometro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CRONOMETRO"
+                ></Button>
 
         </LinearLayout>
         <LinearLayout

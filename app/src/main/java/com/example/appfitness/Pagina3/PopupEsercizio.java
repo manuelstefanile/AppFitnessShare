@@ -18,6 +18,7 @@ import android.database.SQLException;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -52,6 +53,8 @@ import com.example.appfitness.Registrazione_Pag2;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.zip.Inflater;
 
 import javax.net.ssl.ExtendedSSLSession;
 
@@ -446,6 +449,7 @@ public class PopupEsercizio {
         TextView numeroRipetEsercizio = dialogView.findViewById((int) R.id.numeroRipetizioni);
 
         Button bottoneTimer=dialogView.findViewById((int) R.id.bottoneTimer);
+        Button bottoneCronometro=dialogView.findViewById((int) R.id.bottoneCronometro);
 
         EditText pesoKgEsercizio = dialogView.findViewById((int) R.id.pesoKG);
         TextView intensitaEsercizio = dialogView.findViewById((int) R.id.tecnicaIntensita);
@@ -530,7 +534,13 @@ public class PopupEsercizio {
         bottoneTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    AvviaTimer(inflater,totaleSecondi,numeroSerieEsercizio);
+                AvviaTimer(inflater,totaleSecondi,numeroSerieEsercizio);
+            }
+        });
+        bottoneCronometro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AvviaCronometro(inflater);
             }
         });
 
@@ -684,6 +694,81 @@ public class PopupEsercizio {
 
     }
 
+    private static void AvviaCronometro(LayoutInflater inflater){
+        Handler handler;
+        final boolean[] isRunning = new boolean[1];
+        final int[] seconds = {0};
+         handler = new Handler();
+         isRunning[0] = true;
+
+        // Creazione del layout della tua View
+        View dialogView = inflater.inflate(R.layout.cronometro, null);
+        Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
+        Button okButton=dialogView.findViewById((int)R.id.okButton);
+        // Creazione dell'AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
+        builder.setView(dialogView);
+        builder.setPositiveButton(null,null);
+        builder.setNegativeButton(null,null);
+        // Mostra l'AlertDialog
+        AlertDialog alertDialog = builder.create();
+        //alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        TextView timerTesto=dialogView.findViewById((int)R.id.cronometro);
+
+        final View backgroundView = alertDialog.getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
+        backgroundView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                /**/
+                return true; // Indica che l'evento è stato consumato
+            }
+        });
+
+
+        //avvia cronometro
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("isru "+isRunning[0]);
+                if (isRunning[0]) {
+                    seconds[0]++;
+                    int minutes = (seconds[0] % 3600) / 60;
+                    int secs = seconds[0] % 60;
+
+                    String time = String.format(Locale.getDefault(), "%02d:%02d", minutes, secs);
+                    timerTesto.setText(time);
+
+                    System.out.println(" vado +"+seconds[0]);
+                    // Esegui nuovamente il Runnable dopo 1 secondo
+                    handler.postDelayed(this, 1000);
+                } else handler.postDelayed(this, 1000);
+            }
+        });
+
+        Button pausa= dialogView.findViewById(R.id.pauseButton);
+
+        Button back= dialogView.findViewById(R.id.backButton);
+
+        pausa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isRunning[0] = !isRunning[0];
+                if(isRunning[0])pausa.setText("PAUSA");else pausa.setText("RIPRENDI");
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handler.removeCallbacksAndMessages(null);
+                alertDialog.dismiss();
+            }
+        });
+
+
+    }
 
     private static void selectImageFromGallery(){
         System.out.println("selectIMGGG");
