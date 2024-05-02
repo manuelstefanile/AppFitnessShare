@@ -192,6 +192,12 @@ public class PopupSchede {
                         PaginaScheda_Pag3.StampaTutto();
 
                         //alertDialog.dismiss();
+                    //note all inizio della creazione dell ex è vuoto
+                        SharedPreferences.Editor edit = shp.edit();
+                        edit.putString(COSTANTI.NOTE_SCHEDA, new Note().toJson());
+                        edit.commit();
+
+
                         ResettaVariabili();
                         Toast.makeText(dialogView.getContext(), "Scheda salvata, Keep going Buddy!", Toast.LENGTH_LONG).show();
                         creaGiorno.setEnabled(true);
@@ -206,6 +212,15 @@ public class PopupSchede {
             public void onClick(View view) {
 
                 try {
+                    SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    //note all inizio della creazione dell ex è vuoto
+                    if(schedaTemp.getNote()!=null) {
+                        SharedPreferences.Editor edit = shp.edit();
+                        Note n = new Note(schedaTemp.getNote());
+                        edit.putString(COSTANTI.NOTE_SCHEDA, n.toJson());
+                        edit.commit();
+                    }
+
                     Registrazione_Pag2.editGlobal=true;
                     NotificheDialog.NotificaNote(inflater, shp,COSTANTI.NOTE_SCHEDA);
                 } catch (Eccezioni e) {

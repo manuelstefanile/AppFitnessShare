@@ -9,6 +9,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,8 +23,10 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.appfitness.Bean.COSTANTI;
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
+import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Scheda;
 import com.example.appfitness.DB.DbHelper;
 import com.example.appfitness.DB.EsercizioDAO;
@@ -349,7 +352,12 @@ public class PaginaScheda_Pag3 extends Activity {
     }
 
     public void ChiudTuttoNonSalva(View v){
-
+        SharedPreferences shp=this.getApplicationContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = shp.edit();
+        edit.putString(COSTANTI.NOTE_SCHEDA, new Note().toJson());
+        edit.putString(COSTANTI.NOTE_GIORNO, new Note().toJson());
+        edit.putString(COSTANTI.NOTE_ESERCIZIO, new Note().toJson());
+        edit.commit();
         finish();
         Intent intent = new Intent(this, PaginaScheda_Pag3.class);
         intent.putExtra("nomeUtente",nomeutenteR.getText().toString());
