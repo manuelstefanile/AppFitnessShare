@@ -90,7 +90,7 @@ public class PopupGiorno {
 
 
         ListView listaEserciziView = (ListView)dialogView.findViewById(R.id.listaEserciziView);
-        Global.adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi, new ArrayList<Esercizio>());
+        Global.adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi, new ArrayList<Esercizio>(),listaEserciziView);
         listaEserciziView.setAdapter(Global.adapterEsercizi);
 
 
@@ -207,7 +207,7 @@ public class PopupGiorno {
         alertDialog.getWindow().setLayout(size.x, size.y);
 
         ListView listaEserciziiView = (ListView)dialogView.findViewById(R.id.listaEserciziView);
-        Global.adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi, new ArrayList<Esercizio>());
+        Global.adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi, new ArrayList<Esercizio>(),listaEserciziiView);
         listaEserciziiView.setAdapter(Global.adapterEsercizi);
 
         Global.ledao= new ListaEserciziDAO(PopupSchede.act.getApplicationContext());
@@ -346,7 +346,7 @@ public class PopupGiorno {
         alertDialog.getWindow().setLayout(size.x, size.y);
 
         ListView listaEserciziiView = (ListView)dialogView.findViewById(R.id.listaEserciziView);
-        Global.adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi_avvia, new ArrayList<Esercizio>(),true);
+        Global.adapterEsercizi = new AdapterListaScheda(dialogView.getContext(), R.layout.item_esercizi_avvia, new ArrayList<Esercizio>(),true,listaEserciziiView);
         listaEserciziiView.setAdapter(Global.adapterEsercizi);
 
         Global.ledao= new ListaEserciziDAO(PopupSchede.act.getApplicationContext());

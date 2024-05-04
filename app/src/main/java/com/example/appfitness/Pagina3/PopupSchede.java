@@ -143,7 +143,7 @@ public class PopupSchede {
 
         //setto l adapter dei giorni a vuoto
         ListView listaGiorniView = (ListView)dialogView.findViewById(R.id.listaGiorniView);
-        Global.adapterGiorni = new AdapterListaScheda(dialogView.getContext(), R.layout.item_giorni, new ArrayList<Giorno>());
+        Global.adapterGiorni = new AdapterListaScheda(dialogView.getContext(), R.layout.item_giorni, new ArrayList<Giorno>(),listaGiorniView);
         listaGiorniView.setAdapter(Global.adapterGiorni);
 
 
@@ -263,7 +263,7 @@ public class PopupSchede {
         alertDialog.getWindow().setLayout(size.x, size.y);
 
         ListView listaGiorniView = (ListView)dialogView.findViewById(R.id.listaGiorniView);
-        Global.adapterGiorni = new AdapterListaScheda(dialogView.getContext(), R.layout.item_giorni, new ArrayList<Giorno>());
+        Global.adapterGiorni = new AdapterListaScheda(dialogView.getContext(), R.layout.item_giorni, new ArrayList<Giorno>(),listaGiorniView);
         listaGiorniView.setAdapter(Global.adapterGiorni);
 
         Global.listaGiornidao=new ListaGiorniDAO(act.getApplicationContext());

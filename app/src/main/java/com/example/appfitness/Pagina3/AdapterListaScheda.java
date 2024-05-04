@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -34,6 +35,7 @@ import com.example.appfitness.R;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapter<T> {
@@ -43,21 +45,76 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
     //variabile per dire che voglio aprire la lista di ex da avviare
     private boolean apri;
 
+    private ListView listView;
+    private int dragStartPosition = -1;
+    private int dragCurrentPosition = -1;
 
-    public AdapterListaScheda(@NonNull Context context, int risorsaId, List<T> c) {
+
+    public AdapterListaScheda(@NonNull Context context, int risorsaId, List<T> c, ListView listView) {
         super(context,risorsaId,c);
         inflater=LayoutInflater.from(context);
         itemList=c;
+        this.listView=listView;
+        setupDragDrop();
+
 
     }
 
-    public AdapterListaScheda(@NonNull Context context, int risorsaId, List<T> c,boolean apri) {
+    public AdapterListaScheda(@NonNull Context context, int risorsaId, List<T> c,boolean apri,ListView listView) {
         super(context,risorsaId,c);
         inflater=LayoutInflater.from(context);
         itemList=c;
         this.apri=apri;
+        this.listView=listView;
+        setupDragDrop();
 
     }
+
+    private void setupDragDrop() {
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        dragStartPosition = listView.pointToPosition((int) event.getX(), (int) event.getY());
+                        if (dragStartPosition != -1) {
+                            // Imposta l'opacità dell'elemento selezionato
+                            updateOpacity(dragStartPosition, 0.5f);
+                        }
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if (dragStartPosition != -1) {
+                            updateOpacity(dragStartPosition, 1.0f);
+                            dragCurrentPosition = listView.pointToPosition((int) event.getX(), (int) event.getY());
+                            if (dragCurrentPosition != -1) {
+                                // Swap the items as the user moves them
+                                Collections.swap(itemList, dragStartPosition, dragCurrentPosition);
+                                notifyDataSetChanged();
+                                updateOpacity(dragCurrentPosition, 0.5f);
+                                dragStartPosition = dragCurrentPosition;
+                            }
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        // Ripristina l'opacità dell'elemento al rilascio
+                        if (dragStartPosition != -1) {
+                            updateOpacity(dragStartPosition, 1.0f);
+                            dragStartPosition = -1;
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void updateOpacity(int position, float opacity) {
+        View view = listView.getChildAt(position - listView.getFirstVisiblePosition());
+        if (view != null) {
+            view.setAlpha(opacity);
+        }
+    }
+
     @Override
     public int getCount() {
         return itemList.size();

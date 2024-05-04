@@ -71,7 +71,7 @@ public class PaginaScheda_Pag3 extends Activity {
         Global.listaGiornidao= new ListaGiorniDAO(getApplicationContext());
         Global.schedadao=new SchedaDAO(getApplicationContext());
         Global.db=new DbHelper(getApplicationContext());
-        Global.adapterSchede = new AdapterListaScheda(this, R.layout.item_scheda, new ArrayList<Scheda>());
+
         Global.giornoDao=new GiornoDAO(getApplicationContext());
         Global.esercizioDao=new EsercizioDAO(getApplicationContext());
         Global.ledao=new ListaEserciziDAO(getApplicationContext());
@@ -79,6 +79,7 @@ public class PaginaScheda_Pag3 extends Activity {
         //db.deleteDatabase();
 
         lista = (ListView)findViewById(R.id.listaSchedeView);
+        Global.adapterSchede = new AdapterListaScheda(this, R.layout.item_scheda, new ArrayList<Scheda>(),lista);
         lista.setAdapter(Global.adapterSchede);
         nomeutenteR=findViewById((int)R.id.nomeUtente);
         String nomeUtente=getIntent().getStringExtra("nomeUtente");
