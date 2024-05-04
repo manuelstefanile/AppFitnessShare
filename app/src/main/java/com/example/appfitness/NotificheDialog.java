@@ -1179,8 +1179,8 @@ public class NotificheDialog {
 
     private static void ImpostaCalendario(CalendarView calendario, View dialogView, Calendar dataSalvare,Object oggetto){
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int anno, int mese, int giorno) {
+
+            public void settaAll( int anno, int mese, int giorno){
                 /*dammi *****************/
                 Calendar calendarioMostra=Calendar.getInstance();
                 calendarioMostra.set(anno,mese,giorno)
@@ -1244,6 +1244,12 @@ public class NotificheDialog {
 
                 }
 
+
+            }
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int anno, int mese, int giorno) {
+                settaAll(anno,mese,giorno);
+
                 /****************************************************/
                 Calendar calendarioAttuale = Calendar.getInstance();
                 calendarioAttuale.set(Calendar.HOUR_OF_DAY, 0);
@@ -1264,10 +1270,13 @@ public class NotificheDialog {
                     try {
                         calendario.setDate(calendarioAttuale.getTimeInMillis());
                         dataSalvare.setTimeInMillis(calendarioAttuale.getTimeInMillis());
+                        //Calendar calendarioAttuale2 = Calendar.getInstance();
+
+                        settaAll(calendarioAttuale.get(Calendar.YEAR),calendarioAttuale.get(Calendar.MONTH),calendarioAttuale.get(Calendar.DAY_OF_MONTH));
                         throw new Eccezioni(Eccezioni.tipiEccezioni.DATA_NON_VALIDA, dialogView);
                     } catch (Eccezioni e) {
                         e.printStackTrace();
-                    }
+                    }return;
                 } else {
                     // Data selezionata è valida, puoi procedere con il salvataggio
                     dataSalvare.set(anno, mese, giorno);
