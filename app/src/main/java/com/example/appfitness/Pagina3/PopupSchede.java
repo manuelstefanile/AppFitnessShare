@@ -176,9 +176,16 @@ public class PopupSchede {
             @Override
             public void onClick(View view) {
                 if (nomeScheda.getText().toString().trim().length() == 0) {
-                    Toast.makeText(dialogView.getContext(), "Inserisci un nome per salvare la scheda.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(dialogView.getContext(), "Inserisci un nome per salvare la scheda.", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    for(Scheda s:Global.schedadao.getAllSchede()){
+                        if(s.getNomeScheda().equals(nomeScheda.getText().toString())
+                                &&!(schedaTemp.getNomeScheda().equals(nomeScheda.getText().toString()))){
+                            Toast.makeText(dialogView.getContext(), "Nome già presente.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
                         //per le note
                         SharedPreferences sharedPreferences = inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                         Note note = Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_SCHEDA, null));
@@ -188,7 +195,6 @@ public class PopupSchede {
                         schedaTemp.setNote(note.getNote());
                         Global.adapterSchede.add(schedaTemp);
                         Global.schedadao.ModificaSchedaTemp(schedaTemp);
-                        Global.schedadao.ModificaSchedaTemp(schedaTemp);
                         PaginaScheda_Pag3.StampaTutto();
 
                         //alertDialog.dismiss();
@@ -197,9 +203,8 @@ public class PopupSchede {
                         edit.putString(COSTANTI.NOTE_SCHEDA, new Note().toJson());
                         edit.commit();
 
-
                         ResettaVariabili();
-                        Toast.makeText(dialogView.getContext(), "Scheda salvata, Keep going Buddy!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(dialogView.getContext(), "Scheda salvata, Keep going Buddy!", Toast.LENGTH_SHORT).show();
                         creaGiorno.setEnabled(true);
 
                     }
@@ -211,15 +216,19 @@ public class PopupSchede {
             @Override
             public void onClick(View view) {
 
+
+
                 try {
                     SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                    //note all inizio della creazione dell ex è vuoto
-                    if(schedaTemp.getNote()!=null) {
-                        SharedPreferences.Editor edit = shp.edit();
-                        Note n = new Note(schedaTemp.getNote());
-                        edit.putString(COSTANTI.NOTE_SCHEDA, n.toJson());
-                        edit.commit();
-                    }
+                    SharedPreferences.Editor edit= shp.edit();
+                    Note note=Note.fromJson(shp.getString(COSTANTI.NOTE_SCHEDA, null));
+                    Note notaDaMostrare;
+                    if(note.getNote()!=null){
+                        notaDaMostrare=note;
+                    }else
+                        notaDaMostrare= new Note(schedaTemp.getNote());
+                    edit.putString(COSTANTI.NOTE_SCHEDA, notaDaMostrare.toJson());
+                    edit.apply();
 
                     Registrazione_Pag2.editGlobal=true;
                     NotificheDialog.NotificaNote(inflater, shp,COSTANTI.NOTE_SCHEDA);
@@ -313,7 +322,18 @@ public class PopupSchede {
                 Global.adapterSchede.remove(sched);
                 String nomeSchedaPrimaModifica = sched.getNomeScheda(); // Nome della scheda prima della modifica
 
-                sched.setNomeScheda(nomeScheda.getText().toString());
+
+                boolean uguale=false;
+                for(Scheda s:Global.schedadao.getAllSchede()){
+                    if(s.getNomeScheda().equals(nomeScheda.getText().toString())){
+                        uguale=true;
+                        break;
+                    }
+                }
+                if(!uguale)
+                    sched.setNomeScheda(nomeScheda.getText().toString());
+
+                System.out.println("vediamo il nome" + sched.getNomeScheda());
                 sched.setImg(imgScheda.getDrawable());
 
                 SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -371,9 +391,7 @@ public class PopupSchede {
     }
 
     private void ResettaVariabili(){
-        Global.schedaNuova=null;
         PopupGiorno.idGiorniSalvati= new ArrayList<>();
-        PopupEsercizio.idEserciziSalvati= new ArrayList<>();
         PopupEsercizio.immagineEsercizio=null;
     }
 

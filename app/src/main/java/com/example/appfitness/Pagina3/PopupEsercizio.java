@@ -60,7 +60,7 @@ import javax.net.ssl.ExtendedSSLSession;
 
 public class PopupEsercizio {
 
-    public static ArrayList<Long> idEserciziSalvati= new ArrayList<>();
+
 
     public static ImageButton immagineEsercizio;
 

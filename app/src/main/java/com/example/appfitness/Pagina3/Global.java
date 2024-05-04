@@ -30,7 +30,7 @@ public class Global {
     public static EsercizioDAO esercizioDao;
     public static ListaEserciziDAO ledao;
 
-    public static Scheda schedaNuova;
+
 
     public static AdapterListaScheda adapterGiorni;
     public static AdapterListaScheda adapterEsercizi;
