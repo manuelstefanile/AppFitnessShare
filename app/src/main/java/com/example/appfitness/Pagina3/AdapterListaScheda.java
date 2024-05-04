@@ -36,6 +36,7 @@ import com.example.appfitness.R;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapter<T> {
@@ -72,7 +73,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
         this.apri=apri;
         this.listView=listView;
         //+ per forza esercizio
-        setupDragDrop();
+        //setupDragDrop();
 
     }
 
@@ -293,19 +294,20 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
 
 
     public void UpdateEsercizio(@Nullable T object) {
-        if(object.getClass().equals(Esercizio.class)){
-            for (T e: itemList) {
-                if(((Esercizio)object).getId()==((Esercizio)e).getId()){
-                    itemList.remove(e);
+        if (object instanceof Esercizio) {
+            Iterator<T> iterator = itemList.iterator();
+            while (iterator.hasNext()) {
+                T e = iterator.next();
+                if (((Esercizio)object).getId() == ((Esercizio)e).getId()) {
+                    iterator.remove();
                     itemList.add(object);
-                    System.out.println("RRRRRRIMUOVO"+e);
                     notifyDataSetChanged(); // Aggiorna la vista dopo la rimozione
+                    break; // Esci dal ciclo dopo aver aggiornato l'elemento
                 }
             }
-
-
         }
     }
+
 
     public void AggiornaEsercizioCompletato(int pos,Esercizio exnew){
         itemList.remove(pos);

@@ -408,6 +408,9 @@ public class PopupGiorno {
                 List<Long> idex= listaExtemp.stream().map(item->item.getId()).collect(Collectors.toList());
                 for(Long idtemp: idex){
                     Global.ledao.updateStato(giorno.getId(),idtemp,0);
+                    Esercizio ex=Global.esercizioDao.getEsercizioById(idtemp.intValue());
+                    System.out.println("cicc"+ex.getId());
+                    Global.adapterEsercizi.UpdateEsercizio(ex);
                 }
 
                 alertDialog.dismiss();
