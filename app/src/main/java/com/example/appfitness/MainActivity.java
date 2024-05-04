@@ -5,6 +5,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -29,6 +31,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            System.out.println("creo canale");
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            NotificationChannel channel = new NotificationChannel(
+                    getString(R.string.default_notification_channel_id),
+                    "Channel Name",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU){
             if(ContextCompat.checkSelfPermission(MainActivity.this,
@@ -86,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void Inizia(View bottone){
+
 
         //se l utente è gia registrato, vai a pagina 3
         DbHelper db=new DbHelper(getApplicationContext());
