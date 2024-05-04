@@ -83,7 +83,7 @@ public class TimerService extends Service {
 
         // Mostra la notifica
         NotificationManager nm=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(0,notification.build());
+        nm.notify(NOTIFICATION_ID,notification.build());
     }
 
     private void updateNotification(long millisUntilFinished) {
@@ -104,13 +104,17 @@ public class TimerService extends Service {
 
         // Mostra la notifica
         NotificationManager nm=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(0,notification.build());
+        nm.notify(NOTIFICATION_ID,notification.build());
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        // Cancella la notifica quando il servizio viene distrutto
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancel(NOTIFICATION_ID);
+
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }

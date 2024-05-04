@@ -33,6 +33,7 @@ import com.example.appfitness.Registrazione_Pag2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PopupGiorno {
 
@@ -388,6 +389,13 @@ public class PopupGiorno {
         creaEsercizio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //setta tutti gli esercizi di nuovo a non completati
+                ArrayList<Esercizio> listaExtemp= (ArrayList<Esercizio>) Global.adapterEsercizi.getLista();
+                List<Long> idex= listaExtemp.stream().map(item->item.getId()).collect(Collectors.toList());
+                for(Long idtemp: idex){
+                    Global.ledao.updateStato(giorno.getId(),idtemp,0);
+                }
+
                 alertDialog.dismiss();
             }
         });
