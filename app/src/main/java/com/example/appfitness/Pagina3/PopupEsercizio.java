@@ -179,8 +179,8 @@ public class PopupEsercizio {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 if(esercizio.getImmagineMacchinario()!=null) {
                     Bitmap bitmap = ((BitmapDrawable) esercizio.getImmagineMacchinario()).getBitmap();
-                    Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
-                    scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
+                    scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 }
 
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario, stream.toByteArray());

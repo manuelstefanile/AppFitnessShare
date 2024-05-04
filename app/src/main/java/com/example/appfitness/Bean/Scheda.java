@@ -76,9 +76,9 @@ public class Scheda extends ListeClasseMarker {
         if (drawable == null) return null;
 
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         return stream.toByteArray();
     }
 

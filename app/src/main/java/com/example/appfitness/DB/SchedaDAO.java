@@ -82,13 +82,8 @@ public class SchedaDAO {
         ContentValues valuesScheda = new ContentValues();
         valuesScheda.put(SchemaDB.SchedaDB.COLUMN_nomeScheda, scheda.getNomeScheda());
         valuesScheda.put(SchemaDB.SchedaDB.COLUMN_noteScheda, scheda.getNote());
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        if(scheda.getImg()!=null) {
-            Bitmap bitmap = ((BitmapDrawable) scheda.getImg()).getBitmap();
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
-            scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        }
-        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_immagineScheda, stream.toByteArray());
+
+        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_immagineScheda, Global.drawableToByteArray(scheda.getImg()));
 
         long idDBScheda=dbWritable.update(SchemaDB.SchedaDB.TABLE_NAME,valuesScheda,
                 SchemaDB.SchedaDB._ID+" = ?",
@@ -104,14 +99,9 @@ public class SchedaDAO {
         SQLiteDatabase dbWritable = db.getWritableDatabase();
 
         ContentValues valuesScheda = new ContentValues();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        if(schedaNuova.getImg()!=null) {
-            Bitmap bitmap = ((BitmapDrawable) schedaNuova.getImg()).getBitmap();
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
-            scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        }
+
         valuesScheda.put(SchemaDB.SchedaDB.COLUMN_nomeScheda, schedaNuova.getNomeScheda());
-        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_immagineScheda, stream.toByteArray());
+        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_immagineScheda, Global.drawableToByteArray(schedaNuova.getImg()));
        dbWritable.insert(SchemaDB.SchedaDB.TABLE_NAME,null,valuesScheda);
 
 
