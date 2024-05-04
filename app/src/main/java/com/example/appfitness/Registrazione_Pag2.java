@@ -245,7 +245,7 @@ public class Registrazione_Pag2 extends Activity {
         utentedao.updateUtente(utente);
 
         Toast.makeText(getApplicationContext(), "Dati aggiornati con successo", Toast.LENGTH_SHORT).show();
-        StampaTutto();
+
     }
     @SuppressLint("Range")
     public void SalvaAll(View v){
@@ -324,7 +324,7 @@ public class Registrazione_Pag2 extends Activity {
         bottoneNext.setVisibility(View.VISIBLE);
         bottoneNext.setBackground((getDrawable((int) R.drawable.drawable_scheda)));
         dbWritable.close();
-        StampaTutto();
+
 
     }
     public void RipristinaDati(View v){
@@ -363,7 +363,7 @@ public class Registrazione_Pag2 extends Activity {
     }
     public void FunzioniInserisciRegistrazioni(View v) throws Eccezioni {
         String tag= (String) v.getTag();
-        System.out.println("sono in funzione "+tag);
+
         switch (tag){
             case "peso":
                 NotificheDialog.NotificaPeso(getLayoutInflater(),sharedPreferences);
@@ -414,7 +414,7 @@ public class Registrazione_Pag2 extends Activity {
 
         editor.putString(COSTANTI.NOTE_REGISTRAZIONE, noteSalvate.toJson());
         editor.apply();
-        StampaTutto();
+
         //per far comparire il tasto nella pagina di Modifica dati e Visualizza dati
         bottoneripristinaDati.setVisibility(View.VISIBLE);
 

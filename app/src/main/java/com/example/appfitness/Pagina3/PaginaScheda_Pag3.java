@@ -92,15 +92,15 @@ public class PaginaScheda_Pag3 extends Activity {
         ArrayList<Scheda> arrSchede= Global.schedadao.getAllSchede();
         for(Scheda schedaTemp:arrSchede){
             //se ho la scheda temp, allora eliminala
-            System.out.println("_______"+schedaTemp.getNomeScheda());
+
             if(schedaTemp.getNomeScheda().equals("temp")){
-                System.out.println("_____");
+
                 Global.schedadao.DeleteScheda(schedaTemp);
             }else
                 Global.adapterSchede.add(schedaTemp);
         }
 
-        StampaTutto();
+
     }
 
     public static void StampaTutto(){
@@ -221,7 +221,7 @@ public class PaginaScheda_Pag3 extends Activity {
     public void OnSchedaClick(View v){
         int position = Integer.parseInt(v.getTag().toString());
         Scheda c = (Scheda) Global.adapterSchede.getItem(position);
-        System.out.println(c);
+
         //apriSchedaSelezionata
         popS.ApriSchedaSelezionata(c,getLayoutInflater());
     }
@@ -253,7 +253,7 @@ public class PaginaScheda_Pag3 extends Activity {
                 Global.schedadao.DeleteScheda(c);
                 Global.adapterSchede.remove(c);
                 dialog.dismiss(); // Chiudi il dialog box
-                StampaTutto();
+
             }
         });
 

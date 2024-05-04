@@ -104,7 +104,7 @@ public class ListaImgFisicoDAO {
 
         }
         dbWritable.close();
-        System.out.println("___"+totalRowsAffected);
+
         // Controlla se l'aggiornamento ha avuto successo
         return true;
 

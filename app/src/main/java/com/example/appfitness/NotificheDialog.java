@@ -153,7 +153,7 @@ public class NotificheDialog {
                 String nome2=testoFisico2.getText().toString().length() != 0 ? testoFisico2.getText().toString() : "__";
                 String nome3=testoFisico3.getText().toString().length() != 0 ? testoFisico3.getText().toString() : "___";
 
-                System.out.println("NOMI =nome1=  " + nome1 + " nome2=" + nome2+" nom3= "+ nome3);
+
                 if (!nome1.equals(nome2) && !nome1.equals(nome3) && !nome2.equals(nome3)) {
 
                     //salvo prima il fisico. prendo l'id poi lista
@@ -182,11 +182,11 @@ public class NotificheDialog {
                     //fai update se gia presente
                     Fisico fSalvato = fdao.getFisicoPerData(Global.ConversioneCalendarString(dataSalvare));
                     if (fSalvato == null) {
-                        System.out.println("___s");
+
                         f = fdao.inserisciFisico(f);
                         lifdao.inserisciListaImg(f);
                     } else {
-                        System.out.println("___f keyset " + f.getPosa_immagine().keySet());
+
                         f.setId(fSalvato.getId());
                         fdao.updateFisico(f);
                         lifdao.updateFis(f);
@@ -334,7 +334,7 @@ public class NotificheDialog {
         salvaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("sono in on salva");
+
                 //salva i dati che inserisci
                 float pesoInserito = 0;
                 String pesoStringa = kiliEdit.getText().toString().trim(); // Rimuovi spazi vuoti
@@ -473,7 +473,7 @@ public class NotificheDialog {
 
         //scorro tutte le proprietà del istanza
         //prendo le proprietà
-        System.out.println("misureid"+misureStorage.getId());
+
         if(misureStorage.getId()!=0) {
             Field[] campi = misureStorage.getClass().getDeclaredFields();
             for (Field campo : campi) {
@@ -708,8 +708,7 @@ public class NotificheDialog {
             try {
                 //prendo il valore del campo
                 Object valoreCampo = campo.get(kcalStorage);
-                System.out.println(campo.getName());
-                System.out.println(valoreCampo);
+
 
                 //se il campo è float allora carbo,proteine,grassi,sale,acqua
                 if (campo.getType()==float.class&& (float)valoreCampo != 0) {
@@ -1186,13 +1185,12 @@ public class NotificheDialog {
                 calendarioMostra.set(anno,mese,giorno)
                 ;
                 if(oggetto.getClass()==Kcal.class) {
-                    System.out.println("kcalkcal");
+
                     kcalDAO kcalDAO=new kcalDAO(dialogView.getContext());
                     Kcal oggKcal=kcalDAO.getKcalPerData(Global.ConversioneCalendarString(calendarioMostra));
-                    System.out.println("datad"+calendarioMostra.getTimeInMillis());
+
                     if(oggKcal!=null){
-                        System.out.println("datad"+oggKcal.getData().getTimeInMillis());
-                        System.out.println("kcalkcalSetto");
+
                         SettaVarDialogView(oggetto,dialogView,oggKcal);
                     }else SettaTextAVuoto(oggetto,dialogView,oggKcal);
 
@@ -1200,7 +1198,7 @@ public class NotificheDialog {
                     MisureDAO misureDAO=new MisureDAO(dialogView.getContext());
                     Misure oggMisure=misureDAO.getMisureperData(Global.ConversioneCalendarString(calendarioMostra));
                     if(oggMisure!=null){
-                        System.out.println("kcalkcalSetto");
+
                         SettaVarDialogView(oggetto,dialogView,oggMisure);
                     }else SettaTextAVuoto(oggetto,dialogView,oggMisure);
 

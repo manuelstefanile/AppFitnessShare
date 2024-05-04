@@ -334,7 +334,7 @@ public class PopupEsercizio {
             public void onClick(View view) {
                 SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit= sh.edit();
-                PaginaScheda_Pag3.StampaTutto();
+
                 Note notaDaMostrare= new Note(esercizioNew.getNote());
                 edit.putString(COSTANTI.NOTE_ESERCIZIO, notaDaMostrare.toJson());
                 edit.apply();

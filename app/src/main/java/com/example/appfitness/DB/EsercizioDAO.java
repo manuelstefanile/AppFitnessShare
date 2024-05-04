@@ -191,8 +191,8 @@ public class EsercizioDAO {
 
         dbW.close();
 
-        PaginaScheda_Pag3.StampaTutto();
-        System.out.println("______"+esercizio);
+
+
 
         return rowsAffected > 0;
     }

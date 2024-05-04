@@ -138,7 +138,7 @@ public class PesoDAO {
                 " WHERE "+SchemaDB.PesoDB.COLUMN_calendario+" = ?";
         String[] selectionArgs = {String.valueOf(dataString)};
 
-        System.out.println("___"+selectQuery);
+
         Cursor cursor = dbW.rawQuery(selectQuery, selectionArgs);
 
         Peso peso=null;

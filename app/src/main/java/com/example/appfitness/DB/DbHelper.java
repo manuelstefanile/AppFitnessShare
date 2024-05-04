@@ -179,7 +179,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.FisicoDB.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SchemaDB.ListaImmaginiFisicoDB.TABLE_NAME);
 
-        System.out.println("bo");
+
         onCreate(db); // Ricrea le tabelle vuote
     }
 

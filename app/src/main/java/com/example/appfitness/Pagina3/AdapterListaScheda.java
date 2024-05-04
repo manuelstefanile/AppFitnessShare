@@ -59,7 +59,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
 
         String nomeList=getContext().getResources().getResourceEntryName(listView.getId());
         if(nomeList.equals("listaEserciziView")) {
-            System.out.println("nuo");
+
             setupDragDrop();
         }
 
@@ -111,7 +111,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
                                 Esercizio extemp= (Esercizio) itemList.get(i);
                                 Global.ledao.updateOrdine(e.idGiornoAvviaRiferimento,extemp.getId(),i);
                             }
-                            System.out.println("giorno "+e.idGiornoAvviaRiferimento+"qqq "+e.getOrdine()+ " nom"+e.getNomeEsercizio()+ "dragstart "+dragStartPosition);
+
                             /**************************/
                             updateOpacity(dragStartPosition, 1.0f);
                             dragStartPosition = -1;
@@ -264,7 +264,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
                 Button bottoneDelete = v.findViewById(R.id.deleteEsercizi);
                 ImageView im = v.findViewById(R.id.immagineEsercizi);
                 Bitmap bitmap = null;
-                System.out.println("??+" + c);
+
                 if (c.getImmagineMacchinario() != null)
                     bitmap = ((BitmapDrawable) c.getImmagineMacchinario()).getBitmap();
 

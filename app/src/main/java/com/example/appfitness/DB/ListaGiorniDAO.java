@@ -108,7 +108,7 @@ public class ListaGiorniDAO {
         SQLiteDatabase dbWritable = db.getWritableDatabase();
         ContentValues valuesListaGiorni = new ContentValues();
 
-        System.out.println("+++"+idGiorni);
+
 
         for(Long idG:idGiorni){
             valuesListaGiorni.put(SchemaDB.ListaGiorniDB.COLUM_SCHEDARIFERIMENTO, idScheda);

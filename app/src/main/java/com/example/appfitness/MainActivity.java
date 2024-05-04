@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            System.out.println("creo canale");
+
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             NotificationChannel channel = new NotificationChannel(
                     getString(R.string.default_notification_channel_id),

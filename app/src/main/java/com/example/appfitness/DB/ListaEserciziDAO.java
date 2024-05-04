@@ -121,7 +121,7 @@ public class ListaEserciziDAO {
 
         dbW.close();
 
-        PaginaScheda_Pag3.StampaTutto();
+
 
 
         return rowsAffected > 0;
@@ -141,7 +141,7 @@ public class ListaEserciziDAO {
 
         dbW.close();
 
-        PaginaScheda_Pag3.StampaTutto();
+
 
 
         return rowsAffected > 0;

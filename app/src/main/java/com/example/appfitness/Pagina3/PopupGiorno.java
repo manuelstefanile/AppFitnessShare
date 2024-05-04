@@ -289,7 +289,7 @@ public class PopupGiorno {
             public void onClick(View view) {
                 SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit= sh.edit();
-                PaginaScheda_Pag3.StampaTutto();
+
 
                 Note note=Note.fromJson(sh.getString(COSTANTI.NOTE_GIORNO, null));
                 Note notaDaMostrare;
@@ -422,7 +422,7 @@ public class PopupGiorno {
             public void onClick(View view) {
                 SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit= sh.edit();
-                PaginaScheda_Pag3.StampaTutto();
+
 
                 Note note=Note.fromJson(sh.getString(COSTANTI.NOTE_GIORNO, null));
                 Note notaDaMostrare;
