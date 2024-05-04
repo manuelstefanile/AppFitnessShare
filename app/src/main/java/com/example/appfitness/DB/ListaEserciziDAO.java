@@ -34,17 +34,18 @@ public class ListaEserciziDAO {
         Cursor cursor = dbRead.query(
                 SchemaDB.ListaEserciziDB.TABLE_NAME, // Nome della tua tabella
                 null, // Array di colonne; null seleziona tutte le colonne
-                SchemaDB.ListaEserciziDB.IDGiorno +" = ?", // Clausola WHERE
+                SchemaDB.ListaEserciziDB.IDGiorno + " = ?", // Clausola WHERE
                 selectionArgs, // Valori per la clausola WHERE
                 null, // GROUP BY
                 null, // HAVING
-                null // ORDER BY
+                SchemaDB.ListaEserciziDB.COLUMN_Ordine + " ASC" // ORDER BY
         );
 
         while (cursor.moveToNext()){
             Esercizio extemp=new Esercizio();
             extemp.setId(cursor.getInt(cursor.getColumnIndex(SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi)));
             extemp.setCompletato(cursor.getInt(cursor.getColumnIndex(SchemaDB.ListaEserciziDB.COLUMN_Stato)));
+            extemp.setOrdine(cursor.getInt(cursor.getColumnIndex(SchemaDB.ListaEserciziDB.COLUMN_Ordine)));
             result.add(extemp);
         }
 
@@ -95,12 +96,13 @@ public class ListaEserciziDAO {
         db.close();
     }
 
-    public void Insert(Long idGiorno, Long idEx, int stato){
+    public void Insert(Long idGiorno, Long idEx, int stato,int ordine){
         SQLiteDatabase dbWritable = db.getWritableDatabase();
         ContentValues valuesListaEx = new ContentValues();
         valuesListaEx.put(SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi, idEx);
         valuesListaEx.put(SchemaDB.ListaEserciziDB.IDGiorno, idGiorno);
         valuesListaEx.put(SchemaDB.ListaEserciziDB.COLUMN_Stato, stato);
+        valuesListaEx.put(SchemaDB.ListaEserciziDB.COLUMN_Ordine, ordine);
         long idDBListaEx=dbWritable.insert(SchemaDB.ListaEserciziDB.TABLE_NAME,null,valuesListaEx);
     }
 
@@ -109,6 +111,26 @@ public class ListaEserciziDAO {
 
         ContentValues values = new ContentValues();
         values.put(SchemaDB.ListaEserciziDB.COLUMN_Stato, stato);
+
+
+        String whereClause = SchemaDB.ListaEserciziDB.IDGiorno + " = ? AND " + SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi + " = ?";
+        String[] whereArgs = {String.valueOf(idGiorno),String.valueOf(idEsercizio) };
+
+
+        int rowsAffected = dbW.update(SchemaDB.ListaEserciziDB.TABLE_NAME, values, whereClause, whereArgs);
+
+        dbW.close();
+
+        PaginaScheda_Pag3.StampaTutto();
+
+
+        return rowsAffected > 0;
+    }
+    public boolean updateOrdine(Long idGiorno,Long idEsercizio,int ordine) {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SchemaDB.ListaEserciziDB.COLUMN_Ordine, ordine);
 
 
         String whereClause = SchemaDB.ListaEserciziDB.IDGiorno + " = ? AND " + SchemaDB.ListaEserciziDB.COLUMN_IDEsercizi + " = ?";

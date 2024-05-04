@@ -55,7 +55,12 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
         inflater=LayoutInflater.from(context);
         itemList=c;
         this.listView=listView;
-        setupDragDrop();
+
+        String nomeList=getContext().getResources().getResourceEntryName(listView.getId());
+        if(nomeList.equals("listaEserciziView")) {
+            System.out.println("nuo");
+            setupDragDrop();
+        }
 
 
     }
@@ -66,6 +71,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
         itemList=c;
         this.apri=apri;
         this.listView=listView;
+        //+ per forza esercizio
         setupDragDrop();
 
     }
@@ -98,6 +104,14 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
                     case MotionEvent.ACTION_UP:
                         // Ripristina l'opacità dell'elemento al rilascio
                         if (dragStartPosition != -1) {
+                            /*******************************/
+                            Esercizio e= (Esercizio) itemList.get(dragStartPosition);
+                            for(int i=0;i<itemList.size();i++){
+                                Esercizio extemp= (Esercizio) itemList.get(i);
+                                Global.ledao.updateOrdine(e.idGiornoAvviaRiferimento,extemp.getId(),i);
+                            }
+                            System.out.println("giorno "+e.idGiornoAvviaRiferimento+"qqq "+e.getOrdine()+ " nom"+e.getNomeEsercizio()+ "dragstart "+dragStartPosition);
+                            /**************************/
                             updateOpacity(dragStartPosition, 1.0f);
                             dragStartPosition = -1;
                         }

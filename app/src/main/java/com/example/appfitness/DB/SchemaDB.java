@@ -84,6 +84,7 @@ public static abstract class UtenteDB implements BaseColumns {
         public static final String IDGiorno = "GiornoRiferimento";
         public static final String COLUMN_IDEsercizi = "IDEsercizi";
         public static final String COLUMN_Stato = "stato";
+        public static final String COLUMN_Ordine = "ordine";
     }
     public static abstract class EsercizioDB implements BaseColumns {
         public static final String TABLE_NAME = "Esercizio";

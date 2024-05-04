@@ -217,7 +217,14 @@ public class PopupGiorno {
 
         //per ogni id, ricercami l'elemento giorno e aggiungilo alla lista di giorni visibile
         for(Esercizio e:listaDiID){
-            Global.adapterEsercizi.add(Global.esercizioDao.getEsercizioById((int) e.getId()));
+            Esercizio extemp=Global.esercizioDao.getEsercizioById((int) e.getId());
+            ArrayList<Esercizio>listaexgiorno=Global.ledao.getListaEserciziPerGiorno(giorno.getId());
+            for(Esercizio exgio:listaexgiorno){
+                if (exgio.getId()==extemp.getId())
+                    extemp.setOrdine(exgio.getOrdine());
+            }
+            extemp.idGiornoAvviaRiferimento= giorno.getId();
+            Global.adapterEsercizi.add(extemp);
         }
 
         EditText nomeGiorno=dialogView.findViewById((int)R.id.nomeGiorno);
@@ -358,6 +365,13 @@ public class PopupGiorno {
         for(Esercizio e:listaDiID){
             Esercizio extemp=Global.esercizioDao.getEsercizioById((int) e.getId());
             extemp.setCompletato(e.getCompletato()==true?1:0);
+            extemp.idGiornoAvviaRiferimento=giorno.getId();
+
+            ArrayList<Esercizio>listaexgiorno=Global.ledao.getListaEserciziPerGiorno(giorno.getId());
+            for(Esercizio exgio:listaexgiorno){
+                if (exgio.getId()==extemp.getId())
+                    extemp.setOrdine(exgio.getOrdine());
+            }
             extemp.idGiornoAvviaRiferimento=giorno.getId();
             Global.adapterEsercizi.add(extemp);
         }

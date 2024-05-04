@@ -190,18 +190,26 @@ public class PopupEsercizio {
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_pesoKG, esercizio.getPesoKG());
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_note,note.getNote());
 
+                if(esercizio.getNomeEsercizio()==""){
+                    Toast.makeText(dialogView.getContext(), "Inserisci almeno il nome", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
                 esercizio.setId(EsercizioId);
-                if(EsercizioId==-1){
+                if(EsercizioId==-1) {
                     Toast.makeText(dialogView.getContext(), "Nome già presente", Toast.LENGTH_LONG).show();
-
-                }else if(esercizio.getNomeEsercizio()==""){
-                    Toast.makeText(dialogView.getContext(), "Inserisci almeno il nome", Toast.LENGTH_LONG).show();
                 }
                 else{
+
                     giornoNuovo.getListaEsercizi().add(EsercizioId);
+
+                    int posizion= Global.adapterEsercizi.getLista().size()-1;
+                    esercizio.setOrdine(posizion);
+                    esercizio.idGiornoAvviaRiferimento= giornoNuovo.getId();
+
                     Global.adapterEsercizi.add(esercizio);
-                    Global.ledao.Insert(giornoNuovo.getId(),esercizio.getId(),0);
+
+                    Global.ledao.Insert(giornoNuovo.getId(),esercizio.getId(),0,posizion);
                     Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
 
                 }

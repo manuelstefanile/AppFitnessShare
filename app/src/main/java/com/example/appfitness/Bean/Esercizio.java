@@ -21,6 +21,7 @@ public class Esercizio extends ListeClasseMarker {
     private float timer;
     private String pesoKG;
     private boolean completato=false;
+    private int ordine;
 
     public Long idGiornoAvviaRiferimento;
 
@@ -40,6 +41,15 @@ public class Esercizio extends ListeClasseMarker {
     public Esercizio() {
 
     }
+
+    public int getOrdine() {
+        return ordine;
+    }
+
+    public void setOrdine(int ordine) {
+        this.ordine = ordine;
+    }
+
     public void setCompletato(int valore){
         completato=valore==1?true:false;
     }
