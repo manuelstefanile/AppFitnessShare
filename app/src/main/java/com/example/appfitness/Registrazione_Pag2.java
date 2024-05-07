@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.appfitness.Bean.COSTANTI;
 import com.example.appfitness.Bean.Kcal;
 import com.example.appfitness.Bean.Misure;
@@ -200,7 +201,11 @@ public class Registrazione_Pag2 extends Activity {
         String nome=nomeR.getText().toString();
         String cognome=cognomeR.getText().toString();
         String nomeUtente=nomeUtenteR.getText().toString();
-        byte[] immagineByte =Global.drawableToByteArray(immagineUtente.getDrawable());
+        byte[] immagineByte=null;
+        if(!Global.areImagesEqual(immagineUtente.getDrawable(),getResources().getDrawable(R.drawable.noimg))){
+         immagineByte=Global.drawableToByteArray(immagineUtente.getDrawable());
+        }
+
 
         /**
         if(eta<=0){
@@ -244,7 +249,17 @@ public class Registrazione_Pag2 extends Activity {
 
         utentedao.updateUtente(utente);
 
-        Toast.makeText(getApplicationContext(), "Dati aggiornati con successo", Toast.LENGTH_SHORT).show();
+        View layout = getLayoutInflater().inflate(R.layout.toast_calendario,null);
+        TextView testoto=layout.findViewById(R.id.toast_text);
+        testoto.setText("Dati aggiornati con successo.");
+        LottieAnimationView la=layout.findViewById(R.id.animCalendario);
+        la.setAnimation(R.raw.save);
+        la.playAnimation();
+        la.setColorFilter(R.color.lightGreen);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
 
     }
     @SuppressLint("Range")
@@ -255,7 +270,10 @@ public class Registrazione_Pag2 extends Activity {
         String nomeUtente = nomeUtenteR.getText().toString().trim();
         int eta = Integer.parseInt(etaR.getText().toString().trim().length() != 0 ? etaR.getText().toString() : "0");
         float altezza = Float.parseFloat(altezzaR.getText().toString().trim().length() != 0 ? altezzaR.getText().toString() : "0");
-        byte[] immagineByte =Global.drawableToByteArray(immagineUtente.getDrawable());
+        byte[] immagineByte=null;
+        if(!Global.areImagesEqual(immagineUtente.getDrawable(),getResources().getDrawable(R.drawable.noimg))){
+            immagineByte=Global.drawableToByteArray(immagineUtente.getDrawable());
+        }
 
         /**
         if(eta<=0){
@@ -319,7 +337,18 @@ public class Registrazione_Pag2 extends Activity {
         valuesUtente.put(SchemaDB.UtenteDB.COLUMN_immagine, utente.getImmagine());
         long IdUtente = dbWritable.insert(SchemaDB.UtenteDB.TABLE_NAME, null, valuesUtente);
 
-        Toast.makeText(getApplicationContext(), "Dati salvati. Potrai modificarli direttamente nella HomePage!", Toast.LENGTH_LONG).show();
+        View layout = getLayoutInflater().inflate(R.layout.toast_calendario,null);
+        TextView testoto=layout.findViewById(R.id.toast_text);
+        testoto.setText("Utente salvato.");
+        LottieAnimationView la=layout.findViewById(R.id.animCalendario);
+        la.setAnimation(R.raw.save);
+        la.playAnimation();
+        la.setColorFilter(R.color.lightGreen);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+
         bottoneripristinaDati.setVisibility(View.VISIBLE);
         bottoneNext.setVisibility(View.VISIBLE);
         bottoneNext.setBackground((getDrawable((int) R.drawable.drawable_scheda)));
@@ -338,6 +367,7 @@ public class Registrazione_Pag2 extends Activity {
         nomeUtenteR.setText("");
         etaR.setText("");
         altezzaR.setText("");
+        immagineUtente.setImageDrawable(getResources().getDrawable(R.drawable.noimg));
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -402,7 +432,8 @@ public class Registrazione_Pag2 extends Activity {
         nomeUtenteR.setText(utente.getNomeUtente());
         etaR.setText(utente.getEta()==0?"":String.valueOf(utente.getEta()));
         altezzaR.setText(utente.getAltezza()==0?"":String.valueOf(utente.getAltezza()));
-        immagineUtente.setImageDrawable(Global.byteArrayToDrawable(utente.getImmagine()));
+        if(utente.getImmagine()!=null)
+            immagineUtente.setImageDrawable(Global.byteArrayToDrawable(utente.getImmagine()));
 
         noteSalvate=utente.getNote();
 

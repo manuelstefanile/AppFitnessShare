@@ -74,7 +74,7 @@ public class SchedaDAO {
     }
 
     public void ModificaSchedaTemp(Scheda scheda){
-
+        System.out.println("nnnnn"+scheda.getImg());
         SQLiteDatabase dbWritable = db.getWritableDatabase();
         //prendo gli id delle schede appena salvate
 
@@ -83,7 +83,9 @@ public class SchedaDAO {
         valuesScheda.put(SchemaDB.SchedaDB.COLUMN_nomeScheda, scheda.getNomeScheda());
         valuesScheda.put(SchemaDB.SchedaDB.COLUMN_noteScheda, scheda.getNote());
 
-        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_immagineScheda, Global.drawableToByteArray(scheda.getImg()));
+
+        if(scheda.getImg()!=null)
+            valuesScheda.put(SchemaDB.SchedaDB.COLUMN_immagineScheda, Global.drawableToByteArray(scheda.getImg()));
 
         long idDBScheda=dbWritable.update(SchemaDB.SchedaDB.TABLE_NAME,valuesScheda,
                 SchemaDB.SchedaDB._ID+" = ?",
@@ -196,10 +198,7 @@ public class SchedaDAO {
         // Converto l'immagine in un byte array
         byte[] byteArray = null;
         if (scheda.getImg() != null) {
-            Bitmap bitmap = ((BitmapDrawable) scheda.getImg()).getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byteArray = stream.toByteArray();
+            byteArray=Global.drawableToByteArray(scheda.getImg());
         }
         valuesScheda.put(SchemaDB.SchedaDB.COLUMN_immagineScheda, byteArray);
 

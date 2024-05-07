@@ -191,7 +191,11 @@ public class PopupSchede {
                         Note note = Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_SCHEDA, null));
 
                         schedaTemp.setNomeScheda(nomeScheda.getText().toString());
-                        schedaTemp.setImg(imgScheda.getDrawable());
+                        //se l immagine è quella di default allora non salvo nel db
+                        if(Global.areImagesEqual(imgScheda.getDrawable(),dialogView.getResources().getDrawable(R.drawable.noimg))){
+                            schedaTemp.setImg(null);
+                        }else
+                            schedaTemp.setImg(imgScheda.getDrawable());
                         schedaTemp.setNote(note.getNote());
                         Global.adapterSchede.add(schedaTemp);
                         Global.schedadao.ModificaSchedaTemp(schedaTemp);
@@ -348,7 +352,7 @@ public class PopupSchede {
                 if (!nomeSchedaPrimaModifica.equals(nomeScheda.getText().toString())) {
                     // Il nome della scheda è stato modificato, mostro il Toast
                     Toast.makeText(dialogView.getContext(), "Il nome della scheda è stato modificato", Toast.LENGTH_SHORT).show();
-                } else if (sched.getImg() != null && !areImagesEqual(sched.getImg(), imgScheda.getDrawable())) {
+                } else if (sched.getImg() != null && !Global.areImagesEqual(sched.getImg(), imgScheda.getDrawable())) {
                     // L'immagine è stata modificata, mostro il Toast
                     Toast.makeText(dialogView.getContext(), "Solo l'immagine è stata aggiornata.", Toast.LENGTH_SHORT).show();
                 }
@@ -434,27 +438,5 @@ public static void onActivityResult(int requestCode, int resultCode, Intent data
         }
     }
 }
-    private boolean areImagesEqual(Drawable drawable1, Drawable drawable2) {
-        Bitmap bitmap1 = ((BitmapDrawable) drawable1).getBitmap();
-        Bitmap bitmap2 = ((BitmapDrawable) drawable2).getBitmap();
-
-        if (bitmap1 == null || bitmap2 == null) {
-            return false;
-        }
-
-        if (bitmap1.getWidth() != bitmap2.getWidth() || bitmap1.getHeight() != bitmap2.getHeight()) {
-            return false;
-        }
-
-        for (int x = 0; x < bitmap1.getWidth(); x++) {
-            for (int y = 0; y < bitmap1.getHeight(); y++) {
-                if (bitmap1.getPixel(x, y) != bitmap2.getPixel(x, y)) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
 
 }

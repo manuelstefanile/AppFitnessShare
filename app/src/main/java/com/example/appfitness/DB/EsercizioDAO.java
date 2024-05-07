@@ -51,9 +51,11 @@ public class EsercizioDAO {
             result.setNomeEsercizio(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_nomeEsercizio)));
 
             @SuppressLint("Range") byte[] immagine=cursor.getBlob(cursor.getColumnIndex(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario));
-            Bitmap bitmap = BitmapFactory.decodeByteArray(immagine, 0, immagine.length);
-            Drawable immDraw= new BitmapDrawable(Resources.getSystem(), bitmap);
-            result.setImmagineMacchinario(immDraw);
+            if(immagine!=null) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(immagine, 0, immagine.length);
+                Drawable immDraw = new BitmapDrawable(Resources.getSystem(), bitmap);
+                result.setImmagineMacchinario(immDraw);
+            }
             // Chiudi il cursore
             cursor.close();
         }
@@ -89,9 +91,13 @@ public class EsercizioDAO {
             result.setTimer(cursor.getFloat(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_timer)));
             result.setPesoKG(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_pesoKG)));
             @SuppressLint("Range") byte[] immagine=cursor.getBlob(cursor.getColumnIndex(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario));
-            Bitmap bitmap = BitmapFactory.decodeByteArray(immagine, 0, immagine.length);
-            Drawable immDraw= new BitmapDrawable(Resources.getSystem(), bitmap);
-            result.setImmagineMacchinario(immDraw);
+            if(immagine!=null) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(immagine, 0, immagine.length);
+                Drawable immDraw= new BitmapDrawable(Resources.getSystem(), bitmap);
+                result.setImmagineMacchinario(immDraw);
+            }
+
+
             result.setNote(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_note)));
 
             // Chiudi il cursore

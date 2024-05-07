@@ -214,10 +214,13 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
                 Button bottone = v.findViewById(R.id.visualizzaScheda);
                 Button bottoneElimina = v.findViewById(R.id.eliminaScheda);
                 Bitmap bitmap = null;
-                if (c.getImg() != null)
+                if (c.getImg() != null) {
+                    System.out.println("immagine i.getimg non nulla");
                     bitmap = ((BitmapDrawable) c.getImg()).getBitmap();
+                }
 
                 if (bitmap == null) {
+                    System.out.println("immagine i nulla");
                     im.setImageResource(R.drawable.noimg);
                 } else
                     im.setImageDrawable(c.getImg());

@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.appfitness.Bean.COSTANTI;
 import com.example.appfitness.Bean.Fisico;
 import com.example.appfitness.Bean.Kcal;
@@ -206,7 +207,15 @@ public class NotificheDialog {
                     toast.show();
 
                 }else{
-                    Toast.makeText(dialogView.getContext(),"Inserire tutti nomi diversi",Toast.LENGTH_SHORT).show();
+                    //metti l animazione nel toast
+                    // Infla il layout personalizzato
+                    View layout = inflater.inflate(R.layout.toast_erroresave,null);
+                    TextView testoto=layout.findViewById(R.id.toast_text);
+                    testoto.setText("Inserire tutti nomi diversi.");
+                    Toast toast = new Toast(inflater.getContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
                 }
 
 
@@ -261,30 +270,6 @@ public class NotificheDialog {
         immagineRiferimento=posizione;
         act.startActivityForResult(intent,1); // Modificato qui
 
-    }
-
-
-    private boolean areImagesEqual(Drawable drawable1, Drawable drawable2) {
-        Bitmap bitmap1 = ((BitmapDrawable) drawable1).getBitmap();
-        Bitmap bitmap2 = ((BitmapDrawable) drawable2).getBitmap();
-
-        if (bitmap1 == null || bitmap2 == null) {
-            return false;
-        }
-
-        if (bitmap1.getWidth() != bitmap2.getWidth() || bitmap1.getHeight() != bitmap2.getHeight()) {
-            return false;
-        }
-
-        for (int x = 0; x < bitmap1.getWidth(); x++) {
-            for (int y = 0; y < bitmap1.getHeight(); y++) {
-                if (bitmap1.getPixel(x, y) != bitmap2.getPixel(x, y)) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
     }
 
 
@@ -352,7 +337,14 @@ public class NotificheDialog {
 
                 // Verifica se la stringa del peso è vuota
                 if (pesoStringa.isEmpty()) {
-                    Toast.makeText(dialogView.getContext(), "Non stiamo pesando l'aria.", Toast.LENGTH_SHORT).show();
+                    View layout = inflater.inflate(R.layout.toast_erroresave,null);
+                    TextView testoto=layout.findViewById(R.id.toast_text);
+                    testoto.setText("Non stiamo pesando l'aria.");
+                    Toast toast = new Toast(inflater.getContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
+
                     return; // Esci dal metodo in caso di peso non valido
                 }
 
@@ -360,7 +352,13 @@ public class NotificheDialog {
                 try {
                     pesoInserito = Float.parseFloat(pesoStringa);
                 } catch (NumberFormatException e) {
-                    Toast.makeText(dialogView.getContext(), "Formato peso non valido.", Toast.LENGTH_SHORT).show();
+                    View layout = inflater.inflate(R.layout.toast_erroresave,null);
+                    TextView testoto=layout.findViewById(R.id.toast_text);
+                    testoto.setText("Formato non valido.");
+                    Toast toast = new Toast(inflater.getContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
                     e.printStackTrace();
                     return; // Esci dal metodo in caso di formato non valido
                 }
@@ -372,7 +370,16 @@ public class NotificheDialog {
                     toast.setView(layout);
                     toast.show();
                 } else {
-                    Toast.makeText(dialogView.getContext(), "Pesi 0 kg? Non avere paura della bilancia!", Toast.LENGTH_LONG).show();
+                    //metti l animazione nel toast
+                    // Infla il layout personalizzato
+                    View layout = inflater.inflate(R.layout.toast_erroresave,null);
+                    TextView testoto=layout.findViewById(R.id.toast_text);
+                    testoto.setText("Pesi 0 kg? Inserisci >0");
+                    Toast toast = new Toast(inflater.getContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
+
                     return; // Esci dal metodo in caso di peso uguale a zero
                 }
 
@@ -558,15 +565,15 @@ public class NotificheDialog {
                             valoreGambaSx != 0 || valorePetto != 0 || valoreSpalle != 0 || valoreAddome != 0 || valoreFianchi != 0;
 
                     if (!almenoUnaMisuraInserita) {
-                        Toast.makeText(dialogView.getContext(), "Prendi quel metro altrimenti le misure saranno 0 cm!", Toast.LENGTH_LONG).show();
-                        return; // Esci dal metodo
-                    }
+                        View layout = inflater.inflate(R.layout.toast_erroresave,null);
+                        TextView testoto=layout.findViewById(R.id.toast_text);
+                        testoto.setText("Prendi quel metro altrimenti le misure saranno 0 cm! Inserisci almeno una misura.");
+                        Toast toast = new Toast(inflater.getContext());
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
 
-                    // Controllare se alcune misure sono vuote mentre altre no
-                    if ((valoreBracicoDx == 0 || valoreBracicoSx == 0 || valoreGambaDx == 0 || valoreGambaSx == 0 ||
-                            valorePetto == 0 || valoreSpalle == 0 || valoreAddome == 0 || valoreFianchi == 0) &&
-                            almenoUnaMisuraInserita) {
-                        Toast.makeText(dialogView.getContext(), "Le misure non inserite saranno impostate a 0 cm.", Toast.LENGTH_LONG).show();
+                        return; // Esci dal metodo
                     }
 
                     finalMisureStorage.setNote(noteDettaglio.getText().toString());
@@ -945,7 +952,17 @@ public class NotificheDialog {
                     edi.putString(tipoNotifica, finalNoteStorage.toJson());
                     edi.apply();
 
-                    Toast.makeText(dialogView.getContext(), "Note salvate.", Toast.LENGTH_SHORT).show();
+                    View layout = inflater.inflate(R.layout.toast_calendario,null);
+                    TextView testoto=layout.findViewById(R.id.toast_text);
+                    testoto.setText("Note salvate..");
+                    LottieAnimationView la=layout.findViewById(R.id.animCalendario);
+                    la.setAnimation(R.raw.save);
+                    la.playAnimation();
+                    la.setColorFilter(R.color.lightGreen);
+                    Toast toast = new Toast(inflater.getContext());
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.setView(layout);
+                    toast.show();
                 }
             });
         }

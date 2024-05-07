@@ -14,6 +14,9 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -99,8 +102,18 @@ public class PaginaScheda_Pag3 extends Activity {
             }else
                 Global.adapterSchede.add(schedaTemp);
         }
+        // Aggiungi un listener per ascoltare quando la vista è stata completamente caricata
+        lista.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // Rimuovi il listener per evitare chiamate ripetute
+                lista.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                // Avvia l'animazione solo dopo che la ListView è stata completamente caricata
+                animateListViewItems();
+            }
+        });
 
-
+        StampaTutto();
     }
 
     public static void StampaTutto(){
@@ -444,6 +457,21 @@ public class PaginaScheda_Pag3 extends Activity {
     private void stopTimerService() {
         Intent serviceIntent = new Intent(this, TimerService.class);
         stopService(serviceIntent);
+    }
+
+    private void animateListViewItems() {
+        System.out.println("num el "+lista.getChildCount());
+        // Per ogni elemento nella ListView, avvia l'animazione
+        for (int i = 0; i < lista.getChildCount(); i++) {
+            View view = lista.getChildAt(i);
+            System.out.println("num el "+view);
+            Animation animation =null;
+            if(i%2==0) {
+                animation=AnimationUtils.loadAnimation(this, R.anim.anim_move_item);
+            }else animation=AnimationUtils.loadAnimation(this, R.anim.anim_move_item2);
+            animation.setDuration(1500);
+            view.startAnimation(animation);
+        }
     }
 
 }

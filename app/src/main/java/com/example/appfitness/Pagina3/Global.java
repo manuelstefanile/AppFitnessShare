@@ -85,4 +85,27 @@ public class Global {
         return new BitmapDrawable(Resources.getSystem(), BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
     }
 
+    public static boolean areImagesEqual(Drawable drawable1, Drawable drawable2) {
+        Bitmap bitmap1 = ((BitmapDrawable) drawable1).getBitmap();
+        Bitmap bitmap2 = ((BitmapDrawable) drawable2).getBitmap();
+
+        if (bitmap1 == null || bitmap2 == null) {
+            return false;
+        }
+
+        if (bitmap1.getWidth() != bitmap2.getWidth() || bitmap1.getHeight() != bitmap2.getHeight()) {
+            return false;
+        }
+
+        for (int x = 0; x < bitmap1.getWidth(); x++) {
+            for (int y = 0; y < bitmap1.getHeight(); y++) {
+                if (bitmap1.getPixel(x, y) != bitmap2.getPixel(x, y)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
 }

@@ -17,6 +17,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.database.SQLException;
 
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.Editable;
@@ -156,9 +157,16 @@ public class PopupEsercizio {
                 float minuti=Float.parseFloat(numeroTimetEsercizio.getText().toString().trim().length()!=0?numeroTimetEsercizio.getText().toString():"0");
                 float secondi=Float.parseFloat(numeroTimet2Esercizio.getText().toString().trim().length()!=0?numeroTimet2Esercizio.getText().toString():"0");
                 float seconditotali=(minuti*60)+ secondi;
+                Drawable imgIns=null;
+                if(!Global.areImagesEqual(immagineEsercizio.getDrawable(), dialogView.getResources().getDrawable(R.drawable.noimg))){
+                    imgIns=immagineEsercizio.getDrawable();
+                }
                 Esercizio esercizio=new Esercizio(nomeEsercizio.getText().toString().trim().length()>0?nomeEsercizio.getText().toString().trim():"",
                         intensitaEsercizio.getText().toString(),
-                        esecuzioneEsercizio.getText().toString(),immagineEsercizio.getDrawable(),
+                        esecuzioneEsercizio.getText().toString(),
+
+                        imgIns,
+
                         Integer.parseInt(numeroSerieEsercizio.getText().toString().trim().length()!=0
                                 &&Integer.parseInt(numeroSerieEsercizio.getText().toString())>0
                                 ?numeroSerieEsercizio.getText().toString():"1"),
@@ -176,14 +184,12 @@ public class PopupEsercizio {
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_tecnica_intensita, esercizio.getTecnica_intensita());
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_esecuzione, esercizio.getEsecuzione());
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                byte[] stream =null;
                 if(esercizio.getImmagineMacchinario()!=null) {
-                    Bitmap bitmap = ((BitmapDrawable) esercizio.getImmagineMacchinario()).getBitmap();
-                    Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
-                    scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                   stream=Global.drawableToByteArray(esercizio.getImmagineMacchinario());
                 }
 
-                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario, stream.toByteArray());
+                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario, stream);
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroSerie, esercizio.getNumeroSerie());
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni, esercizio.getNumeroRipetizioni());
                 valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_timer, esercizio.getTimer());
@@ -293,7 +299,7 @@ public class PopupEsercizio {
 
 
         nomeEsercizio.setText(esercizioNew.getNomeEsercizio());
-        immagineEsercizio.setImageDrawable(esercizioNew.getImmagineMacchinario());
+        immagineEsercizio.setImageDrawable(esercizioNew.getImmagineMacchinario()!=null?esercizioNew.getImmagineMacchinario():dialogView.getResources().getDrawable(R.drawable.noimg));
         numeroSerieEsercizio.setText(String.valueOf(esercizioNew.getNumeroSerie()));
         numeroRipetEsercizio.setText(String.valueOf(esercizioNew.getNumeroRipetizioni()));
         numeroTimetEsercizio.setText(String.valueOf(minuti));
@@ -475,7 +481,7 @@ public class PopupEsercizio {
         float totaleSecondi=esercizioNew.getTimer();
 
         nomeEsercizio.setText(esercizioNew.getNomeEsercizio());
-        immagineEsercizio.setImageDrawable(esercizioNew.getImmagineMacchinario());
+        immagineEsercizio.setImageDrawable(esercizioNew.getImmagineMacchinario()!=null?esercizioNew.getImmagineMacchinario():dialogView.getResources().getDrawable(R.drawable.noimg));
         numeroSerieEsercizio.setText(String.valueOf(esercizioNew.getNumeroSerie()));
         numeroRipetEsercizio.setText(String.valueOf(esercizioNew.getNumeroRipetizioni()));
 
