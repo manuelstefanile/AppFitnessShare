@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -194,6 +195,16 @@ public class NotificheDialog {
                     Registrazione_Pag2.StampaTutto();
 
                     immagineRiferimento = 0;
+
+
+                    //metti l animazione nel toast
+                    // Infla il layout personalizzato
+                    View layout = inflater.inflate(R.layout.toast_calendario,null);
+                    Toast toast = new Toast(inflater.getContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
+
                 }else{
                     Toast.makeText(dialogView.getContext(),"Inserire tutti nomi diversi",Toast.LENGTH_SHORT).show();
                 }
@@ -355,7 +366,11 @@ public class NotificheDialog {
                 }
 
                 if (pesoInserito != 0) {
-                    Toast.makeText(dialogView.getContext(), "Peso salvato, Keep going Buddy!", Toast.LENGTH_LONG).show();
+                    View layout = inflater.inflate(R.layout.toast_calendario,null);
+                    Toast toast = new Toast(inflater.getContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
                 } else {
                     Toast.makeText(dialogView.getContext(), "Pesi 0 kg? Non avere paura della bilancia!", Toast.LENGTH_LONG).show();
                     return; // Esci dal metodo in caso di peso uguale a zero
@@ -559,7 +574,11 @@ public class NotificheDialog {
 
 
                     // Mostra il Toast solo se tutte le misure sono state inserite correttamente
-                    Toast.makeText(dialogView.getContext(), "Misure salvate. Keep going Buddy!", Toast.LENGTH_LONG).show();
+                    View layout = inflater.inflate(R.layout.toast_calendario,null);
+                    Toast toast = new Toast(inflater.getContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
 
                     Misure mOld=mdao.getMisureperData(Global.ConversioneCalendarString(dataSalvare));
 
@@ -785,13 +804,21 @@ public class NotificheDialog {
                     // Controlla se le kcal attuali sono pari a 0
 
                     if (kcalAttualiValue == 0) {
-                        Toast.makeText(dialogView.getContext(), "Le kcal pari a 0? Digiuno estremo?", Toast.LENGTH_LONG).show();
-                    } else if (kcalAttuali.getText().toString().trim().isEmpty()) {
-                        // Controlla se le kcal attuali sono vuote
-                        Toast.makeText(dialogView.getContext(), "Dovrai pur mangiare qualcosa.", Toast.LENGTH_SHORT).show();
+                        View layout = inflater.inflate(R.layout.toast_erroresave,null);
+                        TextView testo=layout.findViewById((int)R.id.toast_text);
+                        testo.setText("Le kcal pari a 0? Digiuno estremo?");
+                        Toast toast = new Toast(inflater.getContext());
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
+
                     } else {
                         // Mostra il Toast di successo se tutte le operazioni sono andate a buon fine
-                        Toast.makeText(dialogView.getContext(), "Kcal salvate, Keep going Buddy!", Toast.LENGTH_LONG).show();
+                        View layout = inflater.inflate(R.layout.toast_calendario,null);
+                        Toast toast = new Toast(inflater.getContext());
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
                     }
                 } catch (NumberFormatException e) {
                     // Gestisci l'eccezione se il formato non è valido
