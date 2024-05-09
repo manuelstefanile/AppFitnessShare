@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.appfitness.Bean.COSTANTI;
 import com.example.appfitness.Bean.Fisico;
+import com.example.appfitness.Bean.Fisico_Immagini;
 import com.example.appfitness.Bean.Kcal;
 import com.example.appfitness.Bean.Misure;
 import com.example.appfitness.Bean.Note;
@@ -50,7 +51,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class NotificheDialog {
 
-    public static ArrayList<Bitmap> posa_immagine= new ArrayList<>();
+    public static ArrayList<Fisico_Immagini> posa_immagine= new ArrayList<>();
     public static int immagineRiferimento=0;
     public static ImageButton immagineFisico, immagineFisico2,immagineFisico3;
 
@@ -75,12 +76,6 @@ public class NotificheDialog {
         alertDialog.show();
 
 
-        // Carica l'immagine di default dalla cartella drawable
-        InputStream inputStream = dialogView.getResources().openRawResource((int)R.drawable.noimg);
-        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-        for(int i=0;i<3;i++)posa_immagine.add(bitmap);
-
 
         EditText testoFisico1=dialogView.findViewById(R.id.posaFisico);
         EditText testoFisico2=dialogView.findViewById(R.id.posaFisico2);
@@ -89,6 +84,24 @@ public class NotificheDialog {
         immagineFisico= dialogView.findViewById(R.id.immaginefisico);
         immagineFisico2= dialogView.findViewById(R.id.immaginefisico2);
         immagineFisico3= dialogView.findViewById(R.id.immaginefisico3);
+
+        ArrayList<ImageButton> arrayImgB=new ArrayList<>();
+        arrayImgB.add(immagineFisico);
+        arrayImgB.add(immagineFisico2);
+        arrayImgB.add(immagineFisico3);
+        String[] nomi={"_","__","___"};
+        /**********************************/
+        // Carica l'immagine di default dalla cartella drawable
+
+        for(int i=0;i<arrayImgB.size();i++){
+            Fisico_Immagini fi=new Fisico_Immagini(
+                    null,
+                    nomi[i],
+                    i,
+                    arrayImgB.get(i));
+            posa_immagine.add(fi);
+        };
+        /************************************/
         CalendarView calendario=dialogView.findViewById((int)R.id.calendarioFisico);
         Calendar dataSalvare=Calendar.getInstance();
         ImpostaCalendario(calendario,dialogView,dataSalvare,new Fisico());
@@ -117,24 +130,27 @@ public class NotificheDialog {
         /************ se la data corrente ha il set messo, allora mostra *********/
         Fisico fAttuale= fdao.getFisicoPerData(Global.ConversioneCalendarString(dataSalvare));
         if(fAttuale!=null){
-            HashMap<String,byte[]> mappa=lifdao.getImmaginiPerIdFisico(fAttuale.getId());
-            AtomicInteger pos= new AtomicInteger();
-            mappa.entrySet().forEach((stringEntry -> {
-                switch (pos.get()){
+            ArrayList<Fisico_Immagini> mappa=lifdao.getImmaginiPerIdFisico(fAttuale.getId());
+
+            mappa.forEach((stringEntry -> {
+                switch (stringEntry.getPosizione()){
                     case 0:
-                        testoFisico1.setText(controlloStringaFisico(stringEntry.getKey()));
-                        immagineFisico.setImageDrawable(Global.byteArrayToDrawable(stringEntry.getValue()));
+                        testoFisico1.setText(controlloStringaFisico(stringEntry.getNomePosa()));
+                        immagineFisico.setImageDrawable(Global.byteArrayToDrawable(
+                                stringEntry.getImmagine()!=null? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                     case 1:
-                        testoFisico2.setText(controlloStringaFisico(stringEntry.getKey()));
-                        immagineFisico2.setImageDrawable(Global.byteArrayToDrawable(stringEntry.getValue()));
+                        testoFisico2.setText(controlloStringaFisico(stringEntry.getNomePosa()));
+                        immagineFisico2.setImageDrawable(Global.byteArrayToDrawable(
+                                stringEntry.getImmagine()!=null? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                     case 2:
-                        testoFisico3.setText(controlloStringaFisico(stringEntry.getKey()));
-                        immagineFisico3.setImageDrawable(Global.byteArrayToDrawable(stringEntry.getValue()));
+                        testoFisico3.setText(controlloStringaFisico(stringEntry.getNomePosa()));
+                        immagineFisico3.setImageDrawable(Global.byteArrayToDrawable(
+                                stringEntry.getImmagine()!=null? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                 }
-                pos.getAndIncrement();
+
             }));
             noteFisicoDialo.setText(fAttuale.getNote());
         }
@@ -160,23 +176,22 @@ public class NotificheDialog {
 
                     //salvo prima il fisico. prendo l'id poi lista
                     Fisico f = new Fisico();
-                    //converto in byte
-                    ArrayList<byte[]> arrImg = new ArrayList<>();
 
-                    for (Bitmap bitm : posa_immagine) {
-                        Drawable drawable = new BitmapDrawable(dialogView.getResources(), bitm);
-                        arrImg.add(Global.drawableToByteArray(drawable));
+                    for (Fisico_Immagini bitm : posa_immagine) {
+                        switch (bitm.getPosizione()) {
+                            case 0:
+                                bitm.setNomePosa(nome1);
+                                break;
+                            case 1:
+                                bitm.setNomePosa(nome2);
+                                break;
+                            case 2:
+                                bitm.setNomePosa(nome3);
+                                break;
+                        }
                     }
 
-                    f.getPosa_immagine().put(
-                            nome1
-                            , arrImg.get(0));
-                    f.getPosa_immagine().put(
-                            nome2
-                            , arrImg.get(1));
-                    f.getPosa_immagine().put(
-                            nome3
-                            , arrImg.get(2));
+                    f.setPosa_immagine(posa_immagine);
 
                     f.setNote(noteFisicoDialo.getText().toString());
                     f.setCalendario(dataSalvare);
@@ -1095,6 +1110,7 @@ public class NotificheDialog {
             calendario.setDate(peso.getCalendario().getTimeInMillis());
 
         }else if(oggettoC.getClass()==Fisico.class){
+            System.out.println("ci sono le img");
             Fisico fisico=(Fisico) ogg;
             CalendarView calendario=dialogView.findViewById((int)R.id.calendarioFisico);
             EditText posaText1= dialogView.findViewById(R.id.posaFisico);
@@ -1102,33 +1118,31 @@ public class NotificheDialog {
             EditText posaText3= dialogView.findViewById(R.id.posaFisico3);
             EditText noteDettaglio=dialogView.findViewById((int)R.id.noteFisico);
 
-            ImageButton immagineFisico11= dialogView.findViewById(R.id.immaginefisico);
-            ImageButton immagineFisico22= dialogView.findViewById(R.id.immaginefisico2);
-            ImageButton immagineFisico33= dialogView.findViewById(R.id.immaginefisico3);
+
 
             // Impostare il valore di peso e note nei rispettivi EditText
-            HashMap<String,byte[]> mappa=fisico.getPosa_immagine();
-            int i=0;
-            for (Map.Entry<String, byte[]> entry : mappa.entrySet()) {
-                String chiave = entry.getKey();
-                byte[] valore = entry.getValue();
-                switch (i){
+            ArrayList<Fisico_Immagini> mappa=fisico.getPosa_immagine();
+            mappa.get(0).setImmagineBRiferimento(immagineFisico);
+            mappa.get(1).setImmagineBRiferimento(immagineFisico2);
+            mappa.get(2).setImmagineBRiferimento(immagineFisico3);
+            for (Fisico_Immagini entry : mappa) {
+                switch (entry.getPosizione()){
                     case 0:
-                        posaText1.setText(controlloStringaFisico(chiave));
-                        immagineFisico11.setImageDrawable(Global.byteArrayToDrawable(valore));
+                        posaText1.setText(controlloStringaFisico(entry.getNomePosa()));
+                        mappa.get(0).getImmagineBRiferimento().setImageDrawable(Global.byteArrayToDrawable(
+                                entry.getImmagine()!=null? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                     case 1:
-                        posaText2.setText(controlloStringaFisico(chiave));
-                        immagineFisico22.setImageDrawable(Global.byteArrayToDrawable(valore));
+                        posaText2.setText(controlloStringaFisico(entry.getNomePosa()));
+                        mappa.get(1).getImmagineBRiferimento().setImageDrawable(Global.byteArrayToDrawable(
+                                entry.getImmagine()!=null? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                     case 2:
-                        posaText3.setText(controlloStringaFisico(chiave));
-                        immagineFisico33.setImageDrawable(Global.byteArrayToDrawable(valore));
+                        posaText3.setText(controlloStringaFisico(entry.getNomePosa()));
+                        mappa.get(2).getImmagineBRiferimento().setImageDrawable(Global.byteArrayToDrawable(
+                                entry.getImmagine()!=null? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                 }
-                i++;
-
-
             }
 
             noteDettaglio.setText(fisico.getNote());
@@ -1214,6 +1228,9 @@ public class NotificheDialog {
             immagineFisico11.setImageResource(R.drawable.noimg);
             immagineFisico22.setImageResource(R.drawable.noimg);
             immagineFisico33.setImageResource(R.drawable.noimg);
+            posa_immagine.get(0).setImmagine(null);
+            posa_immagine.get(1).setImmagine(null);
+            posa_immagine.get(2).setImmagine(null);
 
 
         }
@@ -1257,29 +1274,18 @@ public class NotificheDialog {
                     FisicoDAO fdao=new FisicoDAO(dialogView.getContext());
                     Fisico oggFisico=fdao.getFisicoPerData(Global.ConversioneCalendarString(calendarioMostra));
 
-                    /********************** ripristino ****************/
-                    posa_immagine= new ArrayList<>();
-                    InputStream inputStream = dialogView.getResources().openRawResource((int)R.drawable.noimg);
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    for(int i=0;i<3;i++)posa_immagine.add(bitmap);
-                    /************************************/
-
-
                     /*********************chiama anche tutti di lista*********/
                     ListaImgFisicoDAO lfdao=new ListaImgFisicoDAO(dialogView.getContext());
 
                     if(oggFisico!=null){
-                        HashMap<String, byte[]> listaim =lfdao.getImmaginiPerIdFisico(oggFisico.getId());
+                        ArrayList<Fisico_Immagini> listaim =lfdao.getImmaginiPerIdFisico(oggFisico.getId());
+                        //associo i bottoni alla lista
+                        listaim.get(0).setImmagineBRiferimento(immagineFisico);
+                        listaim.get(1).setImmagineBRiferimento(immagineFisico2);
+                        listaim.get(2).setImmagineBRiferimento(immagineFisico3);
                         oggFisico.setPosa_immagine(listaim);
-
-                        //setta anche la var globale
-                        AtomicInteger i= new AtomicInteger();
-                        listaim.forEach((set,byt)->{
-                            Bitmap bitmaptemp = BitmapFactory.decodeByteArray(byt, 0, byt.length);
-                            posa_immagine.set(i.get(),bitmaptemp);
-                            i.getAndIncrement();
-                        });
-
+                        //setto la var globale con le immagini
+                        posa_immagine=oggFisico.getPosa_immagine();
 
                         SettaVarDialogView(oggetto,dialogView,oggFisico);
                     }else SettaTextAVuoto(oggetto,dialogView,oggFisico);

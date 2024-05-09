@@ -125,7 +125,8 @@ public class DbHelper extends SQLiteOpenHelper {
                     + SchemaDB.ListaImmaginiFisicoDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + SchemaDB.ListaImmaginiFisicoDB.COLUMN_IDFisico + " INTEGER, "
                     + SchemaDB.ListaImmaginiFisicoDB.COLUMN_Immagine + " BLOB, "
-                    + SchemaDB.ListaImmaginiFisicoDB.COLUMN_NomePosa + " TEXT "
+                    + SchemaDB.ListaImmaginiFisicoDB.COLUMN_NomePosa + " TEXT ,"
+                    + SchemaDB.ListaImmaginiFisicoDB.COLUMN_PosizionePosa + " INTEGER "
                     + ");";
 
 

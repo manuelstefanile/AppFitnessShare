@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.appfitness.Bean.COSTANTI;
+import com.example.appfitness.Bean.Fisico_Immagini;
 import com.example.appfitness.Bean.Kcal;
 import com.example.appfitness.Bean.Misure;
 import com.example.appfitness.Bean.Note;
@@ -39,6 +40,7 @@ import com.example.appfitness.Pagina3.PopupEsercizio;
 import com.example.appfitness.Pagina3.PopupSchede;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -523,27 +525,23 @@ public class Registrazione_Pag2 extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //sto nelle immagini di esercizio
+        //sto nelle immagini di fisico
         System.out.println("img ig 1" );
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Uri imageUri = data.getData();
             try {
+                //prendo l immagine scelta
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                System.out.println("img ig 2" );
-                int immagineRif= NotificheDialog.immagineRiferimento;
-                NotificheDialog.posa_immagine.add(immagineRif-1,bitmap);
-                switch (immagineRif){
-                    case 1:
-                        NotificheDialog.immagineFisico.setImageBitmap(bitmap);
-                        break;
-                    case 2:
-                        NotificheDialog.immagineFisico2.setImageBitmap(bitmap);
-                        break;
-                    case 3:
-                        NotificheDialog.immagineFisico3.setImageBitmap(bitmap);
-                        break;
-                }
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
 
+                //per capire quale immg ho premuto
+                int immagineRif= NotificheDialog.immagineRiferimento;
+
+                //aggiungo a posaimmagine l arraydibyte e anche al bottone setto l img
+                NotificheDialog.posa_immagine.get(immagineRif-1).setImmagine(byteArray);
+                NotificheDialog.posa_immagine.get(immagineRif-1).getImmagineBRiferimento().setImageBitmap(bitmap);
 
 
             } catch (IOException e) {

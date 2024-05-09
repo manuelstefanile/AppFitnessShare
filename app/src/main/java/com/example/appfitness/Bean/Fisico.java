@@ -1,16 +1,21 @@
 package com.example.appfitness.Bean;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
 public class Fisico {
     private long id;
-    private HashMap<String, byte[]> posa_immagine= new HashMap<>();
+    private ArrayList<Fisico_Immagini> posa_immagine= new ArrayList<>();
     private String note;
     private Calendar calendario=Calendar.getInstance();
 
 
-    public void setPosa_immagine(HashMap<String, byte[]> posa_immagine) {
+    public ArrayList<Fisico_Immagini> getPosa_immagine() {
+        return posa_immagine;
+    }
+
+    public void setPosa_immagine(ArrayList<Fisico_Immagini> posa_immagine) {
         this.posa_immagine = posa_immagine;
     }
 
@@ -22,9 +27,6 @@ public class Fisico {
         this.id = id;
     }
 
-    public HashMap<String, byte[]> getPosa_immagine() {
-        return posa_immagine;
-    }
 
     public String getNote() {
         return note;

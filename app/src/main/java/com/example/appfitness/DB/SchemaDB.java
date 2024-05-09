@@ -110,6 +110,7 @@ public static abstract class UtenteDB implements BaseColumns {
         public static final String COLUMN_IDFisico = "IdFisicoRicerimento";
         public static final String COLUMN_NomePosa = "NomePosa";
         public static final String COLUMN_Immagine = "Immagine";
+        public static final String COLUMN_PosizionePosa = "posizione";
     }
 
 

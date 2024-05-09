@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 
 import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Fisico;
+import com.example.appfitness.Bean.Fisico_Immagini;
 import com.example.appfitness.Pagina3.Global;
 import com.example.appfitness.Pagina3.PaginaScheda_Pag3;
 
@@ -36,16 +37,14 @@ public class ListaImgFisicoDAO {
         //inserisco l ex nel db
         SQLiteDatabase dbWritable = db.getWritableDatabase();
 
-        HashMap<String, byte[]> listaImg=f.getPosa_immagine();
-        for (Map.Entry<String, byte[]> entry : listaImg.entrySet()) {
-            String nomeImmagine = entry.getKey();
-            byte[] byteArray = entry.getValue();
+        ArrayList<Fisico_Immagini> listaImg=f.getPosa_immagine();
+        for (Fisico_Immagini entry : listaImg) {
 
             ContentValues valueslista = new ContentValues();
-            valueslista.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_NomePosa, nomeImmagine);
-            valueslista.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_Immagine, byteArray);
+            valueslista.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_NomePosa, entry.getNomePosa());
+            valueslista.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_Immagine, entry.getImmagine());
+            valueslista.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_PosizionePosa, entry.getPosizione());
             valueslista.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_IDFisico, f.getId());
-
             dbWritable.insert(SchemaDB.ListaImmaginiFisicoDB.TABLE_NAME, null, valueslista);
         }
 
@@ -54,9 +53,9 @@ public class ListaImgFisicoDAO {
     }
 
     @SuppressLint("Range")
-    public HashMap<String, byte[]> getImmaginiPerIdFisico(long idFisico) {
+    public ArrayList<Fisico_Immagini> getImmaginiPerIdFisico(long idFisico) {
         SQLiteDatabase dbReadable = db.getReadableDatabase();
-        HashMap<String, byte[]> immagini = new HashMap<>();
+        ArrayList<Fisico_Immagini> immagini = new ArrayList<>();
 
         String selectQuery = "SELECT * FROM " + SchemaDB.ListaImmaginiFisicoDB.TABLE_NAME +
                 " WHERE " + SchemaDB.ListaImmaginiFisicoDB.COLUMN_IDFisico + " = ?";
@@ -67,8 +66,10 @@ public class ListaImgFisicoDAO {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                  String nomeImmagine = cursor.getString(cursor.getColumnIndex(SchemaDB.ListaImmaginiFisicoDB.COLUMN_NomePosa));
+                 Integer posizione=  cursor.getInt(cursor.getColumnIndex(SchemaDB.ListaImmaginiFisicoDB.COLUMN_PosizionePosa));
                 byte[] byteArray = cursor.getBlob(cursor.getColumnIndex(SchemaDB.ListaImmaginiFisicoDB.COLUMN_Immagine));
-                immagini.put(nomeImmagine, byteArray);
+                Fisico_Immagini ftemp=new Fisico_Immagini(byteArray,nomeImmagine,posizione);
+                immagini.add(ftemp);
             } while (cursor.moveToNext());
 
             cursor.close();
@@ -88,18 +89,16 @@ public class ListaImgFisicoDAO {
         deleteImmaginiPerIdFisico(f.getId());
 
         SQLiteDatabase dbWritable = db.getWritableDatabase();
-        HashMap<String, byte[]> listaImg=f.getPosa_immagine();
-        int totalRowsAffected = 0;
-        for (Map.Entry<String, byte[]> entry : listaImg.entrySet()) {
-            String nomeImmagine = entry.getKey();
-            byte[] byteArray = entry.getValue();
+        ArrayList<Fisico_Immagini> listaImg=f.getPosa_immagine();
+        for (Fisico_Immagini entry : listaImg) {
 
-            ContentValues values = new ContentValues();
-            values.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_NomePosa, nomeImmagine);
-            values.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_IDFisico, f.getId());
-            values.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_Immagine, byteArray);
+            ContentValues valueslista = new ContentValues();
+            valueslista.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_NomePosa, entry.getNomePosa());
+            valueslista.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_Immagine, entry.getImmagine());
+            valueslista.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_PosizionePosa, entry.getPosizione());
+            valueslista.put(SchemaDB.ListaImmaginiFisicoDB.COLUMN_IDFisico, f.getId());
             dbWritable.insert(SchemaDB.ListaImmaginiFisicoDB.TABLE_NAME,
-                    null, values);
+                    null, valueslista);
             // Aggiungi il numero di righe aggiornate al totale
 
         }
