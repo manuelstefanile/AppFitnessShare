@@ -102,6 +102,7 @@ public class PopupSchede {
     }
 
     public  void CreaScheda(LayoutInflater inflater){
+        PaginaScheda_Pag3.avviaAnimazione=true;
 
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         //note all inizio della creazione dell ex è vuoto

@@ -54,6 +54,7 @@ public class PaginaScheda_Pag3 extends Activity {
 
     private static final String CHANNEL_ID = "TimerChannel";
     private boolean isInBackground = false;
+    public static boolean avviaAnimazione=false;
 
 
 
@@ -109,7 +110,10 @@ public class PaginaScheda_Pag3 extends Activity {
                 // Rimuovi il listener per evitare chiamate ripetute
                 lista.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 // Avvia l'animazione solo dopo che la ListView è stata completamente caricata
-                animateListViewItems();
+                if(avviaAnimazione) {
+                    animateListViewItems();
+                    avviaAnimazione=false;
+                }
             }
         });
 
