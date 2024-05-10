@@ -200,27 +200,33 @@ public class PopupEsercizio {
                     Toast.makeText(dialogView.getContext(), "Inserisci almeno il nome", Toast.LENGTH_LONG).show();
                     return;
                 }
-                long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
-                esercizio.setId(EsercizioId);
-                if(EsercizioId==-1) {
-                    Toast.makeText(dialogView.getContext(), "Nome già presente", Toast.LENGTH_LONG).show();
+
+                /***** controlla che nel giorno non ci sia lo stesso ex *****/
+                Esercizio esercizioNew=null;
+                ArrayList<Esercizio> exlist=Global.ledao.getListaEserciziPerGiorno(PopupGiorno.idGiornoAttuale);
+                for (Esercizio e:exlist) {
+                    e=Global.esercizioDao.getEsercizioById((int) e.getId());
+                    System.out.println("giorno attuale "+e.getNomeEsercizio());
+                    if(e.getNomeEsercizio().equals(esercizio.getNomeEsercizio())){
+                        esercizioNew=Global.esercizioDao.getEsercizioById((int) e.getId());
+                    }
                 }
-                else{
-
+                //tutto ok
+                if (esercizioNew==null){
+                    long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
+                    esercizio.setId(EsercizioId);
                     giornoNuovo.getListaEsercizi().add(EsercizioId);
-
                     int posizion= Global.adapterEsercizi.getLista().size()-1;
                     esercizio.setOrdine(posizion);
                     esercizio.idGiornoAvviaRiferimento= giornoNuovo.getId();
-
                     Global.adapterEsercizi.add(esercizio);
 
                     Global.ledao.Insert(giornoNuovo.getId(),esercizio.getId(),0,posizion);
                     Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
-
+                }else {
+                    Toast.makeText(dialogView.getContext(), "Nome già presente", Toast.LENGTH_LONG).show();
                 }
-
-
+                /*************************************************************/
 
 
             }
@@ -249,7 +255,20 @@ public class PopupEsercizio {
         edit.putString(COSTANTI.NOTE_ESERCIZIO,new Note().toJson());
         edit.commit();
 
-        Esercizio esercizioNew=Global.esercizioDao.getEsercizioByNome(esercizio.getNomeEsercizio());
+        Esercizio esercizioNew=new Esercizio();
+        System.out.println("giorno attuale "+PopupGiorno.idGiornoAttuale);
+        System.out.println("giorno attuale "+esercizio.getNomeEsercizio());
+        ArrayList<Esercizio> exlist=Global.ledao.getListaEserciziPerGiorno(PopupGiorno.idGiornoAttuale);
+        for (Esercizio e:exlist) {
+            e=Global.esercizioDao.getEsercizioById((int) e.getId());
+
+            if(e.getNomeEsercizio().equals(esercizio.getNomeEsercizio())){
+                esercizioNew=Global.esercizioDao.getEsercizioById((int) e.getId());
+            }
+        }
+        esercizioNew.idGiornoAvviaRiferimento=PopupGiorno.idGiornoAttuale;
+        System.out.println("esercizio aperto "+esercizioNew);
+
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.crea_esercizio, null);
         Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
@@ -335,13 +354,14 @@ public class PopupEsercizio {
             }
         });
 
+        Esercizio finalEsercizioNew = esercizioNew;
         bottoneNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit= sh.edit();
 
-                Note notaDaMostrare= new Note(esercizioNew.getNote());
+                Note notaDaMostrare= new Note(finalEsercizioNew.getNote());
                 edit.putString(COSTANTI.NOTE_ESERCIZIO, notaDaMostrare.toJson());
                 edit.apply();
                 try {
@@ -353,6 +373,7 @@ public class PopupEsercizio {
             }
         });
 
+        Esercizio finalEsercizioNew1 = esercizioNew;
         salva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -380,9 +401,9 @@ public class PopupEsercizio {
                     Toast.makeText(dialogView.getContext(), "Inserisci almeno il nome", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    System.out.println(eser.getNomeEsercizio()+" "+esercizioNew.getNomeEsercizio());
-                    if(eser.getNomeEsercizio().equals(esercizioNew.getNomeEsercizio())){
-                        eser.setId(esercizioNew.getId());
+                    System.out.println(eser.getNomeEsercizio()+" "+ finalEsercizioNew1.getNomeEsercizio());
+                    if(eser.getNomeEsercizio().equals(finalEsercizioNew1.getNomeEsercizio())){
+                        eser.setId(finalEsercizioNew1.getId());
 
                         Global.adapterEsercizi.UpdateEsercizio(eser);
                         Global.esercizioDao.updateEsercizio(eser);
@@ -393,11 +414,19 @@ public class PopupEsercizio {
 
                         //nomi diversi, allora controlla
                     }else{
-                        Esercizio ex=Global.esercizioDao.getEsercizioByNome(eser.getNomeEsercizio());
-                        if(ex!=null){
-                            Toast.makeText(dialogView.getContext(), "Nome esercizio già presente", Toast.LENGTH_SHORT).show();
+                        Esercizio esercizioNew=null;
+                        ArrayList<Esercizio> exlist=Global.ledao.getListaEserciziPerGiorno(PopupGiorno.idGiornoAttuale);
+                        for (Esercizio e:exlist) {
+                            e=Global.esercizioDao.getEsercizioById((int) e.getId());
+
+                            if(e.getNomeEsercizio().equals(esercizio.getNomeEsercizio())){
+                                esercizioNew=Global.esercizioDao.getEsercizioById((int) e.getId());
+                            }
+                        }
+                        if(esercizioNew!=null){
+                            Toast.makeText(dialogView.getContext(), "Nome esercizio già presente nel giorno", Toast.LENGTH_SHORT).show();
                         }else{
-                            eser.setId(esercizioNew.getId());
+                            eser.setId(finalEsercizioNew1.getId());
 
                             Global.esercizioDao.updateEsercizio(eser);
                             Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
@@ -429,7 +458,17 @@ public class PopupEsercizio {
         edit.putString(COSTANTI.NOTE_ESERCIZIO,new Note().toJson());
         edit.commit();
 
-        Esercizio esercizioNew=Global.esercizioDao.getEsercizioByNome(esercizio.getNomeEsercizio());
+        /** prendo l esercizio per quel giorno di riferimento */
+        Esercizio esercizioNew=new Esercizio();
+        ArrayList<Esercizio> exlist=Global.ledao.getListaEserciziPerGiorno(PopupGiorno.idGiornoAttuale);
+        for (Esercizio e:exlist) {
+            e=Global.esercizioDao.getEsercizioById((int) e.getId());
+            if(e.getNomeEsercizio().equals(esercizio.getNomeEsercizio())){
+                esercizioNew=Global.esercizioDao.getEsercizioById((int) e.getId());
+            }
+        }
+        esercizioNew.idGiornoAvviaRiferimento=PopupGiorno.idGiornoAttuale;
+
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.avvia_esercizo, null);
         Button salvaButton=dialogView.findViewById((int)R.id.salvaButton);
@@ -526,22 +565,23 @@ public class PopupEsercizio {
             }
         });
 
+        Esercizio finalEsercizioNew = esercizioNew;
         terminaEx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //salva cio che hai scritto
-                esercizioNew.setPesoKG(pesoKgEsercizio.getText().toString());
-                esercizioNew.setNote(Note.fromJson(shp.getString(COSTANTI.NOTE_ESERCIZIO, null)).getNote());
+                finalEsercizioNew.setPesoKG(pesoKgEsercizio.getText().toString());
+                finalEsercizioNew.setNote(Note.fromJson(shp.getString(COSTANTI.NOTE_ESERCIZIO, null)).getNote());
                 //esercizioNew.setCompletato(1);
 
-                Global.esercizioDao.updateEsercizio(esercizioNew);
-                Global.ledao.updateStato(esercizio.idGiornoAvviaRiferimento,esercizioNew.getId(),1);
+                Global.esercizioDao.updateEsercizio(finalEsercizioNew);
+                Global.ledao.updateStato(esercizio.idGiornoAvviaRiferimento, finalEsercizioNew.getId(),1);
 
                 /************setta il background a verde*********/
                 int posizioneitem=Global.adapterEsercizi.getPosition(esercizio);
 
-                Global.adapterEsercizi.AggiornaEsercizioCompletato(posizioneitem,esercizioNew);
+                Global.adapterEsercizi.AggiornaEsercizioCompletato(posizioneitem, finalEsercizioNew);
                 /************setta il background a verde*********/
 
                 alertDialog.dismiss();
@@ -561,6 +601,7 @@ public class PopupEsercizio {
             }
         });
 
+        Esercizio finalEsercizioNew1 = esercizioNew;
         bottoneNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -569,9 +610,9 @@ public class PopupEsercizio {
 
                 Note notetemp = Note.fromJson(shp.getString(COSTANTI.NOTE_ESERCIZIO, null));
                 if(notetemp.getNote()!=null){
-                    esercizioNew.setNote(notetemp.getNote());
+                    finalEsercizioNew1.setNote(notetemp.getNote());
                 }
-                Note notaDaMostrare= new Note(esercizioNew.getNote());
+                Note notaDaMostrare= new Note(finalEsercizioNew1.getNote());
                 edit.putString(COSTANTI.NOTE_ESERCIZIO, notaDaMostrare.toJson());
                 edit.apply();
                 try {

@@ -39,6 +39,7 @@ public class PopupGiorno {
 
 
     public static ArrayList<Long> idGiorniSalvati= new ArrayList<>();
+    public static Long idGiornoAttuale=-1L;
 
 
     public static void CreaGiorno(LayoutInflater inflater, Scheda schedaRiferimento)
@@ -157,7 +158,11 @@ public class PopupGiorno {
                     creaEsercizio.setBackgroundResource(R.drawable.drawable_scheda);
                     giornoNuovo.setNomeGiorno(testoInserito);
                     giornoNuovo.setNote(note.getNote());
-                    Global.giornoDao.InsertGiorno(giornoNuovo);
+
+                    /*************setto l idGlobalegiorno da passare a esercizi*******/
+                    idGiornoAttuale=Global.giornoDao.InsertGiorno(giornoNuovo).getId();
+                    /************************************************/
+
                     schedaRiferimento.getListaGiorni().add(giornoNuovo.getId());
                     Global.adapterGiorni.add(giornoNuovo);
                 }
@@ -170,6 +175,9 @@ public class PopupGiorno {
 
     public static void ApriGiornoSelezionato(Giorno giorno,LayoutInflater inflater){
 
+        /***********setto l idGlobalegiorno da passare a esercizi*******/
+        idGiornoAttuale=giorno.getId();
+        /***************************************/
 
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit=shp.edit();
@@ -314,8 +322,10 @@ public class PopupGiorno {
     }
 
     public static void AvviaGiornoSelezionato(Giorno giorno,LayoutInflater inflater){
+        /***********setto l idGlobalegiorno da passare a esercizi*******/
+        idGiornoAttuale=giorno.getId();
+        /****************************************/
 
-        System.out.println("___"+giorno);
         SharedPreferences shp=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit=shp.edit();
 

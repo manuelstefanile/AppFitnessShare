@@ -68,7 +68,7 @@ public class DbHelper extends SQLiteOpenHelper {
     final private static String CREATE_ESERCIZIO =
             "CREATE TABLE " + SchemaDB.EsercizioDB.TABLE_NAME + " ("
                     + SchemaDB.EsercizioDB._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + SchemaDB.EsercizioDB.COLUMN_nomeEsercizio + " TEXT NOT NULL UNIQUE, "
+                    + SchemaDB.EsercizioDB.COLUMN_nomeEsercizio + " TEXT NOT NULL , "
                     + SchemaDB.EsercizioDB.COLUMN_tecnica_intensita + " TEXT, "
                     + SchemaDB.EsercizioDB.COLUMN_esecuzione + " TEXT, "
                     + SchemaDB.EsercizioDB.COLUMN_immagineMacchinario + " BLOB, "

@@ -45,17 +45,26 @@ public class EsercizioDAO {
         );
 
         if (cursor.moveToFirst()) {
-            // Se la riga è stata trovata, puoi creare il tuo oggetto Giorno
+// Se la riga è stata trovata, puoi creare il tuo oggetto Giorno
             result = new Esercizio();
             result.setId(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB._ID)));
             result.setNomeEsercizio(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_nomeEsercizio)));
-
+            result.setEsecuzione(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_esecuzione)));
+            result.setNumeroRipetizioni(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni)));
+            result.setNumeroSerie(cursor.getInt(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_numeroSerie)));
+            result.setTecnica_intensita(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_tecnica_intensita)));
+            result.setTimer(cursor.getFloat(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_timer)));
+            result.setPesoKG(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_pesoKG)));
             @SuppressLint("Range") byte[] immagine=cursor.getBlob(cursor.getColumnIndex(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario));
             if(immagine!=null) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(immagine, 0, immagine.length);
-                Drawable immDraw = new BitmapDrawable(Resources.getSystem(), bitmap);
+                Drawable immDraw= new BitmapDrawable(Resources.getSystem(), bitmap);
                 result.setImmagineMacchinario(immDraw);
             }
+
+
+            result.setNote(cursor.getString(cursor.getColumnIndexOrThrow(SchemaDB.EsercizioDB.COLUMN_note)));
+
             // Chiudi il cursore
             cursor.close();
         }
