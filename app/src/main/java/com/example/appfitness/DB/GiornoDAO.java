@@ -78,6 +78,11 @@ public class GiornoDAO {
                 new String[]{String.valueOf(g.getId())});
         db.close();
 
+        ArrayList<Integer> idEx=Global.ledao.getIDListaEserciziPerGiorno(Long.valueOf(g.getId()));
+        //elimino gli esercizi
+        for (Integer idx:idEx){
+            Global.esercizioDao.DeleteEsercizioById(idx);
+        }
         //elimino la lista di giorni
         Global.listaGiornidao.DeleteListaPerIdGiorno(g.getId());
         //devo eliminare la lista di ex associata ai giorni

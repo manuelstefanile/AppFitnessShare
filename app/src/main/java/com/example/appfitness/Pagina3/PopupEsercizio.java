@@ -147,6 +147,7 @@ public class PopupEsercizio {
             }
         });
 
+        final Esercizio[] esercizioAppenaSalvato = {null};
         salva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,26 +176,6 @@ public class PopupEsercizio {
                         note.getNote(),
                         pesoKgEsercizio.getText().toString()
                 );
-                //inserisco l ex nel db
-                DbHelper db = new DbHelper(PopupSchede.act.getApplicationContext());
-                SQLiteDatabase dbWritable = db.getWritableDatabase();
-
-                ContentValues valuesEsercizio = new ContentValues();
-                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_nomeEsercizio, esercizio.getNomeEsercizio());
-                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_tecnica_intensita, esercizio.getTecnica_intensita());
-                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_esecuzione, esercizio.getEsecuzione());
-
-                byte[] stream =null;
-                if(esercizio.getImmagineMacchinario()!=null) {
-                   stream=Global.drawableToByteArray(esercizio.getImmagineMacchinario());
-                }
-
-                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario, stream);
-                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroSerie, esercizio.getNumeroSerie());
-                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni, esercizio.getNumeroRipetizioni());
-                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_timer, esercizio.getTimer());
-                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_pesoKG, esercizio.getPesoKG());
-                valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_note,note.getNote());
 
                 if(esercizio.getNomeEsercizio()==""){
                     Toast.makeText(dialogView.getContext(), "Inserisci almeno il nome", Toast.LENGTH_LONG).show();
@@ -213,14 +194,20 @@ public class PopupEsercizio {
                 }
                 //tutto ok
                 if (esercizioNew==null){
-                    long EsercizioId = dbWritable.insert(SchemaDB.EsercizioDB.TABLE_NAME, null, valuesEsercizio);
-                    esercizio.setId(EsercizioId);
-                    giornoNuovo.getListaEsercizi().add(EsercizioId);
+                    //nella stessa schermata ho gia premuto salva, quindi elimino e risalvo
+                    if(esercizioAppenaSalvato[0]!=null){
+                        Global.esercizioDao.DeleteEsercizioById(esercizioAppenaSalvato[0].getId());
+                        Global.adapterEsercizi.remove(esercizioAppenaSalvato[0]);
+                    }
+                    esercizio.setNote(note.getNote());
+                    esercizio.setId(Global.esercizioDao.inserisciEsercizio(esercizio).getId());
+                    giornoNuovo.getListaEsercizi().add(esercizio.getId());
                     int posizion= Global.adapterEsercizi.getLista().size()-1;
                     esercizio.setOrdine(posizion);
                     esercizio.idGiornoAvviaRiferimento= giornoNuovo.getId();
                     Global.adapterEsercizi.add(esercizio);
 
+                    esercizioAppenaSalvato[0] =esercizio;
                     Global.ledao.Insert(giornoNuovo.getId(),esercizio.getId(),0,posizion);
                     Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
                 }else {
@@ -418,8 +405,8 @@ public class PopupEsercizio {
                         ArrayList<Esercizio> exlist=Global.ledao.getListaEserciziPerGiorno(PopupGiorno.idGiornoAttuale);
                         for (Esercizio e:exlist) {
                             e=Global.esercizioDao.getEsercizioById((int) e.getId());
-
-                            if(e.getNomeEsercizio().equals(esercizio.getNomeEsercizio())){
+                            System.out.println("nnn"+e.getNomeEsercizio()+"  sdfsdf "+eser.getNomeEsercizio());
+                            if(e.getNomeEsercizio().equals(eser.getNomeEsercizio())){
                                 esercizioNew=Global.esercizioDao.getEsercizioById((int) e.getId());
                             }
                         }

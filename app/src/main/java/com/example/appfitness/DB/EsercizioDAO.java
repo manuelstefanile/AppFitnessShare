@@ -16,6 +16,7 @@ import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Pagina3.Global;
 import com.example.appfitness.Pagina3.PaginaScheda_Pag3;
 import com.example.appfitness.Pagina3.PopupEsercizio;
+import com.example.appfitness.Pagina3.PopupSchede;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -147,6 +148,7 @@ public class EsercizioDAO {
 
     public Esercizio inserisciEsercizio(Esercizio esercizio) {
         //inserisco l ex nel db
+        DbHelper db = new DbHelper(PopupSchede.act.getApplicationContext());
         SQLiteDatabase dbWritable = db.getWritableDatabase();
 
         ContentValues valuesEsercizio = new ContentValues();
@@ -154,14 +156,12 @@ public class EsercizioDAO {
         valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_tecnica_intensita, esercizio.getTecnica_intensita());
         valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_esecuzione, esercizio.getEsecuzione());
 
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        byte[] stream =null;
         if(esercizio.getImmagineMacchinario()!=null) {
-            Bitmap bitmap = ((BitmapDrawable) esercizio.getImmagineMacchinario()).getBitmap();
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
-            scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            stream=Global.drawableToByteArray(esercizio.getImmagineMacchinario());
         }
 
-        valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario, stream.toByteArray());
+        valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_immagineMacchinario, stream);
         valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroSerie, esercizio.getNumeroSerie());
         valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_numeroRipetizioni, esercizio.getNumeroRipetizioni());
         valuesEsercizio.put(SchemaDB.EsercizioDB.COLUMN_timer, esercizio.getTimer());

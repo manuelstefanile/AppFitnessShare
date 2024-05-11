@@ -264,9 +264,17 @@ public class PaginaScheda_Pag3 extends Activity {
         buttonYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Elimina la scheda
+                //elimina i giorni associati e gli esercizi
+
+                // Elimina listagiorno,listaesercizio,esercizio in deletegiorno
                 ArrayList<Integer> listaGiorniId = Global.listaGiornidao.getIDListaGiorniPerScheda(c.getId());
                 c.setListaGiorni(listaGiorniId);
+                for(Integer idG:listaGiorniId){
+                    Giorno gtemp=new Giorno();
+                    gtemp.setId(idG);
+                    Global.giornoDao.DeleteGiornoByGiorno(gtemp);
+                }
+
                 Global.schedadao.DeleteScheda(c);
                 Global.adapterSchede.remove(c);
                 dialog.dismiss(); // Chiudi il dialog box
@@ -307,6 +315,7 @@ public class PaginaScheda_Pag3 extends Activity {
             public void onClick(View v) {
                 // Elimina la lista di esercizi
                 Global.ledao.DeleteListaPerNomeEsercizi(c.getId());
+                Global.esercizioDao.DeleteEsercizioById(c.getId());
                 Global.adapterEsercizi.remove(c);
                 dialog.dismiss(); // Chiudi il dialog box
             }
