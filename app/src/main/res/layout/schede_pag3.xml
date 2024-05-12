@@ -114,32 +114,41 @@
         android:gravity="center"
         >
 
-        <TextView
+
+        <Button
+            android:id="@+id/creaScheda"
+            android:onClick="CreaScheda"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"></TextView>
-
-    <Button
-        android:id="@+id/creaScheda"
-        android:onClick="CreaScheda"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:textStyle="bold"
-        android:layout_weight="0.5"
-        android:background="@drawable/drawable_scheda"
-        android:text="Nuova Scheda"
-        android:textColor="@color/black"
-        android:textSize="20dp">
-    </Button>
-
-        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:background="@drawable/drawable_scheda"
+            android:text="Nuova Scheda"
+            android:textColor="@color/black"
+            android:textSize="20dp">
+        </Button>
+        <Button
+            android:id="@+id/importaScheda"
+            android:onClick="ImportaScheda"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"></TextView>
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:background="@drawable/drawable_scheda"
+            android:text="Importa Scheda"
+            android:textColor="@color/black"
+            android:textSize="15dp">
+        </Button>
+
+
 
     </LinearLayout>
 </RelativeLayout>

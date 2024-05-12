@@ -62,6 +62,38 @@ public class SchedaDAO {
         return result;
     }
 
+    @SuppressLint("Range")
+    public Scheda getSchedaById(Long id) {
+        SQLiteDatabase dbRead = db.getReadableDatabase();
+        Scheda result = null;
+        Cursor cursor = dbRead.query(
+                SchemaDB.SchedaDB.TABLE_NAME, // Nome della tua tabella Giorno
+                null, // Array di colonne; null seleziona tutte le colonne
+                SchemaDB.SchedaDB._ID + " = ?", // Clausola WHERE per l'ID
+                new String[]{String.valueOf(id)}, // Valore per la clausola WHERE
+                null, // GROUP BY
+                null, // HAVING
+                null // ORDER BY
+        );
+        if (cursor != null && cursor.moveToFirst()) {
+
+                int idt=cursor.getInt(cursor.getColumnIndex(SchemaDB.SchedaDB._ID));
+                String nomeScheda=cursor.getString(cursor.getColumnIndex(SchemaDB.SchedaDB.COLUMN_nomeScheda));
+                String noteScheda=cursor.getString(cursor.getColumnIndex(SchemaDB.SchedaDB.COLUMN_noteScheda));
+                byte[] immagine=cursor.getBlob(cursor.getColumnIndex(SchemaDB.SchedaDB.COLUMN_immagineScheda));
+                result=new Scheda(nomeScheda,immagine);
+                result.setNote(noteScheda);
+                result.setId(id);
+                result.setListaGiorni(new ArrayList<>());
+
+
+        }
+        // Chiudi il database
+        dbRead.close();
+
+        return result;
+    }
+
     public Scheda CreaSchedaTemp(){
         SQLiteDatabase dbWritable = db.getWritableDatabase();
         ContentValues valuesScheda = new ContentValues();
@@ -96,18 +128,19 @@ public class SchedaDAO {
     }
 
 
-    public void InsertScheda(Scheda schedaNuova){
+    public Long InsertScheda(Scheda schedaNuova){
 
         SQLiteDatabase dbWritable = db.getWritableDatabase();
 
         ContentValues valuesScheda = new ContentValues();
 
         valuesScheda.put(SchemaDB.SchedaDB.COLUMN_nomeScheda, schedaNuova.getNomeScheda());
+        valuesScheda.put(SchemaDB.SchedaDB.COLUMN_noteScheda, schedaNuova.getNote());
         valuesScheda.put(SchemaDB.SchedaDB.COLUMN_immagineScheda, Global.drawableToByteArray(schedaNuova.getImg()));
-       dbWritable.insert(SchemaDB.SchedaDB.TABLE_NAME,null,valuesScheda);
-
+        Long idScheda=dbWritable.insert(SchemaDB.SchedaDB.TABLE_NAME,null,valuesScheda);
 
         //salva anche una lista di giorni
+
         ArrayList<Long> idSalvatiGiorni= PopupGiorno.idGiorniSalvati;
         for (Long id:idSalvatiGiorni) {
             //crea la query id/idSalvatiEsercizi
@@ -117,6 +150,7 @@ public class SchedaDAO {
             dbWritable.insert(SchemaDB.ListaGiorniDB.TABLE_NAME,null,valuesListaGiorni);
         }
 
+        return idScheda;
     }
 
     public void DeleteScheda(Scheda scheda){

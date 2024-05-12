@@ -2,9 +2,10 @@ package com.example.appfitness.Bean;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Giorno extends ListeClasseMarker {
+public class Giorno extends ListeClasseMarker implements Serializable {
     private long id;
     private String nomeGiorno,note;
     private ArrayList<Long> listaIdEsercizi=new ArrayList<>();

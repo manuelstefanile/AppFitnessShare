@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -31,6 +33,7 @@ import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Scheda;
+import com.example.appfitness.Bean.SerializzazioneFileScheda;
 import com.example.appfitness.DB.DbHelper;
 import com.example.appfitness.DB.EsercizioDAO;
 import com.example.appfitness.DB.GiornoDAO;
@@ -42,8 +45,15 @@ import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
 import com.example.appfitness.Registrazione_Pag2;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PaginaScheda_Pag3 extends Activity {
     ListView lista;
@@ -55,6 +65,7 @@ public class PaginaScheda_Pag3 extends Activity {
     private static final String CHANNEL_ID = "TimerChannel";
     private boolean isInBackground = false;
     public static boolean avviaAnimazione=false;
+    public static SerializzazioneFileScheda sf;
 
 
 
@@ -376,6 +387,68 @@ public class PaginaScheda_Pag3 extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         PopupSchede.onActivityResult(requestCode, resultCode, data);
+
+
+        //salvo il file scheda
+        if (requestCode == 5 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            if (data != null) {
+                Uri fileUri = data.getData();
+                try {
+                    // Apre uno stream di output per il file selezionato
+                    FileOutputStream fileOutputStream = (FileOutputStream) getContentResolver().openOutputStream(fileUri);
+
+                    // Crea un ObjectOutputStream per scrivere l'oggetto su questo stream
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+                    // Scrivi l'oggetto nel file
+                    objectOutputStream.writeObject(sf);
+                    System.out.println("oggetto in pg3"+sf);
+                    sf=null;
+                    // Chiudi gli stream
+                    objectOutputStream.close();
+                    fileOutputStream.close();
+
+
+                    Toast.makeText(getApplicationContext(), "File salvato con successo", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // Gestisci eventuali eccezioni di IO
+                }
+            }
+        } else {
+            // L'utente ha annullato la creazione del file o si è verificato un errore
+            Toast.makeText(getApplicationContext(), "Creazione del file annullata", Toast.LENGTH_SHORT).show();
+        }
+
+        //apro  il file scheda
+        if (requestCode == 6 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            if (data != null) {
+                Uri fileUri = data.getData();
+                try {
+                    // Apri uno stream di input per il file selezionato
+                    FileInputStream fileInputStream = (FileInputStream) getContentResolver().openInputStream(fileUri);
+
+                    // Crea un ObjectInputStream per leggere l'oggetto serializzato da questo stream
+                    ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+                    // Leggi l'oggetto SerializzazioneFileScheda dal file
+                    SerializzazioneFileScheda oggettoLetto = (SerializzazioneFileScheda) objectInputStream.readObject();
+
+                    System.out.println("oggetto da "+ oggettoLetto);
+                    SalvaSchedaImportate(oggettoLetto);
+                    // Chiudi gli stream
+                    objectInputStream.close();
+                    fileInputStream.close();
+                    // Fai qualcosa con la scheda e la mappa
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                    // Gestisci eventuali eccezioni di IO o di deserializzazione
+                }
+            }
+        } else {
+            // L'utente ha annullato la creazione del file o si è verificato un errore
+            Toast.makeText(getApplicationContext(), "Creazione annullata", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void ChiudTuttoNonSalva(View v){
@@ -485,6 +558,91 @@ public class PaginaScheda_Pag3 extends Activity {
             animation.setDuration(1500);
             view.startAnimation(animation);
         }
+    }
+    public void ImportaScheda(View v){
+        // Intent per aprire il file picker
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*"); // Tutti i tipi di file
+        startActivityForResult(intent, 6);
+    }
+
+    public void SalvaSchedaImportate(SerializzazioneFileScheda oggettoLetto){
+        Scheda schedaSave=oggettoLetto.getScheda();
+        System.out.println("scheda test "+ schedaSave);
+        for(Scheda sche:Global.schedadao.getAllSchede()){
+            if(sche.getNomeScheda().equals(schedaSave.getNomeScheda())){
+                SovraschiviSchedaNotifica(true,schedaSave,oggettoLetto);
+                return;
+            }
+
+        }
+        SovrascritturaSchedaImport(false,schedaSave,oggettoLetto);
+    }
+    private void SovraschiviSchedaNotifica(boolean elimniaSchedaEsistente,Scheda schedaSave,SerializzazioneFileScheda oggettoLetto){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Imposta il layout personalizzato come vista del dialog box
+        View customLayout = getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
+        TextView testo= customLayout.findViewById((int)R.id.testoCustom);
+        testo.setText("Scheda "+schedaSave.getNomeScheda()+" già presente. Vuoi sovrascrivere?");
+        builder.setView(customLayout);
+        // Ora puoi trovare i pulsanti all'interno del layout e aggiungere i listener di click
+        Button buttonYes = customLayout.findViewById(R.id.button_yes);
+        Button buttonNo = customLayout.findViewById(R.id.button_no);
+
+        // Creazione dell'AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Aggiunta dei listener di click ai pulsanti
+        buttonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SovrascritturaSchedaImport(elimniaSchedaEsistente,schedaSave,oggettoLetto);
+            }
+        });
+
+        buttonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Annulla l'eliminazione
+                dialog.dismiss(); // Chiudi il dialog box
+            }
+        });
+    }
+    private void SovrascritturaSchedaImport(boolean eliminaSchedaEsistente,Scheda schedaSave,SerializzazioneFileScheda oggettoLetto){
+
+        //elimina se esiste, la scheda presente
+        if(eliminaSchedaEsistente){
+            for(Scheda s:Global.schedadao.getAllSchede()){
+                if(s.getNomeScheda().equals(schedaSave.getNomeScheda())){
+                    Global.schedadao.DeleteScheda(s);
+                }
+            }
+        }
+        schedaSave.setId(Global.schedadao.InsertScheda(schedaSave));
+        Global.adapterSchede.add(schedaSave);
+        avviaAnimazione=true;
+
+        HashMap<Giorno,ArrayList<Esercizio>> mappa=oggettoLetto.getMappa();
+        for(Map.Entry<Giorno,ArrayList<Esercizio>> oggChiaveVal:mappa.entrySet()){
+            Giorno giornotemp=oggChiaveVal.getKey();
+            giornotemp=Global.giornoDao.InsertGiorno(giornotemp);
+            Global.listaGiornidao.InsertSingleDay(schedaSave.getId(),giornotemp.getId());
+
+            //lista ex e ex
+            for(Esercizio ex:oggChiaveVal.getValue()){
+                ex=Global.esercizioDao.inserisciEsercizio(ex);
+                Global.ledao.Insert(giornotemp.getId(),ex.getId(),0,ex.getOrdine());
+            }
+
+        }
+
+
+        //se la scheda è gia presente, avvisa che verranno sovrascritti i dati
+
+        System.out.println("____________________________+++");
+        StampaTutto();
+        ChiudTuttoNonSalva(null);
     }
 
 }

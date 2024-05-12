@@ -9,11 +9,12 @@ import android.graphics.drawable.Drawable;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Scheda extends ListeClasseMarker {
+public class Scheda extends ListeClasseMarker implements Serializable {
     private long id;
     private String nomeScheda,note;
     private byte[] imgBytes;
@@ -111,10 +112,11 @@ public class Scheda extends ListeClasseMarker {
 
     @Override
     public String toString() {
-        return "\nScheda{" +
-                "nomeScheda='" + nomeScheda + '\'' +
-                ", imgBytes=" + Arrays.toString(imgBytes) +
-                ", listaGiorni=" + listaIdGiorni +
+        return "Scheda{" +
+                "id=" + id +
+                ", nomeScheda='" + nomeScheda + '\'' +
+                ", note='" + note + '\'' +
+                ", listaIdGiorni=" + listaIdGiorni +
                 '}';
     }
 }

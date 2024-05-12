@@ -9,9 +9,10 @@ import android.graphics.drawable.Drawable;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Esercizio extends ListeClasseMarker {
+public class Esercizio extends ListeClasseMarker implements Serializable {
     private long id;
 
     private String nomeEsercizio,tecnica_intensita,esecuzione,note;
@@ -175,7 +176,7 @@ public class Esercizio extends ListeClasseMarker {
                 ", tecnica_intensita='" + tecnica_intensita + '\'' +
                 ", esecuzione='" + esecuzione + '\'' +
                 ", note='" + note + '\'' +
-                ", immagineMacchinario=" + Arrays.toString(immagineMacchinario) +
+                ", ordine='" + ordine + '\'' +
                 ", numeroSerie=" + numeroSerie +
                 ", numeroRipetizioni='" + numeroRipetizioni + '\'' +
                 ", timer=" + timer +

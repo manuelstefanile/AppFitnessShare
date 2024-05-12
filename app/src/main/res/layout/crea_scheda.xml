@@ -52,16 +52,16 @@
                 android:textSize="24dp"
 
                 ></EditText>
-            <ImageView
+            <Button
+                android:id="@+id/uploadScheda"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="0.1"
-
+                android:background="@drawable/ic_baseline_file_upload_24"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 >
-
-            </ImageView>
+            </Button>
 
 
 

@@ -38,21 +38,27 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.appfitness.Bean.COSTANTI;
+import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Scheda;
+import com.example.appfitness.Bean.SerializzazioneFileScheda;
 import com.example.appfitness.DB.ListaGiorniDAO;
 import com.example.appfitness.Eccezioni.Eccezioni;
 import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
 import com.example.appfitness.Registrazione_Pag2;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class PopupSchede {
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int CREATE_FILE_REQUEST_CODE = 5;
     public static Activity act; // Aggiunto
     private static ImageButton imgScheda;
     private static final String PREFS_NAME = "PopupPrefs";
@@ -153,7 +159,9 @@ public class PopupSchede {
         Button creaGiorno=dialogView.findViewById((int)R.id.CreaGiorno);
         Button back=dialogView.findViewById((int)R.id.backScheda);
         Button bottoneNote = dialogView.findViewById((int)R.id.bottoneNoteScheda);
+        Button uploadScheda=dialogView.findViewById((int)R.id.uploadScheda);
         creaGiorno.setEnabled(false);
+        uploadScheda.setVisibility(View.INVISIBLE);
         //creaGiorno.setBackground((getDrawable((int) R.drawable.drawable_botton_grigio)));
 
 
@@ -187,32 +195,37 @@ public class PopupSchede {
                             return;
                         }
                     }
-                        //per le note
-                        SharedPreferences sharedPreferences = inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                        Note note = Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_SCHEDA, null));
+                    //per le note
+                    SharedPreferences sharedPreferences = inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    Note note = Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_SCHEDA, null));
 
-                        schedaTemp.setNomeScheda(nomeScheda.getText().toString());
-                        //se l immagine è quella di default allora non salvo nel db
-                        if(Global.areImagesEqual(imgScheda.getDrawable(),dialogView.getResources().getDrawable(R.drawable.noimg))){
-                            schedaTemp.setImg(null);
-                        }else
-                            schedaTemp.setImg(imgScheda.getDrawable());
-                        schedaTemp.setNote(note.getNote());
-                        Global.adapterSchede.add(schedaTemp);
-                        Global.schedadao.ModificaSchedaTemp(schedaTemp);
-
-
-                        //alertDialog.dismiss();
-                    //note all inizio della creazione dell ex è vuoto
-                        SharedPreferences.Editor edit = shp.edit();
-                        edit.putString(COSTANTI.NOTE_SCHEDA, new Note().toJson());
-                        edit.commit();
-
-                        ResettaVariabili();
-                        Toast.makeText(dialogView.getContext(), "Scheda salvata, Keep going Buddy!", Toast.LENGTH_SHORT).show();
-                        creaGiorno.setEnabled(true);
-
+                    schedaTemp.setNomeScheda(nomeScheda.getText().toString());
+                    //se l immagine è quella di default allora non salvo nel db
+                    Drawable imgIns=null;
+                    if(!Global.areImagesEqual(imgScheda.getDrawable(), dialogView.getResources().getDrawable(R.drawable.noimg))){
+                        imgIns=imgScheda.getDrawable();
                     }
+
+
+                    schedaTemp.setImg(imgIns);
+
+
+                    schedaTemp.setNote(note.getNote());
+                    Global.adapterSchede.add(schedaTemp);
+                    Global.schedadao.ModificaSchedaTemp(schedaTemp);
+
+
+                    //alertDialog.dismiss();
+                    //note all inizio della creazione dell ex è vuoto
+                    SharedPreferences.Editor edit = shp.edit();
+                    edit.putString(COSTANTI.NOTE_SCHEDA, new Note().toJson());
+                    edit.commit();
+
+                    ResettaVariabili();
+                    Toast.makeText(dialogView.getContext(), "Scheda salvata, Keep going Buddy!", Toast.LENGTH_SHORT).show();
+                    creaGiorno.setEnabled(true);
+
+                }
 
             }
         });
@@ -297,14 +310,24 @@ public class PopupSchede {
         Button creaGiorno=dialogView.findViewById((int)R.id.CreaGiorno);
         Button back=dialogView.findViewById((int)R.id.backScheda);
         Button bottoneNote = dialogView.findViewById((int)R.id.bottoneNoteScheda);
+        Button uploadScheda=dialogView.findViewById((int)R.id.uploadScheda);
         bottoneNote.setText("Note");
         nomeScheda.setText(sched.getNomeScheda());
+
+
+
 
         if(sched.getImg()!=null)
             imgScheda.setImageDrawable(sched.getImg());
 
 
 
+        uploadScheda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UploadSchedaFile(sched.getId());
+            }
+        });
         imgScheda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -338,8 +361,12 @@ public class PopupSchede {
                 if(!uguale)
                     sched.setNomeScheda(nomeScheda.getText().toString());
 
-                System.out.println("vediamo il nome" + sched.getNomeScheda());
-                sched.setImg(imgScheda.getDrawable());
+                //se l immagine è quella di default allora non salvo nel db
+                Drawable imgIns=null;
+                if(!Global.areImagesEqual(imgScheda.getDrawable(), dialogView.getResources().getDrawable(R.drawable.noimg))){
+                    imgIns=imgScheda.getDrawable();
+                }
+                sched.setImg(imgIns);
 
                 SharedPreferences sharedPreferences=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 Note note=Note.fromJson(sharedPreferences.getString(COSTANTI.NOTE_SCHEDA, null));
@@ -411,33 +438,71 @@ public class PopupSchede {
 
 
 
-//per le immagini e mostrarle a schermo quando pronte
-public static void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-        Uri imageUri = data.getData();
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(act.getContentResolver(), imageUri);
-            imgScheda.setImageBitmap(bitmap);
-            imgScheda.setVisibility(View.VISIBLE); // Mostra l'ImageView
-            // Mostra il Toast per confermare l'aggiunta dell'immagine
-            Toast.makeText(act, "Bella personalizzazione con l'immagine!", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(act, "Errore nel caricamento dell'immagine", Toast.LENGTH_SHORT).show();
+    //per le immagini e mostrarle a schermo quando pronte
+    public static void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(act.getContentResolver(), imageUri);
+                imgScheda.setImageBitmap(bitmap);
+                imgScheda.setVisibility(View.VISIBLE); // Mostra l'ImageView
+                // Mostra il Toast per confermare l'aggiunta dell'immagine
+                Toast.makeText(act, "Bella personalizzazione con l'immagine!", Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(act, "Errore nel caricamento dell'immagine", Toast.LENGTH_SHORT).show();
+            }
         }
-    }
-    //sto nelle immagini di esercizio
-    if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-        Uri imageUri = data.getData();
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(act.getContentResolver(), imageUri);
-            PopupEsercizio.immagineEsercizio.setImageBitmap(bitmap);
-            PopupEsercizio.immagineEsercizio.setVisibility(View.VISIBLE); // Mostra l'ImageView
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(act, "Errore nel caricamento dell'immagine", Toast.LENGTH_SHORT).show();
+        //sto nelle immagini di esercizio
+        if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(act.getContentResolver(), imageUri);
+                PopupEsercizio.immagineEsercizio.setImageBitmap(bitmap);
+                PopupEsercizio.immagineEsercizio.setVisibility(View.VISIBLE); // Mostra l'ImageView
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(act, "Errore nel caricamento dell'immagine", Toast.LENGTH_SHORT).show();
+            }
         }
-    }
-}
 
+    }
+
+    private void UploadSchedaFile(Long idScheda){
+        System.out.println("mah"+idScheda);
+        // Avvia l'intent per creare un nuovo file
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/plain"); // Tipo del file, puoi modificare in base al tipo di file che vuoi creare
+
+        SerializzazioneFileScheda fileser=new SerializzazioneFileScheda();
+        HashMap<Giorno,ArrayList<Esercizio>> mappa = new HashMap<>();
+        //prendo la scheda
+        Scheda schedatemp=Global.schedadao.getSchedaById(idScheda);
+        fileser.setScheda(schedatemp);
+
+        System.out.println("mah"+schedatemp);
+        //popolo i giorni della lista
+        ArrayList<Giorno> giorniAssociatiAScheda=new ArrayList<>();
+        ArrayList<Integer> idGiorni=Global.listaGiornidao.getListaGiorniPerScheda(schedatemp.getId());
+        for (Integer idg:idGiorni) {
+            Giorno g=Global.giornoDao.getGiornoById(idg);
+            giorniAssociatiAScheda.add(g);
+            ArrayList<Esercizio> listaExpreGiorno=Global.ledao.getListaEserciziPerGiorno(Long.valueOf(idg));
+            ArrayList<Esercizio> listaexCompleti=new ArrayList<>();
+
+            for(Esercizio e:listaExpreGiorno){
+                Esercizio estemp=Global.esercizioDao.getEsercizioById((int) e.getId());
+                estemp.setOrdine(e.getOrdine());
+                listaexCompleti.add(estemp);
+            }
+            mappa.put(g,listaexCompleti);
+        }
+        fileser.setMappa(mappa);
+        System.out.println("proviamo ancora "+ fileser);
+        PaginaScheda_Pag3.sf=fileser;
+
+        act.startActivityForResult(intent, CREATE_FILE_REQUEST_CODE);
+
+    }
 }

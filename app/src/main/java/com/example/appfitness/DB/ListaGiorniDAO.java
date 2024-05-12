@@ -120,4 +120,13 @@ public class ListaGiorniDAO {
 
     }
 
+    public void InsertSingleDay(Long idScheda, Long idGiorni){
+        SQLiteDatabase dbWritable = db.getWritableDatabase();
+        ContentValues valuesListaGiorni = new ContentValues();
+
+        valuesListaGiorni.put(SchemaDB.ListaGiorniDB.COLUM_SCHEDARIFERIMENTO, idScheda);
+        valuesListaGiorni.put(SchemaDB.ListaGiorniDB.COLUMN_IDGiorno, idGiorni);
+        dbWritable.insert(SchemaDB.ListaGiorniDB.TABLE_NAME,null,valuesListaGiorni);
+    }
+
 }

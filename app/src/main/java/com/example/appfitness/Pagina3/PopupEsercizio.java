@@ -190,32 +190,40 @@ public class PopupEsercizio {
                     System.out.println("giorno attuale "+e.getNomeEsercizio());
                     if(e.getNomeEsercizio().equals(esercizio.getNomeEsercizio())){
                         esercizioNew=Global.esercizioDao.getEsercizioById((int) e.getId());
+                        break;
                     }
                 }
                 //tutto ok
                 if (esercizioNew==null){
-                    //nella stessa schermata ho gia premuto salva, quindi elimino e risalvo
-                    if(esercizioAppenaSalvato[0]!=null){
-                        Global.esercizioDao.DeleteEsercizioById(esercizioAppenaSalvato[0].getId());
-                        Global.adapterEsercizi.remove(esercizioAppenaSalvato[0]);
-                    }
-                    esercizio.setNote(note.getNote());
-                    esercizio.setId(Global.esercizioDao.inserisciEsercizio(esercizio).getId());
-                    giornoNuovo.getListaEsercizi().add(esercizio.getId());
-                    int posizion= Global.adapterEsercizi.getLista().size()-1;
-                    esercizio.setOrdine(posizion);
-                    esercizio.idGiornoAvviaRiferimento= giornoNuovo.getId();
-                    Global.adapterEsercizi.add(esercizio);
-
-                    esercizioAppenaSalvato[0] =esercizio;
-                    Global.ledao.Insert(giornoNuovo.getId(),esercizio.getId(),0,posizion);
-                    Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
+                    AggiornaEsercizio(esercizio,note);
                 }else {
-                    Toast.makeText(dialogView.getContext(), "Nome già presente", Toast.LENGTH_LONG).show();
+                    if(esercizioAppenaSalvato[0]!=null&&esercizioAppenaSalvato[0].getId()==esercizioNew.getId()){
+                        AggiornaEsercizio(esercizio,note);
+                    }else
+                        Toast.makeText(dialogView.getContext(), "Nome già presente", Toast.LENGTH_LONG).show();
                 }
                 /*************************************************************/
 
 
+            }
+
+            private void AggiornaEsercizio(Esercizio esercizio, Note note){
+                //nella stessa schermata ho gia premuto salva, quindi elimino e risalvo
+                if(esercizioAppenaSalvato[0]!=null){
+                    Global.esercizioDao.DeleteEsercizioById(esercizioAppenaSalvato[0].getId());
+                    Global.adapterEsercizi.remove(esercizioAppenaSalvato[0]);
+                }
+                esercizio.setNote(note.getNote());
+                esercizio.setId(Global.esercizioDao.inserisciEsercizio(esercizio).getId());
+                giornoNuovo.getListaEsercizi().add(esercizio.getId());
+                int posizion= Global.adapterEsercizi.getLista().size()-1;
+                esercizio.setOrdine(posizion);
+                esercizio.idGiornoAvviaRiferimento= giornoNuovo.getId();
+                Global.adapterEsercizi.add(esercizio);
+
+                esercizioAppenaSalvato[0] =esercizio;
+                Global.ledao.Insert(giornoNuovo.getId(),esercizio.getId(),0,posizion);
+                Toast.makeText(dialogView.getContext(), "Salvato", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -348,7 +356,14 @@ public class PopupEsercizio {
                 SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit= sh.edit();
 
-                Note notaDaMostrare= new Note(finalEsercizioNew.getNote());
+
+                Note note=Note.fromJson(sh.getString(COSTANTI.NOTE_ESERCIZIO, null));
+                Note notaDaMostrare;
+                if(note.getNote()!=null){
+                    notaDaMostrare=note;
+                }else
+                    notaDaMostrare= new Note(finalEsercizioNew.getNote());
+
                 edit.putString(COSTANTI.NOTE_ESERCIZIO, notaDaMostrare.toJson());
                 edit.apply();
                 try {
@@ -372,9 +387,14 @@ public class PopupEsercizio {
                 float secondi=Float.parseFloat(numeroTimet2Esercizio.getText().toString().trim().length()!=0?numeroTimet2Esercizio.getText().toString():"0");
                 float seconditotali=(minuti*60)+ secondi;
 
+                Drawable imgIns=null;
+                if(!Global.areImagesEqual(immagineEsercizio.getDrawable(), dialogView.getResources().getDrawable(R.drawable.noimg))){
+                    imgIns=immagineEsercizio.getDrawable();
+                }
                 Esercizio eser=new Esercizio(nomeEsercizio.getText().toString().trim().length()>0?nomeEsercizio.getText().toString().trim():"",
                         intensitaEsercizio.getText().toString(),
-                        esecuzioneEsercizio.getText().toString(),immagineEsercizio.getDrawable(),
+                        esecuzioneEsercizio.getText().toString(),
+                        imgIns,
                         Integer.parseInt(numeroSerieEsercizio.getText().toString().trim().length()!=0
                                 &&Integer.parseInt(numeroSerieEsercizio.getText().toString())>0
                                 ?numeroSerieEsercizio.getText().toString():"1"),
@@ -595,11 +615,14 @@ public class PopupEsercizio {
                 SharedPreferences sh=inflater.getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit= sh.edit();
 
-                Note notetemp = Note.fromJson(shp.getString(COSTANTI.NOTE_ESERCIZIO, null));
-                if(notetemp.getNote()!=null){
-                    finalEsercizioNew1.setNote(notetemp.getNote());
-                }
-                Note notaDaMostrare= new Note(finalEsercizioNew1.getNote());
+
+                Note note=Note.fromJson(sh.getString(COSTANTI.NOTE_ESERCIZIO, null));
+                Note notaDaMostrare;
+                if(note.getNote()!=null){
+                    notaDaMostrare=note;
+                }else
+                    notaDaMostrare= new Note(finalEsercizioNew1.getNote());
+
                 edit.putString(COSTANTI.NOTE_ESERCIZIO, notaDaMostrare.toJson());
                 edit.apply();
                 try {
@@ -756,8 +779,8 @@ public class PopupEsercizio {
         Handler handler;
         final boolean[] isRunning = new boolean[1];
         final int[] seconds = {0};
-         handler = new Handler();
-         isRunning[0] = true;
+        handler = new Handler();
+        isRunning[0] = true;
 
         // Creazione del layout della tua View
         View dialogView = inflater.inflate(R.layout.cronometro, null);
@@ -835,5 +858,7 @@ public class PopupEsercizio {
         PopupSchede.act.startActivityForResult(Intent.createChooser(intent, "Seleziona Immagine"), 2); // Modificato qui
 
     }
+
+
 
 }
