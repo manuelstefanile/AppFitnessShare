@@ -84,6 +84,7 @@ public class PopupGiorno {
         //prima devi mettere un nome per il giorno e poi puoi andare avanti
         Button back=dialogView.findViewById((int)R.id.backGiorno);
         creaEsercizio.setEnabled(false);
+        creaEsercizio.setAlpha(0.5f);
 
         Giorno giornoNuovo=new Giorno();
         //schedaRiferimento.getListaGiorni().add(giornoNuovo);
@@ -155,6 +156,7 @@ public class PopupGiorno {
                     salvaGiorno.setEnabled(false);{
                     Toast.makeText(dialogView.getContext(), "Giorno salvato con successo", Toast.LENGTH_SHORT).show();}
                     creaEsercizio.setEnabled(true);
+                    creaEsercizio.setAlpha(1f);
                     creaEsercizio.setBackgroundResource(R.drawable.drawable_scheda);
                     giornoNuovo.setNomeGiorno(testoInserito);
                     giornoNuovo.setNote(note.getNote());

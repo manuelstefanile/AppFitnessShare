@@ -161,6 +161,7 @@ public class PopupSchede {
         Button bottoneNote = dialogView.findViewById((int)R.id.bottoneNoteScheda);
         Button uploadScheda=dialogView.findViewById((int)R.id.uploadScheda);
         creaGiorno.setEnabled(false);
+        creaGiorno.setAlpha(0.5F);
         uploadScheda.setVisibility(View.INVISIBLE);
         //creaGiorno.setBackground((getDrawable((int) R.drawable.drawable_botton_grigio)));
 
@@ -225,6 +226,7 @@ public class PopupSchede {
                     ResettaVariabili();
                     Toast.makeText(dialogView.getContext(), "Scheda salvata, Keep going Buddy!", Toast.LENGTH_SHORT).show();
                     creaGiorno.setEnabled(true);
+                    creaGiorno.setAlpha(1f);
 
                 }
 

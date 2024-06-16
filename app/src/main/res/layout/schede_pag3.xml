@@ -19,17 +19,6 @@
 
 
         >
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.1"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/edit"
-            android:background="@drawable/drawable_botton_white"
-            android:onClick="EditUtente"
-            >
-        </ImageView>
 
         <ImageView
             android:layout_width="0dp"

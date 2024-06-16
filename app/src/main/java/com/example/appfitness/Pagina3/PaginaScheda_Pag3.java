@@ -463,12 +463,6 @@ public class PaginaScheda_Pag3 extends Activity {
         startActivity(intent);
     }
 
-    public void EditUtente(View v){
-        Intent i =new Intent();
-        i.setClass(getApplicationContext(), Registrazione_Pag2.class);
-        i.putExtra("mode","edit");
-        startActivity(i);
-    }
     public void SeeUtente(View v){
         Intent i =new Intent();
         i.setClass(getApplicationContext(), Registrazione_Pag2.class);

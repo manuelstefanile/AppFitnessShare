@@ -83,6 +83,7 @@ public class Registrazione_Pag2 extends Activity {
         bottoneSalva=findViewById((int)R.id.salvaButtonReg);
         bottoneNext=findViewById((int)R.id.bottoneNextRegistrazione);
         bottoneNext.setVisibility(View.INVISIBLE);
+
         immagineUtente=findViewById(R.id.immagineProfilo);
         //Toast.makeText(getApplicationContext(), "Devi prima salvare i dati per poter proseguire!", Toast.LENGTH_LONG).show();
 
@@ -131,6 +132,10 @@ public class Registrazione_Pag2 extends Activity {
         {
             switch (modalita) {
                 case "edit":
+                    //nascondo il bottone edit
+                    ImageView edit=findViewById((int)R.id.editButton);
+                    edit.setEnabled(false);
+                    edit.setVisibility(View.GONE);
                     editGlobal=true;
                     bottoneNext.setEnabled(true);
                     bottoneNext.setVisibility(View.GONE);
@@ -160,6 +165,7 @@ public class Registrazione_Pag2 extends Activity {
                     ModalitaEdit(true);
                     break;
                 case "see":
+
                     bottonePeso.setText("Peso");
                     bottoneNote.setText("Note");
                     bottoneKcal.setText("Kcal");
@@ -572,5 +578,12 @@ public class Registrazione_Pag2 extends Activity {
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Seleziona Immagine"), 2); // Modificato qui
 
+    }
+
+    public void EditUtente(View v){
+        Intent i =new Intent();
+        i.setClass(getApplicationContext(), Registrazione_Pag2.class);
+        i.putExtra("mode","edit");
+        startActivity(i);
     }
 }
