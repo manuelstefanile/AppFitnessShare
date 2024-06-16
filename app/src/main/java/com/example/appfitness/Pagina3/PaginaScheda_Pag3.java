@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
@@ -127,6 +128,12 @@ public class PaginaScheda_Pag3 extends Activity {
                 }
             }
         });
+
+        //se mi trovo in registrazione iniziale e devo creare al scheda
+        String CreazioneIniziale=getIntent().getStringExtra("creazioneSchedaFirst");
+        if(CreazioneIniziale!=null && CreazioneIniziale.equals("ok")){
+            CreaScheda(null);
+        }
         StampaTutto();
     }
 
@@ -380,6 +387,11 @@ public class PaginaScheda_Pag3 extends Activity {
     public void CreaScheda(View v){
 
         popS.CreaScheda(getLayoutInflater());
+    }
+
+    public void CreaSchedaFirst(View v, LayoutInflater l){
+
+        popS.CreaScheda(l);
     }
 
     @Override

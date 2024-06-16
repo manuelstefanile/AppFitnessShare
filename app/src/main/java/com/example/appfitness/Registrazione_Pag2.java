@@ -56,7 +56,7 @@ public class Registrazione_Pag2 extends Activity {
     Utente utente;
     SharedPreferences sharedPreferences;
     DbHelper db;
-    Button bottoneNext,bottoneSalva,bottoneripristinaDati;
+    Button bottoneNext,bottoneSalva,bottoneCreaScheda;
     ImageView immagineUtente;
     public static boolean editGlobal=true;
 
@@ -78,8 +78,8 @@ public class Registrazione_Pag2 extends Activity {
         Button bottoneKcal=findViewById((int)R.id.buttonKcal);
         Button bottoneMisure=findViewById((int)R.id.buttonMisure);
         Button bottoneNote=findViewById((int)R.id.buttonNote);
-        bottoneripristinaDati=findViewById((int)R.id.ripristinaDatiButton);
-        bottoneripristinaDati.setVisibility(View.INVISIBLE);
+        bottoneCreaScheda=findViewById((int)R.id.creaSchedaButton);
+        bottoneCreaScheda.setVisibility(View.INVISIBLE);
         bottoneSalva=findViewById((int)R.id.salvaButtonReg);
         bottoneNext=findViewById((int)R.id.bottoneNextRegistrazione);
         bottoneNext.setVisibility(View.INVISIBLE);
@@ -113,10 +113,10 @@ public class Registrazione_Pag2 extends Activity {
                 PassaPagina3(view);
             }
         });
-        bottoneripristinaDati.setOnClickListener(new View.OnClickListener() {
+        bottoneCreaScheda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RipristinaDati(view);
+                CreaSchedaFirst(view);
             }
         });
         bottoneSalva.setOnClickListener(new View.OnClickListener() {
@@ -139,8 +139,8 @@ public class Registrazione_Pag2 extends Activity {
                     editGlobal=true;
                     bottoneNext.setEnabled(true);
                     bottoneNext.setVisibility(View.GONE);
-                    bottoneripristinaDati.setText("Back");
-                    bottoneripristinaDati.setOnClickListener(new View.OnClickListener() {
+                    bottoneCreaScheda.setText("Back");
+                    bottoneCreaScheda.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             PassaPagina3(view);
@@ -173,8 +173,8 @@ public class Registrazione_Pag2 extends Activity {
                     bottoneNext.setEnabled(true);
                     bottoneNext.setVisibility(View.GONE);
                     bottoneSalva.setVisibility(View.GONE);
-                    bottoneripristinaDati.setText("Back");
-                    bottoneripristinaDati.setOnClickListener(new View.OnClickListener() {
+                    bottoneCreaScheda.setText("Back");
+                    bottoneCreaScheda.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             PassaPagina3(view);
@@ -389,14 +389,14 @@ public class Registrazione_Pag2 extends Activity {
         toast.setView(layout);
         toast.show();
 
-        bottoneripristinaDati.setVisibility(View.VISIBLE);
+        bottoneCreaScheda.setVisibility(View.VISIBLE);
         bottoneNext.setVisibility(View.VISIBLE);
         bottoneNext.setBackground((getDrawable((int) R.drawable.drawable_scheda)));
         dbWritable.close();
 
 
     }
-    public void RipristinaDati(View v){
+    /*public void RipristinaDati(View v){
         if(utente!=null)
             utente.RipristinaDatiUtente();
 
@@ -431,6 +431,21 @@ public class Registrazione_Pag2 extends Activity {
 
 
     }
+     */
+    public void CreaSchedaFirst(View v){
+
+        db.close();
+        Intent i =new Intent();
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("nomeUtente",nomeUtenteR.getText().toString());
+        i.putExtra("creazioneSchedaFirst","ok");
+        i.setClass(getApplicationContext(), PaginaScheda_Pag3.class);
+        startActivity(i);
+        finish();
+
+
+    }
+
     public void FunzioniInserisciRegistrazioni(View v) throws Eccezioni {
         String tag= (String) v.getTag();
 
@@ -487,7 +502,7 @@ public class Registrazione_Pag2 extends Activity {
         editor.apply();
 
         //per far comparire il tasto nella pagina di Modifica dati e Visualizza dati
-        bottoneripristinaDati.setVisibility(View.VISIBLE);
+        bottoneCreaScheda.setVisibility(View.VISIBLE);
 
         TextView titolo=findViewById(R.id.titoloPaginaReg);
         //modalita see
