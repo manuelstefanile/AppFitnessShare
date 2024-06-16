@@ -194,6 +194,10 @@ public class Registrazione_Pag2 extends Activity {
             }
             /**registrazione per la prima volta*/
         }else{
+            //nascondo il bottone edit
+            ImageView edit=findViewById((int)R.id.editButton);
+            edit.setEnabled(false);
+            edit.setVisibility(View.GONE);
             immagineUtente.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -212,6 +216,19 @@ public class Registrazione_Pag2 extends Activity {
         String nome=nomeR.getText().toString();
         String cognome=cognomeR.getText().toString();
         String nomeUtente=nomeUtenteR.getText().toString();
+
+        if(nomeUtente.trim().length()==0){
+            View layout = this.getLayoutInflater().inflate(R.layout.toast_erroresave,null);
+            TextView testoto=layout.findViewById(R.id.toast_text);
+            testoto.setText("Inserisci nome utente.");
+            Toast toast = new Toast(this.getLayoutInflater().getContext());
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
+            return;
+
+        }
+
         byte[] immagineByte=null;
         if(!Global.areImagesEqual(immagineUtente.getDrawable(),getResources().getDrawable(R.drawable.noimg))){
          immagineByte=Global.drawableToByteArray(immagineUtente.getDrawable());
@@ -284,6 +301,18 @@ public class Registrazione_Pag2 extends Activity {
         byte[] immagineByte=null;
         if(!Global.areImagesEqual(immagineUtente.getDrawable(),getResources().getDrawable(R.drawable.noimg))){
             immagineByte=Global.drawableToByteArray(immagineUtente.getDrawable());
+        }
+
+        if(nomeUtente.trim().length()==0){
+            View layout = this.getLayoutInflater().inflate(R.layout.toast_erroresave,null);
+            TextView testoto=layout.findViewById(R.id.toast_text);
+            testoto.setText("Inserisci nome utente.");
+            Toast toast = new Toast(this.getLayoutInflater().getContext());
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
+            return;
+
         }
 
         /**
