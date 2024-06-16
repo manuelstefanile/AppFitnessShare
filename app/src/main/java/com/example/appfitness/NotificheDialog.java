@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -238,15 +240,18 @@ public class NotificheDialog {
             }
         });
 
+        NotificaImmaginePremutaIngrandisci(inflater,immagineFisico);
         immagineFisico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(!Registrazione_Pag2.editGlobal) {
                     NotificaImmagine(inflater,immagineFisico.getDrawable());
                 }else
                     selectImageFromGallery(act,1);
             }
         });
+        NotificaImmaginePremutaIngrandisci(inflater,immagineFisico2);
         immagineFisico2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -256,6 +261,7 @@ public class NotificheDialog {
                     selectImageFromGallery(act,2);
             }
         });
+        NotificaImmaginePremutaIngrandisci(inflater,immagineFisico3);
         immagineFisico3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -873,6 +879,7 @@ public class NotificheDialog {
         // Mostra l'AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#88000000"))); // Semi-trasparente nero
 
         ImageView immagineSet=dialogView.findViewById(R.id.immagineIngrandita);
         ImageButton closeButton=dialogView.findViewById(R.id.btnChiudi);
@@ -884,6 +891,57 @@ public class NotificheDialog {
             public void onClick(View view) {
                 alertDialog.dismiss(); // Chiudi il dialog
 
+            }
+        });
+
+    }
+
+    public static AlertDialog NotificaImmagineZoom(LayoutInflater inflater, Drawable immagine){
+        // Creazione del layout della tua View
+        View dialogView = inflater.inflate(R.layout.immagine_big, null);
+        // Creazione dell'AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
+        builder.setView(dialogView);
+
+
+        builder.setPositiveButton(null,null);
+        builder.setNegativeButton(null,null);
+        // Mostra l'AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#88000000"))); // Semi-trasparente nero
+
+        ImageView immagineSet=dialogView.findViewById(R.id.immagineIngrandita);
+        ImageButton closeButton=dialogView.findViewById(R.id.btnChiudi);
+        closeButton.setVisibility(View.GONE);
+
+        immagineSet.setImageDrawable(immagine);
+
+
+        return alertDialog;
+
+    }
+
+    public static void NotificaImmaginePremutaIngrandisci(LayoutInflater inflater,ImageView immagineUtente){
+        //todo test
+        System.out.println("sono in zoom");
+        final AlertDialog[] alertNotifica = {null};
+        immagineUtente.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // ingrandisci
+                        alertNotifica[0] =NotificaImmagineZoom(inflater,immagineUtente.getDrawable());
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        // chiudi
+                        if(alertNotifica[0]!=null){
+                            alertNotifica[0].dismiss();
+                        }
+                        break;
+                }
+                return false;
             }
         });
 

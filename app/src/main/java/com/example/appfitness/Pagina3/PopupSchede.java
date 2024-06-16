@@ -173,6 +173,7 @@ public class PopupSchede {
             }
         });
 
+        NotificheDialog.NotificaImmaginePremutaIngrandisci(inflater,imgScheda);
         imgScheda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -328,6 +329,8 @@ public class PopupSchede {
                 UploadSchedaFile(sched.getId());
             }
         });
+
+        NotificheDialog.NotificaImmaginePremutaIngrandisci(inflater,imgScheda);
         imgScheda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

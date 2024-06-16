@@ -127,7 +127,6 @@ public class PaginaScheda_Pag3 extends Activity {
                 }
             }
         });
-
         StampaTutto();
     }
 

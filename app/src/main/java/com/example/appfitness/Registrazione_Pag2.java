@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.appfitness.Bean.COSTANTI;
+import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Fisico_Immagini;
 import com.example.appfitness.Bean.Kcal;
 import com.example.appfitness.Bean.Misure;
@@ -44,6 +46,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Registrazione_Pag2 extends Activity {
 
@@ -122,6 +125,7 @@ public class Registrazione_Pag2 extends Activity {
             }
         });
 
+        NotificheDialog.NotificaImmaginePremutaIngrandisci(getLayoutInflater(),immagineUtente);
         String modalita=getIntent().getStringExtra("mode");
         if (modalita!=null)
         {
@@ -170,7 +174,6 @@ public class Registrazione_Pag2 extends Activity {
                             PassaPagina3(view);
                         }
                     });
-
                     immagineUtente.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

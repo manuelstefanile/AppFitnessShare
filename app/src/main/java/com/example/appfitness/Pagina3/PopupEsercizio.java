@@ -139,6 +139,7 @@ public class PopupEsercizio {
         });
 
 
+        NotificheDialog.NotificaImmaginePremutaIngrandisci(inflater,immagineEsercizio);
         immagineEsercizio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -334,6 +335,7 @@ public class PopupEsercizio {
 
          */
 
+        NotificheDialog.NotificaImmaginePremutaIngrandisci(inflater,immagineEsercizio);
         immagineEsercizio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -564,6 +566,7 @@ public class PopupEsercizio {
             public void afterTextChanged(Editable editable) {}
         });
 
+        NotificheDialog.NotificaImmaginePremutaIngrandisci(inflater,immagineEsercizio);
         immagineEsercizio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

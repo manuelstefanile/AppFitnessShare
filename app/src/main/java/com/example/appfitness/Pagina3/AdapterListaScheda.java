@@ -165,6 +165,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
             } else
                 im.setImageDrawable(c.getImmagineMacchinario());
 
+            NotificheDialog.NotificaImmaginePremutaIngrandisci(inflater,im);
             bottone.setText(c.getNomeEsercizio());
             bottone.setTag(position);
             bottoneDelete.setTag(position);
@@ -224,6 +225,8 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
                     im.setImageResource(R.drawable.noimg);
                 } else
                     im.setImageDrawable(c.getImg());
+
+                NotificheDialog.NotificaImmaginePremutaIngrandisci(inflater,im);
                 bottone.setText(c.getNomeScheda());
 
                 im.setTag(position);
@@ -276,6 +279,7 @@ public class AdapterListaScheda<T extends ListeClasseMarker> extends ArrayAdapte
                 } else
                     im.setImageDrawable(c.getImmagineMacchinario());
 
+                NotificheDialog.NotificaImmaginePremutaIngrandisci(inflater,im);
                 bottone.setText(c.getNomeEsercizio());
                 bottone.setTag(position);
                 bottoneDelete.setTag(position);
