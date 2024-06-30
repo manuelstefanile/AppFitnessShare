@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/grigio"
+    android:orientation="vertical">
+
+
+
+    <Button
+        android:id="@+id/button_chiudi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@drawable/ic_baseline_close_24"
+         />
+
+    <!-- Aggiungi altri elementi come testo, pulsanti, ecc. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:padding="30dp">
+
+
+
+        <Button
+            android:id="@+id/button_import_dati"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/drawable_botton_grigio"
+            android:text="Dati" />
+
+        <Button
+            android:id="@+id/button_import_scheda"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_botton_grigio"
+            android:text="Scheda" />
+
+    </LinearLayout>
+</LinearLayout>
