@@ -2,9 +2,10 @@ package com.example.appfitness.Bean;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class Kcal {
+public class Kcal implements Serializable {
     private long id;
     private int kcal;
     private Fase fase=Fase.NORMO;

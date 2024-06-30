@@ -2,9 +2,10 @@ package com.example.appfitness.Bean;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class Misure {
+public class Misure implements Serializable {
     private long id;
     private float braccioDx;
     private float braccioSx;

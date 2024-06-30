@@ -2,8 +2,10 @@ package com.example.appfitness.Bean;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 
-public class Note {
+
+public class Note implements Serializable {
     private String note;
 
 

@@ -1,10 +1,11 @@
 package com.example.appfitness.Bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class Fisico {
+public class Fisico implements Serializable {
     private long id;
     private ArrayList<Fisico_Immagini> posa_immagine= new ArrayList<>();
     private String note;

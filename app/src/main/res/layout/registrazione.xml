@@ -19,14 +19,13 @@
 
            >
 
-
-
             <TextView
                 android:id="@+id/titoloPaginaReg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:layout_margin="15dp"
+                android:layout_weight="0.8"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
                 android:text="REGISTRAZIONE"
                 android:textStyle="bold"
                 android:textAlignment="center"
@@ -39,13 +38,24 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="0.1"
-                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/edit"
                 android:background="@drawable/drawable_botton_white"
                 android:onClick="EditUtente"
                 >
             </ImageView>
+
+            <Button
+                android:id="@+id/uploadScheda"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@drawable/ic_baseline_file_upload_24"
+                >
+            </Button>
 
 
 

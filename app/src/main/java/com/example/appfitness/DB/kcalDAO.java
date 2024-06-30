@@ -162,6 +162,15 @@ public class kcalDAO {
         return count > 0;
     }
 
+    public boolean deleteAllKcal() {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+        // Rimuovi tutti i dati dalla tabella kcal
+        int count = dbW.delete(SchemaDB.KcalDB.TABLE_NAME, null, null);
+        db.close();
+        // Se il count è maggiore di 0, significa che sono stati rimossi dei record
+        return count > 0;
+    }
+
     @SuppressLint("Range")
     public Kcal getKcalPerData(String timestamp) {
         SQLiteDatabase dbW = db.getReadableDatabase();

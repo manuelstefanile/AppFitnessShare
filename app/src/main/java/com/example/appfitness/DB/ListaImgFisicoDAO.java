@@ -125,6 +125,14 @@ public class ListaImgFisicoDAO {
         return rowsDeleted > 0;
     }
 
+    public boolean deleteAllImgFisico() {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+        // Rimuovi tutti i dati dalla tabella kcal
+        int count = dbW.delete(SchemaDB.ListaImmaginiFisicoDB.TABLE_NAME, null, null);
+        db.close();
+        // Se il count è maggiore di 0, significa che sono stati rimossi dei record
+        return count > 0;
+    }
 
 
 

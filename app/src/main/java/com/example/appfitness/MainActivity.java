@@ -1,12 +1,15 @@
 package com.example.appfitness;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -47,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
             if(ContextCompat.checkSelfPermission(MainActivity.this,
                     Manifest.permission.POST_NOTIFICATIONS)!=
                     PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{Manifest.permission.POST_NOTIFICATIONS},101);
+
+                showNotificationPermissionDialog();
 
             }
         }
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         //se l utente è gia registrato, vai a pagina 3
         DbHelper db=new DbHelper(getApplicationContext());
-        //db.deleteDatabase();
+        db.deleteDatabase();
         SQLiteDatabase dbRead=db.getReadableDatabase();
         int count=0;
 
@@ -137,6 +140,49 @@ public class MainActivity extends AppCompatActivity {
         }
 
         startActivity(i);
+    }
+
+
+    private void showNotificationPermissionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Permesso di Notifica");
+        builder.setMessage("Questa app richiede il permesso di inviare notifiche per mostrarti il timer di " +
+                "recupero quando l'applicazione è in background. " +
+                "Cosi puoi usare altre app mentre recuperi");
+
+        builder.setPositiveButton("Sì", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 101) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permesso concesso
+                ToastPersonalizzato.ToastSuccesso("Permesso per le notifiche concesso",getLayoutInflater());
+            } else {
+                // Permesso negato
+                ToastPersonalizzato.ToastErrore("Permesso per le notifiche negato", getLayoutInflater());
+
+            }
+        }
     }
 
 

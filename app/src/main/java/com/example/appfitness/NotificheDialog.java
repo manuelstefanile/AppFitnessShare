@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -41,6 +42,7 @@ import com.example.appfitness.DB.PesoDAO;
 import com.example.appfitness.DB.kcalDAO;
 import com.example.appfitness.Eccezioni.Eccezioni;
 import com.example.appfitness.Pagina3.Global;
+import com.example.appfitness.Pagina3.PaginaScheda_Pag3;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -215,24 +217,12 @@ public class NotificheDialog {
                     immagineRiferimento = 0;
 
 
-                    //metti l animazione nel toast
-                    // Infla il layout personalizzato
-                    View layout = inflater.inflate(R.layout.toast_calendario,null);
-                    Toast toast = new Toast(inflater.getContext());
-                    toast.setDuration(Toast.LENGTH_LONG);
-                    toast.setView(layout);
-                    toast.show();
+                    ToastPersonalizzato.ToastSuccessoCalendario(inflater);
 
                 }else{
                     //metti l animazione nel toast
                     // Infla il layout personalizzato
-                    View layout = inflater.inflate(R.layout.toast_erroresave,null);
-                    TextView testoto=layout.findViewById(R.id.toast_text);
-                    testoto.setText("Inserire tutti nomi diversi.");
-                    Toast toast = new Toast(inflater.getContext());
-                    toast.setDuration(Toast.LENGTH_LONG);
-                    toast.setView(layout);
-                    toast.show();
+                    ToastPersonalizzato.ToastErrore("Inserire tutti nomi diversi.",inflater);
                 }
 
 
@@ -358,14 +348,7 @@ public class NotificheDialog {
 
                 // Verifica se la stringa del peso è vuota
                 if (pesoStringa.isEmpty()) {
-                    View layout = inflater.inflate(R.layout.toast_erroresave,null);
-                    TextView testoto=layout.findViewById(R.id.toast_text);
-                    testoto.setText("Non stiamo pesando l'aria.");
-                    Toast toast = new Toast(inflater.getContext());
-                    toast.setDuration(Toast.LENGTH_LONG);
-                    toast.setView(layout);
-                    toast.show();
-
+                    ToastPersonalizzato.ToastErrore("Non stiamo pesando l'aria.",inflater);
                     return; // Esci dal metodo in caso di peso non valido
                 }
 
@@ -373,33 +356,16 @@ public class NotificheDialog {
                 try {
                     pesoInserito = Float.parseFloat(pesoStringa);
                 } catch (NumberFormatException e) {
-                    View layout = inflater.inflate(R.layout.toast_erroresave,null);
-                    TextView testoto=layout.findViewById(R.id.toast_text);
-                    testoto.setText("Formato non valido.");
-                    Toast toast = new Toast(inflater.getContext());
-                    toast.setDuration(Toast.LENGTH_LONG);
-                    toast.setView(layout);
-                    toast.show();
-                    e.printStackTrace();
+                    ToastPersonalizzato.ToastErrore("Formato non valido.", inflater);
                     return; // Esci dal metodo in caso di formato non valido
                 }
 
                 if (pesoInserito != 0) {
-                    View layout = inflater.inflate(R.layout.toast_calendario,null);
-                    Toast toast = new Toast(inflater.getContext());
-                    toast.setDuration(Toast.LENGTH_LONG);
-                    toast.setView(layout);
-                    toast.show();
+                   ToastPersonalizzato.ToastSuccessoCalendario(inflater);
                 } else {
                     //metti l animazione nel toast
                     // Infla il layout personalizzato
-                    View layout = inflater.inflate(R.layout.toast_erroresave,null);
-                    TextView testoto=layout.findViewById(R.id.toast_text);
-                    testoto.setText("Pesi 0 kg? Inserisci >0");
-                    Toast toast = new Toast(inflater.getContext());
-                    toast.setDuration(Toast.LENGTH_LONG);
-                    toast.setView(layout);
-                    toast.show();
+                    ToastPersonalizzato.ToastErrore("Pesi 0 kg? Inserisci >0.",inflater);
 
                     return; // Esci dal metodo in caso di peso uguale a zero
                 }
@@ -586,14 +552,7 @@ public class NotificheDialog {
                             valoreGambaSx != 0 || valorePetto != 0 || valoreSpalle != 0 || valoreAddome != 0 || valoreFianchi != 0;
 
                     if (!almenoUnaMisuraInserita) {
-                        View layout = inflater.inflate(R.layout.toast_erroresave,null);
-                        TextView testoto=layout.findViewById(R.id.toast_text);
-                        testoto.setText("Prendi quel metro altrimenti le misure saranno 0 cm! Inserisci almeno una misura.");
-                        Toast toast = new Toast(inflater.getContext());
-                        toast.setDuration(Toast.LENGTH_LONG);
-                        toast.setView(layout);
-                        toast.show();
-
+                        ToastPersonalizzato.ToastErrore("Prendi quel metro altrimenti le misure saranno 0 cm! Inserisci almeno una misura.",inflater);
                         return; // Esci dal metodo
                     }
 
@@ -602,12 +561,7 @@ public class NotificheDialog {
 
 
                     // Mostra il Toast solo se tutte le misure sono state inserite correttamente
-                    View layout = inflater.inflate(R.layout.toast_calendario,null);
-                    Toast toast = new Toast(inflater.getContext());
-                    toast.setDuration(Toast.LENGTH_LONG);
-                    toast.setView(layout);
-                    toast.show();
-
+                    ToastPersonalizzato.ToastSuccessoCalendario(inflater);
                     Misure mOld=mdao.getMisureperData(Global.ConversioneCalendarString(dataSalvare));
 
                     if(mOld==null)
@@ -832,21 +786,11 @@ public class NotificheDialog {
                     // Controlla se le kcal attuali sono pari a 0
 
                     if (kcalAttualiValue == 0) {
-                        View layout = inflater.inflate(R.layout.toast_erroresave,null);
-                        TextView testo=layout.findViewById((int)R.id.toast_text);
-                        testo.setText("Le kcal pari a 0? Digiuno estremo?");
-                        Toast toast = new Toast(inflater.getContext());
-                        toast.setDuration(Toast.LENGTH_LONG);
-                        toast.setView(layout);
-                        toast.show();
+                        ToastPersonalizzato.ToastErrore("Le kcal pari a 0? Digiuno estremo?",inflater);
 
                     } else {
                         // Mostra il Toast di successo se tutte le operazioni sono andate a buon fine
-                        View layout = inflater.inflate(R.layout.toast_calendario,null);
-                        Toast toast = new Toast(inflater.getContext());
-                        toast.setDuration(Toast.LENGTH_LONG);
-                        toast.setView(layout);
-                        toast.show();
+                        ToastPersonalizzato.ToastSuccessoCalendario(inflater);
                     }
                 } catch (NumberFormatException e) {
                     // Gestisci l'eccezione se il formato non è valido
@@ -923,27 +867,39 @@ public class NotificheDialog {
     }
 
     public static void NotificaImmaginePremutaIngrandisci(LayoutInflater inflater,ImageView immagineUtente){
-        //todo test
+        // TODO test
+        /*
         System.out.println("sono in zoom");
         final AlertDialog[] alertNotifica = {null};
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                alertNotifica[0] = NotificaImmagineZoom(inflater, immagineUtente.getDrawable());
+            }
+        };
+
         immagineUtente.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        // ingrandisci
-                        alertNotifica[0] =NotificaImmagineZoom(inflater,immagineUtente.getDrawable());
+                        // Inizia il conteggio dei 2 secondi
+                        handler.postDelayed(runnable, 700);
                         break;
                     case MotionEvent.ACTION_UP:
-                        // chiudi
-                        if(alertNotifica[0]!=null){
+                        // Annulla l'ingrandimento se il tempo di pressione è inferiore a 2 secondi
+                        handler.removeCallbacks(runnable);
+                        if (alertNotifica[0] != null) {
                             alertNotifica[0].dismiss();
                         }
                         break;
                 }
-                return false;
+                return true;  // Restituisci true per indicare che l'evento è stato gestito
             }
         });
+
+         */
 
     }
 
@@ -1025,17 +981,7 @@ public class NotificheDialog {
                     edi.putString(tipoNotifica, finalNoteStorage.toJson());
                     edi.apply();
 
-                    View layout = inflater.inflate(R.layout.toast_calendario,null);
-                    TextView testoto=layout.findViewById(R.id.toast_text);
-                    testoto.setText("Note salvate..");
-                    LottieAnimationView la=layout.findViewById(R.id.animCalendario);
-                    la.setAnimation(R.raw.save);
-                    la.playAnimation();
-                    la.setColorFilter(R.color.lightGreen);
-                    Toast toast = new Toast(inflater.getContext());
-                    toast.setDuration(Toast.LENGTH_SHORT);
-                    toast.setView(layout);
-                    toast.show();
+                    ToastPersonalizzato.ToastSuccesso("Note salvate...",inflater);
                 }
             });
         }
@@ -1079,7 +1025,6 @@ public class NotificheDialog {
             EditText acqua = dialogView.findViewById(R.id.acqua);
             EditText noteDettaglio = dialogView.findViewById(R.id.noteDettaglio);
             CalendarView calendario = dialogView.findViewById(R.id.calendarioKcal);
-
             // Imposta i valori dell'oggetto Kcal nei rispettivi elementi della View
             if(oggettoKcal.getKcal()!=0)kcalAttuali.setText(String.valueOf(oggettoKcal.getKcal()));
                 else kcalAttuali.setText("");
@@ -1390,6 +1335,66 @@ public class NotificheDialog {
 
             }
         });
+
+    }
+
+    //popup Import
+    public static void PopupImporta(LayoutInflater inflater, Activity act) {
+
+        View dialogView = inflater.inflate(R.layout.importa_general_layout, null);
+        Button salvaButton=dialogView.findViewById((int)R.id.SalvaMisure);
+        Button okButton=dialogView.findViewById((int)R.id.OkMisure);
+        // Creazione dell'AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
+        builder.setView(dialogView);
+        builder.setCancelable(false);
+
+
+        builder.setPositiveButton(null,null);
+        builder.setNegativeButton(null,null);
+        // Mostra l'AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        Button dati = dialogView.findViewById(R.id.button_import_dati);
+        Button scheda = dialogView.findViewById(R.id.button_import_scheda);
+        Button chiudi = dialogView.findViewById((int)R.id.button_chiudi);
+
+        chiudi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+
+        scheda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Intent per aprire il file picker
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*"); // Tutti i tipi di file
+                act.startActivityForResult(intent, 6);
+                chiudi.callOnClick();
+            }
+        });
+
+        dati.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Intent per aprire il file picker
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*"); // Tutti i tipi di file
+                act.startActivityForResult(intent, 8);
+                chiudi.callOnClick();
+            }
+        });
+
+
+
+
+
+
+        
 
     }
 

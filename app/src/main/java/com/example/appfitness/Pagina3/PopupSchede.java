@@ -45,9 +45,11 @@ import com.example.appfitness.Bean.Scheda;
 import com.example.appfitness.Bean.SerializzazioneFileScheda;
 import com.example.appfitness.DB.ListaGiorniDAO;
 import com.example.appfitness.Eccezioni.Eccezioni;
+import com.example.appfitness.ImportExport;
 import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
 import com.example.appfitness.Registrazione_Pag2;
+import com.example.appfitness.ToastPersonalizzato;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -58,7 +60,7 @@ import java.util.HashMap;
 
 public class PopupSchede {
     private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int CREATE_FILE_REQUEST_CODE = 5;
+    public static final int CREATE_FILE_REQUEST_CODE = 5;
     public static Activity act; // Aggiunto
     private static ImageButton imgScheda;
     private static final String PREFS_NAME = "PopupPrefs";
@@ -187,13 +189,13 @@ public class PopupSchede {
             @Override
             public void onClick(View view) {
                 if (nomeScheda.getText().toString().trim().length() == 0) {
-                    Toast.makeText(dialogView.getContext(), "Inserisci un nome per salvare la scheda.", Toast.LENGTH_SHORT).show();
+                    ToastPersonalizzato.ToastErrore("Inserisci un nome per salvare la scheda.",inflater);
                 }
                 else {
                     for(Scheda s:Global.schedadao.getAllSchede()){
                         if(s.getNomeScheda().equals(nomeScheda.getText().toString())
                                 &&!(schedaTemp.getNomeScheda().equals(nomeScheda.getText().toString()))){
-                            Toast.makeText(dialogView.getContext(), "Nome già presente.", Toast.LENGTH_SHORT).show();
+                            ToastPersonalizzato.ToastErrore("Nome già presente.",inflater);
                             return;
                         }
                     }
@@ -224,7 +226,7 @@ public class PopupSchede {
                     edit.commit();
 
                     ResettaVariabili();
-                    Toast.makeText(dialogView.getContext(), "Scheda salvata, Keep going Buddy!", Toast.LENGTH_SHORT).show();
+                    ToastPersonalizzato.ToastSuccesso("Scheda salvata, Keep going Buddy!",inflater);
                     creaGiorno.setEnabled(true);
                     creaGiorno.setAlpha(1f);
 
@@ -384,10 +386,9 @@ public class PopupSchede {
                 // Controllo se il nome della scheda è stato modificato
                 if (!nomeSchedaPrimaModifica.equals(nomeScheda.getText().toString())) {
                     // Il nome della scheda è stato modificato, mostro il Toast
-                    Toast.makeText(dialogView.getContext(), "Il nome della scheda è stato modificato", Toast.LENGTH_SHORT).show();
+                    ToastPersonalizzato.ToastSuccesso("Il nome della scheda è stato modificato",inflater);
                 } else if (sched.getImg() != null && !Global.areImagesEqual(sched.getImg(), imgScheda.getDrawable())) {
-                    // L'immagine è stata modificata, mostro il Toast
-                    Toast.makeText(dialogView.getContext(), "Solo l'immagine è stata aggiornata.", Toast.LENGTH_SHORT).show();
+
                 }
 
                 //alertDialog.dismiss();
@@ -474,40 +475,7 @@ public class PopupSchede {
     }
 
     private void UploadSchedaFile(Long idScheda){
-        System.out.println("mah"+idScheda);
-        // Avvia l'intent per creare un nuovo file
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/plain"); // Tipo del file, puoi modificare in base al tipo di file che vuoi creare
-
-        SerializzazioneFileScheda fileser=new SerializzazioneFileScheda();
-        HashMap<Giorno,ArrayList<Esercizio>> mappa = new HashMap<>();
-        //prendo la scheda
-        Scheda schedatemp=Global.schedadao.getSchedaById(idScheda);
-        fileser.setScheda(schedatemp);
-
-        System.out.println("mah"+schedatemp);
-        //popolo i giorni della lista
-        ArrayList<Giorno> giorniAssociatiAScheda=new ArrayList<>();
-        ArrayList<Integer> idGiorni=Global.listaGiornidao.getListaGiorniPerScheda(schedatemp.getId());
-        for (Integer idg:idGiorni) {
-            Giorno g=Global.giornoDao.getGiornoById(idg);
-            giorniAssociatiAScheda.add(g);
-            ArrayList<Esercizio> listaExpreGiorno=Global.ledao.getListaEserciziPerGiorno(Long.valueOf(idg));
-            ArrayList<Esercizio> listaexCompleti=new ArrayList<>();
-
-            for(Esercizio e:listaExpreGiorno){
-                Esercizio estemp=Global.esercizioDao.getEsercizioById((int) e.getId());
-                estemp.setOrdine(e.getOrdine());
-                listaexCompleti.add(estemp);
-            }
-            mappa.put(g,listaexCompleti);
-        }
-        fileser.setMappa(mappa);
-        System.out.println("proviamo ancora "+ fileser);
-        PaginaScheda_Pag3.sf=fileser;
-
-        act.startActivityForResult(intent, CREATE_FILE_REQUEST_CODE);
-
+        ImportExport impExp= new ImportExport();
+        impExp.UploadSchedaFile(idScheda,act);
     }
 }

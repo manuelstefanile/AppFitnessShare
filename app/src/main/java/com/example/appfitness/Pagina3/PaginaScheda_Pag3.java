@@ -1,5 +1,6 @@
 package com.example.appfitness.Pagina3;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -25,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
@@ -34,6 +37,7 @@ import com.example.appfitness.Bean.Esercizio;
 import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Scheda;
+import com.example.appfitness.Bean.SerializzazioneFileDati;
 import com.example.appfitness.Bean.SerializzazioneFileScheda;
 import com.example.appfitness.DB.DbHelper;
 import com.example.appfitness.DB.EsercizioDAO;
@@ -42,9 +46,13 @@ import com.example.appfitness.DB.ListaEserciziDAO;
 import com.example.appfitness.DB.ListaGiorniDAO;
 import com.example.appfitness.DB.SchedaDAO;
 import com.example.appfitness.DB.SchemaDB;
+import com.example.appfitness.Eccezioni.Eccezioni;
+import com.example.appfitness.ImportExport;
+import com.example.appfitness.MainActivity;
 import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
 import com.example.appfitness.Registrazione_Pag2;
+import com.example.appfitness.ToastPersonalizzato;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -426,11 +434,7 @@ public class PaginaScheda_Pag3 extends Activity {
                     // Gestisci eventuali eccezioni di IO
                 }
             }
-        } else {
-            // L'utente ha annullato la creazione del file o si è verificato un errore
-            Toast.makeText(getApplicationContext(), "Creazione del file annullata", Toast.LENGTH_SHORT).show();
         }
-
         //apro  il file scheda
         if (requestCode == 6 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             if (data != null) {
@@ -443,10 +447,17 @@ public class PaginaScheda_Pag3 extends Activity {
                     ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
                     // Leggi l'oggetto SerializzazioneFileScheda dal file
-                    SerializzazioneFileScheda oggettoLetto = (SerializzazioneFileScheda) objectInputStream.readObject();
+                    try {
 
-                    System.out.println("oggetto da "+ oggettoLetto);
-                    SalvaSchedaImportate(oggettoLetto);
+                        SerializzazioneFileScheda oggettoLetto = (SerializzazioneFileScheda) objectInputStream.readObject();
+                        new ImportExport().SalvaSchedaImportate(oggettoLetto,getLayoutInflater());
+                        ToastPersonalizzato.ToastSuccesso("Scheda importata con successo", getLayoutInflater());
+                    }catch (ClassCastException cce){
+                        System.out.println("cast non riuscito");
+                        // Infla il layout personalizzato
+                        ToastPersonalizzato.ToastErrore("Il file non è una Scheda",getLayoutInflater());
+                    }
+
                     // Chiudi gli stream
                     objectInputStream.close();
                     fileInputStream.close();
@@ -456,9 +467,39 @@ public class PaginaScheda_Pag3 extends Activity {
                     // Gestisci eventuali eccezioni di IO o di deserializzazione
                 }
             }
-        } else {
-            // L'utente ha annullato la creazione del file o si è verificato un errore
-            Toast.makeText(getApplicationContext(), "Creazione annullata", Toast.LENGTH_SHORT).show();
+        }
+        //apro  il file dati
+        else if (requestCode == 8 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            if (data != null) {
+                Uri fileUri = data.getData();
+                try {
+                    // Apri uno stream di input per il file selezionato
+                    FileInputStream fileInputStream = (FileInputStream) getContentResolver().openInputStream(fileUri);
+
+                    // Crea un ObjectInputStream per leggere l'oggetto serializzato da questo stream
+                    ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+                    // Leggi l'oggetto SerializzazioneFileScheda dal file
+                    try {
+                        SerializzazioneFileDati oggettoLetto = (SerializzazioneFileDati) objectInputStream.readObject();
+                        System.out.println("oggetto da "+ oggettoLetto);
+                        new ImportExport().SovrascritturaDatiImport(oggettoLetto,getLayoutInflater());
+                        ToastPersonalizzato.ToastSuccesso("Dati importati con successo",getLayoutInflater());
+                    }catch (ClassCastException cce){
+                        System.out.println("cast non riuscito");
+                        // Infla il layout personalizzato
+                        ToastPersonalizzato.ToastErrore("Il file non è dati utente",getLayoutInflater());
+                    }
+
+                    // Chiudi gli stream
+                    objectInputStream.close();
+                    fileInputStream.close();
+                    // Fai qualcosa con la scheda e la mappa
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                    // Gestisci eventuali eccezioni di IO o di deserializzazione
+                }
+            }
         }
     }
 
@@ -533,10 +574,19 @@ public class PaginaScheda_Pag3 extends Activity {
         super.onPause();
         isInBackground = true;
 
-        if(PopupEsercizio.tempotemp!=null &&PopupEsercizio.tempotemp[0]!=0) {
-            TimerService.millisecondi = PopupEsercizio.tempotemp[0];
-            startTimerService();
+        //se ho i permessi della notifica allora mostra il timer
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU){
+            if(ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.POST_NOTIFICATIONS)!=
+                    PackageManager.PERMISSION_GRANTED){
+
+                if(PopupEsercizio.tempotemp!=null &&PopupEsercizio.tempotemp[0]!=0) {
+                    TimerService.millisecondi = PopupEsercizio.tempotemp[0];
+                    startTimerService();
+                }
+            }
         }
+
     }
 
 
@@ -564,90 +614,12 @@ public class PaginaScheda_Pag3 extends Activity {
             view.startAnimation(animation);
         }
     }
-    public void ImportaScheda(View v){
-        // Intent per aprire il file picker
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*"); // Tutti i tipi di file
-        startActivityForResult(intent, 6);
+    public void Importa(View v) {
+        //apro popupNotifica
+        NotificheDialog.PopupImporta(getLayoutInflater(),this);
+
     }
 
-    public void SalvaSchedaImportate(SerializzazioneFileScheda oggettoLetto){
-        Scheda schedaSave=oggettoLetto.getScheda();
-        System.out.println("scheda test "+ schedaSave);
-        for(Scheda sche:Global.schedadao.getAllSchede()){
-            if(sche.getNomeScheda().equals(schedaSave.getNomeScheda())){
-                SovraschiviSchedaNotifica(true,schedaSave,oggettoLetto);
-                return;
-            }
 
-        }
-        SovrascritturaSchedaImport(false,schedaSave,oggettoLetto);
-    }
-    private void SovraschiviSchedaNotifica(boolean elimniaSchedaEsistente,Scheda schedaSave,SerializzazioneFileScheda oggettoLetto){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        // Imposta il layout personalizzato come vista del dialog box
-        View customLayout = getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
-        TextView testo= customLayout.findViewById((int)R.id.testoCustom);
-        testo.setText("Scheda "+schedaSave.getNomeScheda()+" già presente. Vuoi sovrascrivere?");
-        builder.setView(customLayout);
-        // Ora puoi trovare i pulsanti all'interno del layout e aggiungere i listener di click
-        Button buttonYes = customLayout.findViewById(R.id.button_yes);
-        Button buttonNo = customLayout.findViewById(R.id.button_no);
-
-        // Creazione dell'AlertDialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        // Aggiunta dei listener di click ai pulsanti
-        buttonYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SovrascritturaSchedaImport(elimniaSchedaEsistente,schedaSave,oggettoLetto);
-            }
-        });
-
-        buttonNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Annulla l'eliminazione
-                dialog.dismiss(); // Chiudi il dialog box
-            }
-        });
-    }
-    private void SovrascritturaSchedaImport(boolean eliminaSchedaEsistente,Scheda schedaSave,SerializzazioneFileScheda oggettoLetto){
-
-        //elimina se esiste, la scheda presente
-        if(eliminaSchedaEsistente){
-            for(Scheda s:Global.schedadao.getAllSchede()){
-                if(s.getNomeScheda().equals(schedaSave.getNomeScheda())){
-                    Global.schedadao.DeleteScheda(s);
-                }
-            }
-        }
-        schedaSave.setId(Global.schedadao.InsertScheda(schedaSave));
-        Global.adapterSchede.add(schedaSave);
-        avviaAnimazione=true;
-
-        HashMap<Giorno,ArrayList<Esercizio>> mappa=oggettoLetto.getMappa();
-        for(Map.Entry<Giorno,ArrayList<Esercizio>> oggChiaveVal:mappa.entrySet()){
-            Giorno giornotemp=oggChiaveVal.getKey();
-            giornotemp=Global.giornoDao.InsertGiorno(giornotemp);
-            Global.listaGiornidao.InsertSingleDay(schedaSave.getId(),giornotemp.getId());
-
-            //lista ex e ex
-            for(Esercizio ex:oggChiaveVal.getValue()){
-                ex=Global.esercizioDao.inserisciEsercizio(ex);
-                Global.ledao.Insert(giornotemp.getId(),ex.getId(),0,ex.getOrdine());
-            }
-
-        }
-
-
-        //se la scheda è gia presente, avvisa che verranno sovrascritti i dati
-
-        System.out.println("____________________________+++");
-        StampaTutto();
-        ChiudTuttoNonSalva(null);
-    }
 
 }

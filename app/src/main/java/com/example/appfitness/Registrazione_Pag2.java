@@ -28,8 +28,10 @@ import com.example.appfitness.Bean.Kcal;
 import com.example.appfitness.Bean.Misure;
 import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Peso;
+import com.example.appfitness.Bean.SerializzazioneFileDati;
 import com.example.appfitness.Bean.Utente;
 import com.example.appfitness.DB.DbHelper;
+import com.example.appfitness.DB.FisicoDAO;
 import com.example.appfitness.DB.MisureDAO;
 import com.example.appfitness.DB.PesoDAO;
 import com.example.appfitness.DB.SchemaDB;
@@ -43,7 +45,11 @@ import com.example.appfitness.Pagina3.PopupSchede;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,6 +84,12 @@ public class Registrazione_Pag2 extends Activity {
         Button bottoneKcal=findViewById((int)R.id.buttonKcal);
         Button bottoneMisure=findViewById((int)R.id.buttonMisure);
         Button bottoneNote=findViewById((int)R.id.buttonNote);
+        Button uploadScheda=findViewById((int)R.id.uploadScheda);
+
+        //uploadScheda.setVisibility(View.GONE);
+        uploadScheda.setBackgroundDrawable(null);
+        uploadScheda.setText("Importa");
+
         bottoneCreaScheda=findViewById((int)R.id.creaSchedaButton);
         bottoneCreaScheda.setVisibility(View.INVISIBLE);
         bottoneSalva=findViewById((int)R.id.salvaButtonReg);
@@ -107,6 +119,15 @@ public class Registrazione_Pag2 extends Activity {
         editor.putString(COSTANTI.NOTE_REGISTRAZIONE, noteSalvate.toJson());
         editor.apply();
 
+        uploadScheda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Intent per aprire il file picker
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*"); // Tutti i tipi di file
+                startActivityForResult(intent, 8);
+            }
+        });
         bottoneNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,6 +160,7 @@ public class Registrazione_Pag2 extends Activity {
                     editGlobal=true;
                     bottoneNext.setEnabled(true);
                     bottoneNext.setVisibility(View.GONE);
+                    uploadScheda.setVisibility(View.GONE);
                     bottoneCreaScheda.setText("Back");
                     bottoneCreaScheda.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -172,12 +194,21 @@ public class Registrazione_Pag2 extends Activity {
                     bottoneMisure.setText("Misure");
                     bottoneNext.setEnabled(true);
                     bottoneNext.setVisibility(View.GONE);
+                    uploadScheda.setVisibility(View.VISIBLE);
                     bottoneSalva.setVisibility(View.GONE);
-                    bottoneCreaScheda.setText("Back");
-                    bottoneCreaScheda.setOnClickListener(new View.OnClickListener() {
+                    bottoneCreaScheda.setVisibility(View.GONE);
+                    /*bottoneCreaScheda.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             PassaPagina3(view);
+                        }
+                    });
+
+                     */
+                    uploadScheda.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new ImportExport().UploadDatiFile(Registrazione_Pag2.this);
                         }
                     });
                     immagineUtente.setOnClickListener(new View.OnClickListener() {
@@ -218,13 +249,7 @@ public class Registrazione_Pag2 extends Activity {
         String nomeUtente=nomeUtenteR.getText().toString();
 
         if(nomeUtente.trim().length()==0){
-            View layout = this.getLayoutInflater().inflate(R.layout.toast_erroresave,null);
-            TextView testoto=layout.findViewById(R.id.toast_text);
-            testoto.setText("Inserisci nome utente.");
-            Toast toast = new Toast(this.getLayoutInflater().getContext());
-            toast.setDuration(Toast.LENGTH_SHORT);
-            toast.setView(layout);
-            toast.show();
+           ToastPersonalizzato.ToastErrore("Inserisci nome utente.",getLayoutInflater());
             return;
 
         }
@@ -277,17 +302,7 @@ public class Registrazione_Pag2 extends Activity {
 
         utentedao.updateUtente(utente);
 
-        View layout = getLayoutInflater().inflate(R.layout.toast_calendario,null);
-        TextView testoto=layout.findViewById(R.id.toast_text);
-        testoto.setText("Dati aggiornati con successo.");
-        LottieAnimationView la=layout.findViewById(R.id.animCalendario);
-        la.setAnimation(R.raw.save);
-        la.playAnimation();
-        la.setColorFilter(R.color.lightGreen);
-        Toast toast = new Toast(getApplicationContext());
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(layout);
-        toast.show();
+        ToastPersonalizzato.ToastSuccesso("Dati aggiornati con successo.", getLayoutInflater());
 
     }
     @SuppressLint("Range")
@@ -304,13 +319,7 @@ public class Registrazione_Pag2 extends Activity {
         }
 
         if(nomeUtente.trim().length()==0){
-            View layout = this.getLayoutInflater().inflate(R.layout.toast_erroresave,null);
-            TextView testoto=layout.findViewById(R.id.toast_text);
-            testoto.setText("Inserisci nome utente.");
-            Toast toast = new Toast(this.getLayoutInflater().getContext());
-            toast.setDuration(Toast.LENGTH_SHORT);
-            toast.setView(layout);
-            toast.show();
+           ToastPersonalizzato.ToastErrore("Inserisci nome utente.",getLayoutInflater());
             return;
 
         }
@@ -377,17 +386,7 @@ public class Registrazione_Pag2 extends Activity {
         valuesUtente.put(SchemaDB.UtenteDB.COLUMN_immagine, utente.getImmagine());
         long IdUtente = dbWritable.insert(SchemaDB.UtenteDB.TABLE_NAME, null, valuesUtente);
 
-        View layout = getLayoutInflater().inflate(R.layout.toast_calendario,null);
-        TextView testoto=layout.findViewById(R.id.toast_text);
-        testoto.setText("Utente salvato.");
-        LottieAnimationView la=layout.findViewById(R.id.animCalendario);
-        la.setAnimation(R.raw.save);
-        la.playAnimation();
-        la.setColorFilter(R.color.lightGreen);
-        Toast toast = new Toast(getApplicationContext());
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(layout);
-        toast.show();
+        ToastPersonalizzato.ToastSuccesso("Utente salvato.",getLayoutInflater());
 
         bottoneCreaScheda.setVisibility(View.VISIBLE);
         bottoneNext.setVisibility(View.VISIBLE);
@@ -502,7 +501,7 @@ public class Registrazione_Pag2 extends Activity {
         editor.apply();
 
         //per far comparire il tasto nella pagina di Modifica dati e Visualizza dati
-        bottoneCreaScheda.setVisibility(View.VISIBLE);
+        //bottoneCreaScheda.setVisibility(View.VISIBLE);
 
         TextView titolo=findViewById(R.id.titoloPaginaReg);
         //modalita see
@@ -613,6 +612,75 @@ public class Registrazione_Pag2 extends Activity {
             }
             immagineUtente.setImageBitmap(bitmap);
 
+        }
+        //per esportare i file dati
+        else if(requestCode == 4 && resultCode == Activity.RESULT_OK){
+            if (data != null) {
+                Uri fileUri = data.getData();
+                try {
+                    // Apre uno stream di output per il file selezionato
+                    FileOutputStream fileOutputStream = (FileOutputStream) getContentResolver().openOutputStream(fileUri);
+
+                    // Crea un ObjectOutputStream per scrivere l'oggetto su questo stream
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+                    SerializzazioneFileDati sfd= new SerializzazioneFileDati();
+                    sfd.setUtente(utentedao.getUtenteInfo());
+                    sfd.setKcal(kcalDAO.getKcalInfo());
+                    sfd.setMisure(misuradao.getMisureInfo());
+                    sfd.setPeso(pesodao.getPesoInfo());
+                    sfd.setFisico(new FisicoDAO(getApplicationContext()).getFisicoInfo());
+
+                    // Scrivi l'oggetto nel file
+                    objectOutputStream.writeObject(sfd);
+                    // Chiudi gli stream
+                    objectOutputStream.close();
+                    fileOutputStream.close();
+
+
+                    ToastPersonalizzato.ToastSuccesso("File salvato con successo.",getLayoutInflater());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // Gestisci eventuali eccezioni di IO
+                }
+            }
+        }
+        //per importare  il file dati
+        else if (requestCode == 8 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            if (data != null) {
+                Uri fileUri = data.getData();
+                try {
+                    // Apri uno stream di input per il file selezionato
+                    FileInputStream fileInputStream = (FileInputStream) getContentResolver().openInputStream(fileUri);
+
+                    // Crea un ObjectInputStream per leggere l'oggetto serializzato da questo stream
+                    ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+                    // Leggi l'oggetto SerializzazioneFileScheda dal file
+                    try {
+                        SerializzazioneFileDati oggettoLetto = (SerializzazioneFileDati) objectInputStream.readObject();
+                        System.out.println("oggetto da " + oggettoLetto);
+                        new ImportExport().SovrascritturaDatiImport(oggettoLetto, getLayoutInflater());
+                        ToastPersonalizzato.ToastSuccesso("Dati importati con successo", getLayoutInflater());
+                    } catch (ClassCastException cce) {
+                        System.out.println("cast non riuscito");
+                        // Infla il layout personalizzato
+                        ToastPersonalizzato.ToastErrore("Il file non è dati utente", getLayoutInflater());
+                    }
+
+                    // Chiudi gli stream
+                    objectInputStream.close();
+                    fileInputStream.close();
+
+                    Intent intent = new Intent(getApplicationContext(), PaginaScheda_Pag3.class);
+                    startActivity(intent);
+
+                    // Fai qualcosa con la scheda e la mappa
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                    // Gestisci eventuali eccezioni di IO o di deserializzazione
+                }
+            }
         }
     }
 

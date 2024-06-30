@@ -1,6 +1,10 @@
 package com.example.appfitness.Bean;
 
-public class Utente {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Utente implements Serializable {
     private long id;
     private String nome,cognome,nomeUtente;
     private int eta;
@@ -10,6 +14,7 @@ public class Utente {
     private Kcal kcal;
     private Note note;
     private byte[] immagine;
+    private HashMap<Fisico, ArrayList<Fisico_Immagini>> mappaFisico;
 
     public Utente(String nome, String cognome, String nomeUtente, int eta, float altezza, Peso peso, Misure misure, Kcal kcal, Note note) {
         this.nome = nome;
@@ -26,6 +31,7 @@ public class Utente {
     public Utente() {
 
     }
+
 
     public long getId() {
         return id;
@@ -117,6 +123,14 @@ public class Utente {
         misure=null;
         kcal=null;
         note=null;
+    }
+
+    public HashMap<Fisico, ArrayList<Fisico_Immagini>> getMappaFisico() {
+        return mappaFisico;
+    }
+
+    public void setMappaFisico(HashMap<Fisico, ArrayList<Fisico_Immagini>> mappaFisico) {
+        this.mappaFisico = mappaFisico;
     }
 
     public byte[] getImmagine() {

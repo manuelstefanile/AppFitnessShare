@@ -13,6 +13,8 @@ import com.example.appfitness.Bean.Misure;
 import com.example.appfitness.Bean.Note;
 import com.example.appfitness.Bean.Peso;
 import com.example.appfitness.Bean.Scheda;
+import com.example.appfitness.Bean.SerializzazioneFileDati;
+import com.example.appfitness.Bean.SerializzazioneFileScheda;
 import com.example.appfitness.Bean.Utente;
 import com.example.appfitness.Pagina3.Global;
 import com.example.appfitness.Pagina3.PopupGiorno;
@@ -29,6 +31,33 @@ public class UtenteDAO {
         this.ct = ct;
         db=new DbHelper(ct);
     }
+
+    public Utente insertUtente(Utente utente) {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SchemaDB.UtenteDB.COLUMN_nome, utente.getNome());
+        values.put(SchemaDB.UtenteDB.COLUMN_cognome, utente.getCognome());
+        values.put(SchemaDB.UtenteDB.COLUMN_nomeUtente, utente.getNomeUtente());
+        values.put(SchemaDB.UtenteDB.COLUMN_eta, utente.getEta());
+        values.put(SchemaDB.UtenteDB.COLUMN_altezza, utente.getAltezza());
+        values.put(SchemaDB.UtenteDB.COLUMN_immagine, utente.getImmagine());
+        if(utente.getPeso()!=null)
+            values.put(SchemaDB.UtenteDB.COLUMN_IdPeso, utente.getPeso().getId());
+        if(utente.getKcal()!=null)
+            values.put(SchemaDB.UtenteDB.COLUMN_IdKcal, utente.getKcal().getId());
+        if(utente.getMisure()!=null)
+            values.put(SchemaDB.UtenteDB.COLUMN_IdMisure, utente.getMisure().getId());
+        if(utente.getNote()!=null)
+            values.put(SchemaDB.UtenteDB.COLUMN_note, utente.getNote().getNote());
+
+        // Esegui l'operazione di inserimento
+        long newRowId = dbW.insert(SchemaDB.UtenteDB.TABLE_NAME, null, values);
+        utente.setId(newRowId);
+        db.close();
+        return utente; // Ritorna l'ID del nuovo record inserito
+    }
+
 
     @SuppressLint("Range")
     public Utente getUtenteInfo() {
@@ -76,6 +105,9 @@ public class UtenteDAO {
         return utente;
     }
 
+
+
+
     public void updateUtente(Utente utente) {
         SQLiteDatabase dbW = db.getWritableDatabase();
 
@@ -106,5 +138,17 @@ public class UtenteDAO {
 
 
         dbW.close();
+    }
+
+    public boolean deleteAllUtente() {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        // Rimuovi tutti i dati dalla tabella kcal
+        int count = dbW.delete(SchemaDB.UtenteDB.TABLE_NAME, null, null);
+
+        db.close();
+
+        // Se il count è maggiore di 0, significa che sono stati rimossi dei record
+        return count > 0;
     }
 }

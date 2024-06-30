@@ -191,4 +191,16 @@ public class MisureDAO {
         return misure;
     }
 
+    public boolean deleteAllMisure() {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        // Rimuovi tutti i dati dalla tabella kcal
+        int count = dbW.delete(SchemaDB.MisureDB.TABLE_NAME, null, null);
+
+        db.close();
+
+        // Se il count è maggiore di 0, significa che sono stati rimossi dei record
+        return count > 0;
+    }
+
 }

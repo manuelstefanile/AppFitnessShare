@@ -2,7 +2,9 @@ package com.example.appfitness.Bean;
 
 import android.widget.ImageButton;
 
-public class Fisico_Immagini {
+import java.io.Serializable;
+
+public class Fisico_Immagini implements Serializable {
     private byte[] immagine;
     private String nomePosa;
     private int posizione;

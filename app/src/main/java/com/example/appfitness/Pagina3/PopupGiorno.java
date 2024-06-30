@@ -2,6 +2,7 @@ package com.example.appfitness.Pagina3;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -30,6 +31,7 @@ import com.example.appfitness.Eccezioni.Eccezioni;
 import com.example.appfitness.NotificheDialog;
 import com.example.appfitness.R;
 import com.example.appfitness.Registrazione_Pag2;
+import com.example.appfitness.ToastPersonalizzato;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,8 +155,8 @@ public class PopupGiorno {
                 if(testoInserito.length()>0) {
                     nomeGiorno.setEnabled(false);
                     bottoneNote.setEnabled(false);
-                    salvaGiorno.setEnabled(false);{
-                    Toast.makeText(dialogView.getContext(), "Giorno salvato con successo", Toast.LENGTH_SHORT).show();}
+                    salvaGiorno.setEnabled(false);
+                    ToastPersonalizzato.ToastSuccesso("Giorno salvato con successo.",inflater);
                     creaEsercizio.setEnabled(true);
                     creaEsercizio.setAlpha(1f);
                     creaEsercizio.setBackgroundResource(R.drawable.drawable_scheda);
@@ -281,7 +283,7 @@ public class PopupGiorno {
                 Global.adapterGiorni.add(giorno);
 
 
-                Toast.makeText(dialogView.getContext(), "Giorno salvato con successo", Toast.LENGTH_SHORT).show();
+                ToastPersonalizzato.ToastSuccesso("Giorno salvato con successo",inflater);
         }
         });
 
@@ -411,6 +413,21 @@ public class PopupGiorno {
         back.setVisibility(View.GONE);
         creaEsercizio.setText("Fine Allenamento");
 
+
+        //quando premo il tasto indietro, resetta a 0
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                //setta tutti gli esercizi di nuovo a non completati
+                ArrayList<Esercizio> listaExtemp= (ArrayList<Esercizio>) Global.adapterEsercizi.getLista();
+                List<Long> idex= listaExtemp.stream().map(item->item.getId()).collect(Collectors.toList());
+                for(Long idtemp: idex){
+                    Global.ledao.updateStato(giorno.getId(),idtemp,0);
+                    Esercizio ex=Global.esercizioDao.getEsercizioById(idtemp.intValue());
+                    Global.adapterEsercizi.UpdateEsercizio(ex);
+                }
+            }
+        });
         //fine allenamento
         creaEsercizio.setOnClickListener(new View.OnClickListener() {
             @Override

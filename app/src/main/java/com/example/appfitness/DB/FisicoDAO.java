@@ -7,8 +7,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.appfitness.Bean.Fisico;
+import com.example.appfitness.Bean.Peso;
 import com.example.appfitness.Pagina3.Global;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,6 +73,18 @@ public class FisicoDAO {
         return fisico;
     }
 
+    public boolean deleteAllFisico() {
+        SQLiteDatabase dbW = db.getWritableDatabase();
+
+        // Rimuovi tutti i dati dalla tabella kcal
+        int count = dbW.delete(SchemaDB.FisicoDB.TABLE_NAME, null, null);
+
+        db.close();
+
+        // Se il count è maggiore di 0, significa che sono stati rimossi dei record
+        return count > 0;
+    }
+
     public boolean updateFisico(Fisico fisico) {
         SQLiteDatabase dbW = db.getWritableDatabase();
 
@@ -89,6 +103,37 @@ public class FisicoDAO {
         db.close();
 
         return count > 0;
+    }
+
+    @SuppressLint("Range")
+    // Metodo per ottenere le informazioni sul peso dalla tabella
+    public ArrayList<Fisico> getFisicoInfo() {
+        ArrayList<Fisico> FisicoList = new ArrayList<>();
+
+        String selectQuery = "SELECT * FROM " + SchemaDB.FisicoDB.TABLE_NAME;
+        SQLiteDatabase dbW = db.getWritableDatabase();
+        Cursor cursor = dbW.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Fisico fisico = new Fisico();
+                fisico.setId(cursor.getLong(cursor.getColumnIndex(SchemaDB.FisicoDB._ID)));
+                fisico.setNote(cursor.getString(cursor.getColumnIndex(SchemaDB.FisicoDB.COLUMN_note)));
+                fisico.setPosa_immagine(new ListaImgFisicoDAO(ct).getImmaginiPerIdFisico(fisico.getId()));
+
+                // Converti il valore del timestamp in un oggetto Calendar
+                String striData = cursor.getString(cursor.getColumnIndex(SchemaDB.FisicoDB.COLUMN_calendario));
+                Calendar data=Global.ConversioneStringCalendar(striData);
+                fisico.setCalendario(data)
+                ;
+                FisicoList.add(fisico);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return FisicoList;
     }
 
 
