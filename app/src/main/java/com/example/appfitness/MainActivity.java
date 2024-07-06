@@ -22,11 +22,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.appfitness.Bean.Giorno;
 import com.example.appfitness.DB.DbHelper;
 import com.example.appfitness.DB.SchemaDB;
+import com.example.appfitness.Pagina3.Global;
 import com.example.appfitness.Pagina3.PaginaScheda_Pag3;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -185,5 +190,40 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        // Imposta il layout personalizzato come vista del dialog box
+        View customLayout = getLayoutInflater().inflate(R.layout.custom_dialog_layout, null);
+        builder.setView(customLayout);
+
+        // Ora puoi trovare i pulsanti all'interno del layout e aggiungere i listener di click
+        Button buttonYes = customLayout.findViewById(R.id.button_yes);
+        Button buttonNo = customLayout.findViewById(R.id.button_no);
+
+        // Creazione dell'AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        TextView testo = dialog.findViewById(R.id.testoCustom);
+        testo.setText("Sei sicuro di voler uscire?");
+        // Aggiunta dei listener di click ai pulsanti
+        buttonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                dialog.dismiss(); // Chiudi il dialog box
+
+            }
+        });
+
+        buttonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss(); // Chiudi il dialog box
+            }
+        });
+
+    }
 }

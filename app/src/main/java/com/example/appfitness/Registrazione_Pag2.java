@@ -302,6 +302,7 @@ public class Registrazione_Pag2 extends Activity {
 
         utentedao.updateUtente(utente);
 
+
         ToastPersonalizzato.ToastSuccesso("Dati aggiornati con successo.", getLayoutInflater());
 
     }
@@ -666,6 +667,7 @@ public class Registrazione_Pag2 extends Activity {
                         System.out.println("cast non riuscito");
                         // Infla il layout personalizzato
                         ToastPersonalizzato.ToastErrore("Il file non è dati utente", getLayoutInflater());
+                        return;
                     }
 
                     // Chiudi gli stream
@@ -697,5 +699,28 @@ public class Registrazione_Pag2 extends Activity {
         i.setClass(getApplicationContext(), Registrazione_Pag2.class);
         i.putExtra("mode","edit");
         startActivity(i);
+    }
+
+    @Override
+    public void onBackPressed() {
+        String modalita=getIntent().getStringExtra("mode");
+        Intent i =new Intent();
+        System.out.println("sono ora in back");
+        if(modalita!=null) {
+            System.out.println("sono ora in back != null");
+            if (modalita.equals("see")) {
+                System.out.println("sono ora in back see e vado in scheda3");
+                i.setClass(getApplicationContext(), PaginaScheda_Pag3.class);
+            } else {
+                System.out.println("sono ora in edit e vado in see");
+                i.setClass(getApplicationContext(), Registrazione_Pag2.class);
+                i.putExtra("mode", "see");
+            }
+        }else{
+            i.setClass(getApplicationContext(), MainActivity.class);
+        }
+        this.finishActivity(0);
+        startActivity(i);
+        //super.onBackPressed();
     }
 }
