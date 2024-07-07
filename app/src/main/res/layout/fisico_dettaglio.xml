@@ -5,13 +5,18 @@
     android:padding="20dp"
     android:background="@color/white"
     >
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-
-
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomLayout"
         >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:orientation="vertical"
+            >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,113 +52,259 @@
                 </ImageButton>
 
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="20dp"
-
-            >
-
-            <EditText
-                android:id="@+id/posaFisico2"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:padding="6dp"
-                android:background="@drawable/drawable_botton_grigio"
-                android:textAlignment="center"
-                android:hint="Nome Posa"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="20dp"
+
                 >
-            </EditText>
-            <ImageButton
-                android:id="@+id/immaginefisico2"
-                android:layout_width="0dp"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                android:layout_weight="0.1"
-                android:layout_marginLeft="10dp"
+
+                <EditText
+                    android:id="@+id/posaFisico2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:padding="6dp"
+                    android:background="@drawable/drawable_botton_grigio"
+                    android:textAlignment="center"
+                    android:hint="Nome Posa"
+                    android:layout_height="wrap_content"
+                    >
+                </EditText>
+                <ImageButton
+                    android:id="@+id/immaginefisico2"
+                    android:layout_width="0dp"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:layout_weight="0.1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/drawable_botton_white"
+                    android:src="@drawable/noimg"
+                    >
+                </ImageButton>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/drawable_botton_white"
-                android:src="@drawable/noimg"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="20dp"
+
                 >
-            </ImageButton>
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/posaFisico3"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:padding="6dp"
+                    android:background="@drawable/drawable_botton_grigio"
+                    android:textAlignment="center"
+                    android:hint="Nome Posa"
+                    android:layout_height="wrap_content"
+                    >
+                </EditText>
+                <ImageButton
+                    android:id="@+id/immaginefisico3"
+                    android:layout_width="0dp"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:layout_weight="0.1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/drawable_botton_white"
+                    android:src="@drawable/noimg"
+                    >
+                </ImageButton>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="20dp"
+            </LinearLayout>
 
-            >
-
-            <EditText
-                android:id="@+id/posaFisico3"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:padding="6dp"
-                android:background="@drawable/drawable_botton_grigio"
-                android:textAlignment="center"
-                android:hint="Nome Posa"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="20dp"
+
                 >
-            </EditText>
-            <ImageButton
-                android:id="@+id/immaginefisico3"
-                android:layout_width="0dp"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                android:layout_weight="0.1"
-                android:layout_marginLeft="10dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/drawable_botton_white"
-                android:src="@drawable/noimg"
-                >
-            </ImageButton>
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/posaFisico4"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:padding="6dp"
+                    android:background="@drawable/drawable_botton_grigio"
+                    android:textAlignment="center"
+                    android:hint="Nome Posa"
+                    android:layout_height="wrap_content"
+                    >
+                </EditText>
+                <ImageButton
+                    android:id="@+id/immaginefisico4"
+                    android:layout_width="0dp"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:layout_weight="0.1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/drawable_botton_white"
+                    android:src="@drawable/noimg"
+                    >
+                </ImageButton>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="20dp"
-            >
-            <TextView
-                android:layout_width="0dp"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="0.175"
-                android:gravity="left"
-                android:text=""></TextView>
-            <EditText
-                android:id="@+id/noteFisico"
-                android:layout_width="0dp"
-                android:layout_weight="1.7"
-                android:padding="6dp"
-                android:hint="Note"
-                android:background="@drawable/drawable_botton_grigio"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="20dp"
+
                 >
-            </EditText>
-            <TextView
-                android:layout_width="0dp"
+
+                <EditText
+                    android:id="@+id/posaFisico5"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:padding="6dp"
+                    android:background="@drawable/drawable_botton_grigio"
+                    android:textAlignment="center"
+                    android:hint="Nome Posa"
+                    android:layout_height="wrap_content"
+                    >
+                </EditText>
+                <ImageButton
+                    android:id="@+id/immaginefisico5"
+                    android:layout_width="0dp"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:layout_weight="0.1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/drawable_botton_white"
+                    android:src="@drawable/noimg"
+                    >
+                </ImageButton>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="0.175"
-                android:gravity="left"
-                android:text=""></TextView>
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="20dp"
+
+                >
+
+                <EditText
+                    android:id="@+id/posaFisico6"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:padding="6dp"
+                    android:background="@drawable/drawable_botton_grigio"
+                    android:textAlignment="center"
+                    android:hint="Nome Posa"
+                    android:layout_height="wrap_content"
+                    >
+                </EditText>
+                <ImageButton
+                    android:id="@+id/immaginefisico6"
+                    android:layout_width="0dp"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:layout_weight="0.1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/drawable_botton_white"
+                    android:src="@drawable/noimg"
+                    >
+                </ImageButton>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="20dp"
+
+                >
+
+                <EditText
+                    android:id="@+id/posaFisico7"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:padding="6dp"
+                    android:background="@drawable/drawable_botton_grigio"
+                    android:textAlignment="center"
+                    android:hint="Nome Posa"
+                    android:layout_height="wrap_content"
+                    >
+                </EditText>
+                <ImageButton
+                    android:id="@+id/immaginefisico7"
+                    android:layout_width="0dp"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:layout_weight="0.1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/drawable_botton_white"
+                    android:src="@drawable/noimg"
+                    >
+                </ImageButton>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.175"
+                    android:gravity="left"
+                    android:text=""></TextView>
+                <EditText
+                    android:id="@+id/noteFisico"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.7"
+                    android:padding="6dp"
+                    android:hint="Note"
+                    android:background="@drawable/drawable_botton_grigio"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    >
+                </EditText>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.175"
+                    android:gravity="left"
+                    android:text=""></TextView>
+            </LinearLayout>
 
 
             <TextView
@@ -172,9 +323,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 ></CalendarView>
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
+        android:id="@+id/bottomLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -182,17 +335,17 @@
         android:layout_alignParentBottom="true"
         >
         <Button
-        android:id="@+id/okButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:textSize="15dp"
-        android:background="@drawable/drawable_scheda"
-        android:layout_gravity="center"
+            android:id="@+id/okButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:textSize="15dp"
+            android:background="@drawable/drawable_scheda"
+            android:layout_gravity="center"
             android:layout_margin="10dp"
-        >
+            >
 
-    </Button>
+        </Button>
         <Button
             android:id="@+id/salvaButton"
             android:layout_width="wrap_content"

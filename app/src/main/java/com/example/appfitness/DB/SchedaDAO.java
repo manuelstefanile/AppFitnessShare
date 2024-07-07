@@ -130,6 +130,7 @@ public class SchedaDAO {
 
     public Long InsertScheda(Scheda schedaNuova){
 
+        System.out.println("mah 2 "+ schedaNuova.getNote());
         SQLiteDatabase dbWritable = db.getWritableDatabase();
 
         ContentValues valuesScheda = new ContentValues();

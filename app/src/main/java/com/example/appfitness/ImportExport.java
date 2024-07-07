@@ -56,7 +56,7 @@ public class ImportExport {
         Scheda schedatemp= Global.schedadao.getSchedaById(idScheda);
         fileser.setScheda(schedatemp);
 
-        System.out.println("mah"+schedatemp);
+        System.out.println("mah"+schedatemp.getNote());
         //popolo i giorni della lista
         ArrayList<Giorno> giorniAssociatiAScheda=new ArrayList<>();
         ArrayList<Integer> idGiorni=Global.listaGiornidao.getListaGiorniPerScheda(schedatemp.getId());
@@ -96,6 +96,7 @@ public class ImportExport {
     public void SalvaSchedaImportate(SerializzazioneFileScheda oggettoLetto, LayoutInflater cx){
         Scheda schedaSave=oggettoLetto.getScheda();
         System.out.println("scheda test "+ schedaSave);
+        System.out.println("mah scheda test "+ schedaSave.getNote());
         for(Scheda sche:Global.schedadao.getAllSchede()){
             if(sche.getNomeScheda().equals(schedaSave.getNomeScheda())){
                 //passa context, layoutInflate

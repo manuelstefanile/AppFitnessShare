@@ -57,7 +57,7 @@ public class NotificheDialog {
 
     public static ArrayList<Fisico_Immagini> posa_immagine= new ArrayList<>();
     public static int immagineRiferimento=0;
-    public static ImageButton immagineFisico, immagineFisico2,immagineFisico3;
+    public static ImageButton immagineFisico, immagineFisico2,immagineFisico3,immagineFisico4,immagineFisico5,immagineFisico6,immagineFisico7;
 
     //vabbe ho iniziato quantomeno a scriverlo per vedere se parte
     public static void NotificaFisico(LayoutInflater inflater, SharedPreferences sh, String noteFisico, Activity act) throws Eccezioni {
@@ -79,21 +79,31 @@ public class NotificheDialog {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-
-
         EditText testoFisico1=dialogView.findViewById(R.id.posaFisico);
         EditText testoFisico2=dialogView.findViewById(R.id.posaFisico2);
         EditText testoFisico3=dialogView.findViewById(R.id.posaFisico3);
+        EditText testoFisico4=dialogView.findViewById(R.id.posaFisico4);
+        EditText testoFisico5=dialogView.findViewById(R.id.posaFisico5);
+        EditText testoFisico6=dialogView.findViewById(R.id.posaFisico6);
+        EditText testoFisico7=dialogView.findViewById(R.id.posaFisico7);
         EditText noteFisicoDialo=dialogView.findViewById(R.id.noteFisico);
         immagineFisico= dialogView.findViewById(R.id.immaginefisico);
         immagineFisico2= dialogView.findViewById(R.id.immaginefisico2);
         immagineFisico3= dialogView.findViewById(R.id.immaginefisico3);
+        immagineFisico4= dialogView.findViewById(R.id.immaginefisico4);
+        immagineFisico5= dialogView.findViewById(R.id.immaginefisico5);
+        immagineFisico6= dialogView.findViewById(R.id.immaginefisico6);
+        immagineFisico7= dialogView.findViewById(R.id.immaginefisico7);
 
         ArrayList<ImageButton> arrayImgB=new ArrayList<>();
         arrayImgB.add(immagineFisico);
         arrayImgB.add(immagineFisico2);
         arrayImgB.add(immagineFisico3);
-        String[] nomi={"_","__","___"};
+        arrayImgB.add(immagineFisico4);
+        arrayImgB.add(immagineFisico5);
+        arrayImgB.add(immagineFisico6);
+        arrayImgB.add(immagineFisico7);
+        String[] nomi={"_","__","___","____","_____","______","_______"};
         /**********************************/
         // Carica l'immagine di default dalla cartella drawable
 
@@ -113,12 +123,28 @@ public class NotificheDialog {
         if(!Registrazione_Pag2.editGlobal){
             calendario.setFocusable(false);
             calendario.setClickable(false);
+
             testoFisico1.setFocusable(false);
             testoFisico1.setClickable(false);
+
             testoFisico2.setFocusable(false);
             testoFisico2.setClickable(false);
+
             testoFisico3.setFocusable(false);
             testoFisico3.setClickable(false);
+
+            testoFisico4.setFocusable(false);
+            testoFisico4.setClickable(false);
+
+            testoFisico5.setFocusable(false);
+            testoFisico5.setClickable(false);
+
+            testoFisico6.setFocusable(false);
+            testoFisico6.setClickable(false);
+
+            testoFisico7.setFocusable(false);
+            testoFisico7.setClickable(false);
+
             noteFisicoDialo.setFocusable(false);
             noteFisicoDialo.setClickable(false);
 
@@ -141,17 +167,37 @@ public class NotificheDialog {
                     case 0:
                         testoFisico1.setText(controlloStringaFisico(stringEntry.getNomePosa()));
                         immagineFisico.setImageDrawable(Global.byteArrayToDrawable(
-                                stringEntry.getImmagine()!=null? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                                stringEntry.getImmagine() != null ? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                     case 1:
                         testoFisico2.setText(controlloStringaFisico(stringEntry.getNomePosa()));
                         immagineFisico2.setImageDrawable(Global.byteArrayToDrawable(
-                                stringEntry.getImmagine()!=null? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                                stringEntry.getImmagine() != null ? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                     case 2:
                         testoFisico3.setText(controlloStringaFisico(stringEntry.getNomePosa()));
                         immagineFisico3.setImageDrawable(Global.byteArrayToDrawable(
-                                stringEntry.getImmagine()!=null? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                                stringEntry.getImmagine() != null ? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                        break;
+                    case 3:
+                        testoFisico4.setText(controlloStringaFisico(stringEntry.getNomePosa()));
+                        immagineFisico4.setImageDrawable(Global.byteArrayToDrawable(
+                                stringEntry.getImmagine() != null ? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                        break;
+                    case 4:
+                        testoFisico5.setText(controlloStringaFisico(stringEntry.getNomePosa()));
+                        immagineFisico5.setImageDrawable(Global.byteArrayToDrawable(
+                                stringEntry.getImmagine() != null ? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                        break;
+                    case 5:
+                        testoFisico6.setText(controlloStringaFisico(stringEntry.getNomePosa()));
+                        immagineFisico6.setImageDrawable(Global.byteArrayToDrawable(
+                                stringEntry.getImmagine() != null ? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                        break;
+                    case 6:
+                        testoFisico7.setText(controlloStringaFisico(stringEntry.getNomePosa()));
+                        immagineFisico7.setImageDrawable(Global.byteArrayToDrawable(
+                                stringEntry.getImmagine() != null ? stringEntry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                 }
 
@@ -170,15 +216,25 @@ public class NotificheDialog {
             @Override
             public void onClick(View view) {
 
-                //controlla che il fisico inserito in quella data sia presente e fai
-                String nome1=testoFisico1.getText().toString().length() != 0 ? testoFisico1.getText().toString() : "_";
-                String nome2=testoFisico2.getText().toString().length() != 0 ? testoFisico2.getText().toString() : "__";
-                String nome3=testoFisico3.getText().toString().length() != 0 ? testoFisico3.getText().toString() : "___";
+                // Controlla che il fisico inserito in quella data sia presente e fai
+                String nome1 = testoFisico1.getText().toString().length() != 0 ? testoFisico1.getText().toString() : "_";
+                String nome2 = testoFisico2.getText().toString().length() != 0 ? testoFisico2.getText().toString() : "__";
+                String nome3 = testoFisico3.getText().toString().length() != 0 ? testoFisico3.getText().toString() : "___";
+                String nome4 = testoFisico4.getText().toString().length() != 0 ? testoFisico4.getText().toString() : "____";
+                String nome5 = testoFisico5.getText().toString().length() != 0 ? testoFisico5.getText().toString() : "_____";
+                String nome6 = testoFisico6.getText().toString().length() != 0 ? testoFisico6.getText().toString() : "______";
+                String nome7 = testoFisico7.getText().toString().length() != 0 ? testoFisico7.getText().toString() : "_______";
 
 
-                if (!nome1.equals(nome2) && !nome1.equals(nome3) && !nome2.equals(nome3)) {
 
-                    //salvo prima il fisico. prendo l'id poi lista
+                if (!nome1.equals(nome2) && !nome1.equals(nome3) && !nome1.equals(nome4) && !nome1.equals(nome5) && !nome1.equals(nome6) && !nome1.equals(nome7) &&
+                        !nome2.equals(nome3) && !nome2.equals(nome4) && !nome2.equals(nome5) && !nome2.equals(nome6) && !nome2.equals(nome7) &&
+                        !nome3.equals(nome4) && !nome3.equals(nome5) && !nome3.equals(nome6) && !nome3.equals(nome7) &&
+                        !nome4.equals(nome5) && !nome4.equals(nome6) && !nome4.equals(nome7) &&
+                        !nome5.equals(nome6) && !nome5.equals(nome7) &&
+                        !nome6.equals(nome7)) {
+
+                    // Salvo prima il fisico. prendo l'id poi lista
                     Fisico f = new Fisico();
 
                     for (Fisico_Immagini bitm : posa_immagine) {
@@ -192,8 +248,21 @@ public class NotificheDialog {
                             case 2:
                                 bitm.setNomePosa(nome3);
                                 break;
+                            case 3:
+                                bitm.setNomePosa(nome4);
+                                break;
+                            case 4:
+                                bitm.setNomePosa(nome5);
+                                break;
+                            case 5:
+                                bitm.setNomePosa(nome6);
+                                break;
+                            case 6:
+                                bitm.setNomePosa(nome7);
+                                break;
                         }
                     }
+
 
                     f.setPosa_immagine(posa_immagine);
 
@@ -230,50 +299,108 @@ public class NotificheDialog {
             }
         });
 
-        NotificaImmaginePremutaIngrandisci(inflater,immagineFisico);
+        NotificaImmaginePremutaIngrandisci(inflater, immagineFisico);
         immagineFisico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(!Registrazione_Pag2.editGlobal) {
-                    NotificaImmagine(inflater,immagineFisico.getDrawable());
-                }else
-                    selectImageFromGallery(act,1);
+                if (!Registrazione_Pag2.editGlobal) {
+                    NotificaImmagine(inflater, immagineFisico.getDrawable());
+                } else {
+                    selectImageFromGallery(act, 1);
+                }
             }
         });
-        NotificaImmaginePremutaIngrandisci(inflater,immagineFisico2);
+
+        NotificaImmaginePremutaIngrandisci(inflater, immagineFisico2);
         immagineFisico2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!Registrazione_Pag2.editGlobal) {
-                    NotificaImmagine(inflater,immagineFisico2.getDrawable());
-                }else
-                    selectImageFromGallery(act,2);
+                if (!Registrazione_Pag2.editGlobal) {
+                    NotificaImmagine(inflater, immagineFisico2.getDrawable());
+                } else {
+                    selectImageFromGallery(act, 2);
+                }
             }
         });
-        NotificaImmaginePremutaIngrandisci(inflater,immagineFisico3);
+
+        NotificaImmaginePremutaIngrandisci(inflater, immagineFisico3);
         immagineFisico3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!Registrazione_Pag2.editGlobal) {
-                    NotificaImmagine(inflater,immagineFisico3.getDrawable());
-                }else
-                    selectImageFromGallery(act,3);
+                if (!Registrazione_Pag2.editGlobal) {
+                    NotificaImmagine(inflater, immagineFisico3.getDrawable());
+                } else {
+                    selectImageFromGallery(act, 3);
+                }
+            }
+        });
+
+        NotificaImmaginePremutaIngrandisci(inflater, immagineFisico4);
+        immagineFisico4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!Registrazione_Pag2.editGlobal) {
+                    NotificaImmagine(inflater, immagineFisico4.getDrawable());
+                } else {
+                    selectImageFromGallery(act, 4);
+                }
+            }
+        });
+
+        NotificaImmaginePremutaIngrandisci(inflater, immagineFisico5);
+        immagineFisico5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!Registrazione_Pag2.editGlobal) {
+                    NotificaImmagine(inflater, immagineFisico5.getDrawable());
+                } else {
+                    selectImageFromGallery(act, 5);
+                }
+            }
+        });
+
+        NotificaImmaginePremutaIngrandisci(inflater, immagineFisico6);
+        immagineFisico6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!Registrazione_Pag2.editGlobal) {
+                    NotificaImmagine(inflater, immagineFisico6.getDrawable());
+                } else {
+                    selectImageFromGallery(act, 6);
+                }
+            }
+        });
+
+        NotificaImmaginePremutaIngrandisci(inflater, immagineFisico7);
+        immagineFisico7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!Registrazione_Pag2.editGlobal) {
+                    NotificaImmagine(inflater, immagineFisico7.getDrawable());
+                } else {
+                    selectImageFromGallery(act, 7);
+                }
             }
         });
 
 
     }
 
-    private static String controlloStringaFisico(String stringapassata){
-        switch (stringapassata){
+    private static String controlloStringaFisico(String stringapassata) {
+        switch (stringapassata) {
             case "_":
             case "__":
             case "___":
+            case "____":
+            case "_____":
+            case "______":
+            case "_______":
                 return "";
-            default: return stringapassata;
+            default:
+                return stringapassata;
         }
     }
+
     private static void selectImageFromGallery(Activity act,int posizione){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -1112,46 +1239,81 @@ public class NotificheDialog {
             noteDettaglio.setText(peso.getNote());
             calendario.setDate(peso.getCalendario().getTimeInMillis());
 
-        }else if(oggettoC.getClass()==Fisico.class){
+        }else if(oggettoC.getClass() == Fisico.class) {
             System.out.println("ci sono le img");
-            Fisico fisico=(Fisico) ogg;
-            CalendarView calendario=dialogView.findViewById((int)R.id.calendarioFisico);
-            EditText posaText1= dialogView.findViewById(R.id.posaFisico);
-            EditText posaText2= dialogView.findViewById(R.id.posaFisico2);
-            EditText posaText3= dialogView.findViewById(R.id.posaFisico3);
-            EditText noteDettaglio=dialogView.findViewById((int)R.id.noteFisico);
+            Fisico fisico = (Fisico) ogg;
+            CalendarView calendario = dialogView.findViewById(R.id.calendarioFisico);
+            EditText posaText1 = dialogView.findViewById(R.id.posaFisico);
+            EditText posaText2 = dialogView.findViewById(R.id.posaFisico2);
+            EditText posaText3 = dialogView.findViewById(R.id.posaFisico3);
+            EditText posaText4 = dialogView.findViewById(R.id.posaFisico4);
+            EditText posaText5 = dialogView.findViewById(R.id.posaFisico5);
+            EditText posaText6 = dialogView.findViewById(R.id.posaFisico6);
+            EditText posaText7 = dialogView.findViewById(R.id.posaFisico7);
+            EditText noteDettaglio = dialogView.findViewById(R.id.noteFisico);
 
-
+            ImageButton immagineFisico = dialogView.findViewById(R.id.immaginefisico);
+            ImageButton immagineFisico2 = dialogView.findViewById(R.id.immaginefisico2);
+            ImageButton immagineFisico3 = dialogView.findViewById(R.id.immaginefisico3);
+            ImageButton immagineFisico4 = dialogView.findViewById(R.id.immaginefisico4);
+            ImageButton immagineFisico5 = dialogView.findViewById(R.id.immaginefisico5);
+            ImageButton immagineFisico6 = dialogView.findViewById(R.id.immaginefisico6);
+            ImageButton immagineFisico7 = dialogView.findViewById(R.id.immaginefisico7);
 
             // Impostare il valore di peso e note nei rispettivi EditText
-            ArrayList<Fisico_Immagini> mappa=fisico.getPosa_immagine();
+            ArrayList<Fisico_Immagini> mappa = fisico.getPosa_immagine();
             mappa.get(0).setImmagineBRiferimento(immagineFisico);
             mappa.get(1).setImmagineBRiferimento(immagineFisico2);
             mappa.get(2).setImmagineBRiferimento(immagineFisico3);
+            mappa.get(3).setImmagineBRiferimento(immagineFisico4);
+            mappa.get(4).setImmagineBRiferimento(immagineFisico5);
+            mappa.get(5).setImmagineBRiferimento(immagineFisico6);
+            mappa.get(6).setImmagineBRiferimento(immagineFisico7);
+
             for (Fisico_Immagini entry : mappa) {
-                switch (entry.getPosizione()){
+                switch (entry.getPosizione()) {
                     case 0:
                         posaText1.setText(controlloStringaFisico(entry.getNomePosa()));
                         mappa.get(0).getImmagineBRiferimento().setImageDrawable(Global.byteArrayToDrawable(
-                                entry.getImmagine()!=null? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                                entry.getImmagine() != null ? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                     case 1:
                         posaText2.setText(controlloStringaFisico(entry.getNomePosa()));
                         mappa.get(1).getImmagineBRiferimento().setImageDrawable(Global.byteArrayToDrawable(
-                                entry.getImmagine()!=null? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                                entry.getImmagine() != null ? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                     case 2:
                         posaText3.setText(controlloStringaFisico(entry.getNomePosa()));
                         mappa.get(2).getImmagineBRiferimento().setImageDrawable(Global.byteArrayToDrawable(
-                                entry.getImmagine()!=null? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                                entry.getImmagine() != null ? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                        break;
+                    case 3:
+                        posaText4.setText(controlloStringaFisico(entry.getNomePosa()));
+                        mappa.get(3).getImmagineBRiferimento().setImageDrawable(Global.byteArrayToDrawable(
+                                entry.getImmagine() != null ? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                        break;
+                    case 4:
+                        posaText5.setText(controlloStringaFisico(entry.getNomePosa()));
+                        mappa.get(4).getImmagineBRiferimento().setImageDrawable(Global.byteArrayToDrawable(
+                                entry.getImmagine() != null ? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                        break;
+                    case 5:
+                        posaText6.setText(controlloStringaFisico(entry.getNomePosa()));
+                        mappa.get(5).getImmagineBRiferimento().setImageDrawable(Global.byteArrayToDrawable(
+                                entry.getImmagine() != null ? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
+                        break;
+                    case 6:
+                        posaText7.setText(controlloStringaFisico(entry.getNomePosa()));
+                        mappa.get(6).getImmagineBRiferimento().setImageDrawable(Global.byteArrayToDrawable(
+                                entry.getImmagine() != null ? entry.getImmagine() : Global.drawableToByteArray(dialogView.getResources().getDrawable(R.drawable.noimg))));
                         break;
                 }
             }
 
             noteDettaglio.setText(fisico.getNote());
             calendario.setDate(fisico.getCalendario().getTimeInMillis());
-
         }
+
 
     }
 
@@ -1212,31 +1374,53 @@ public class NotificheDialog {
             noteDettaglio.setText("");
 
 
-        }else if(oggettoC.getClass()==Fisico.class){
+        }else if(oggettoC.getClass() == Fisico.class) {
 
-            EditText posaText1= dialogView.findViewById(R.id.posaFisico);
-            EditText posaText2= dialogView.findViewById(R.id.posaFisico2);
-            EditText posaText3= dialogView.findViewById(R.id.posaFisico3);
+            EditText posaText1 = dialogView.findViewById(R.id.posaFisico);
+            EditText posaText2 = dialogView.findViewById(R.id.posaFisico2);
+            EditText posaText3 = dialogView.findViewById(R.id.posaFisico3);
+            EditText posaText4 = dialogView.findViewById(R.id.posaFisico4);
+            EditText posaText5 = dialogView.findViewById(R.id.posaFisico5);
+            EditText posaText6 = dialogView.findViewById(R.id.posaFisico6);
+            EditText posaText7 = dialogView.findViewById(R.id.posaFisico7);
 
-            ImageButton immagineFisico11= dialogView.findViewById(R.id.immaginefisico);
-            ImageButton immagineFisico22= dialogView.findViewById(R.id.immaginefisico2);
-            ImageButton immagineFisico33= dialogView.findViewById(R.id.immaginefisico3);
+            ImageButton immagineFisico11 = dialogView.findViewById(R.id.immaginefisico);
+            ImageButton immagineFisico22 = dialogView.findViewById(R.id.immaginefisico2);
+            ImageButton immagineFisico33 = dialogView.findViewById(R.id.immaginefisico3);
+            ImageButton immagineFisico44 = dialogView.findViewById(R.id.immaginefisico4);
+            ImageButton immagineFisico55 = dialogView.findViewById(R.id.immaginefisico5);
+            ImageButton immagineFisico66 = dialogView.findViewById(R.id.immaginefisico6);
+            ImageButton immagineFisico77 = dialogView.findViewById(R.id.immaginefisico7);
 
-            EditText noteDettaglio=dialogView.findViewById((int)R.id.noteFisico);
+            EditText noteDettaglio = dialogView.findViewById(R.id.noteFisico);
+
             // Impostare il valore di peso e note nei rispettivi EditText
             posaText1.setText("");
             posaText2.setText("");
             posaText3.setText("");
+            posaText4.setText("");
+            posaText5.setText("");
+            posaText6.setText("");
+            posaText7.setText("");
             noteDettaglio.setText("");
+
             immagineFisico11.setImageResource(R.drawable.noimg);
             immagineFisico22.setImageResource(R.drawable.noimg);
             immagineFisico33.setImageResource(R.drawable.noimg);
+            immagineFisico44.setImageResource(R.drawable.noimg);
+            immagineFisico55.setImageResource(R.drawable.noimg);
+            immagineFisico66.setImageResource(R.drawable.noimg);
+            immagineFisico77.setImageResource(R.drawable.noimg);
+
             posa_immagine.get(0).setImmagine(null);
             posa_immagine.get(1).setImmagine(null);
             posa_immagine.get(2).setImmagine(null);
-
-
+            posa_immagine.get(3).setImmagine(null);
+            posa_immagine.get(4).setImmagine(null);
+            posa_immagine.get(5).setImmagine(null);
+            posa_immagine.get(6).setImmagine(null);
         }
+
 
     }
 
@@ -1280,18 +1464,28 @@ public class NotificheDialog {
                     /*********************chiama anche tutti di lista*********/
                     ListaImgFisicoDAO lfdao=new ListaImgFisicoDAO(dialogView.getContext());
 
-                    if(oggFisico!=null){
-                        ArrayList<Fisico_Immagini> listaim =lfdao.getImmaginiPerIdFisico(oggFisico.getId());
-                        //associo i bottoni alla lista
+                    if(oggFisico != null) {
+                        ArrayList<Fisico_Immagini> listaim = lfdao.getImmaginiPerIdFisico(oggFisico.getId());
+
+                        // Associo i bottoni alla lista
                         listaim.get(0).setImmagineBRiferimento(immagineFisico);
                         listaim.get(1).setImmagineBRiferimento(immagineFisico2);
                         listaim.get(2).setImmagineBRiferimento(immagineFisico3);
-                        oggFisico.setPosa_immagine(listaim);
-                        //setto la var globale con le immagini
-                        posa_immagine=oggFisico.getPosa_immagine();
+                        listaim.get(3).setImmagineBRiferimento(immagineFisico4);
+                        listaim.get(4).setImmagineBRiferimento(immagineFisico5);
+                        listaim.get(5).setImmagineBRiferimento(immagineFisico6);
+                        listaim.get(6).setImmagineBRiferimento(immagineFisico7);
 
-                        SettaVarDialogView(oggetto,dialogView,oggFisico);
-                    }else SettaTextAVuoto(oggetto,dialogView,oggFisico);
+                        oggFisico.setPosa_immagine(listaim);
+
+                        // Setto la var globale con le immagini
+                        posa_immagine = oggFisico.getPosa_immagine();
+
+                        SettaVarDialogView(oggetto, dialogView, oggFisico);
+                    } else {
+                        SettaTextAVuoto(oggetto, dialogView, oggFisico);
+                    }
+
 
                 }
 

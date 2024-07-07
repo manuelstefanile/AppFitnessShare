@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         //se l utente è gia registrato, vai a pagina 3
         DbHelper db=new DbHelper(getApplicationContext());
-        db.deleteDatabase();
+        //db.deleteDatabase();
         SQLiteDatabase dbRead=db.getReadableDatabase();
         int count=0;
 
